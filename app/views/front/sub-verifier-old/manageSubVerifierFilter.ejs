@@ -1,0 +1,215 @@
+	<table class="table" id="myTable3">
+						<thead>
+					    	<tr>
+						      	<th width="5%" scope="col">Type</th>
+						      	<th width="10%" scope="col">Name</th>
+						      	<th width="20%" scope="col">Email</th>
+						      	<th width="12%" scope="col">MyReflet ID</th>
+						      	<th width="8%" scope="col">Country</th>
+						      	<th width="20%" scope="col">Verified Status</th>
+						      	<th width="15%" scope="col">Created Date</th>
+						      	<th width="10%" scope="col">Status</th>
+						      	<th width="5%" scope="col">Action</th>
+					    	</tr>
+					  	</thead>
+						<tbody id="subVerifierTble">
+							<%if(sub_verifiers_list.data.length>0){%>
+							<%sub_verifiers_list.data.forEach(sub_list=>{%>
+								
+						    <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									           
+									            <input type="checkbox" name="sub_ver_checkbox" value="<%=sub_list.invite_sub_id%>">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table for-square-img" src="../assets/images/icons/repersentative.png">
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+						      		<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600"><%=sub_list.full_name%></span>
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td><%=sub_list.email%></td>
+							    <td><%=sub_list.reflect_code%></td>
+							    <td><%=sub_list.country_name%></td>
+							    <td>
+							    	<div>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verified.png">
+											Email
+										</span>
+										<!-- <span>
+											<img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+											Phone
+										</span> -->
+									</div>
+							    </td>
+							    <td>
+							    	<%=moment(sub_list.sub_createdAt).format("DD , MMM ,YYYY")%>
+							    </td>
+							    <td>
+									<%if(sub_list.sub_veri_status=="inactive"){%>
+										<div class="cancel-status">
+											Deactive
+										</div>
+										<%}else{%>
+											<div class="approved-status">
+												Active
+											</div>
+											<%}%>
+							    	
+									
+							    </td>
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="/sub_verifier_client?invite_sub_id=<%=sub_list.invite_sub_id%>" >
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> View
+				                            </a>
+											<!-- <a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Deactivate
+											</a> -->
+											<a class="dropdown-item" href="/delete_indi_sub_veri?status=deactivate&invite_sub_id=<%=sub_list.invite_sub_id%>">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Deactivate
+											</a>
+											<!-- <a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+											</a>	 -->
+
+											<a class="dropdown-item" href="/delete_indi_sub_veri?status=delete&invite_sub_id=<%=sub_list.invite_sub_id%>">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Delete
+											</a>
+				                        </div>
+				                    </div>
+						      	</td>
+							</tr>
+							<%})%>
+							<%}%>
+						    <!-- <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table for-square-img" src="../assets/images/icons/entity.png">
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+						      		<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600">Jack Ma</span> <br>
+							      		     		25102
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td>questglt@gmail.com</td>
+							    <td>6464646894</td>
+							    <td>China</td>
+							    <td>
+							    	<div>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verified.png">
+											Email
+										</span>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+											Phone
+										</span>
+									</div>
+							    </td>
+							    <td>
+							    	July 10, 2019
+							    </td>
+							    <td>
+							    	<div class="approved-status">
+							    		Active
+							    	</div>
+							    </td>
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="sub-verifier-clients.php" >
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> View
+				                            </a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Deactivate
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+											</a>	
+				                        </div>
+				                    </div>
+						      	</td>
+						    </tr> -->
+						</tbody>
+					</table>
+					<div class="pagination-list for-user">
+          
+				     	<% if (sub_verifiers_list.totalPages > 0) { %>
+				                       <ul class="pagination text-center">
+					   <% if (sub_verifiers_list.currentPage == 1) { %>
+						   <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+					   <% } else { %>
+						   <li class="page-item"><a class="page-link" href="/sub_magage_verifier?page=1">&lt;</a></li>
+					   <% } %>
+				
+				
+				
+					   <% var i = (Number(sub_verifiers_list.currentPage) > 5 ? Number(sub_verifiers_list.currentPage) - 4 : 1) %>
+					   <% if (i !== 1) { %>
+						   <!-- <li class="disabled"><a>...</a></li> -->
+						   <li class="page-item disabled"><a class="page-link" >...</a></li>
+					   <% } %>
+					   <% for (; i <= (Number(sub_verifiers_list.currentPage) + 4) && i <= sub_verifiers_list.totalPages; i++) { %>
+						   <% if (i == sub_verifiers_list.currentPage) { %>
+							   <!-- <li class="active"><a><%= i %></a></li> -->
+							   <li class="page-item active">
+								 <a class="page-link" href="#"><%= i %><span class="sr-only">(sub_verifiers_list.currentPage)</span></a>
+							   </li>
+						   <% } else { %>
+							   <li class="page-item"><a class="page-link" href="/sub_magage_verifier?page=<%= i %>"><%= i %></a></li>
+						   <% } %>
+						   <% if (i == Number(sub_verifiers_list.currentPage) + 4 && i < sub_verifiers_list.totalPages) { %>
+							   <!-- <li class="disabled"><a>...</a></li> -->
+							   <li class="page-item disabled"><a class="page-link" >...</a></li>
+						   <% } %>
+					   <% } %>
+				
+				
+					   <% if (sub_verifiers_list.currentPage == sub_verifiers_list.totalPages) { %>                       
+						   <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+					   <% } else { %>
+						   <li><a class="page-link" href="/sub_magage_verifier?page=<%= sub_verifiers_list.totalPages %>">&gt;</a></li>
+					   <% } %>
+				
+				         </ul>
+				       <% } %>
+				</div>

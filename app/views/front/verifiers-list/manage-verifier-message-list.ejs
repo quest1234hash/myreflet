@@ -1,0 +1,773 @@
+<%-include('../innerHeader')%>
+
+<section class="heading-sec mb-0">
+	<div class="container">
+		<ul class="breadcrumb custom-braed">
+			<li class="upper">Manage Message</li>
+		</ul>
+		<div class="row align-item-center">
+			<div class="col-lg-9 col-md-6 col-sm-6">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/dashboard-assets/icon_message1.png">
+					<h4 class="upper">Manage Message</h4>
+				</div>
+			</div>
+		</div>
+	</div> 
+</section>
+
+<section class="setup-id-sec">
+	<div class="container">
+		<div class="row personal-info-heading">
+			<div class="col-md-12 custom-flex-row">
+				<div class="text-right">
+					<a href="">
+						<div class="icon-for-dwnload">
+							<div class="tooltip fade" data-title="Export Data" onclick="export_table();">
+								<img src="../assets/images/icons/dashboard-assets/export.png">
+						     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+							</div>
+						</div>
+					</a>
+					<a href="">
+						<div class="icon-for-dwnload">
+							<div class="tooltip fade" data-title="Print Data"onclick="print_table();">
+								<img src="../assets/images/icons/dashboard-assets/print.png">
+							    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- Button S-->
+		<!-- <div class="btn-all-dwnload">
+			<div>
+				<a href=""><img src="../assets/images/icons/dashboard-assets/icon_add_book.png"> Add to address book</a>
+				<a href=""><img src="../assets/images/icons/dashboard-assets/icon_send.png"> Send on-boarding documents</a>
+				<a href=""><img src="../assets/images/icons/dashboard-assets/icon_eye_pur.png"> View Document</a>
+				<a href=""><img src="../assets/images/icons/dashboard-assets/icon_message.png"> Manage messages</a>
+			</div> 
+		</div> -->
+		<!-- Button E -->
+		<% if(success_msg!=undefined && success_msg !='' ){ %>
+			<div class="alert alert-success text-center  flash_msg "id="success_message">
+			  <%= success_msg %>
+		   </div>
+		  <% }%>
+		  <% if(err_msg!=undefined && err_msg !='' ){ %>
+			<div class="alert alert-danger text-center  flash_msg " id="err_message">
+					<%= err_msg %>
+				 </div>
+		   
+			<% }%>
+		<div class="personal-info-box table-responsive">
+			<table class="table" id="myTable3">
+
+				<thead>
+			    	<tr>
+			    		<th width="5%" scope="col">No.</th>
+				      	<th width="20%" scope="col">Name/MyReflete ID</th>
+				      	<th width="15%" scope="col">Type</th>
+				      	<!-- <th width="15%" scope="col">Email ID</th> -->
+				      	<th width="15%" scope="col">Country</th>
+				      	<th width="10%" scope="col">Status</th>
+				      	<th width="25%" scope="col">Wallet Address</th>
+				      	<th width="5%"class="hide_link" scope="col">Action</th>
+			    	</tr>
+			  	</thead>
+				<tbody>
+					<%	if(market_list_result.data.length>0)
+		  	{
+			var i=0;
+			var j=0;
+			var k=1;
+				for(let each_data of market_list_result.data){
+				  %>
+				    <tr>
+				    	<td class="upper"><%=k%>.</td>
+				      	<th scope="row">
+					      	<div class="for-flex-align">
+					      		<div class="checkbox">
+						          	<label>
+							            <!-- <input class="hide_link" type="checkbox" value=""> -->
+<!-- 							            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+ -->					      		     	<div>
+					      		     		<span class="upper">
+					      		     			<%if(each_data.rep_firstname){%>
+					      		     			<%=each_data.rep_firstname%>
+					      		     				<%}else if(each_data.entity_company_name){%>
+
+                                         <%= each_data.entity_company_name %>
+                                         <%}else{%>
+										           <%= decrypt(each_data.full_name) %>
+										           <%}%>
+					      		     			</span><br>
+					      		     		<span><%=each_data.reflect_code%></span>
+					      		     	</div>
+						         	 </label>
+						        </div>
+							</div>
+						  </th>
+						  <td class="upper"><%=each_data.user_as%></td>
+
+					<!-- 	  <%if(each_data.rep_email)
+						  {%>
+							<td><%=each_data.rep_email%></td>
+
+							<%}else{%> 
+                         <td> <%=each_data.email%>
+							
+                      </td>
+								<%}%> -->
+
+					<%if(each_data.entity_company_country)
+					{%>
+						<td class="upper"><%=each_data.country_name%></td>
+
+						<%}else{%>
+							<td> <%=each_data.birthplace%></td>
+							<%}%> 
+							
+					    <td class="upper"><%=each_data.verifier_type%></td>
+					    <td><%=each_data.wallet_address%></td>
+					    <td class="hide_link" >
+					      	<div class="dropdown-menu-new">
+		                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+		                          <div class="doc-img">
+							      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+							      	</div>
+		                        </a>
+		                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+								
+
+
+					<!-- 				<a class="dropdown-item" href="" data-toggle="modal" data-target="#set-docs-permission-Modal">
+										<img src="../assets/images/icons/dashboard-assets/view.png"> View Document
+									</a>
+									  -->
+									
+									<a class="dropdown-item" href="/manage-verifier-message?reflect_id=<%=each_data.reflect_id%>">
+										<img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage Messages
+									</a>	
+<!-- 									
+ -->
+		                        </div>
+		                    </div>
+				      	</td>
+				    </tr> 
+				   
+					<%
+					i++;k++;		j++;				
+				} 
+				   }else{
+	   %>
+                       <tr>
+						<td colspan="8"><center>No record found.</center> </td>
+					   </tr>			 <%}%>
+				</tbody>
+			</table>
+		
+			   </div>
+            <div class="pagination-list for-user">
+          
+            <% if (market_list_result.totalPages > 0) { %>
+             <ul class="pagination text-center">
+               <% if (market_list_result.currentPage == 1) { %>
+                 <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+               <% } else { %>
+                 <li class="page-item"><a class="page-link" href="/manage-verifier-message-list?page=1&market_place_id=<%=label[0].market_place_id %>">&lt;</a></li>
+               <% } %>
+          
+          
+          
+               <% var i = (Number(market_list_result.currentPage) > 5 ? Number(market_list_result.currentPage) - 4 : 1) %>
+               <% if (i !== 1) { %>
+                 <!-- <li class="disabled"><a>...</a></li> -->
+                 <li class="page-item disabled"><a class="page-link" >...</a></li>
+               <% } %>
+               <% for (; i <= (Number(market_list_result.currentPage) + 4) && i <= market_list_result.totalPages; i++) { %>
+                 <% if (i == market_list_result.currentPage) { %>
+                   <!-- <li class="active"><a><%= i %></a></li> -->
+                   <li class="page-item active">
+                   <a class="page-link" href="#"><%= i %><span class="sr-only">(market_list_result.currentPage)</span></a>
+                   </li>
+                 <% } else { %>
+                   <li class="page-item"><a class="page-link" href="/manage-verifier-message-list?page=1&market_place_id=<%=label[0].market_place_id %>"><%= i %></a></li>
+                 <% } %>
+                 <% if (i == Number(market_list_result.currentPage) + 4 && i < market_list_result.totalPages) { %>
+                   <!-- <li class="disabled"><a>...</a></li> -->
+                   <li class="page-item disabled"><a class="page-link" >...</a></li>
+                 <% } %>
+               <% } %>
+          
+          
+               <% if (market_list_result.currentPage == market_list_result.totalPages) { %>                       
+                 <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+               <% } else { %>
+                 <li><a class="page-link" href="/manage-verifier-message-list?page=1&market_place_id=<%=label[0].market_place_id %>">&gt;</a></li>
+               <% } %>
+          
+             </ul>
+          <% } %>
+          
+           </div>
+		</div>
+	</div>
+</section>
+
+<!-- Modal S -->
+
+
+<!--Add Verifier Modal E -->
+
+<%- include('../innerFooter')%>
+<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css"> -->
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script>
+	
+	$('.cancel').click(function()
+{
+	location.reload();
+
+})
+// $(document).ready( function () {
+// 	$('.table').DataTable();
+// } );
+</script>
+<script>
+		function export_table(){
+	//   alert('hhh') 
+	// $('.hide_link').show();
+
+	  $("#myTable3").table2excel({
+		  filename: "access-market-list.xls",
+		  exclude:'.hide_link',
+	  });
+	//   $('.hide_link').show();
+	window.location.reload(true);
+
+	};
+	
+	function print_table(){
+		$('.hide_link').hide();
+     
+     // $("#user_div").print();
+     var restorepage = $('body').html();
+  // $('.nodata').hide();
+   var printcontent = $('#myTable3').clone();
+   $('body').empty().html(printcontent);
+   window.print();
+   $('body').html(restorepage);
+ 
+   window.location.reload(true);
+
+		}  
+		setTimeout(function() {
+        $('#success_message').fadeOut('fast');
+        }, 3000);
+		setTimeout(function() {
+        $('#err_message').fadeOut('fast');
+        }, 3000);
+</script>
+<script>
+
+// $('.get_category_1').click(function(){
+// 		// alert('ref_id')
+
+// 		var ref_id = $("#ref_id").val();
+// 		// alert(ref_id)
+// 	if(ref_id!=""){
+// 		$.ajax({
+// 			type: "post",
+// 			url: "/get-category-list",
+// 			data:{reflect_id:ref_id},
+// 			success: function (data) {
+// 				alert(data);  
+// 				$('#category_list_1').html(data);
+			
+//             }
+// 		});
+// 	}else{
+// 				$('#category_list_1').html("");
+// 	}
+// })
+</script>
+<script>
+	// var reflect_id
+
+
+// $(document).on('change', ".mp_select", function(){
+// 	reflect_id =   $(this).val()
+// });
+
+// $(document).on('change', ".mp_select", function(){
+// 	reflect_id =   $(this).val()
+// });
+$('.reflect_code_1').click(function()
+{
+	// alert('mp_id')
+
+	var label = $("#label_id").val();
+	var reflect_code = $("#reflect_code").val();
+
+// alert(label)
+// alert(reflect_code)
+
+
+
+
+
+	  
+
+	  $.ajax({
+  type: "post",
+  url: "/post-address-book",
+  data:{reflect_code:reflect_code,label:label},
+  success: function (data) {
+	  
+	  location.reload();
+
+  
+  }
+});
+})
+
+
+</script>
+
+<script>
+	var reflect_id_client,j_value,getVerifierID,verifier_id;
+
+
+	$('.d1').on('click', '.menu-for-id a', function() {
+	   $('.dropbtn_1').html($(this).html()); 
+	//   var lastID = $(this).html();
+	reflect_id_client = $(this).find(".getId1").attr("value");
+	// alert(reflect_id_client)
+		// console.log("text", lastID); 
+
+
+   });
+
+  function get_category(j){
+	// alert('cat_val');
+	var cat_val=$('#ref_id'+j).val();
+	// alert(cat_val);
+
+	if(cat_val!=""){
+		$.ajax({
+			type: "post",
+			url: "/get-category-list-mp",
+			data:{reflect_id:cat_val,j},
+			success: function (data) {
+				// alert(data)
+				// console.log(data);  
+				$('#ver_category_list'+j).html(data);
+            }
+		});
+	}else{
+				$('#ver_category_list'+j).html("");
+	}
+}
+
+function get_sub_category(sub_cat_val,j){
+	// alert(sub_cat_val);
+	// alert(j);
+
+	$("#p_cat_id"+j).val(sub_cat_val)
+// 
+	if(sub_cat_val!=""){
+		$.ajax({ 
+			type: "post",
+			url: "/get-sub-category-list-mp",
+			data:{category_id:sub_cat_val,j},
+			success: function (data) {
+				// alert('data');  
+
+			// alert(data);  
+				$('#sub_category_list'+j).html(data);
+            }
+		});
+	}else{
+				$('#sub_category_list'+j).html("");
+	}
+}
+
+function get_requested_doc(category_id,j){
+	$("#sub_cat_id"+j).val(category_id) 
+	j_value=j;
+	// alert(j);
+
+//    alert(category_id);
+   if(category_id!=""){
+		$.ajax({
+			type: "post",
+			url: "/get-requested-doc-mp",
+			data:{category_id:category_id},
+			success: function (data) {
+			// 	alert('category_id');
+
+			// 	alert(data);  
+				$('#category_docs'+j).html(data);
+            }
+		});
+	}else{
+				$('#category_docs'+j).html("");
+	}
+}
+$('.select_client_coc').click(function()
+   {
+	$("#doc_reflect_id"+j_value).val(reflect_id_client)
+
+	var k=0;
+
+	// $('.select_append_client').html("");
+	//    alert('select_client_coc')
+	if ($(".select_append_client").find('#doc_check'+k).length==0)
+    {
+	   if(reflect_id_client!=""){
+		$.ajax({
+			type: "post",
+			url: "/existing-doc-client",
+			data:{reflect_id:reflect_id_client},
+			success: function (data) {
+				if(data!=null && data!="" && data!=undefined){
+					var i=0;
+
+			for(let document of data){
+
+				$('.select_append_client').append(`<div class="for-doc-select">
+												 <div class="checkbox"> 	
+												 <label>
+													${document.document_name}<input type="checkbox" onclick="get_check_doc('${i}','${j_value}')" id="doc_check${i}" value="${document.user_doc_id}" name="doc_check">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+												 </label>
+												</div>	
+												</div>`)
+																
+												
+
+				i++; }}
+				// console.log(data);  
+				// $('#ver_category_list'+j).html(data);
+            }
+		});
+	      }else{
+				// $('#ver_category_list'+j).html("");
+	}
+	}
+	else{
+		// $(`.select_append_client`).remove();
+
+	}
+   })
+	
+
+</script>
+<script>
+	function get_check_doc(value,j){
+		// alert(value);
+		// alert(j);
+       var p=0;
+		var user_doc_id = $(`#doc_check${value}`).val();
+		var trow = $(`#docRow${value}`).text();
+
+		// alert(user_doc_id);
+		// alert(trow);
+
+		// console.log("user_doc_id",user_doc_id);
+		if(trow!=""){
+			$(`#docRow${value}`).remove();
+		}else{
+        $.ajax({
+			type: "post",
+			url: "/get-checked-doc",
+			data:{user_doc_id:user_doc_id},
+			success: function (data) {
+			// alert(data)
+				$('#doc_data'+j).append(`<tr id="docRow${value}">
+								      <th scope="row">
+								      	<div class="for-flex-align">
+								      		 <img src="../assets/images/icons/dashboard-assets/drivinglicense.png">
+											   ${data[0].document_name}
+											   <input type="hidden" id="docIdRow" value="${data[0].user_doc_id}">
+								      	</div>
+								      </th>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" name="downloadPerm" id="downloadPerm" value="${data[0].user_doc_id}">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" name="viewPerm" id="viewPerm" value="${data[0].user_doc_id}">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" name="certifyPerm" id="certifyPerm" value="${data[0].user_doc_id}">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								    </tr>`);
+			}
+		});
+	}
+	}
+
+</script>
+<script>
+	var rowCount;
+	var rowVal=[];
+	var download = [];
+	var view = [];
+	var certify = [];
+
+function submit_all_perm(){
+	// alert('hhhh')
+	// alert(($('table#myTable1 tr:last').index() + 1));
+
+	getVerifierID = $("#verifier_ref_id"+j_value).val();
+	verifier_id = $("#verifier_id"+j_value).val();
+
+
+	// alert('getVerifierID : '+getVerifierID)
+
+	if(getVerifierID!="" || getVerifierID!=undefined){
+	//  alert(getVerifierID);
+	 
+	rowCount = $('table#myTable1 tr:last').index() + 1;
+	//  alert(rowCount);
+
+	var reflect_id = $('#doc_reflect_id'+j_value).val();
+	// alert('reflect_id : '+reflect_id);
+
+
+	if(rowCount>0)
+	{
+        // alert('length '+$('#doc_data'+j_value).find('tr').length)
+		if($('input[name="doc_check"]:checked')){
+			
+			$('#doc_data'+j_value).find('tr').each(function(index) {
+				var hidden_val=$(this).find('input[type="hidden"]').val();
+
+                 rowVal.push(hidden_val);
+
+			//    alert(index)
+
+			   var down_val=$(this).find('input[name="downloadPerm"]:checked').val();
+			   var view_val = $(this).find('input[name="viewPerm"]:checked').val();
+			   var certify_val = $(this).find('input[name="certifyPerm"]:checked').val();
+			//    alert('hidden_val '+hidden_val)
+
+			//    alert('down_val '+down_val)
+			//    alert(view_val)
+			//    alert(certify_val)
+
+	   		if(down_val==undefined)
+	   		{
+	   			var dwn_per='no';
+	   		}
+	   		else
+	   		{
+	   		   var dwn_per='yes';	
+			}
+			if(view_val==undefined)
+	   		{
+	   			var vw_per='no';
+	   		}
+	   		else
+	   		{
+	   		   var vw_per='yes';	
+			}
+			   if(certify_val==undefined)
+	   		{
+	   			var crt_per='no';
+	   		}
+	   		else
+	   		{
+	   		   var crt_per='yes';	
+	   		}
+			   
+
+	   		download.push(dwn_per);
+			view.push(vw_per);
+			certify.push(crt_per)
+	   	});
+		   $('#subPerm'+j_value).attr('data-toggle', 'modal');
+			$('#subPerm'+j_value).attr('data-target', '#doc-permission-Modal'); 
+			$('#subPerm'+j_value).attr('data-dismiss', 'modal');
+	}else if(rowCount<=0){
+		$('#prm_error_span').html("Please select atleast one document.");
+	}
+}
+}else{
+	$('#prm_error_span').html("Please select verifier.");
+}
+	
+	
+		
+}
+
+
+
+function pin_for_prm(){
+	// alert("hellllllllllllll0000");
+var otp1=$('#otp1').val();
+var otp2=$('#otp2').val();
+var otp3=$('#otp3').val();
+var otp4=$('#otp4').val();
+var otp = otp1+""+otp2+""+otp3+""+otp4;
+// alert('otp : '+otp)
+if(otp1=="" || otp1=="" || otp1=="" || otp1==""){
+ $('#req_err_prm').html("Please enter valid Pin.");
+}else{
+// alert(otp);
+$('#req_err_prm').html("");
+	$.ajax({
+			type: "post",
+			url: "/request-check-pin",
+			data:{pin:otp},
+			success: function (data) {
+				// alert(data);
+				if(data.success_data){
+                    $('#req_err_prm').html('');
+					// alert(data);
+					submit_permission();
+				}else{
+                    $('#req_err_prm').html('Please enter valid Pin');
+				}
+			}
+	})
+}
+}
+
+function submit_permission(){
+
+	// alert("hiiii");
+var reflect_id = $('#doc_reflect_id'+j_value).val();
+// var vrfr = getVerifierID.split('-');
+	//  var vId = vrfr[0];
+	//  var vRefId = vrfr[1];
+	 var p_cat_id1= $("#p_cat_id"+j_value).val()
+	 var sub_cat_id1= $("#sub_cat_id"+j_value).val()
+
+	//  alert("reflect_id "+reflect_id);
+	//  alert("verifier_id "+verifier_id);
+
+	//  alert("sub_cat_id1 "+sub_cat_id1);
+	//  alert("p_cat_id1 "+p_cat_id1);
+
+	//  alert("download "+download);
+	//  alert("view "+view);
+	//  alert("certify "+certify);
+	//  alert("rowVal "+rowVal);
+	//  alert("rowCount "+rowCount);
+
+$.ajax({
+    type: "post",
+	url:"/request-doc-mp",
+	data:{
+		reflect_id:reflect_id,
+		download:JSON.stringify(download),
+		view:JSON.stringify(view),
+		certify:JSON.stringify(certify),
+		total_doc:JSON.stringify(rowVal),
+		verifier_id:verifier_id,
+		verifier_reflect_id:getVerifierID,
+		rowCount:rowCount,
+		p_cat_id:p_cat_id1,
+		sub_cat_id:sub_cat_id1
+    },
+    success:function(datas) {
+        // alert("[[[[[[[[[[[[[[["+datas);
+		
+		$('#validate-pin-Modal'+j_value).modal('hide');
+		
+		$('#dsuccess-doc-Modal').modal('show');
+	}
+});
+
+}
+
+
+
+function submit_signature(sign_val)
+ {
+
+ 	var signature=$(`#signature${sign_val}`).get(0);
+ 	var signature_url=signature.toDataURL();
+    //  alert(signature);
+ 	if(signature_url)
+ 	{
+		 var can_val =isCanvasBlank(signature);
+		//  alert(can_val);
+		if(can_val!=true){
+		    $('#canvas_error').html("");
+			var blob_url=signature_url;
+			var user_doc_id = $('#attested_doc_id'+sign_val).val();
+			$.ajax({
+				type:"post",
+				url:"/self-attested",
+				data:{attested_doc_id:user_doc_id,blob_url:blob_url},
+				success:function(data) {
+					location.reload();
+					// $('#example_img').attr('src',`https://ipfs.io/ipfs/${data}`)
+					// console.log(data)
+				}
+			});
+
+ 	    }else{
+		    $('#canvas_error').html("Please sign first.");
+	    }
+
+	}
+
+ 	
+}
+function isCanvasBlank(canvas) {
+  return !canvas.getContext('2d')
+    .getImageData(0, 0, canvas.width, canvas.height).data
+    .some(channel => channel !== 0);
+}
+function dataURItoBlob(dataURI) {
+		// alert("in");
+		console.log("canvas",dataURI);
+ // convert base64 to raw binary data held in a string
+ // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+ var byteString = atob(dataURI.split(',')[1]);
+
+ // separate out the mime component
+ var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+
+ // write the bytes of the string to an ArrayBuffer
+ var ab = new ArrayBuffer(byteString.length);
+
+ // create a view into the buffer
+ var ia = new Uint8Array(ab);
+
+ // set the bytes of the buffer to the correct values
+ for (var i = 0; i < byteString.length; i++) {
+     ia[i] = byteString.charCodeAt(i);
+ }
+
+ // write the ArrayBuffer to a blob, and you're done
+ var blob = new Blob([ab], {type: mimeString});
+ return blob;
+
+}
+// }
+
+</script>

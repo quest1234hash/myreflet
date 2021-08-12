@@ -1,0 +1,610 @@
+<%-include('../innerHeader')%>
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12">
+				<div class="row personal-info-heading">
+					<div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+						<div class="main-heading-dash">
+							<img src="../assets/images/icons/marketplace-assets/other-verifiers-grey.png">
+							<h4>Client Report</h4>
+						</div>
+					</div>
+					<div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 text-right">
+						<a href="#save-report" data-toggle="modal"  class="btn-common-new">Save</a>
+						<a href="client-report-list.php" class="btn-common-new">Run</a>
+						<a href="my-reports-list" class="btn-common-new">Close</a>
+					</div>
+				</div>
+
+				<div class="custom-space-btw align-items-center m-bottom-30 personal-info-heading">
+					<form class="">
+                      <div class="input-group search-address-book">
+                          <input type="text" class="form-control autocomplete" id="myInput" placeholder="Search" onkeypress="autoSearch(this);">
+                          <div class="input-group-append">
+                              <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+                          </div>
+                      </div>
+                  	</form>
+					<div class="text-right">
+						<a href="">
+							<div class="icon-for-dwnload">
+								<div class="tooltip fade" data-title="Export Data">
+									<img src="../assets/images/icons/dashboard-assets/export.png">
+							     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+								</div>
+							</div>
+						</a>
+						<a href="">
+							<div class="icon-for-dwnload">
+								<div class="tooltip fade" data-title="Print Data">
+									<img src="../assets/images/icons/dashboard-assets/print.png">
+								    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xl-3 col-lg-5 col-md-6 col-sm-6">
+				<div class="filter-tabs-wrapper tab-content">
+					<div class="align-item-center another-tabs-wrapper">
+						<ul class="nav nav-tabs all-doc-tabs" id="myTab" role="tablist">
+						  	<li class="nav-item">
+						    	<a class="nav-link active show" id="doc1" data-toggle="tab" href="#doc-tab1" role="tab" aria-controls="doc-tab1" aria-selected="false">Columns</a>
+						  	</li>
+						  	<li class="nav-item">
+						    	<a class="nav-link" id="doc2" data-toggle="tab" href="#doc-tab2" role="tab" aria-controls="doc-tab2" aria-selected="false">Filters</a>
+						  	</li>
+						</ul>
+					</div>
+					<div class="add-column-wrapper tab-pane fade show active" id="doc-tab1" role="tabpanel" aria-labelledby="doc1">
+						<form>
+	                      	<div class="input-group search-address-book">
+	                         	<input type="text" class="form-control autocomplete" id="myInput" placeholder="Add column..." onkeypress="autoSearch(this);">
+		                        <div class="input-group-append">
+		                            <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+		                        </div>
+	                      </div>
+	                  	</form>
+	                  	<div>
+	                  		<div>
+			            		<ul>
+			            			<li>
+			            				<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							      		     	Email
+								         	</label>
+			        					</div>
+			        					<span class="close-filter">X</span>
+			        				</li>
+			        				<li>
+			            				<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							      		     	Type
+								         	</label>
+			        					</div>
+			        					<span class="close-filter">X</span>
+			        				</li>
+			        				<li>
+			            				<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							      		     	Name
+								         	</label>
+			        					</div>
+			        					<span class="close-filter">X</span>
+			        				</li>
+			        				<li>
+			            				<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							      		     	MyReflet ID
+								         	</label>
+			        					</div>
+			        					<span class="close-filter">X</span>
+			        				</li>
+			        				<li>
+			            				<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							      		     	Country
+								         	</label>
+			        					</div>
+			        					<span class="close-filter">X</span>
+			        				</li>
+			        				<li>
+			            				<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							      		     	Status
+								         	</label>
+			        					</div>
+			        					<span class="close-filter">X</span>
+			        				</li>
+				            	</ul>
+				            </div>
+	                  	</div>
+					</div>
+					<div class="add-column-wrapper tab-pane fade" id="doc-tab2" role="tabpanel" aria-labelledby="doc2">
+				  	 	<div class="show-me-filter mt-20">
+				  	 		<div id="addFilter" class="drop-down-wrapper">
+                      			<p>Add Filter
+                      			<img src="../assets/images/icons/search-black.png">
+                      			</p>
+                      		</div>
+                      		<div class="filter-custom-dropdown hide-custom">
+	                  			<ul>
+	                  				<li>
+			            				<label class="font-w-600">Add Filter</label>
+			        					<span class="close-filter">X</span>
+			        				</li>
+	                  			</ul>
+	                  			<div id="filterList">
+				            		<ul>
+				            			<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox" value="Email">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Email
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox" value="Type">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Type
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox" value="Name">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Name
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox" value="MyReflet ID">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	MyReflet ID
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox" value="Country">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Country
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox" value="Status">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Status
+									         	</label>
+				        					</div>
+				        				</li>
+					            	</ul>
+				            	</div>
+	                  		</div>
+              			</div>
+                      	<div class="show-me-filter mt-20">
+                      		<div class="drop-down-wrapper">
+                      			<span>Show Me</span>
+	                  			<p>All Clients</p>
+                      		</div>
+	                  		<div class="filter-custom-dropdown hide-custom">
+	                  			<ul>
+	                  				<li>
+			            				<label class="font-w-600">Edit Filter</label>
+			        					<span class="close-filter">X</span>
+			        				</li>
+	                  			</ul>
+	                  			<div class="setup-inner-box for-protact p-0">
+		                  			<div class="create-rflet-id-form">
+			                  			<div class="form-group for-select-existing-doc">
+									    	<div class="input-group">
+				                  				<div class="dropdown keep-inside-clicks-open">
+													<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												    Show ME
+												  	</button>
+												  	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+												    	<div class="for-doc-select">
+												    		<div class="checkbox"> 	
+												          		<label>
+												          			All Clients
+													            	<input type="checkbox" value="">
+													            	<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+												          		</label>
+												        	</div>	
+												     	</div>
+												      	<div class="for-doc-select">
+												    		<div class="checkbox"> 	
+												          		<label>
+												          			My Clients
+												            		<input type="checkbox" value="">
+												            		<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+												          		</label>
+												        	</div>	
+												     	</div>
+												  	</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+	                  		</div>
+	                  	</div>
+	                  	<div class="show-me-filter mt-20">
+	                  		<div class="drop-down-wrapper">
+	                  			<span>Created Date</span>
+		                  		<p>On or after 2 Oct, 2020 </p>
+	                  		</div>
+	                  		<div class="filter-custom-dropdown hide-custom">
+	                  			<ul>
+	                  				<li>
+			            				<label class="font-w-600">Filter by Date </label>
+			        					<span class="close-filter">X</span>
+			        				</li>
+	                  			</ul>
+	                  			<div class="setup-inner-box for-protact p-0">
+		                  			<div class="create-rflet-id-form">
+			                  			<div class="form-group for-select-existing-doc">
+									    	<div class="input-group">
+				                  				<div class="dropdown keep-inside-clicks-open">
+													<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												    Date
+												  	</button>
+												  	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+												    	<div class="for-doc-select">
+												    		<div class="checkbox"> 	
+												          		<label>
+												          			Created Date
+													            	<input type="checkbox" value="">
+													            	<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+												          		</label>
+												        	</div>	
+												     	</div>
+												      	<div class="for-doc-select">
+												    		<div class="checkbox"> 	
+												          		<label>
+												          			Last Modified Date
+												            		<input type="checkbox" value="">
+												            		<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+												          		</label>
+												        	</div>	
+												     	</div>
+												  	</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="input-group">
+											  <input type="text" id="range" class="form-control" placeholder="Range">
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="input-group">
+											  <input type="text" id="start-date" class="form-control" placeholder="Start Date">
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="input-group">
+											  <input type="text" id="end-date" class="form-control" placeholder="End Date">
+											</div>
+										</div>
+										<div class="text-right">
+											<button class="btn-common-new small-btn close-filter">Apply</button>	
+										</div>
+									</div>
+								</div>
+	                  		</div>
+	                  	</div>
+	                  	<div id="rowMatching" class="show-me-filter mt-20 filter-remove-bdr">
+	                  		<div class="">
+	                  			<span>Includes Row Matching</span>
+		                  		<p class="tabWrapper drop-down-wrapper1">1 AND ((2 OR 3) OR (4 AND 5)) <i class="fas fa-pencil-alt"></i></p>
+	                  		</div>
+	                  		<div class="filter-custom-dropdown hide-custom">
+	                  			<ul>
+	                  				<li>
+			            				<label class="font-w-600">Edit Filter Logic</label>
+			        					<span class="close-filter">X</span>
+			        				</li>
+	                  			</ul>
+								<div class="edit-logic">
+									<p>1 AND ((2 OR 3) OR (4 AND 5))</p>
+								</div>	
+								<div class="tabWrapper mt-15">
+									<button class="btn-common-new small-btn close-filter1">Remove</button>	
+									<button class="btn-common-new small-btn close-filter1">Apply</button>	
+								</div>
+	                  		</div>
+	                  	</div>
+	                  	<div id="appendFilter">
+	                  		
+	                  	</div>
+	                </div>
+				</div>
+			</div>
+			<div class="col-xl-9">
+				<div class="personal-info-box table-responsive another-table">
+					<table class="table" id="myTable3">
+						<thead>
+					    	<tr> 
+						      	<th width="25%" scope="col">Email</th>
+						      	<th width="15%" scope="col">Type</th>
+						      	<th width="20%" scope="col">Name</th>
+						      	<th width="15%" scope="col">MyReflet ID</th>
+						      	<th width="10%" scope="col">Country</th>
+						      	<th width="15%" scope="col">Status</th>
+					    	</tr>
+					  	</thead>
+						<tbody>
+						    <tr>
+						    	<td>georgestrong@gmail.com</td>
+						      	<td>Representative</td>
+							    <td><span class="font-w-600">George Strong</span> </td>
+							    <td>2148522</td>
+							    <td>US</td>
+							    <td><span class="approved-status">Approved</span></td>
+						    </tr>
+							<tr>
+						    	<td>georgestrong@gmail.com</td>
+						      	<td>Representative</td>
+							    <td><span class="font-w-600">George Strong</span> </td>
+							    <td>2148522</td>
+							    <td>US</td>
+							    <td><span class="approved-status">Approved</span></td>
+						    </tr>
+						    <tr>
+						    	<td>georgestrong@gmail.com</td>
+						      	<td>Representative</td>
+							    <td><span class="font-w-600">George Strong</span> </td>
+							    <td>2148522</td>
+							    <td>US</td>
+							    <td><span class="approved-status">Approved</span></td>
+						    </tr>
+						    <tr>
+						    	<td>georgestrong@gmail.com</td>
+						      	<td>Representative</td>
+							    <td><span class="font-w-600">George Strong</span> </td>
+							    <td>2148522</td>
+							    <td>US</td>
+							    <td><span class="approved-status">Approved</span></td>
+						    </tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!--Save Report S  -->
+<div class="modal fade field-edit-modal" id="save-report" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-upload-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Save Report</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+								<div class="input-group">
+								  <input type="text" id="" class="form-control" placeholder="Report Name">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group">
+								  <input type="text" class="form-control" placeholder="Description">
+								</div>
+							</div>
+						</div>
+						<div >
+							<a class="btn-common-new" href="">Save</a>
+							<a class="btn-common-new" href="">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+<!-- Save Report E -->
+
+<%- include('../innerFooter')%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script>
+$(document).ready( function () {
+	$('.table').DataTable();
+} );
+</script>
+<script>
+	$(document).on('click.bs.dropdown.data-api', '.dropdown.keep-inside-clicks-open', function (e) {
+	  e.stopPropagation();
+	});
+</script>
+<!-- for dropdown S -->
+<script>
+	$(document).on('click','.drop-down-wrapper',function(){
+		$(".show-me-filter").removeClass("active");
+		$(".filter-custom-dropdown").removeClass("active");
+
+		$(this).parent().toggleClass("active");
+		$(this).parent().find(".hide-custom").toggleClass("active");
+	});
+	$(document).on('click','.close-filter',function(){
+		$(this).parent().parent().parent().removeClass("active");
+		$(this).parent().parent().parent().parent().removeClass("active");
+	});
+	$(".close-filter1").click(function(){
+		$(this).parent().parent().removeClass("active");
+	});
+
+	$(".drop-down-wrapper1").click(function(){
+		$(".show-me-filter").removeClass("active");
+		$(".filter-custom-dropdown").removeClass("active");
+
+		$(this).parent().parent().find(".hide-custom").toggleClass("active");
+	});
+</script> 
+<!-- for dropdown E -->
+<script>
+	$("#start-date").datepicker();
+	$("#end-date").datepicker();
+</script>
+<!-- Add Filter S -->
+<script>
+	var filterList = [];
+	var myNewArray = []; 
+	var htmlFilter = "";
+	$("#filterList ul li input").change(function(){
+		if($(this).is(":checked")){
+			var getValue = $(this).val(); 
+			filterList.push(getValue);
+			filterList = filterList.filter(function(elem, index, self) {
+			    return index === self.indexOf(elem);
+			});
+		}
+		else{ 
+			var getReValue = $(this).val(); 
+			filterList = filterList.filter(function(elem, index, self) {
+			    return elem != getReValue;
+			});
+		}
+		console.log(filterList.length);
+		if(filterList.length == 0){
+			$("#rowMatching").hide();
+		}
+		else{
+			$("#rowMatching").show();
+		}
+		htmlFilter = "";
+		var count ;
+		for(i = 0; i < filterList.length; i++ ){
+			count = i +1;
+			htmlFilter += '<div class="show-me-filter mt-20 main-heading-dash">'+
+			'<div class="drop-down-wrapper main-heading-dash width-full">'+
+				'<span class="p-right-10">'+ count +'.</span>'+
+				'<div>'+
+					'<span>'+ filterList[i] +'</span>'+
+		  		'<p><span class="clr-purple">equals</span> George</p>'+
+				'</div>'+
+			'</div>'+
+			'<div class="filter-custom-dropdown hide-custom">'+
+				'<ul>'+
+					'<li>'+
+					'<label class="font-w-600">Filter by ' + filterList[i] +'</label>'+
+					'<span class="close-filter">X</span>'+
+				'</li>'+
+				'</ul>'+
+				'<div class="setup-inner-box for-protact p-0">'+
+					'<div class="create-rflet-id-form">'+
+		  			'<div class="form-group for-select-existing-doc">'+
+				    	'<div class="input-group">'+
+		      				'<div class="dropdown keep-inside-clicks-open">'+
+								'<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+							    'Name'+
+							  	'</button>'+
+							  	'<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">'+
+							    	'<div class="for-doc-select">'+
+							    		'<div class="checkbox"> 	'+
+							          		'<label>'+
+							          			'George'+
+								            	'<input type="checkbox" value="">'+
+								            	'<span class="cr"><i class="cr-icon fa fa-check"></i></span>'+
+							          		'</label>'+
+							        	'</div>'+
+							     	'</div>'+
+							      	'<div class="for-doc-select">'+
+							    		'<div class="checkbox">'+
+							          		'<label>'+
+							          			'John Doe'+
+							            		'<input type="checkbox" value="">'+
+							            		'<span class="cr"><i class="cr-icon fa fa-check"></i></span>'+
+							          		'</label>'+
+							        	'</div>'+
+							     	'</div>'+
+							     	'<div class="for-doc-select">'+
+							    		'<div class="checkbox">'+
+							          		'<label>'+
+							          			'Aakash'+
+							            		'+<input type="checkbox" value="">'+
+							            		'<span class="cr"><i class="cr-icon fa fa-check"></i></span>'+
+							          		'</label>'+
+							        	'</div>'+
+							     	'</div>'+
+							     	'<div class="for-doc-select">'+
+							    		'<div class="checkbox">'+ 	
+							          		'<label>'+
+							          			'Bharkha'+
+							            		'<input type="checkbox" value="">'+
+							            		'<span class="cr"><i class="cr-icon fa fa-check"></i></span>'+
+							          		'</label>'+
+							        	'</div>'+
+							     	'</div>'+
+							     	'<div class="for-doc-select">'+
+							    		'<div class="checkbox">'+ 	
+							          		'<label>'+
+							          			'Navaj'+
+							            		'<input type="checkbox" value="">'+
+							            		'<span class="cr"><i class="cr-icon fa fa-check"></i></span>'+
+							          		'</label>'+
+							        	'</div>'+
+							     	'</div>'+
+							  	'</div>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+					'<div class="text-right">'+
+						'<button class="btn-common-new small-btn close-filter">Apply</button>'+
+					'</div>'+
+				'</div>'+
+			'</div>'+
+			'</div>'+
+		'</div>';
+	}
+	$("#appendFilter").html(htmlFilter);
+	});
+</script>
+<!-- Add Filter E -->

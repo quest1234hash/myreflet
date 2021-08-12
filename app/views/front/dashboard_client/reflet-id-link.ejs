@@ -1,0 +1,248 @@
+<%- include('../innerHeader') %>
+
+	<style>
+		.active-check.active .wallet-box {
+			background-color: #caedff;
+		}
+	</style>
+
+	<section class="heading-sec" id="id1">
+		<div class="container">
+			<div class="row align-item-center">
+				<div class="col-lg-12">
+					<div class="custom-space-btw align-items-center">
+					</div>
+				</div>
+
+				<!--main content-->
+				<div class="col-md-12">
+					<div class="white-box client">
+						<div class="tab-content" id="myTabContent">
+							<h4 class="small-heading text-center">Link Your MyReflet ID</h4>
+							<% if(all_reflect_id.length>0)
+								{
+								var i=0;
+								%>
+
+								<div class="row">
+									<% all_reflect_id.forEach(function(each_reflect){ i=i++; %>
+										<% if(each_reflect.type=='representative' ) {%>
+											<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 active-check active"
+												onclick="callMe(`<%= encrypt(each_reflect.myreflectid) %>`,`<%= encrypt  %>`)">
+												<div class="white-box full-box wallet-box">
+													<div class="row align-item-center">
+														<div class="col-xl-6 col-lg-12 col-md-12">
+															<div class="id-code-represent-heading">
+																<img
+																	src="../assets/images/icons/home-assets/Representative.png">
+																<span>Natural Person</span>
+															</div>
+														</div>
+														<input type="hidden" value="<%= encrypt(each_reflect.myreflectid)%>" id="natural-id">
+														<div class="col-xl-6 col-lg-12 col-md-12">
+															<h5 class="mb-0 balance-value">Wallet Name :
+																<%=each_reflect.walletname%>
+															</h5>
+														</div>
+													</div>
+													<div>
+														<div class="private-key-copy-box mt-15">
+															<div class="form-group">
+																<div class="row inner-box-id-code">
+																	<div class="col-md-4 p-0">
+																		<p>Wallet ID</p>
+																	</div>
+																	<div class="col-md-6 dubble-dot-after p-0">
+																		<p>
+																			<%=each_reflect.walletAddress %>
+																		</p>
+																	</div>
+																	<!-- <div class="input-group mb-3">
+												  <input type="text" class="form-control" placeholder="75kln55nlk5lk75k7n5lk7lkn5nkfsflskskjl6;k64j64;6kj46kj">
+												  <div class="input-group-append">
+												  	<a class="btn-copy" href=""><img src="../assets/images/icons/createidentity-assets/copy.png"></a>
+												  </div>
+												</div> -->
+																</div>
+															</div>
+														</div>
+														<div class="row inner-box-id-code">
+															<div class="col-md-4 p-0">
+																<div class="for-flex-align">
+																	<img
+																		src="../assets/images/icons/home-assets/user.png">
+																	<p>MyReflet ID</p>
+																</div>
+															</div>
+															<div class="col-md-4 dubble-dot-after p-0">
+																<p id="default_id">
+																	<%=each_reflect.myreflectid %>
+																</p>
+															</div>
+														</div>
+														<div class="row inner-box-id-code">
+															<div class="col-md-4 p-0">
+																<div class="for-flex-align">
+																	<!-- <img src="../assets/images/icons/home-assets/ETHwallet.png"> -->
+																	<img src="../assets/images/icons/wallet/ether.png">
+																	<p>ETH Balance</p>
+																</div>
+															</div>
+															<div class="col-md-4 dubble-dot-after p-0">
+																<p>0 ETH</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<!--second box-->
+											<%}else {%>
+												<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 active-check"
+													onclick="callMe(`<%= encrypt(each_reflect.myreflectid) %>`)">
+													<div class="white-box full-box wallet-box">
+														<div class="row align-item-center">
+															<div class="col-xl-6 col-lg-12 col-md-12">
+																<div class="id-code-represent-heading">
+																	<img
+																		src="../assets/images/icons/home-assets/entity.png">
+																	<span class="">Entity</span>
+																</div>
+															</div>
+															<div class="col-xl-6 col-lg-12 col-md-12">
+																<h5 class="mb-0 balance-value">Wallet name :
+																	<%=each_reflect.entity_name%>
+																</h5>
+															</div>
+														</div>
+														<div>
+															<div class="private-key-copy-box mt-15">
+
+																<div class="form-group">
+																	<div class="row inner-box-id-code">
+																		<div class="col-md-4 p-0">
+																			<p>Wallet ID</p>
+																		</div>
+																		<div class="col-md-6 dubble-dot-after p-0">
+																			<p>
+																				<%=each_reflect.walletAddress %>
+																			</p>
+																		</div>
+																		<!-- <div class="input-group mb-3">
+												  <input type="text" class="form-control" placeholder="75kln55nlk5lk75k7n5lk7lkn5nkfsflskskjl6;k64j64;6kj46kj">
+												  <div class="input-group-append">
+												  	<a class="btn-copy" href=""><img src="../assets/images/icons/createidentity-assets/copy.png"></a>
+												  </div>
+												</div> -->
+																	</div>
+																</div>
+															</div>
+															<div class="row inner-box-id-code">
+																<div class="col-md-4 p-0">
+																	<div class="for-flex-align">
+																		<img
+																			src="../assets/images/icons/home-assets/user.png">
+																		<p>MyReflet ID</p>
+																	</div>
+																</div>
+																<div class="col-md-6 dubble-dot-after p-0">
+																	<p id="reflet_id">
+																		<%=each_reflect.myreflectid %>
+																	</p>
+																</div>
+															</div>
+
+															<div class="row inner-box-id-code">
+																<div class="col-md-4 p-0">
+																	<div class="for-flex-align">
+																		<img
+																			src="../assets/images/icons/wallet/ether.png">
+																		<p>ETH Balance</p>
+																	</div>
+																</div>
+																<div class="col-md-6 dubble-dot-after p-0">
+																	<p>0 ETH</p>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<% }%>
+													<% });%>
+								</div>
+								<% }else{ %>
+									<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+										<div class="white-box create-wallet-box">
+											<div class="row align-item-center">
+
+												<div class="col-xl-12 col-lg-12 col-md-12">
+													<!-- <h5 class="heading-purple">Create a New Wallet</h5> -->
+													<p>
+														<center>Currently, No MyReflet code available.</center>
+													</p>
+												</div>
+											</div>
+										</div>
+									</div>
+									<%}%>
+										<div class="col-lg-7 col-md-8 col-sm-8">
+											<div class="text-right">
+												<a class="btn-common-new" id="continue-id" href="get-unlinked-wallets" onclick="location.href=this.href+'?reflet_id='+this.value;
+													return false"  value=''>Continue</a>
+											</div>
+
+										</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	</section>
+
+
+
+	<%- include('../innerFooter')%>
+
+
+
+		<script>
+			$(document).ready(function () {
+				$('.active-check').click(function () {
+					$('.active-check').removeClass("active");
+					$(this).addClass("active");
+				});
+			});
+		</script>
+		<script>
+
+			$(document).ready(function () {
+				console.log("loadingggg");
+				callMe()
+			})
+
+//let reflet_id='';
+			function callMe(i,encrypt) {
+				if (i == undefined) {
+					let ref_id = document.getElementById('natural-id').value;
+					console.log("ref_id:", ref_id);
+					i = ref_id;
+					
+				}
+				document.getElementById('continue-id').value=i;
+
+				console.log("iiiiiiiiiiii", i);
+			}
+
+			// $('.continue-id').click(function () {
+			// 	console.log("clickeddddddddddddddd");
+			// 		$.ajax({
+			// 		type: "post",
+			// 		url: "/get-unlinked-wallets",
+			// 		data: { reflet_id:reflet_id },
+			// 		success: function (data) {
+			// 			console.log("success");
+			// 			// alert(data);
+			// 		//	console.log("blocked")
+			// 			//location.reload();
+			// 		}
+			// 	})
+			// 	});
+		</script>

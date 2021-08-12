@@ -1,0 +1,1233 @@
+<%-include('../innerHeader')%>
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12">
+				<div class="custom-space-btw align-items-center">
+					<div class="main-heading-dash">
+						<img src="../assets/images/icons/home-assets/dashbord-grey.png">
+						<h4>Dashboard: What Can I Do With My Reflet?</h4>
+					</div>
+					<div>
+						
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div>
+
+					<ul class="nav nav-tabs dashboard-tabs-outer" id="myTab" role="tablist">
+					  <li class="nav-item search-dash">
+						  	<div class="responsive-search">
+								<form class="response-search"> 
+				                     <div class="input-group search-address-book">
+				                        <input type="text" class="form-control autocomplete" id="myInput" placeholder="Search" onkeypress="autoSearch(this);">
+				                        <div class="input-group-append">
+				                            <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+				                        </div>
+				                    </div>
+			                  	</form>
+							</div>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link active" id="dash-tab" data-toggle="tab" href="#dashtab1" role="tab" aria-controls="home" aria-selected="true">
+					    <span>
+					    	<img class="gray" src="../assets/images/icons/home-assets/wallet.png">
+					    	<img class="purple" src="../assets/images/icons/home-assets/wallet-purple.png">
+					    </span> 	
+					    Manage Wallet</a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link" id="dash-tab" data-toggle="tab" href="#dashtab2" role="tab" aria-controls="profile" aria-selected="false">
+					    <span>
+					    	<img class="gray" src="../assets/images/icons/home-assets/myrequests.png">
+					    	<img class="purple" src="../assets/images/icons/home-assets/myrequests-purple.png">
+					    </span> 
+					    New Requests
+					    </a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link" id="dash-tab" data-toggle="tab" href="#dashtab3" role="tab" aria-controls="contact" aria-selected="false">
+					    <span>
+					    	<img class="gray" src="../assets/images/icons/home-assets/myrefletID.png">
+					    	<img class="purple" src="../assets/images/icons/home-assets/myrefletID-purple.png">
+					    </span> 
+					    Create New MyReflet ID</a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link" id="dash-tab" data-toggle="tab" href="#dashtab4" role="tab" aria-controls="contact" aria-selected="false">
+					    <span>
+					    	<img class="gray" src="../assets/images/icons/home-assets/icon_message1.png">
+					    	<img class="purple" src="../assets/images/icons/home-assets/icon_message.png">
+					    </span> 
+					    Send Messages</a>
+					  </li>
+					  <li class="nav-item">
+					  	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <span>
+									    	<img class="gray" src="../assets/images/icons/home-assets/dashbord-grey.png">
+									    	<img class="purple" src="../assets/images/icons/home-assets/dashboard.png">
+									      </span> 
+				                          All Dashboards
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="/address-book" >
+				                            	<img src="../assets/images/icons/home-assets/addressbook.png"> Address Book
+				                            </a>
+											<a class="dropdown-item" href="/complaint-list">
+												<img src="../assets/images/icons/home-assets/complaints.png"> Manage Complaints
+											</a>
+											<a class="dropdown-item" href="/get-certified-doc-list"><img src="../assets/images/icons/home-assets/code-verification-tool.png"> Self Certification
+											</a>
+											<a class="dropdown-item" href="/myrequest">
+												<img src="../assets/images/icons/home-assets/mydocuments.png"> Send Document
+											</a>
+											<a class="dropdown-item" href="/my-reports-list">
+												<img src="../assets/images/icons/home-assets/myrequests.png"> Create New Report
+											</a>
+											<a class="dropdown-item" href="/verifier">
+												<img src="../assets/images/icons/home-assets/verifiers.png"> Become A Verifier
+											</a>
+
+				                        </div>
+				        </div>
+					  </li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-12"> 
+				<div class="white-box client-dash-sec">
+					<div class="tab-content" id="myTabContent">
+					  <div class="tab-pane fade show active" id="dashtab1" role="tabpanel" aria-labelledby="dash-tab">
+					  	<h4 class="small-heading text-center">Manage your existing wallets or create a new wallet.</h4>
+						<div class="row">
+							<%
+							console.log("msg data ejs",msgArray)
+			    var i=1;
+				if(walletdetails.length>0)
+				{
+
+					
+			%>
+			<% walletdetails.forEach(function(each_wallet) { %>
+			<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+				<div class="white-box full-box wallet-box">
+					<div class="row align-item-center">
+					   <div class="col-xl-6 col-lg-12 col-md-12">
+					   	  <div class="id-code-represent-heading"> 
+							<% if(each_wallet.reflectid_by=='representative')
+							{%>
+							<img src="../assets/images/icons/home-assets/Representative.png">
+							<%}else
+							{%>
+								<img src="../assets/images/icons/home-assets/entity.png">
+	
+							<%}%>
+							  <span><%= each_wallet.reflectid_by %></span>
+ 						  </div> 
+					   </div>
+					   <div class="col-xl-6 col-lg-12 col-md-12">
+					   	 <h5 class="mb-0 balance-value">Balance :<%= each_wallet.wal_balan %>ETH</h5>
+					   </div>
+					 
+					</div>
+					<div>
+						<div class="row inner-box-id-code">
+							<div class="col-md-4 p-0">
+								<div class="for-flex-align">
+									<img src="../assets/images/icons/home-assets/user.png">
+									<p>MyReflet ID </p>
+								</div>
+							</div>
+							<div class="col-md-6 dubble-dot-after p-0">
+								<%if(session.user_type!="client"){%>
+									
+										<a href="/myreflect-verifier-view?id=<%=each_wallet.reflect_code%>"><p><%= each_wallet.reflect_code %></p></a>
+									
+									
+								<%}else{%>
+									<%if(each_wallet.reflectid_by=="entity"){%>
+										<a href="/entity?reflect_id=<%=each_wallet.reflect_id%>"><p><%= each_wallet.reflect_code %></p></a>
+									<%}else{%>
+									<a href="/view-reflect-id?id=<%=each_wallet.reflect_code%>"><p><%= each_wallet.reflect_code %></p></a>
+									<%}%>
+								<%}%>
+
+								
+							</div>
+						</div>
+						<div class="row inner-box-id-code">
+							<div class="col-md-4 p-0">
+								<div class="for-flex-align">
+									<img src="../assets/images/icons/home-assets/user.png">
+									<p>Wallet Name </p>
+								</div>
+							</div>
+							<div class="col-md-6 dubble-dot-after p-0">
+								<%if(each_wallet.wallet_name){%>
+                       <a href="/view-reflect-id?id=<%=each_wallet.reflect_code%>"><p>
+	                           <%= each_wallet.wallet_name %></p></a>
+								<%}else{%>
+                                 <p>NA</p>  
+								<%}%>
+								
+							</div>
+							
+						</div>
+						<div class="private-key-copy-box mt-15">
+							<div class="form-group">
+								<label>Your Wallet Address</label>
+								<div class="input-group mb-3">
+								  <input type="text" class="form-control"  value="<%- each_wallet.wallet_address %>" id="wallet_addr<%=i %>" readonly>
+								  <div class="input-group-append">
+								  <a class="btn-copy" href="javascript:void(0);" onclick="copy_address('<%=i %>')"><img src="../assets/images/icons/createidentity-assets/copy.png"></a>
+								  </div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<div id="qrcode<%= i %>" class="qrcode" ></div>
+								
+							</div>
+							<div class="col-md-9">
+								<h4 class="purple-heading">Just scan the wallet address</h4>
+								<p>You can share this QR code with friends to receive ether or tokens in your wallet.</p>
+								<div class="row mt-15">
+									<div class="col-xl-6 col-lg-12 col-md-12">
+										<a class="btn-common-new single-color-btn" href="/send-ether?ied=<%= base64encode(each_wallet.wallet_id) %>"><img src="../assets/images/icons/wallet/send.png">Send</a>
+									</div>
+									<div class="col-xl-6 col-lg-12 col-md-12">
+									    <a class="btn-common-new border-btn" href="javascript:void(0);" onclick="show_share_modal('<%= each_wallet.wallet_address %>','<%= i %>')" ><img src="../assets/images/icons/wallet/share.png"> Share</a>
+									</div>
+								</div>
+							</div>
+						</div>
+			         </div>
+			    </div>
+            </div>
+            <% 
+
+            i++;
+
+        }); %>
+            <%
+                  
+            	}
+            %>
+				            <!-- <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+								<div class="white-box full-box wallet-box">
+									<div class="row align-item-center">
+									   <div class="col-xl-6 col-lg-12 col-md-12">
+									   	  <div class="id-code-represent-heading"> 
+											  <img src="../assets/images/icons/home-assets/Representative.png">
+											  <span>Representative</span>
+										  </div>
+									   </div>
+									   <div class="col-xl-6 col-lg-12 col-md-12">
+									   	 <h5 class="mb-0 balance-value">Balance : 0.245 ETH</h5>
+									   </div>
+									</div>
+									<div>
+										<div class="row inner-box-id-code">
+											<div class="col-md-4 p-0">
+												<div class="for-flex-align">
+													<img src="../assets/images/icons/home-assets/user.png">
+													<p>MyReflet ID</p>
+												</div>
+											</div>
+											<div class="col-md-6 dubble-dot-after p-0">
+												<p>1201</p>
+											</div>
+										</div>
+										<div class="private-key-copy-box mt-15">
+											<div class="form-group">
+												<label>Your Wallet Address</label>
+												<div class="input-group mb-3">
+												  <input type="text" class="form-control" placeholder="75kln55nlk5lk75k7n5lk7lkn5nkfsflskskjl6;k64j64;6kj46kj">
+												  <div class="input-group-append">
+												  	<a class="btn-copy" href=""><img src="../assets/images/icons/createidentity-assets/copy.png"></a>
+												  </div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-3">
+												<img src="../assets/images/icons/wallet/qrcode.png" class="img-fluid">
+											</div>
+											<div class="col-md-9">
+												<h4 class="purple-heading">Just scan the wallet address</h4>
+												<p>You can share this QR code with friends to receive ether or tokens in your wallet.</p>
+												<div class="row mt-15">
+													<div class="col-xl-6 col-lg-12 col-md-12">
+														<a class="btn-common-new single-color-btn" href="send-ether.php"><img src="../assets/images/icons/wallet/send.png"> Send</a>
+													</div>
+													<div class="col-xl-6 col-lg-12 col-md-12">
+													    <a class="btn-common-new border-btn" href="" data-toggle="modal" data-target="#share-Modal"><img src="../assets/images/icons/wallet/share.png"> Share</a>
+													</div>
+												</div>
+											</div>
+										</div>
+							         </div>
+							    </div>
+				            </div> -->
+						 </div>
+						 <div class="row">
+						 	<div class=" col-md-6">
+								<div class="white-box create-wallet-box for-dash-create">
+									<div class="row align-item-center">
+										<div class="col-xl-3 col-lg-3 col-md-3">
+											<div>
+												<img src="../assets/images/icons/createidentity-assets/create-wallet.png">
+											</div>
+										</div>
+										<div class="col-xl-9 col-lg-9 col-md-9">
+											<h5 class="heading-purple">Create a New Wallet</h5>
+											<p>Want to create a new wallet? Don’t worry, we’ll walk you through the setup process.</p>
+											<a class="btn-common-new mt-15" href="/get-create-wallet">Create</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="white-box create-wallet-box for-dash-create">
+									<div class="row align-item-center">
+										<div class="col-xl-3 col-lg-3 col-md-3">
+											<div>
+												<img src="../assets/images/icons/createidentity-assets/import-wallet.png">
+											</div>
+										</div>
+										<div class="col-xl-9 col-lg-9 col-md-9">
+											<h5 class="heading-purple">use existing wallet</h5>
+											<p>You can also import an existing wallet. Don’t worry, you can easily setup your existing wallet.</p>
+											<a class="btn-common-new mt-15" href="/import-wallet">Import</a>
+										</div>
+									
+									</div>
+								</div>
+							</div>
+						 </div>
+					  </div>
+					  <div class="tab-pane fade" id="dashtab2" role="tabpanel" aria-labelledby="dash-tab">
+					  	 <div class="row">
+					  	 	<div class="col-lg-12">
+					  	 		<h4 class="small-heading text-left mb-15">New Requests</h4>
+								<div class="personal-info-box table-responsive another-table">
+									<table class="table" id="myTable3">
+										<thead>
+									    	<tr> 
+										      	<th scope="col" width="10%">Request ID</th>
+										      	<th scope="col" width="20%">Requested By/From Verifier</th>
+										      	<th scope="col" width="10%">MyReflet ID</th>
+										      	<th scope="col" width="10%">Type</th>
+										      	<th scope="col" width="15%">Requested On</th>
+										      	<th scope="col" width="10%">Due Date</th>
+										      	<th scope="col" width="10%">Status</th>
+										      	<th scope="col" width="10%">Action</th>
+									    	</tr>
+									  	</thead>
+										<!-- <tbody>
+										    <tr>
+										    	<td>350052</td>
+										      	<td>
+											      	<div class="for-flex-align">
+											      		<div class="checkbox">
+												          	<label>
+													            <img class="profile-table" src="../assets/images/other/img_user1.png">
+											      		     	<p class="line-hgt">
+											      		     		<span class="font-w-600">Jack Ma</span> <br>
+											      		     		25102
+											      		     	</p>
+												         	 </label>
+												        </div>
+													</div>
+										      	</td>
+											    <td><span class="font-w-600">John Doe </span> <br> 132556</td>
+											    <td>Requested by me</td>
+											    <td>20 jan, 2020</td>
+											    <td>30 jan, 2020</td>
+											    <td class="text-center"> <span class="pending-status">Pending</span></td>
+											    <td>
+											      	<a href="requested-by-verifier.php" class="view-link">View</a>
+										      	</td>
+										    </tr>
+										     <tr>
+										    	<td>350052</td>
+										      	<td>
+											      	<div class="for-flex-align">
+											      		<div class="checkbox">
+												          	<label>
+													            <img class="profile-table" src="../assets/images/other/img_user1.png">
+											      		     	<p class="line-hgt">
+											      		     		<span class="font-w-600">Jack Ma</span> <br>
+											      		     		25102
+											      		     	</p>
+												         	 </label>
+												        </div>
+													</div>
+										      	</td>
+											    <td><span class="font-w-600">John Doe </span> <br> 132556</td>
+											    <td>Requested by me</td>
+											    <td>20 jan, 2020</td>
+											    <td>30 jan, 2020</td>
+											    <td class="text-center"> <span class="pending-status">Pending</span></td>
+											    <td>
+											      	<a href="requested-by-verifier.php" class="view-link">View</a>
+										      	</td>
+										    </tr>
+										     <tr>
+										    	<td>350052</td>
+										      	<td>
+											      	<div class="for-flex-align">
+											      		<div class="checkbox">
+												          	<label>
+													            <img class="profile-table" src="../assets/images/other/img_user1.png">
+											      		     	<p class="line-hgt">
+											      		     		<span class="font-w-600">Jack Ma</span> <br>
+											      		     		25102
+											      		     	</p>
+												         	 </label>
+												        </div>
+													</div>
+										      	</td>
+											    <td><span class="font-w-600">John Doe </span> <br> 132556</td>
+											    <td>Requested by me</td>
+											    <td>20 jan, 2020</td>
+											    <td>30 jan, 2020</td>
+											    <td class="text-center"> <span class="pending-status">Pending</span></td>
+											    <td>
+											      	<a href="requested-by-verifier.php" class="view-link">View</a>
+										      	</td>
+										    </tr>
+										     <tr>
+										    	<td>350052</td>
+										      	<td>
+											      	<div class="for-flex-align">
+											      		<div class="checkbox">
+												          	<label>
+													            <img class="profile-table" src="../assets/images/other/img_user1.png">
+											      		     	<p class="line-hgt">
+											      		     		<span class="font-w-600">Jack Ma</span> <br>
+											      		     		25102
+											      		     	</p>
+												         	 </label>
+												        </div>
+													</div>
+										      	</td>
+											    <td><span class="font-w-600">John Doe </span> <br> 132556</td>
+											    <td>Requested by me</td>
+											    <td>20 jan, 2020</td>
+											    <td>30 jan, 2020</td>
+											    <td class="text-center"> <span class="pending-status">Pending</span></td>
+											    <td>
+											      	<a href="requested-by-verifier.php" class="view-link">View</a>
+										      	</td>
+										    </tr>
+										</tbody> -->
+									
+										<tbody id="tableIDofData">
+											<%if(ClientVerificationModelData[0]==null){%>
+												<tr><td colspan="8"><center> No record found.</center></td></tr>
+												<%}else{%>
+											<% 
+											   var i=1;
+											   ClientVerificationModelData.forEach(modelData=>{
+											%>
+										
+												<tr>
+													<td><%= modelData.ClientVerificationData.request_code %></td>
+													  <td>
+														  <div class="for-flex-align">
+															  <div class="checkbox">
+																  <label>
+																		<%
+                                                                if(modelData.verifer_my_reflect_id_Data.length>0){
+																		if(modelData.verifer_my_reflect_id_Data[0].profile_pic)
+																		{
+																			%>
+																			<img class="profile-table" src="<%= modelData.verifer_my_reflect_id_Data[0].profile_pic %>">
+																			<%
+																		}
+																		else
+																		{
+																			
+																			%>
+																			<img class="profile-table" id="user_profile_image_preview" src="../assets/images/other/face1.jpg" class="m-t-5" >
+																			<%
+																		}
+																	}
+																	%>
+																	<!-- <%console.log( "from ejs ejs 1234",modelData.verifer_my_reflect_id_Data)%> -->
+																	<!-- <%=modelData.verifer_my_reflect_id_Data%> -->
+																	<!-- <img class="profile-table" src="<%= modelData.verifer_my_reflect_id_Data.profile_pic %>"> -->
+																	   <p class="line-hgt">
+																		 <%if(modelData.verifer_my_reflect_id_Data.length>0){%>  
+																		<%
+																		
+																		if(modelData.verifer_my_reflect_id_Data[0].reflectid_by=="entity"){ %>
+																			<span class="font-w-600"></span>
+																			<%=modelData.verifer_my_reflect_id_Data[0].entity_company_name%>
+																		</span>
+																			  <%}else{%>
+																				<span class="font-w-600"><%=modelData.verifer_my_reflect_id_Data[0].rep_username%></span> 
+																				<%}%>
+
+
+																		   <br>
+																		   <%=modelData.verifer_my_reflect_id_Data[0].reflect_code%>
+																		   <%}%>
+																	   </p>
+																  </label>
+															</div>
+														</div>
+													  </td>
+																		<td>
+																		  <%if(modelData.MyReflectIData.reflectid_by=="entity"){ %>
+																			<span class="font-w-600"></span>
+																			<%=modelData.MyReflectIData.entity_company_name%>
+																		</span>
+																			  <%}else{%>
+																				<span class="font-w-600"></span>
+																				<%=modelData.MyReflectIData.rep_username%>
+																			</span>
+																				<%}%>
+																			 
+										
+																		 <br> <%=modelData.MyReflectIData.reflect_code%></td>
+																		 <%if(modelData.ClientVerificationData.verifier_id==session.user_id){ %>
+																			<td>Requested to me</td>
+										
+																		<%}else{%>
+																			<td>Requested by me</td>
+										
+																			<%}%>
+																		<td>
+																			<%=moment(modelData.ClientVerificationData.createdAt).format('MMM DD, YYYY')%>
+																		</td>
+																		<td>30 jan, 2020</td>
+
+																		<td class="text-center"> 
+																			<%if(modelData.ClientVerificationData.request_status=="pending"){%>
+																				<div class="pending-status">
+																					Pending
+																				</div>
+																				<%}%>
+																				<%if(modelData.ClientVerificationData.request_status=="reject"){%>
+																					<div class="cancel-status">
+																						Rejected
+																					</div>
+																					<%}%>
+																				<%if(modelData.ClientVerificationData.request_status=="accept"){%>
+																					<div class="approved-status">
+																						Accepted
+																					</div>
+																					<%}%>
+																			<!-- <span class="pending-status">
+																				<%=modelData.ClientVerificationData.request_status%>
+																			</span> -->
+
+																		</td>
+																		
+																		<td>
+																			  <a href="/myrequest_view?clientId=<%=modelData.ClientVerificationData.client_id%>&request_id=<%=modelData.ClientVerificationData.request_id%>" class="view-link">View</a>
+																		  </td>
+																	</tr>
+																	<% i++;})
+																%>
+										 				<%}%>
+																</tbody>
+															</table>
+								</div>
+							</div>
+					  	 </div>
+					  </div>
+					  <div class="tab-pane fade" id="dashtab3" role="tabpanel" aria-labelledby="dash-tab">
+					  	<div class="row">
+					  	 	<div class="col-lg-12">
+					  	 		<h4 class="small-heading text-left ">MyReflet ID Code</h4>
+					  	 		<div class="row">
+									<!-- <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+										<div class="white-box full-box">
+											<div class="id-code-represent-heading"> 
+												<img src="../assets/images/icons/home-assets/Representative.png">
+												<span>Representative</span>
+											</div>
+											<div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/user.png">
+															<p>MyReflet ID</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>1201</p>
+													</div>
+												</div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/user.png">
+															<p>Name</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>John Doe</p>
+													</div>
+												</div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/verified-emailID.png">
+															<p>Email ID</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>johndoe@gmail.com</p>
+													</div>
+												</div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/phone.png">
+															<p>Phone Number</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>+81 7869586748</p>
+													</div>
+												</div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/ETHwallet.png">
+															<p>Wallet Address</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>85676e7d65g7ds6g7586765fdf76f76f65s676s756s756s756f756sf</p>
+													</div>
+												</div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/user.png">
+															<p>Digital ID</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>
+															<a href=""><img src="../assets/images/icons/home-assets/drivinglicense.png"></a>
+															<a href=""><img src="../assets/images/icons/home-assets/passport.png"></a>
+															<a href=""><img src="../assets/images/icons/home-assets/photoID.png"></a>
+															<a href="" class="add-icon"><i class="fas fa-plus"></i></a>
+														</p>
+													</div>
+												</div>
+												<div class="view-icon">
+													<a href="my-reflet-id-view.php"><i class="fas fa-eye"></i></a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+										<div class="white-box full-box">
+											<div class="id-code-represent-heading"> 
+												<img src="../assets/images/icons/entity.png">
+												<span>Entity</span>
+											</div>
+											<div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/user.png">
+															<p>MyReflet ID</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>1201</p>
+													</div>
+												</div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/user.png">
+															<p>Company Name</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>Quest GLT</p>
+													</div>
+												</div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/verified-emailID.png">
+															<p>Email ID</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>johndoe@gmail.com</p>
+													</div>
+												</div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/phone.png">
+															<p>Phone Number</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>+81 7869586748</p>
+													</div>
+												</div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/ETHwallet.png">
+															<p>Wallet Address</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>85676e7d65g7ds6g7586765fdf76f76f65s676s756s756s756f756sf</p>
+													</div>
+												</div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/user.png">
+															<p>Digital ID</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>
+															<a href=""><img src="../assets/images/icons/home-assets/drivinglicense.png"></a>
+															<a href=""><img src="../assets/images/icons/home-assets/passport.png"></a>
+															<a href=""><img src="../assets/images/icons/home-assets/photoID.png"></a>
+															<a href="" class="add-icon"><i class="fas fa-plus"></i></a>
+														</p>
+													</div>
+												</div>
+												<div class="view-icon">
+													<a href="my-reflet-id-view.php"><i class="fas fa-eye"></i></a>
+												</div>
+											</div>
+										</div>
+									</div> -->
+									<%
+									if(myreflectData.length>0)
+									{
+					
+										myreflectData.forEach(function(each_reflect){
+								%>
+					
+								<!--my reflect code start--> 
+								<div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+									<div class="white-box full-box">
+										<div class="id-code-represent-heading"> 
+											<% if(each_reflect.reflectid_by=='representative')
+											{%>
+											<img src="../assets/images/icons/home-assets/Representative.png">
+											<%}else
+											{%>
+												<img src="../assets/images/icons/home-assets/entity.png">
+					
+											<%}%>
+											<span><%=each_reflect.reflectid_by %></span>
+										</div>
+										<div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-6 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>MyReflet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p><%=each_reflect.reflect_code %></p>
+												</div> 
+											</div>
+
+											<div class="row inner-box-id-code">
+												<div class="col-md-6 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>Name</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													
+
+													<%if(each_reflect.entity_company_name){ %>
+													<p><%=each_reflect.entity_company_name %></p>
+													<%}else if(each_reflect.rep_username){%>
+													<p><%=each_reflect.rep_username %></p>
+													<%}else{%>
+													<p><%=each_reflect.full_name %></p>
+													<%}%>
+																
+
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-6 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/verified-emailID.png">
+														<p>Email ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p><%=each_reflect.email %></p>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-6 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/phone.png">
+														<p>Phone Number</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p><%=each_reflect.mobile_number %></p>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-6 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/ETHwallet.png">
+														<p>Wallet Address</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p><%=each_reflect.wallet_address %></p>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-6 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>Digital ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>
+														<a href=""><img src="../assets/images/icons/home-assets/drivinglicense.png"></a>
+														<a href=""><img src="../assets/images/icons/home-assets/passport.png"></a>
+														<a href=""><img src="../assets/images/icons/home-assets/photoID.png"></a>
+														<a href="" class="add-icon"><i class="fas fa-plus"></i></a>
+													</p>
+												</div>
+											</div>
+											<div class="view-icon">
+												<a href=""><i class="fas fa-eye"></i></a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<%
+								  });
+					
+									}
+								%>
+								</div>
+								<div class="row align-item-center">
+									<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="text-center">
+											<a class="btn-common-new" href="/creat-new-wallet">Create New Myreflet ID</a>
+										</div>
+									</div>
+								</div>
+					  	 	</div>
+					  	 </div>
+					  </div>
+					  <div class="tab-pane fade" id="dashtab4" role="tabpanel" aria-labelledby="dash-tab">
+						<div class="row">
+							<div class="col-lg-12">
+								<h4 class="small-heading text-left mb-15">Messages</h4>
+							 <div class="personal-info-box table-responsive another-table">
+								 <table class="table" id="myTable3">
+									 <thead>
+										 <tr> 
+											   <th scope="col">Date</th>
+											   <th scope="col">Verifier</th>
+											   <th scope="col">Message</th>
+											   <!-- <th scope="col">MyReflet ID</th> -->
+											   <th scope="col">Action</th>
+										 </tr>
+									   </thead>
+									 <tbody>
+										 <%
+										
+										 if(msgArray[0]!=null){%>
+											 <%msgArray.forEach(msg=>{%>
+
+											 
+										 <tr>
+											 
+											   <td><%=moment(msg.tblMsg.createdAt).format("DD, MMM , YYYY")%></td>
+
+											 <td><span class="font-w-600">
+												<%if(msg.tblReflet[0].reflectid_by=="entity"){ %>
+												
+													<%=msg.tblReflet[0].entity_company_name%>
+											
+													  <%}else{%>
+												
+														<%=msg.tblReflet[0].rep_username%>
+											
+														<%}%>
+
+												</span> <br> <%=msg.tblReflet[0].reflect_code%></td>
+
+											 <td><%=msg.tblMsg.message%></td>
+											 <!-- <td><span class="font-w-600">John Doe</span> <br> 25102</td> -->
+											 <td>
+												 <div>
+													 <a href="/message-market?reflect_id=<%=msg.tblReflet[0].reflect_id%>">
+													   <div class="doc-img">
+															   <img src="../assets/images/icons/dashboard-assets/menu.png">
+														   </div>
+													 </a>
+												 </div>
+											   
+											   </td>
+										 </tr>
+										 <%})%>
+										 <%}else{%>
+											<tr><td colspan="4"><center> No record found.</center></td></tr>
+											<%}%>
+										 <!-- <tr>
+										 
+											   <td>15 Aug, 2020</td>
+											 <td><span class="font-w-600">Jack MA </span> <br> 25102</td>
+											 <td>Lorem ipsume has</td>
+											 <td><span class="font-w-600">John Doe</span> <br> 25102</td>
+											<td>
+												 <div>
+													 <a href="#">
+													   <div class="doc-img">
+															   <img src="../assets/images/icons/home-assets/eye.png">
+														   </div>
+													 </a>
+												 </div>
+											   
+											   </td>
+										 </tr>
+										 <tr>
+											 
+											   <td>15 Aug, 2020</td>
+											 <td><span class="font-w-600">Jack MA </span> <br> 25102</td>
+											 <td>Lorem ipsume has</td>
+											 <td><span class="font-w-600">John Doe</span> <br> 25102</td>
+											 <td>
+												 <div>
+													 <a href="#">
+													   <div class="doc-img">
+															   <img src="../assets/images/icons/home-assets/eye.png">
+														   </div>
+													 </a>
+												 </div>
+											   
+											   </td>
+										 </tr>
+										 <tr>
+											 
+											   <td>15 Aug, 2020</td>
+											 <td><span class="font-w-600">Jack MA </span> <br> 25102</td>
+											 <td>Lorem ipsume has</td>
+											 <td><span class="font-w-600">John Doe</span> <br> 25102</td>
+											 <td>
+												 <div>
+													 <a href="#">
+													   <div class="doc-img">
+															   <img src="../assets/images/icons/home-assets/eye.png">
+														   </div>
+													 </a>
+												 </div>
+											   
+											   </td>
+										 </tr> -->
+									 </tbody>
+								 </table>
+							 </div>
+						 </div>
+						</div>
+				   </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<%- include('../innerFooter')%>
+
+<script type="text/javascript" src="../assets/js/custom_qr.min.js"></script>
+
+<script>
+	var text_share,rowno;
+	function show_share_modal(text_share,rowno)
+	{
+		//alert(text_share);
+		var whatsup_url='https://api.whatsapp.com/send?text='+encodeURI('Please send ether to wallet address '+text_share);
+		//var facebook_url='https://m.facebook.com/sharer.php?u=';
+		var instagram_url='https://api.facebook.com/send?text='+encodeURI('Please send ether to wallet address ',+text_share);
+		// var facebook_url=encodeURIComponent("Hey,I scored 4500"); window.open("https://www.facebook.com/sharer.php?u=http://192.168.1.137:3001/&description="+text_share);
+	var facebook_url="https://www.facebook.com/sharer.php?u=http://192.168.1.137:3001/&description="+text_share;
+
+		$('#whatsup-url').attr('href',whatsup_url);
+		$('#instagram-url').attr('href',instagram_url);
+
+
+		$('#facebook-url').attr('href',facebook_url);
+
+		// alert("wallet add"+text_share);
+		$('#wallet-qrcode').html('');
+		create_qrcode('wallet-qrcode',text_share,200,200);
+
+		$('#share-Modal').modal('show');
+	}
+
+
+$(function(){
+
+	var i=1;
+	$('.qrcode').each(function(){
+
+
+		var wallet_add=$('#wallet_addr'+i).val();
+
+
+		// var wallet_div=$('#qrcode'+i).val();
+
+		create_qrcode('qrcode'+i,wallet_add,110,110);
+
+		// var qr_src=$('#qrcode'+i).html();
+
+         //console.log("qr src",qr_src);
+		i++;
+	});
+
+    
+
+})
+
+var qrdiv,qrtext;
+function create_qrcode(qrdiv,qrtext,qrwidth,qrheight)
+{
+
+		var qrcode = new QRCode(qrdiv, {
+	        text:qrtext,
+		    width:qrwidth,
+		    height:qrheight,
+		    colorDark : "#000000",
+		    colorLight : "#ffffff",
+		    correctLevel : QRCode.CorrectLevel.H
+	   });
+
+
+
+       
+		// var file = dataURLtoFile(base64_string,'qrcode.png');
+
+
+		// $.ajax({
+  //           url:""+authToken,
+  //           type:"POST",
+  //           data:fd,
+  //           processData:false,
+  //           contentType:false,
+  //           cache:false,
+  //           success:function(data){
+  //               console.log("success " + data);
+  //           },
+  //           error:function(shr,status,data){
+  //               console.log("error " + data + " Status " + shr.status);
+  //           },
+  //           complete:function(){
+  //               console.log("Posted to facebook");
+  //           }
+  //       });
+    		
+}
+
+// qrcode.clear(); // clear the code.
+// qrcode.makeCode("http://naver.com"); // make another code.
+// document.body.addEventListener('click', ()=>{
+//             qrcode.clear(); 
+//             qrcode.makeCode("http://google.ca/"); 
+//         })
+
+function shareit()
+{
+
+	var scored = document.getElementById('wallet-qrcode').innerHTML;
+
+     var desc=encodeURIComponent("Hey,I scored 4500"); window.open("https://www.facebook.com/sharer.php?u=http://192.168.1.137:3001/&description="+desc);
+	// var authToken="EAACbCf6ZCDywBANgEtJuo5LBr4OhQaP7IrFioNzNgxktS3MZBu2tmpJKuwxkLHnl9SFHtSOM04jo3Ad0f18P1FCxFDYLAJNAzSM8kTZCJrCEN02lZAKaTZCONGHhlaDLL7juJZBGS6B1fiEHLTFJ7dG0lnGDktiDtv8Pojf85hfCvzTEZB9QZAkFoH9ADAfsmS4g4VWRXbISSGdUWvTRfiztGVy152wRwovMrTFqdtomvAZDZD";
+ //    // var canvas = document.getElementById("c");
+ //    // var imageData  = canvas.toDataURL("image/png");
+ //    // try {
+ //    //     blob = dataURItoBlob(imageData);
+ //    // }
+ //    // catch(e) {
+ //    //     console.log(e);
+ //    // }
+ //    var base64_string=$('#wallet-qrcode').find('img').attr('src');
+
+ //    var file = dataURLtoFile(base64_string,'qrcode.png');
+    
+ //    var fd = new FormData();
+ //    fd.append("access_token",authToken);
+ //    fd.append("source",file);
+ //    fd.append("message","Photo Text");
+ //    try {
+ //        $.ajax({
+ //            url:"https://graph.facebook.com/me/photos?access_token="+authToken,
+ //            type:"POST",
+ //            data:fd,
+ //            processData:false,
+ //            contentType:false,
+ //            cache:false,
+ //            success:function(data){
+ //                console.log("success " + data);
+ //            },
+ //            error:function(shr,status,data){
+ //                console.log("error " + data + " Status " + shr.status);
+ //            },
+ //            complete:function(){
+ //                console.log("Posted to facebook");
+ //            }
+ //        });
+ //    }
+ //    catch(e) 
+ //    {
+ //        console.log(e);
+ //    }
+}
+
+function shareit_data()
+{
+	var base64_string=$('#wallet-qrcode').find('img').attr('src');
+
+	var file = dataURLtoFile(base64_string,'qrcode.png');
+    // console.log(file);
+
+    $.ajax({
+            url:""+authToken,
+            type:"POST",
+            data:fd,
+            processData:false,
+            contentType:false,
+            cache:false,
+            success:function(data){
+                console.log("success " + data);
+            },
+            error:function(shr,status,data){
+                console.log("error " + data + " Status " + shr.status);
+            },
+            complete:function(){
+                console.log("Posted to facebook");
+            }
+        });
+    			
+
+	//console.log(base64_string);
+	// var img = document.createElement("img");
+	// img.width = "250px";
+	// img.height = "250px";
+	// img.src = base64_string;
+	// var preview = document.getElementById("img_preview");
+	// preview.appendChild(img);
+
+	//console.log('img',img);
+}
+
+
+function dataURLtoFile(dataurl,filename) {
+ 
+	var arr = dataurl.split(','),
+	    mime = arr[0].match(/:(.*?);/)[1],
+	    bstr = atob(arr[1]), 
+	    n = bstr.length, 
+	    u8arr = new Uint8Array(n);
+	    
+	while(n--){
+	    u8arr[n] = bstr.charCodeAt(n);
+	}
+
+	return new File([u8arr], filename, {type:mime});
+}
+
+</script>
+
+<script type="text/javascript">
+// function shareit(){
+// 	var url=window.location.href; //Set desired URL here
+// 	var img=$('#wallet-qrcode').find('img').attr('src'); //Set Desired Image here
+// 	//var totalurl=encodeURIComponent(url+'?img='+img);
+// 	var totalurl='http://192.168.1.137:3001/assets/images/icons/wallet/fb.png';
+
+// 	//alert(img);
+
+// 	// alert("url"+totalurl);
+
+// 	 window.open ('http://www.facebook.com/sharer.php?u='+totalurl,'','width=500, height=500, scrollbars=yes, resizable=no');
+
+// }
+
+//  function shareit() {
+//      var u=$('#wallet-qrcode').find('img').attr('src');
+
+//      var blob_url=dataURItoBlob(u);
+
+//      alert(blob_url);
+//      // t=document.title;
+//     t='img';
+//     // window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(u)+'&t='+encodeURIComponent(t),'sharer','toolbar=0,status=0,width=626,height=436');return false;
+// }
+
+
+function dataURItoBlob(dataURI) {
+  // convert base64 to raw binary data held in a string
+  // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+  var byteString = atob(dataURI.split(',')[1]);
+
+  // separate out the mime component
+  var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+
+  // write the bytes of the string to an ArrayBuffer
+  var ab = new ArrayBuffer(byteString.length);
+
+  // create a view into the buffer
+  var ia = new Uint8Array(ab);
+
+  // set the bytes of the buffer to the correct values
+  for (var i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+  }
+
+  // write the ArrayBuffer to a blob, and you're done
+  var blob = new Blob([ab], {type: mimeString});
+  return blob;
+
+}
+
+</script>
+
+
+
+ <script type="text/javascript">
+	function copy_address(i_val) {
+	  var copyText = document.getElementById("wallet_addr"+i_val);
+	  if($('#wallet_addr').val() !="")
+	  {
+	  copyText.select();
+	  document.execCommand("copy");
+	  alert("Wallet address is copied.");
+	  }  
+	}  
+</script>

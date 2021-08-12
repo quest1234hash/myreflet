@@ -1,0 +1,137 @@
+<ul class="aside-wrapper">
+    <li><a href="/verifier_deshboard">
+           <img src="/assets/images/icons/home-assets/dashboard.png" class="white-img" alt="Wallet">
+           <img src="/assets/images/icons/home-assets/dashbord-grey.png" class="black-icon" alt="Wallet">
+          Dashboard
+        </a>
+      </li>
+      <li>
+            <a href="javascript:void(0)">
+               <img src="../assets/images/icons/home-assets/myrefletID-purple.png" class="white-img" alt="Wallet">
+               <img src="../assets/images/icons/home-assets/myrefletID.png" class="black-icon" alt="Wallet">
+                MyReflet ID Code
+            </a>
+            <ul class="cus-sub-menu">
+                <li><a href="/manage-category">Manage Categories</a></li>
+                <li><a href="/manage-document">Manage Documents</a></li>
+                <li><a href="my-reflet-id-code">View MyReflet ID</a></li>
+            </ul>
+        </li>
+     <li>
+     <a href="/sub_magage_verifier" >
+        <img src="../assets/images/icons/home-assets/addressbook-purple.png" class="white-img" alt="Wallet">
+        <img src="../assets/images/icons/home-assets/addressbook.png" class="black-icon" alt="Wallet">
+       Manage sub-verifiers
+     </a>
+   </li>
+    <li>
+      <!-- <span class="dot showNewMsgDot"></span> -->
+     <a href="/manage-message-list" class="">
+       <img src="../assets/images/icons/home-assets/icon_message.png" class="white-img" alt="Wallet">
+       <img src="../assets/images/icons/home-assets/icon_message.png" class="black-icon" alt="Wallet">
+       Manage message<span id="verifier_manage_msg_notifications"class="new-msg-dot"></span>
+     </a>
+   </li>
+    <li>
+     <a href="/my-wallets" class="">
+       <img src="../assets/images/icons/home-assets/wallet-purple.png" class="white-img" alt="Wallet">
+       <img src="../assets/images/icons/home-assets/wallet.png" class="black-icon" alt="Wallet">
+       Wallet
+     </a>
+   </li>
+      <!-- <li>
+     <a href="" >
+       <img src="../assets/images/icons/home-assets/verifiers-purple.png" class="white-img" alt="Wallet">
+       <img src="../assets/images/icons/home-assets/verifiers.png" class="black-icon" alt="Wallet">
+       My Clients
+     </a>
+   </li> -->
+   <!-- <li>
+     <a href="" >
+       <img src="../assets/images/icons/home-assets/myrequests-purple.png" class="white-img" alt="Wallet">
+       <img src="../assets/images/icons/home-assets/myrequests.png" class="black-icon" alt="Wallet">
+       My Requests
+     </a>
+   </li> -->
+   <li>
+     <a href="/request_on_boarding" class="wallet_click">
+      <img src="../assets/images/icons/home-assets/complaints-purple.png" class="white-img" alt="Wallet">
+       <img src="../assets/images/icons/home-assets/complaints.png" class="black-icon" alt="Wallet">
+      User on boadrding Request
+     </a>
+   </li>
+   <li>
+     <a href="/complaint-list" >
+       <img src="../assets/images/icons/home-assets/mydocuments-purple.png" class="white-img" alt="Wallet">
+       <img src="../assets/images/icons/home-assets/mydocuments.png" class="black-icon" alt="Wallet">
+       Complaints
+     </a>
+   </li>
+  <li>
+    <a href="/payment_history" >
+      <img src="../assets/images/icons/home-assets/mydocuments-purple.png" class="white-img" alt="Wallet">
+      <img src="../assets/images/icons/home-assets/mydocuments.png" class="black-icon" alt="Wallet">
+      Payment History
+    </a>
+  </li>
+   <li>
+    <a href="javascript:void(0)">
+       <img src="../assets/images/icons/home-assets/myrefletID-purple.png" class="white-img" alt="Wallet">
+       <img src="../assets/images/icons/home-assets/myrefletID.png" class="black-icon" alt="Wallet">
+       My Reports
+      </a>
+    <ul class="cus-sub-menu">
+<li><a href="/archive-reports">Archive Reports</a></li>
+        <li><a href="/my-reports-list">My Reports </a></li>
+         <li><a href="/schedule-reports">Schedule Reports</a></li>
+
+    </ul>
+</li>
+  <li>
+    <a href="/personal-explorer-ver" >
+      <img src="../assets/images/icons/home-assets/mydocuments-purple.png" class="white-img" alt="Wallet">
+      <img src="../assets/images/icons/home-assets/mydocuments.png" class="black-icon" alt="Wallet">
+      Explorer
+    </a>
+  </li>
+  <li>
+     <a href="/verifier-terms-and-condition" >
+       <img src="../assets/images/icons/home-assets/marketplace-purple.png" class="white-img" alt="t&C">
+       <img src="../assets/images/icons/home-assets/marketplace.png" class="black-icon" alt="t&C">
+       Terms And Conditions
+     </a>
+   </li>
+  <!--   <li>
+     <a href="" >
+       <img src="../assets/images/icons/home-assets/code-verification-tool-purple.png" class="white-img" alt="Wallet">
+       <img src="../assets/images/icons/home-assets/code-verification-tool.png" class="black-icon" alt="Wallet">
+       Code Verification Tool
+     </a>
+   </li> -->
+</ul>
+<div class="loader-box">
+  <img src="../assets/images/loader-3.gif">
+ </div>
+ <script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+ 
+<script>
+ $( document ).ready(function() {
+  //  alert('hey');
+ 
+     $('.loader-box').hide();
+ 
+ });
+ $('.wallet_click').click(function()
+ {
+  $('.loader-box').show();
+ })
+ </script>
+  <script type="text/javascript">
+   $(function(){
+       $("a").each(function(){
+               if ($(this).attr("href") == window.location.pathname){
+                       $(this).addClass("active");
+               }
+       });
+});
+ </script>

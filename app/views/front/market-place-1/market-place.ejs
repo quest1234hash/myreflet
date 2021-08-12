@@ -1,0 +1,113 @@
+<%-include('../innerHeader')%>
+
+ 
+<section class="heading-sec mb-0">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-6 col-md-6 col-sm-6">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/home-assets/marketplace.png">
+					<h4>Marketplace</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section>
+	<div class="container">
+		<div class="row">
+			<%	if(market_list_result.length>0)
+			{
+			
+				for(let each_data of market_list_result){
+				  %>
+			<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+				<div class="white-box">
+					<div class="market-place-inner-box">
+					    <div class="id-code-represent-heading"> 
+							<img id="" src="../addMPIcon/<%= each_data.icon %>" class="m-t-5" >
+							<!-- <img src="<%=each_data.icon%>">  -->
+						  <span><%=each_data.label%></span>
+					    </div>
+						<p><%=each_data.descriptions%> </p>
+						<a href="/access-marketplace?market_place_id=<%=each_data.market_place_id%>" class="btn-common-new border-btn">Access Marketplace</a>
+					</div>
+				</div>
+			</div>
+			<%
+											
+		} 
+		   }
+	   %>
+			<!-- <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+				<div class="white-box">
+					<div class="market-place-inner-box">
+					    <div class="id-code-represent-heading"> 
+						  <img src="../assets/images/icons/marketplace-assets/notaries.png">
+						  <span>Notaries</span>
+					    </div>
+						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+						<a href="" class="btn-common-new border-btn">Access Marketplace</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+				<div class="white-box">
+					<div class="market-place-inner-box">
+					    <div class="id-code-represent-heading"> 
+						  <img src="../assets/images/icons/marketplace-assets/lawyer.png">
+						  <span>Lawyer</span>
+					    </div>
+						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+						<a href="" class="btn-common-new border-btn">Access Marketplace</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+				<div class="white-box">
+					<div class="market-place-inner-box">
+					    <div class="id-code-represent-heading"> 
+						  <img src="../assets/images/icons/marketplace-assets/exchanges.png">
+						  <span>Exchanges</span>
+					    </div>
+						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+						<a href="" class="btn-common-new border-btn">Access Marketplace</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+				<div class="white-box">
+					<div class="market-place-inner-box">
+					    <div class="id-code-represent-heading"> 
+						  <img src="../assets/images/icons/marketplace-assets/public-certifiers.png">
+						  <span>Public Certifiers</span>
+					    </div>
+						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+						<a href="" class="btn-common-new border-btn">Access Marketplace</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+				<div class="white-box">
+					<div class="market-place-inner-box">
+					    <div class="id-code-represent-heading"> 
+						  <img src="../assets/images/icons/marketplace-assets/other-verifiers.png">
+						  <span>Other Verifiers</span>
+					    </div>
+						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+						<a href="" class="btn-common-new border-btn">Access Marketplace</a>
+					</div>
+				</div>
+			</div> -->
+		</div>
+	</div>
+</section>
+
+
+ 
+<%- include('../innerFooter')%>
+
+
+ 
+ 

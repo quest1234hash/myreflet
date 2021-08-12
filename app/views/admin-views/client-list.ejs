@@ -1,0 +1,453 @@
+<%- include('header'); -%>
+
+<div>
+   <div class="main-bredcrum-box">
+        <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            Client List
+          </li>
+        </ul>
+      </nav>
+    </div>
+	<div class="page-header">
+      <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+          <i class="mdi mdi-contacts"></i>
+        </span> Client List </h3>
+    </div>
+    <div class="row align-bottom-flex">
+    	<div class="col-md-2">
+    		<div>
+    			<div class="form-group">
+                    <label for="exampleInputUsername1">Status</label>
+                    <select class="form-control form-control-sm select_option"  id="exampleFormControlSelect3">
+                        <option value="all">All</option>
+                        <option value="1">Active</option>
+                        <option value="2">Inactive</option>
+                        <option value="3">Block</option>
+                      </select>
+                  </div>
+    		</div>
+    	</div>
+    	<div class="col-md-2">
+    		<div>
+    			<div class="form-group">
+              <a href="javascript:void(0);" onclick="export_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-export"></i>
+                   </span> 
+                 </span>
+               </a>
+              <a href="javascript:void(0);" onclick="print_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-printer"></i>
+                   </span> 
+                 </span>
+              </a>
+          </div>
+        </div>
+        
+    	</div>
+    	<div class="col-md-3 offset-md-5">
+    		<div>
+    			<div class="form-group">
+                      <div class="input-group search-input">
+                        <input type="text" class="form-control"id="myInput" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                          <button class="btn btn-sm" type="button"><i class=" mdi mdi-magnify"></i></button>
+                        </div>
+                      </div>
+                    </div>
+    		</div>
+    	</div>
+    </div>
+    <div class="row">
+    	<div class="col-md-12"> 
+    		<div class="table-responsive">
+          <% if(success_msg!=undefined && success_msg !='' ){ %>
+            <div class="alert alert-success text-center  flash_msg "id="success_message">
+            <%= success_msg %>
+           </div>
+          <% }%>
+          <% if(err_msg!=undefined && err_msg !='' ){ %>
+            <div class="alert alert-danger text-center  flash_msg " id="error_msg">
+                <%= err_msg %>
+               </div>
+             
+            <% }%>
+    			<table class="table tabel-virifier"id="myTable3">
+              <thead>
+                <tr>
+                   <th width="15%">Number</th>
+                   <th width="15%">Client Name</th>
+                  <th width="20%">Email ID</th>
+                  <th width="20%">Date Of Birth</th>
+                  <th width="20%">Place Of Birth</th>
+                  <th width="20%">MyReflet IDs</th>
+                  <th width="20%">Status</th>
+
+                  <th width="5%"class="hide_link">Action</th>
+                </tr>
+              </thead>
+              <tbody id="myTable" class="data_table">
+                  <% if(count_client_list.data.length>0)
+                  { 
+                     var i=0;
+                     var j=1;
+                     count_client_list.data.forEach(function(each_data){
+                        %>
+              <tr>
+                 
+                 <td>
+                   <div>
+                     <p class="">UI-<%=j%></p>
+                   </div>
+                 </td>
+                 <td>
+                   <div> 
+                     <p class="upper"><%=each_data.full_name%></p>
+                   </div>
+                  </td>
+                  <td>
+                          <div> 
+                            <p class="upper"><%=each_data.email%></p>
+                          </div>
+                  </td>
+                  <!-- <td>
+                          <div> 
+                            <p class="upper"><%=each_data.mobile_number%></p>
+                          </div>
+                  </td> -->
+                  <td>
+                          <% if(each_data.dob){ %>
+                          <div> 
+                            <p class="upper"><%=each_data.dob%></p>
+                          </div>
+                          <%}else{%>
+                           <div> 
+                        <p class="upper">----------</p>
+                          </div>
+                          <%}%>
+
+                  </td>
+                  <td>
+                      <% if(each_data.birthplace){ %>
+                      <div> 
+                        <p class="upper"><%=each_data.birthplace%></p>
+                      </div>
+                      <%}else{%>
+                       <div> 
+                    <p class="upper">----------</p>
+                      </div>
+                      <%}%>
+
+              </td>
+
+              <td>
+                 
+                  <div> 
+                    <p class="upper"><%=each_data.numReflect%></p>
+                  </div>
+                 
+
+           </td>
+           <td>
+                 
+              <div> 
+                <p class="upper"><%=each_data.status%></p>
+              </div>
+             
+
+       </td>
+                   <td class="hide_link">
+                     <div class="dropdown-menu-new">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                          <a class="dropdown-item" href="/manage-client?id=<%=each_data.user_id%>"><i class="fas fa-cogs"></i> Manage MyReflet ID</a>
+                          <!-- <a class="dropdown-item" href="#"><i class="mdi mdi-close-box"></i> Reject</a> -->
+                          <a class="dropdown-item" href="/delete-client/:<%=each_data.user_id%>"><i class="mdi mdi-delete"></i> Delete</a>
+                          <a class="dropdown-item" href="/block-client/:<%=each_data.user_id%>"><i class="mdi mdi-delete-forever"></i> Block</a>
+                        </div>
+                     </div>
+                   </td>
+                </tr>
+                <%
+								i++;	j++;		
+            });
+              }else{
+     %>
+                       <tr>
+            <td colspan="8"><center>No record found.</center> </td>
+             </tr>       <%}%>
+              </tbody>
+              <tbody class="status_table"></tbody>
+          </table>
+          
+
+         <div class="pagination-list for-user">
+          
+            <% if (count_client_list.totalPages > 0) { %>
+             <ul class="pagination text-center">
+               <% if (count_client_list.currentPage == 1) { %>
+                 <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+               <% } else { %>
+                 <li class="page-item"><a class="page-link" href="/client-list?&page=1">&lt;</a></li>
+               <% } %>
+          
+          
+          
+               <% var i = (Number(count_client_list.currentPage) > 5 ? Number(count_client_list.currentPage) - 4 : 1) %>
+               <% if (i !== 1) { %>
+                 <!-- <li class="disabled"><a>...</a></li> -->
+                 <li class="page-item disabled"><a class="page-link" >...</a></li>
+               <% } %>
+               <% for (; i <= (Number(count_client_list.currentPage) + 4) && i <= count_client_list.totalPages; i++) { %>
+                 <% if (i == count_client_list.currentPage) { %>
+                   <!-- <li class="active"><a><%= i %></a></li> -->
+                   <li class="page-item active">
+                   <a class="page-link" href="#"><%= i %><span class="sr-only">(count_client_list.currentPage)</span></a>
+                   </li>
+                 <% } else { %>
+                   <li class="page-item"><a class="page-link" href="/client-list?&page=<%= i %>"><%= i %></a></li>
+                 <% } %>
+                 <% if (i == Number(count_client_list.currentPage) + 4 && i < count_client_list.totalPages) { %>
+                   <!-- <li class="disabled"><a>...</a></li> -->
+                   <li class="page-item disabled"><a class="page-link" >...</a></li>
+                 <% } %>
+               <% } %>
+          
+          
+               <% if (count_client_list.currentPage == count_client_list.totalPages) { %>                       
+                 <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+               <% } else { %>
+                 <li><a class="page-link" href="/client-list?&page=<%=count_client_list.totalPages %>">&gt;</a></li>
+               <% } %>
+          
+             </ul>
+          <% } %>
+          
+           </div>
+    
+    		</div>
+    	</div>
+    </div>
+</div>
+
+<%- include('footer'); -%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script>
+
+
+    function export_table(){
+        // alert('hhh')
+      // $('.hide_link').show();
+    
+        $("#myTable3").table2excel({
+          filename: "Verifier-list.xls",
+          exclude:'.hide_link',
+        });
+      //   $('.hide_link').show();
+      window.location.reload(true);
+    
+      };
+      
+      function print_table(){
+        $('.hide_link').hide();
+     
+       // $("#user_div").print();
+       var restorepage = $('body').html();
+    // $('.nodata').hide();
+     var printcontent = $('#myTable3').clone();
+     $('body').empty().html(printcontent);
+     window.print();
+     $('body').html(restorepage);
+   
+     window.location.reload(true);
+    
+    
+        }   
+   </script>
+<script>
+    $(document).ready(function(){
+      // ('.show_link').hide()
+       $("#myInput").on("keyup", function() {
+
+            var value = $(this).val().toLowerCase();
+             if(value)
+            {
+            // alert(value)
+            $.ajax({
+                          type: "post",
+                          url: "/search-client",
+                          data:{query:value},
+                          success: function (data) {
+                            // alert(data);
+                            
+                                 $('.data_table').html("");
+                                          $('.data_table').html(data);
+                                  
+      
+  
+    
+    }
+  })
+ }
+            else
+            {
+              location.reload(true);
+            }
+  })
+      $("#myInput1").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+ </script>
+ <script>
+    $('.select_option').click(function() {
+      $('.status_table').html(" ")
+  
+      var option = $('option:selected', this).attr('value');
+
+       // alert(option)
+
+    //    if(option==="all")
+    //    {
+        
+    // // setTimeout(60000);
+    //  location.reload(true)
+    //     }
+       
+      //  var checkstr =  confirm('Are You Sure You Want To Active?');
+      $.ajax({
+                        type : 'POST',
+                        url  : '/show-client-by-status',
+                        data: {option_value:option},
+              
+                         success: function(client_data) {
+  
+  
+                       if(client_data.length==0)
+                        {
+  
+                               $(".data_table").hide();
+  
+                                      $(".status_table").append(`<tr>
+						<td colspan="8"><center>No record found.</center> </td>
+					   </tr>`);
+  
+                        }
+                      else{
+                        
+  
+                      console.log("ajax success data : ")	
+                      $('.data_table').hide();
+                    $(".status_table").show();
+                    client_data.forEach(function(each_data){
+                      
+                        
+                      $(".status_table").append(`  <tr>
+                   
+                   <td>
+                     <div>
+                       <p class="">UI-${each_data.user_id}</p>
+                     </div>
+                   </td>
+                   <td>
+                     <div> 
+                       <p class="upper">${each_data.full_name}</p>
+                     </div>
+                    </td>
+                    <td>
+                            <div> 
+                              <p class="upper">${each_data.email}</p>
+                            </div>
+                    </td>
+                    <!-- <td>
+                            <div> 
+                              <p class="upper">${each_data.mobile_number}</p>
+                            </div>
+                    </td> -->
+                    <td>
+                            <div> 
+                              <p class="upper">${each_data.dob}</p>
+                            </div>
+                             
+  
+                    </td>
+                    <td>
+                        <div> 
+                          <p class="upper">${each_data.birthplace}</p>
+                        </div>
+                       
+  
+                </td>
+                <td>
+                   
+                    <div> 
+                      <p class="upper">${each_data.status}</p>
+                    </div>
+                   
+  
+             </td>
+                <td>
+                   
+                    <div> 
+                      <p class="upper">${each_data.numReflect}</p>
+                    </div>
+                   
+  
+             </td>
+                     <td>
+                       <div class="dropdown-menu-new">
+                          <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v"></i>
+                          </a>
+                          <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                            <a class="dropdown-item" href="manage_request.php"><i class="fas fa-cogs"></i> Manage MyReflet ID</a>
+                            <!-- <a class="dropdown-item" href="#"><i class="mdi mdi-close-box"></i> Reject</a> -->
+                            <a class="dropdown-item" href="/delete/:${each_data.user_id}"><i class="mdi mdi-delete"></i> Delete</a>
+                            <a class="dropdown-item" href="/block-verifier/:${each_data.user_id}"><i class="mdi mdi-delete-forever"></i> Block</a>
+                          </div>
+                       </div>
+                     </td>
+                  </tr>`);
+  
+                      });
+  
+  
+            } 
+                }                                                    
+             
+  })
+  })
+   
+    
+  setTimeout(function() {
+    $('#success_message').fadeOut('fast');
+    }, 3000);
+    
+    setTimeout(function() {
+    $('#error_msg').fadeOut('fast');
+    }, 3000);
+             
+   </script>

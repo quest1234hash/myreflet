@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html>
+<head>
+     <title>My Reflet User</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="index_assets/images/favicon.png">
+  <!-- Bootstrap Core CSS -->
+    <link href="index_assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="index_assets/css/bootstrap-dropdownhover.min.css" rel="stylesheet"/>
+  <!-- Animate CSS -->
+    <link href="index_assets/css/animate.css" rel="stylesheet"/>
+    <!-- hover-min CSS -->
+    <link href="index_assets/css/hover-min.css" rel="stylesheet"/>
+    <!-- yamm css -->
+    <link href="index_assets/css/yamm.css" rel="stylesheet"/>
+    <!-- Font-awesome web fonts with css -->
+    <link href="index_assets/css/fontawesome-all.css" rel="stylesheet" type="text/css"/>
+    <!-- Font-awesome web fonts with css -->
+    <!-- loader css -->
+    <link href="index_assets/css/loader.css" rel="stylesheet"/>
+  <!-- Custom CSS -->
+    <link href="index_assets/css/custom.css" rel="stylesheet"/>
+    <link href="index_assets/css/custom-new.css" rel="stylesheet"/>
+    <link href="index_assets/css/custom-home.css" rel="stylesheet"/>
+
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900&display=swap" rel="stylesheet">
+
+     <link rel="stylesheet" href="index_assets/css/jquery-ui.css">
+<style type="text/css">
+	/*body{
+  height:300vh;
+  background: linear-gradient(45deg,  violet , dodgerblue, hotpink);
+}*/
+ a.disabled { 
+                pointer-events: none; 
+            } 
+.popup-overlay{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background-color:rgba(0,0,0,.5);
+  width:100%;
+  height:100%;
+  text-align:center;
+  padding:1rem;
+  align-items:center;
+  justify-content:center;
+}
+  .popup{
+    display:inline-block;
+    width:400px;
+    min-height:200px;
+    background-color:white;
+    border-radius: 5px;
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items:center;
+    justify-content:center;
+    position: relative;
+    z-index: 100;
+  }
+
+.max-lines {
+  display: block;/* or inline-block */
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 7em;
+  line-height: 1.8em;
+}
+p{
+  flex: 0 1 100%;
+  padding:0 1rem;
+  margin:0;
+  margin-top:1rem;
+  font-size: 14px;
+
+}
+.popup-overlay .purple-btn-index{
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+</style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="index-body">
+
+<!-- normal header -->
+<header class="header-main index-header">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand logo" href="/">
+                 <img src="index_assets/images/logo-white33.png" class="white-logo" alt="Rowan Energy Logo">
+                <img src="index_assets/images/logo-white.png" class="color-logo" alt="Rowan Energy Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto navigation" id="main-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-close" href="#why-choose">Why Choose Us</a>
+                    </li>
+                   
+                    <li class="nav-item">
+                        <a class="nav-link nav-close" href="#benefits">Benefits</a>
+                    </li>
+                  
+                    <li class="nav-item">
+                        <a class="nav-link nav-close" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link nav-close" href="/global-explorer">Explorer</a>
+                   </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-close" href="#contact">Contact</a>
+                    </li>
+                   
+                    <%if(session.is_user_logged_in!=true){%>
+                    <li class="nav-item dropdown">
+                        <a class="btn btn-common login-btn" href="/login">Login <i class="fas fa-caret-right"></i></a>
+                    </li>
+                    <%}else{%>
+                      <%
+                      if(Userprofile())
+                      { var userdata = Userprofile()
+                        var imageName = userdata.profile_pic;
+                        var username  = decrypt(userdata.full_name)
+                        
+                        %>
+                      <li class="nav-item dropdown">
+                        <a class="btn btn-common login-btn" href="/cilent_deshboard"> <%-username.charAt(0).toUpperCase()+ username.slice(1);%><i class="fas fa-caret-right"></i></a>
+                    </li>
+                    <%}%>
+                      <%}%>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+
+
+<section class="sec-banner">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+         <div class="outer-banner">
+              <div class="row">
+                  <div class="col-md-7">
+                    <div >
+                      <img src="index_assets/images/other/benner-left.png" class="img-fluid">
+                    </div>
+                  </div>
+              </div>
+             <div class="pc-img wow slideInRight">
+                 <img src="index_assets/images/other/banner-2.png" class="img-fluid">
+             </div>  
+             </div>
+      </div>
+    </div>
+     <div class="row">
+        <div class="col-md-10">
+            <div class="text-box-bottom wow slideInUp">
+                 <%=about_us_data[0].descriptions%>
+            </div>
+        </div>         
+      </div>
+  </div>
+</section>
+
+<section class="why-choose-sec page-section" id="why-choose">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+               <h3 class="main-heading-index wow slideInLeft">Why My Reflet?</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+               <div class="why-choose-box text-center">
+                   <div class="outer-bg">
+                     <img class="img-fluid hexgon-img" src="index_assets/images/other/home-page-box.png">
+                    <!--  <img class="icon-innder img-fluid" src="index_assets/images/other/secured-blockchain.png"> -->
+                    <img class="icon-innder img-fluid" src="../addMPIcon/<%- why_choose_us_data[0].icon %>" >
+                   </div>
+
+                   <div class="wow slideInUp">
+                      <h5><%=why_choose_us_data[0].why_label%></h5>
+                      <p><%=why_choose_us_data[0].why_descriptions%></p>
+                   </div>
+               </div>
+            </div>
+             <div class="col-md-4">
+               <div class="why-choose-box text-center mt-100">
+                   <div class="outer-bg">
+                     <img class="img-fluid hexgon-img" src="index_assets/images/other/home-page-box.png">
+                     <!-- <img class="icon-innder img-fluid" src="index_assets/images/other/trusted.png"> -->
+                     <img class="icon-innder img-fluid" src="../addMPIcon/<%- why_choose_us_data[1].icon %>" >
+                   </div>
+
+                   <div class="wow slideInUp">
+                     <h5><%=why_choose_us_data[1].why_label%></h5>
+                      <p><%=why_choose_us_data[1].why_descriptions%></p>
+                   </div>
+               </div>
+            </div>
+             <div class="col-md-4">
+               <div class="why-choose-box text-center mt-200">
+                   <div class="outer-bg">
+                     <img class="img-fluid hexgon-img" src="index_assets/images/other/home-page-box.png">
+                     <img class="icon-innder img-fluid" src="../addMPIcon/<%- why_choose_us_data[2].icon %>" >
+                     <!-- <img class="icon-innder img-fluid" src="index_assets/images/other/confidential-docs.png"> -->
+                   </div>
+
+                   <div class="wow slideInUp">
+                     <h5><%=why_choose_us_data[2].why_label%></h5>
+                      <p><%=why_choose_us_data[2].why_descriptions%></p>
+                   </div>
+               </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="benefits-sec page-section" id="benefits">
+   <div class="container-fluid p-0">
+        <div class="row">
+            <div class="col-lg-10 col-md-12">
+               <div class="inner-benefit">
+                   <div class="for-text-box">
+                     <div class="row align-item-center">
+                       <div class="col-lg-7 col-md-6">
+                          <img class="img-fluid wow slideInLeft" src="../addMPIcon/<%- benifit_data[0].icon %>">
+                       </div>
+                        <div class="col-lg-5 col-md-6">
+                          <div class="benefit-content wow slideInRight">
+                             <h3 class="main-heading-index text-left color-white"><%=benifit_data[0].benifit_label%></h3>
+                             <p class="max-lines"><%=benifit_data[0].benifit_descriptions%></p>
+
+                             <a class="white-btn-index" href="/benifits-more-index">Learn More <i class="fas fa-caret-right"></i></a>
+                          </div>
+                       </div>
+                     </div>
+                   </div>
+               </div>
+            </div>
+        </div>
+      </div>
+</section>
+
+
+
+<section class="feature-sec page-section" id="features">
+   <div class="container">
+        <div class="row align-item-center">
+           
+           <div class="col-lg-4 offset-lg-1 col-md-4 order-2">
+              <img class="img-fluid wow slideInRight" src="../addMPIcon/<%- feature_data[0].icon %>">
+           </div>
+            <div class="col-lg-5 offset-lg-1 col-md-6 offset-md-2">
+              <div class="features-content wow slideInLeft">
+                 <h3 class="main-heading-index text-left"><span>01</span> <%=feature_data[0].feature_label%></h3>
+                 <p class="max-lines"><%=feature_data[0].feature_descriptions%> </p>
+
+                 <ul class="feature-sub-point">
+               
+                   <%if(feature_data[0].features_relations_data=='undefined'){%>
+
+
+                                         <%}else{%> 
+                                            <%if(length_data>0){
+                                         for(let relations_data of feature_data[0].features_relations_data){    
+                                            %>
+                                             
+                     <li>
+                         <span><img class="img-fluid" src="index_assets/images/other/bullet.png"></span>
+                         <%=relations_data.feature%>
+                     </li>
+                                               
+                          <%}}}%>
+                 </ul>
+
+                 <a class="purple-btn-index" href="/feature-more-index?feature_id=<%=feature_data[0].feature_id%>">Learn More <i class="fas fa-caret-right"></i></a>
+              </div>
+           </div>
+         </div>
+
+           <div class="row align-item-center mt-100">
+         
+           <div class="col-md-4 offset-md-1">
+              <img class="img-fluid wow slideInLeft" src="../addMPIcon/<%- feature_data[1].icon %>">
+           </div>
+              <div class="col-lg-5 offset-lg-1 col-md-6 offset-md-1">
+              <div class="features-content wow slideInRight">
+                 <h3 class="main-heading-index text-left"><span>02</span> <%=feature_data[1].feature_label%></h3>
+                 <p class="max-lines"><%=feature_data[1].feature_descriptions%></p>
+
+                 <ul class="feature-sub-point">
+                  <%if(feature_data[1].features_relations_data=='undefined'){%>
+
+
+                                         <%}else{%> 
+                                            <%if(length_data>0){
+                                         for(let relations_data of feature_data[1].features_relations_data){    
+                                            %>
+                                             
+                     <li>
+                         <span><img class="img-fluid" src="index_assets/images/other/bullet.png"></span>
+                         <%=relations_data.feature%>
+                     </li>
+                                               
+                          <%}}}%>
+
+                 </ul>
+
+                 <a class="purple-btn-index" href="/feature-more-index?feature_id=<%=feature_data[1].feature_id%>">Learn More <i class="fas fa-caret-right"></i></a>
+              </div>
+           </div>
+         </div>
+   </div>
+</section>
+
+
+<section class="key-piller-sec">
+   <div class="container-fluid p-0">
+        <div class="row">
+            <div class="col-lg-3 offset-lg-1 col-md-5 offset-md-1">
+               <div class="perticuler-rule wow slideInLeft">
+                 <div class="outer-bg-key">
+                     <img class="icon-innder img-fluid" src="index_assets/images/other/share.png">
+                   </div>
+                  <h5>Choose What To Share And With Whom</h5>
+               </div>
+               <div class="perticuler-rule wow slideInLeft">
+                 <div class="outer-bg-key">
+                     <img class="icon-innder img-fluid" src="index_assets/images/other/security.png">
+                   </div>
+                  <h5>Interact Securely With The World Of Compliance</h5>
+               </div>
+            </div>
+            <div class="col-lg-3 offset-lg-1 col-md-5 offset-md-1">
+              <div class="perticuler-rule wow slideInUp">
+                 <div class="outer-bg-key">
+                     <img class="icon-innder img-fluid" src="index_assets/images/other/accreditation.png">
+                   </div>
+                  <h5>Choose Your Level Of Accreditation</h5>
+               </div>
+               <div class="perticuler-rule wow slideInUp">
+                 <div class="outer-bg-key">
+                     <img class="icon-innder img-fluid" src="index_assets/images/other/regulations.png">
+                   </div>
+                  <h5>Comply With Regulations You May Be Subject To</h5>
+               </div>
+            </div>
+            <div class="col-lg-4  col-md-12   strech-box">
+              <div class="light-blue-box wow slideInRight">
+                  <div>
+                    <h3 class="main-heading-index text-left color-purple"><%=our_key_pillars_data[0].label%></h3>
+                     <p class="color-purple max-lines"><%=our_key_pillars_data[0].descriptions%></p>
+
+                 <a class="purple-btn-index" href="/our-key-pillars-more-index">Learn More <i class="fas fa-caret-right"></i></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+   </div>
+</section>
+
+
+<section class="contact-sec page-section" id="contact">
+   <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+               <div class="wow slideInLeft">
+                 <h3 class="main-heading-index text-left color-purple">Get in Touch</h3>
+                 <p>Please fill out the quick form and we will be in touch with lightning speed.</p>
+                   <div class="alert alert-success text-center  flash_msg " id="success_div">
+			           	      Your information has been submitted successfully.
+			              </div>
+                 <div class="contact-form-new">
+                   <form>
+                     
+                    <label for=""> Name </label>
+                      <div class="form-group">
+                        <input type="text" id="name" class="form-control" placeholder="Enter Your Name">
+                        <span id="con_name_err" style="color: red;"></span>
+                      </div>
+                      
+                      <label for=""> Email</label>
+                      <div class="form-group">
+                        <input type="email" id="email" class="form-control" placeholder="Enter Your Email">
+                        <span id="con_email_err" style="color: red;"></span>
+                      </div>
+                     
+                      <div class="form-group">
+                         <textarea class="form-control" id="msg" rows="3" placeholder="Your Message"></textarea>
+                         <span id="con_msg_err" style="color: red;"></span>
+                      </div>
+                      
+                      <div>
+                      <button class="purple-btn-index" onclick="ContactUs()" type="button" >Submit Now <i class="fas fa-caret-right"></i></button>
+                       
+                      </div>
+                    </form>
+                 </div>
+               </div>
+
+            </div>
+              <div class="col-lg-4 offset-lg-1 col-md-6">
+               <div class="wow slideInRight">
+                 <h3 class="main-heading-index text-left color-purple">Connect with us:</h3>
+                 <p>For support or any questions:  Email us at <%=front_connect_with_us_data[0].connect_email%></p>
+               </div>
+
+            </div>
+        </div>
+   </div>
+</section>
+
+
+<footer>
+   <div class="upper-part">
+     <div class="container">
+        <div class="row">
+          <div class="col-md-2">
+            <div class="extra-links">
+              <ul>
+                <li>
+                  <a href="#">About</a>
+                </li>
+                <li>
+                  <a href="#why-choose">Why Choose Us</a>
+                </li>
+                <li>
+                  <a href="#features">Features</a>
+                </li>
+                <li>
+                  <a href="#benefits">Benefits</a>
+                </li>
+                <li>
+                  <a href="#contact
+                  ">Contact Us</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+           <div class="col-md-2">
+            <div class="extra-links social-links">
+              <ul>
+                <li>
+                  <a href=""><span><i class="fab fa-facebook-f"></i></span> Facebook</a>
+                </li>
+                <li>
+                  <a href=""><span><i class="fab fa-linkedin-in"></i></span> Linked In</a>
+                </li>
+                <li>
+                  <a href=""><span><i class="fab fa-google-plus-g"></i></span> Google+</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+            <div class="col-md-4">
+            <div class="extra-links">
+              <ul>
+                <li>
+                  <a href=""> <%=front_connect_with_us_data[0].connect_email%></a>
+                </li>
+               
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4"> 
+             <div class="form-group stay-tunned-form">
+               <label>Stay tunned:</label>
+               <span id="subscribe_span" style="color: green;" ></span>
+               <span id="subscribe_span_err" style="color: red;"></span>
+               <div class="input-group">
+                  <input type="email" id="s_email" class="form-control" placeholder="Enter Your Email">
+                  <div class="input-group-append">
+                    <button class="purple-btn-index" type="button" onclick="SubscribeFun()">Subscribe Now <i class="fas fa-caret-right"></i></button>
+                  </div>
+                </div>
+                <p>* we promise that we won’t spam you, ever.</p>
+             </div>
+          </div>
+        </div>
+      </div>
+   </div>
+   <!-- Bhavna -->
+   <div class="popup-overlay">
+  <div class="popup" style="color:rgba(0, 0, 0, 0.5)">
+    <p>This website uses cookies in order to offer you the most relevant information. Please accept cookies for optimal performance.</p>
+    <a href="javascript:void(0);" class="submit purple-btn-index">Yes,I accept Cookies</a>&nbsp;
+    <a href="javascript:void(0);" onclick="no_thanks()" class="purple-btn-index">No, thanks</a>
+  </div>
+</div>
+
+   <div class="copy-right">
+     <p>© Copyright 2020 - MyReflet by Reflet Dynamics and Smart Blockchain R&D</p>
+   </div>
+</footer>
+
+
+	<!-- JQuery -->
+        <script type="text/javascript" src="index_assets/js/jquery-3.3.1.min.js"></script>
+        <!-- <script type="text/javascript" src="index_assets/js/jquery-1.11.3.min.js"></script> -->
+        <!-- Bootstrap Core JavaScript -->
+        <script type="text/javascript" src="index_assets/js/bootstrap.min.js"></script>
+        <!-- dropdownhover effects JavaScript -->
+        <script type="text/javascript" src="index_assets/js/bootstrap-dropdownhover.min.js"></script>
+        <!-- wow JavaScript -->
+        <script type="text/javascript" src="index_assets/js/wow.min.js"></script>
+        <!-- video player JavaScript -->
+
+        <!-- Custom JavaScript -->
+        <script type="text/javascript" src="index_assets/js/custom.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+      <!-- <script>window.$ = window.jQuery = require('./jquery-3.0.0.min.js');</script>
+        
+      <script>window.$ = window.jQuery = require('jquery');</script> -->
+<script type="text/javascript">
+
+	  if( getCookie('popupCookie') != 'submited'){ 
+    if(getCookie('popupCookie') != 'closed' ){
+      $('.popup-overlay').css("display", "flex").hide().fadeIn();
+    }
+  }
+  
+  $('a.close').click(function(){
+    $('.popup-overlay').fadeOut();
+    //sets the coookie to one minute if the popup is closed (whole numbers = days)
+    setCookie( 'popupCookie', 'closed', .00069444444 );
+
+  });
+  
+  $('a.submit').click(function(){
+    $('.popup-overlay').fadeOut();
+    //sets the coookie to five minutes if the popup is submited (whole numbers = days)
+    setCookie( 'popupCookie', 'submited','7' );
+    location.reload(true)
+  });
+
+function no_thanks(){
+   location.reload();
+}
+
+  function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+
+
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+  function setCookie(cname, cvalue,exday) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exday * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+  
+</script>
+<script>
+$(document).ready( function () {
+  $("#success_div").hide()
+
+	 // var acookie = getCookie("cookiename");
+	 // alert(acookie)
+  //   if (!acookie) {
+  //       alert("Cookie not found.");
+  //   }
+  if (document.cookie.indexOf('submited') == -1 ) {
+  // alert("cookie");
+ $('a').removeAttr('href');
+}
+else
+{
+	  // alert("not cookie");
+            $('a').attr('href');
+
+}
+//   if (typeof $.cookie('submited') === 'undefined'){
+//  //no cookie
+//  alert('1')
+// } else {
+// 	alert('2')
+//  //have cookie
+// }
+// var CookieSet = $.cookie('popupCookie', 'submited');
+
+// // alert('CookieSet ; '+CookieSet)
+//      if (CookieSet == null) {
+//           // Do Nothing
+//            alert('1')
+//             $('a').removeAttr('href');
+
+
+//      }
+//      else  {
+//      	 alert('2')
+
+//             $('a').attr('href');
+//           // Reactions
+//      }
+  //check to see if the submited cookie is set, if not check if the popup has been closed, if not then display the popup
+
+
+
+// alert(cookie_var)
+// 	if(cookie_var==1)
+// 	{
+// 		alert('1')
+//         location.reload(true);
+// 	}else{
+// 		// var disableLink = function(){ return false;};
+//   //        $('a').bind('click', disableLink);
+
+// 		// var attr = document.createAttribute("class"); 
+//   //               attr.value = "disabled";                          
+//   //               link.setAttributeNode(attr); 
+//   //               link.setAttribute("style", "color: black;"); 
+// 	}
+// 	// $('.table').DataTable();
+
+} );
+</script>
+           <script>
+               $("#main-nav li .nav-close").click(function(event) {
+                    $(".navbar-collapse").collapse('hide');
+                });
+            </script>
+
+<script>
+	function ContactUs(){
+	
+     var name = $("#name").val()
+     var email= $("#email").val()
+     var msg= $("#msg").val()
+      
+     if(name==""&&email==""&&msg==""){
+      //  alert("inside if")
+       if(name==""){
+             $("#con_name_err").text("*Please enter your name.")
+       }
+       if(email==""){
+        $("#con_email_err").text("*Please enter your email.")
+        }
+        if(msg==""){
+          $("#con_msg_err").text("*Please enter your message.")
+        }
+
+     }else{
+      // alert("inside else")
+          // alert(name)
+          // alert(name)
+          // alert(name)
+          $("#con_name_err").text("")
+          $("#con_email_err").text("")
+          $("#con_msg_err").text("")
+
+		  	$.ajax({
+                      type : 'POST',
+                      url  : '/contact_us',
+					           data: {
+					                  	name,
+						                 	email,
+                               msg,
+					                },
+					  
+					        	success: function(data) {
+						                                 	
+                                               if(data){
+                                                            $("#success_div").show()
+                                                            setTimeout(function(){
+							                                                                      $("#success_div").hide()
+                                                                                    
+						                                                	},4000)
+                                               }else{
+                                                               alert("Somthing went wrong try again")
+                                               }
+                              
+						                            
+							
+					                                 	}
+		         	})
+       }
+
+	}
+</script>
+
+<script>
+	function SubscribeFun(){
+	
+     var email= $("#s_email").val()
+    
+
+			$.ajax({
+                      type : 'POST',
+                      url  : '/subscribe',
+					           data: {
+					                  
+						                 	email,
+                              
+					                },
+					  
+					        	success: function(data) {
+						                                 	
+                                               if(data){
+                                                     
+                                                if(data=="1"){
+                                                            $("#subscribe_span").text("You have subscribe My Reflect successfilly.")
+                                                            setTimeout(function(){
+                                                                                  $("#subscribe_span").text("")
+                                                                                    
+                                                              },4000)
+                                                    }else{
+                                                      $("#subscribe_span_err").text("*Already,You are My Reflect subscriber.")
+                                                    }
+                                               }else{
+                                                          $("#subscribe_span_err").text("*Somthing went wrong try again")
+                                               }
+                              
+						                            
+							
+					                                 	}
+		         	})
+        
+
+	}
+</script>
+
+
+
+
+
+            <!-- Javascript for closing scrolling smoothly on clicking of header menus -->
+            <script type="text/javascript">
+                // $(document).ready(function() {
+                //         $('a[href*=\\#]:not([href=\\#])').bind('click', function(e) {
+                //                 e.preventDefault(); // prevent hard jump, the default behavior
+                //                 var target = $(this).attr("href"); // Set the target as variable
+                //                 // perform animated scrolling by getting top-position of target-element and set it as scroll target
+                //                 $('html, body').stop().animate({
+                //                         scrollTop: $(target).offset().top
+                //                 }, 100, function() {
+                //                         location.hash = target; //attach the hash (#jumptarget) to the pageurl
+                //                 });
+                //                 return false;
+                //         });
+                // });
+                $(window).scroll(function() {
+                        var scrollDistance = $(window).scrollTop();
+                        // Assign active class to nav links while scolling
+                        $('.page-section').each(function(i) {
+                                if ($(this).position().top <= scrollDistance + 100) {
+                                        $('.navigation li.active').removeClass('active');
+                                        $('.navigation li').eq(i).addClass('active');
+                                }
+                        });
+                }).scroll();
+            </script>
+      <script type="text/javascript">
+                 var main_url=window.location.href.split("#")[0];
+                 var hash_tag=window.location.href.split("#")[1];
+
+                 if(hash_tag!='' && hash_tag!=undefined)
+                 {
+                  window.location.href=main_url;
+                 }
+            </script>
+
+              <!-- Javascript for closing scrolling smoothly on clicking of header menus -->
+            <script type="text/javascript">
+                // $(document).ready(function() {
+                //         $('a[href*=\\#]:not([href=\\#])').bind('click', function(e) {
+                //                 e.preventDefault(); // prevent hard jump, the default behavior
+                //                 var target = $(this).attr("href"); // Set the target as variable
+                //                 // perform animated scrolling by getting top-position of target-element and set it as scroll target
+                //                 $('html, body').stop().animate({
+                //                         scrollTop: $(target).offset().top
+                //                 }, 100, function() {
+                //                         location.hash = target; //attach the hash (#jumptarget) to the pageurl
+                //                 });
+                //                 return false;
+                //         });
+                // });
+                $(window).scroll(function() {
+                        var scrollDistance = $(window).scrollTop();
+                        // Assign active class to nav links while scolling
+                        $('.page-section').each(function(i) {
+                                if ($(this).position().top <= scrollDistance + 100) {
+                                        $('.navigation li.active').removeClass('active');
+                                        $('.navigation li').eq(i).addClass('active');
+                                }
+                        });
+                }).scroll();
+            </script>
+               <script type="text/javascript">
+                 var main_url=window.location.href.split("#")[0];
+                 var hash_tag=window.location.href.split("#")[1];
+
+                 if(hash_tag!='' && hash_tag!=undefined)
+                 {
+                  window.location.href=main_url;
+                 }
+            </script>
+            
+          
+
+
+   <!-- Bhavna -->
+
+    </body>
+</html>
+
+
+
+ 

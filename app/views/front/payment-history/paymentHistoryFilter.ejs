@@ -1,0 +1,175 @@
+<div class="personal-info-box table-responsive another-table">
+    <table class="table" id="myTable3">
+        <thead>
+            <tr> 
+                  <th width="24%" scope="col">MyReflet ID</th>
+                  <th width="26%" scope="col">Date</th>
+                  <th width="20%" scope="col">Amount</th>
+                  <th width="25%" scope="col">Subscription Plan</th>
+                  <th width="5%" scope="col">Action</th>
+            </tr>
+          </thead>
+        <tbody id="table_id">
+        <%pay_history.data.forEach(pay_history=>{%>
+
+            <tr>
+                <td>
+                    <div class="for-flex-align">
+                          <div class="checkbox">
+                              <label>
+                                   <input type="checkbox" value="">
+                                 <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                   <%=pay_history.reflect_code%>
+                              </label>
+                        </div>
+                    </div>
+                </td>
+                  <td><%=moment(pay_history.createdAt).format("DD , MMM , YYYY")%></td>
+                <td>$<%=pay_history.plan_price%></td>
+                <td><%=pay_history.plan_name%></td>
+                <td>
+                      <div class="dropdown-menu-new">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                          <div class="doc-img">
+                                  <img src="../assets/images/icons/dashboard-assets/menu.png">
+                              </div>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+                            <a class="dropdown-item" href="/pay_invoice?purchase_id=<%=pay_history.purchase_id%>">
+                                <img src="../assets/images/icons/dashboard-assets/view.png"> View Invoice
+                            </a>
+                            <a class="dropdown-item" href="../my-reflet-id/choose-plan.php">
+                                <img src="../assets/images/icons/dashboard-assets/upload.png"> Upgrade
+                            </a>
+                            <a class="dropdown-item" href="#cancelPlan" data-toggle="modal">
+                                <img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Cancel
+                            </a>
+                        </div>
+                    </div>
+                  </td>
+            </tr>
+            
+        <%})%>
+            <!-- <tr>
+                <td>
+                    <div class="for-flex-align">
+                          <div class="checkbox">
+                              <label>
+                                   <input type="checkbox" value="">
+                                 <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                   C-32568
+                              </label>
+                        </div>
+                    </div>
+                </td>
+                  <td>15 Aug, 2020</td>
+                <td>$50</td>
+                <td>Basic</td>
+                <td>
+                      <div class="dropdown-menu-new">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                          <div class="doc-img">
+                                  <img src="../assets/images/icons/dashboard-assets/menu.png">
+                              </div>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+                            <a class="dropdown-item" href="history-invoice.php">
+                                <img src="../assets/images/icons/dashboard-assets/view.png"> View Invoice
+                            </a>
+
+                            <a class="dropdown-item" href="../my-reflet-id/choose-plan.php">
+                                <img src="../assets/images/icons/dashboard-assets/upload.png"> Upgrade
+                            </a>
+            
+                            <a class="dropdown-item" href="">
+                                <img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Cancel
+                            </a>
+                        </div>
+                    </div>
+                  </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="for-flex-align">
+                          <div class="checkbox">
+                              <label>
+                                   <input type="checkbox" value="">
+                                 <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                   C-32568
+                              </label>
+                        </div>
+                    </div>
+                </td>
+                  <td>15 Aug, 2020</td>
+                <td>$50</td>
+                <td>Basic</td>
+                <td>
+                      <div class="dropdown-menu-new">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                          <div class="doc-img">
+                                  <img src="../assets/images/icons/dashboard-assets/menu.png">
+                              </div>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+                            <a class="dropdown-item" href="history-invoice.php">
+                                <img src="../assets/images/icons/dashboard-assets/view.png"> View Invoice
+                            </a>
+
+                            <a class="dropdown-item" href="../my-reflet-id/choose-plan.php">
+                                <img src="../assets/images/icons/dashboard-assets/upload.png"> Upgrade
+                            </a>
+            
+                            <a class="dropdown-item" href="">
+                                <img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Cancel
+                            </a>
+                        </div>
+                    </div>
+                  </td>
+            </tr> -->
+          
+        </tbody>
+    </table>
+</div>
+<div class="pagination-list for-user">
+
+    <% if (pay_history.totalPages > 0) { %>
+   <ul class="pagination text-center">
+       <% if (pay_history.currentPage == 1) { %>
+           <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+       <% } else { %>
+           <li class="page-item"><a class="page-link" href="/payment_history?page=1">&lt;</a></li>
+       <% } %>
+
+
+
+       <% var i = (Number(pay_history.currentPage) > 5 ? Number(pay_history.currentPage) - 4 : 1) %>
+       <% if (i !== 1) { %>
+           <!-- <li class="disabled"><a>...</a></li> -->
+           <li class="page-item disabled"><a class="page-link" >...</a></li>
+       <% } %>
+       <% for (; i <= (Number(pay_history.currentPage) + 4) && i <= pay_history.totalPages; i++) { %>
+           <% if (i == pay_history.currentPage) { %>
+               <!-- <li class="active"><a><%= i %></a></li> -->
+               <li class="page-item active">
+                 <a class="page-link" href="#"><%= i %><span class="sr-only">(pay_history.currentPage)</span></a>
+               </li>
+           <% } else { %>
+               <li class="page-item"><a class="page-link" href="/payment_history?page=<%= i %>"><%= i %></a></li>
+           <% } %>
+           <% if (i == Number(pay_history.currentPage) + 4 && i < pay_history.totalPages) { %>
+               <!-- <li class="disabled"><a>...</a></li> -->
+               <li class="page-item disabled"><a class="page-link" >...</a></li>
+           <% } %>
+       <% } %>
+
+
+       <% if (pay_history.currentPage == pay_history.totalPages) { %>                       
+           <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+       <% } else { %>
+           <li><a class="page-link" href="/payment_history?page=<%= pay_history.totalPages %>">&gt;</a></li>
+       <% } %>
+
+   </ul>
+<% } %>
+
+ </div>

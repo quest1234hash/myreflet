@@ -1,0 +1,114 @@
+<%- include('../innerHeader') %>
+
+<section class="heading-sec mb-0">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/home-assets/myrefletID.png">
+					<h4>Create MyReflect ID as</h4>
+				</div>
+				<!-- <div class="with-sub-heading">
+				    <p>Before creating MyReflet ID you need to create wallet.</p>
+				</div> -->
+			</div>
+			<% if(err_msg!=undefined && err_msg !='' ){ %>
+				<div class="alert alert-danger text-center  flash_msg " id="error_msg">
+					<%= err_msg %>
+				   </div>
+				 
+				<% }%>
+				 <% if(success_msg!=undefined && success_msg !='' ){ %>
+				  <div class="alert alert-success text-center  flash_msg "id="success_message">
+				  <%= success_msg %>
+				 </div>
+				<% }%>
+
+      <!-- Tab bars -->
+      <div class="col-md-12" style="margin-left: 188px;">
+				<div>
+
+					<ul class="nav nav-tabs dashboard-tabs-outer" id="myTab" role="tablist">
+					  <li class="nav-item">
+					    <a class="nav-link active" id="dash-tab" data-toggle="tab" href="#dashtab1" role="tab" aria-controls="home" aria-selected="true">
+					    <span>
+					    	<img class="gray" src="../assets/images/icons/home-assets/wallet.png">
+					    	<img class="purple" src="../assets/images/icons/home-assets/wallet-white.png">
+					    </span> 	
+					    Entity</a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link" id="dash-tab" data-toggle="tab" href="#dashtab2" role="tab" aria-controls="profile" aria-selected="false">
+					    <span>
+					    	<img class="gray" src="../assets/images/icons/home-assets/myrequests.png">
+					    	<img class="purple" src="../assets/images/icons/home-assets/myrequests-white.png">
+					    </span> 
+					    Natural
+					    </a>
+					  </li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Main Content -->
+<section class="col-md-8" style="margin: auto;">
+	<div class="white-box client-dash-sec">
+		<div  class="tab-content" id="myTabContent">
+
+    <!-- Entity form-->
+	
+		 <div class="tab-pane fade show active" id="dashtab1" role="tabpanel" aria-labelledby="dash-tab">
+			<form action="submit-entity" method="POST">
+     <div class="form-group ">
+
+<input type="text" name="user_name" class="form-control" placeholder="My Reflet Username"  style="padding: 10px 10px; width: 100%;     margin-bottom: 20px;;">
+
+<input type="text" name="company_name" class="form-control" placeholder="Company Name" style="padding: 10px 10px; width: 100%;     margin-bottom: 20px;">
+
+<input type="text" name="company_country" class="form-control" placeholder="Company Country" style="padding: 10px 10px; width: 100%;     margin-bottom: 20px;">
+
+<input type="text" name="company_address" class="form-control" placeholder="Address" style="padding: 10px 10px; width: 100%;     margin-bottom: 20px;">
+
+<input type="text" name="company_reg_no" class="form-control" placeholder="Company Registration Number" style="padding: 10px 10px; width: 100%;     margin-bottom: 20px;;">
+
+<input type="text" name="company_phone" class="form-control" placeholder="Company Phone Number" style="padding: 10px 10px; width: 100%; ">
+            
+        </div>
+			<div class="text-center mt-4">
+            <button type="submit" class="btn-common-new single-color-btn"  style="margin-top: 10px; margin-left: 0x;">Create myreflect ID Code</button>
+            </div>
+		</form>
+	</div> 
+
+
+  <!--Natural -->
+ 
+	 <div class="tab-pane fade" id="dashtab2" role="tabpanel" aria-labelledby="dash-tab">
+		<form action="submit-natural" method="POST">
+   <div class="form-group" >
+
+<input type="text" name="username" class="form-control" placeholder="My Reflet Username"  style="padding: 10px 10px; width: 100%;     margin-bottom: 20px;">
+
+<input type="text" name="firstName" class="form-control" placeholder="First Name"  style="padding: 10px 10px; width: 100%;     margin-bottom: 20px;">
+
+<input type="text" name="lastName" class="form-control" placeholder="Last Name" style="padding: 10px 10px; width: 100%;">
+            
+       </div>
+			<div class="text-center mt-4">
+            <button type="submit" class="btn-common-new single-color-btn"  style="margin-top: 10px; margin-left: 0x;">Create myreflect ID Code</button>
+            </div>
+		</form>
+	</div> 
+
+	</div>
+	</div>
+</section>
+
+<%- include('../innerFooter')%>
+
+
+
+ 

@@ -1,0 +1,781 @@
+<style>
+	.tooltip {
+	  position: relative;
+	  display: inline-block;
+	}
+	
+	.tooltip .tooltiptext {
+	  visibility: hidden;
+	  width: 140px;
+	  background-color: #555;
+	  color: #fff;
+	  text-align: center;
+	  border-radius: 6px;
+	  padding: 5px;
+	  position: absolute;
+	  z-index: 1;
+	  bottom: 150%;
+	  left: 50%;
+	  margin-left: -75px;
+	  opacity: 0;
+	  transition: opacity 0.3s;
+	}
+	
+	.tooltip .tooltiptext::after {
+	  content: "";
+	  position: absolute;
+	  top: 100%;
+	  left: 50%;
+	  margin-left: -5px;
+	  border-width: 5px;
+	  border-style: solid;
+	  border-color: #555 transparent transparent transparent;
+	}
+	
+	.tooltip:hover .tooltiptext {
+	  visibility: visible;
+	  opacity: 1;
+	}
+
+	</style>
+	
+
+
+<%-include('./innerHeader')%>
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12">
+				<div class="custom-space-btw align-items-center">
+					<!--<div class="main-heading-dash">
+						<img src="../assets/images/icons/home-assets/dashbord-grey.png">
+						<h4>Dashboard: What Can I Do With My Reflet?</h4>
+					</div>-->
+					<div>
+						
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div>
+
+					<!--<ul class="nav nav-tabs dashboard-tabs-outer" id="myTab" role="tablist">
+					  <li class="nav-item search-dash">
+						  	<div class="responsive-search">
+								<form class="response-search"> 
+				                     <div class="input-group search-address-book">
+				                        <input type="text" class="form-control autocomplete" id="myInput" placeholder="Search" onkeypress="autoSearch(this);">
+				                        <div class="input-group-append">
+				                            <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+				                        </div>
+				                    </div>
+			                  	</form>
+							</div>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link active" id="dash-tab" data-toggle="tab" href="#dashtab1" role="tab" aria-controls="home" aria-selected="true">
+					    <span>
+					    	<img class="gray" src="../assets/images/icons/home-assets/wallet.png">
+					    	<img class="purple" src="../assets/images/icons/home-assets/wallet-purple.png">
+					    </span> 	
+					    Manage Wallet</a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link" id="dash-tab" data-toggle="tab" href="#dashtab2" role="tab" aria-controls="profile" aria-selected="false">
+					    <span>
+					    	<img class="gray" src="../assets/images/icons/home-assets/myrequests.png">
+					    	<img class="purple" src="../assets/images/icons/home-assets/myrequests-purple.png">
+					    </span> 
+					    New Requests
+					    </a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link" id="dash-tab" data-toggle="tab" href="#dashtab3" role="tab" aria-controls="contact" aria-selected="false">
+					    <span>
+					    	<img class="gray" src="../assets/images/icons/home-assets/myrefletID.png">
+					    	<img class="purple" src="../assets/images/icons/home-assets/myrefletID-purple.png">
+					    </span> 
+					    Create New MyReflet ID</a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link" id="dash-tab" data-toggle="tab" href="#dashtab4" role="tab" aria-controls="contact" aria-selected="false">
+					    <span>
+					    	<img class="gray" src="../assets/images/icons/home-assets/icon_message1.png">
+					    	<img class="purple" src="../assets/images/icons/home-assets/icon_message.png">
+					    </span> 
+					    Send Messages</a>
+					  </li>
+					  <li class="nav-item">
+					  	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <span>
+									    	<img class="gray" src="../assets/images/icons/home-assets/dashbord-grey.png">
+									    	<img class="purple" src="../assets/images/icons/home-assets/dashboard.png">
+									      </span> 
+				                          All Dashboards
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="" >
+				                            	<img src="../assets/images/icons/home-assets/addressbook.png"> Address Book
+				                            </a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/home-assets/complaints.png"> Manage Complaints
+											</a>
+											<a class="dropdown-item" href=""><img src="../assets/images/icons/home-assets/code-verification-tool.png"> Self Certification
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/home-assets/mydocuments.png"> Send Document
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/home-assets/myrequests.png"> Create New Report
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/home-assets/verifiers.png"> Become A Verifier
+											</a>
+
+				                        </div>
+				        </div>
+					  </li>
+					</ul>-->
+				</div>
+			</div>
+			<!--<div class="col-lg-12 col-md-8 col-sm-8">
+				<div class="text-right">
+					<a class="btn-common-new" href="../my-reflet-id/protact-your-wallet.php">Add New Wallet</a>
+					<a class="btn-common-new" href="../my-reflet-id/import-wallet.php">Import Wallet</a>
+				</div>
+			</div>-->
+			<div class="col-md-12"> 
+				<div class="white-box client">
+					<div class="tab-content" id="myTabContent">
+					  <div class="tab-pane fade show active" id="dashtab1" role="tabpanel" aria-labelledby="dash-tab">
+					  	<!--<h4 class="small-heading text-center">Manage your existing wallets or create a new wallet.</h4>-->
+						<div class="row">
+							<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" style="margin: auto;">
+								<div class="white-box full-box wallet-box">
+									<div class="row align-item-center">
+									   <!--<div class="col-xl-6 col-lg-12 col-md-12">
+									   	  <div class="id-code-represent-heading"> 
+											  <img src="../assets/images/icons/home-assets/Representative.png">
+											  <span>Representative</span>
+										  </div>
+									   </div>-->
+									   <!--<div class="col-xl-6 col-lg-12 col-md-12">
+									   	 <h5 class="mb-0 balance-value">Balance : 0.245 ETH</h5>
+									   </div>-->
+									</div>
+									<div>
+										<div class="private-key-copy-box mt-15">
+											<div class="form-group">
+												<label>Public key</label>
+												<div class="input-group mb-3">
+												  <input type="text" class="form-control" value="<%= public_key %>" id="wallet_addr1" readonly>
+												  <div class="input-group-append">
+													<span class="tooltip">
+												  	<a class="btn-copy" href="javascript:void(0);"  onclick="myFunction1(1)" onmouseout="outFunc(1)"><img src="../assets/images/icons/createidentity-assets/copy.png">
+														<span class="tooltiptext" id="myTooltip1">Copy to clipboard</span>
+													</a>
+													  </span>
+												  </div>
+												</div>
+											</div>
+										</div>
+										<div class="row inner-box-id-code">
+											<div class="col-md-4 p-0">
+												<div class="for-flex-align">
+													<!--<img src="../assets/images/icons/home-assets/user.png">-->
+													<p>Wallet ID</p>
+												</div>
+											</div>
+											<div class="col-md-6 dubble-dot-after p-0">
+												<p><%= wallet_address %></p>
+											</div>
+										</div>
+										<div class="row inner-box-id-code">
+											<div class="col-md-4 p-0">
+												<div class="for-flex-align">
+													<img src="../assets/images/icons/home-assets/user.png">
+													<p>MyReflet ID</p>
+												</div>
+											</div>
+											<div class="col-md-6 dubble-dot-after p-0">
+												<p><%= reflet_id %></p>
+											</div>
+										</div>
+										<div class="row inner-box-id-code">
+											<div class="col-md-4 p-0">
+												<div class="for-flex-align">
+													<img src="../assets/images/icons/7.png">
+													<p  >Balance</p>
+												</div>
+											</div>
+											<div class="col-md-6 dubble-dot-after p-0">
+												<p><%= balance %></p>
+											</div>
+										</div>
+										<div class="row inner-box-id-code">
+											<div class="col-md-4 p-0">
+												<div class="for-flex-align">
+													<img src="../assets/images/icons/7.png">
+													<p>Wallet type</p>
+												</div>
+											</div>
+											<div class="col-md-6 dubble-dot-after p-0">
+												<p><%= wallet_type %></p>
+											</div>
+										</div>
+										<div class="row">
+											<!--<div class="col-md-3">
+												<img src="../assets/images/icons/wallet/qrcode.png" class="img-fluid">
+											</div>-->
+											<div class="col-md-9" style="margin: auto;">
+												<!--<h4 class="purple-heading">Just scan the wallet address</h4>
+												<p>You can share this QR code with friends to receive ether or tokens in your wallet.</p>-->
+												<div class="row mt-15">
+													<div class="col-xl-6 col-lg-12 col-md-12">
+														<a class="btn-common-new single-color-btn" href="#" data-toggle="modal" data-target="#keyModal2"><img src="../assets/images/icons/wallet/send.png"> Send</a>
+													</div>
+													<div class="col-xl-6 col-lg-12 col-md-12">
+													<a class="btn-common-new single-color-btn" href="send-ether.php"><img src="../assets/images/icons/document.png"> Document</a>
+													</div>
+												</div>
+											</div>
+										</div>
+							         </div>
+							    </div>
+				            </div>
+				           
+						 </div>
+						 <h4 class="small-heading text-center"> Transaction History</h4>
+						 <div class="row">
+						 <div class="col-lg-12">
+					  	 		<!--<h4 class="small-heading text-left mb-15">New Requests</h4>-->
+								<div class="personal-info-box table-responsive another-table">
+									<table class="table" id="myTable3">
+										<thead>
+									    	<tr> 
+										      	<th scope="col" width="10%">Due Date</th>
+										      	<th scope="col" width="10%">Amount</th>
+										      	<th scope="col" width="10%">Action</th>
+									    	</tr>
+									  	</thead>
+										<tbody>
+											<% for(let i=0;i<cryptoTransArr.length;i++){ %>
+										    <tr>
+												
+											    <td> <%= cryptoTransArr[i].operation %> <%= cryptoTransArr[i].date %></td>
+												<% if(cryptoTransArr[i].operation=='shared'||cryptoTransArr[i].operation=='sent') {%>
+											    <td> <span class="pending-status" style="color: red;"><%= cryptoTransArr[i].amount %></span></td>
+												<% }else{ %>
+													<td> <span class="pending-status" style="color: green;"><%= cryptoTransArr[i].amount %></span></td>
+													<% } %>
+											    <td>
+											      	<a href="requested-by-verifier.php" class="view-link"  data-toggle="modal" data-target="#keyModal1">View Recipt</a>
+										      	</td>
+												 
+										    </tr>
+											<% } %>
+										  
+										</tbody>
+									</table>
+								</div>
+							</div>
+						
+						 </div>
+					  </div>
+					  <!--<div class="tab-pane fade" id="dashtab2" role="tabpanel" aria-labelledby="dash-tab">
+					  	 <div class="row">
+					  	 	<div class="col-lg-12">
+					  	 		<h4 class="small-heading text-left mb-15">New Requests</h4>
+								<div class="personal-info-box table-responsive another-table">
+									<table class="table" id="myTable3">
+										<thead>
+									    	<tr> 
+										      	<th scope="col" width="10%">Request ID</th>
+										      	<th scope="col" width="20%">Requested By/From Verifier</th>
+										      	<th scope="col" width="10%">MyReflet ID</th>
+										      	<th scope="col" width="10%">Type</th>
+										      	<th scope="col" width="15%">Requested On</th>
+										      	<th scope="col" width="10%">Due Date</th>
+										      	<th scope="col" width="10%">Status</th>
+										      	<th scope="col" width="10%">Action</th>
+									    	</tr>
+									  	</thead>
+										<tbody>
+										    <tr>
+										    	<td>350052</td>
+										      	<td>
+											      	<div class="for-flex-align">
+											      		<div class="checkbox">
+												          	<label>
+													            <img class="profile-table" src="../assets/images/other/img_user1.png">
+											      		     	<p class="line-hgt">
+											      		     		<span class="font-w-600">Jack Ma</span> <br>
+											      		     		25102
+											      		     	</p>
+												         	 </label>
+												        </div>
+													</div>
+										      	</td>
+											    <td><span class="font-w-600">John Doe </span> <br> 132556</td>
+											    <td>Requested by me</td>
+											    <td>20 jan, 2020</td>
+											    <td>30 jan, 2020</td>
+											    <td class="text-center"> <span class="pending-status">Pending</span></td>
+											    <td>
+											      	<a href="requested-by-verifier.php" class="view-link">View</a>
+										      	</td>
+										    </tr>
+										     <tr>
+										    	<td>350052</td>
+										      	<td>
+											      	<div class="for-flex-align">
+											      		<div class="checkbox">
+												          	<label>
+													            <img class="profile-table" src="../assets/images/other/img_user1.png">
+											      		     	<p class="line-hgt">
+											      		     		<span class="font-w-600">Jack Ma</span> <br>
+											      		     		25102
+											      		     	</p>
+												         	 </label>
+												        </div>
+													</div>
+										      	</td>
+											    <td><span class="font-w-600">John Doe </span> <br> 132556</td>
+											    <td>Requested by me</td>
+											    <td>20 jan, 2020</td>
+											    <td>30 jan, 2020</td>
+											    <td class="text-center"> <span class="pending-status">Pending</span></td>
+											    <td>
+											      	<a href="requested-by-verifier.php" class="view-link">View</a>
+										      	</td>
+										    </tr>
+										     <tr>
+										    	<td>350052</td>
+										      	<td>
+											      	<div class="for-flex-align">
+											      		<div class="checkbox">
+												          	<label>
+													            <img class="profile-table" src="../assets/images/other/img_user1.png">
+											      		     	<p class="line-hgt">
+											      		     		<span class="font-w-600">Jack Ma</span> <br>
+											      		     		25102
+											      		     	</p>
+												         	 </label>
+												        </div>
+													</div>
+										      	</td>
+											    <td><span class="font-w-600">John Doe </span> <br> 132556</td>
+											    <td>Requested by me</td>
+											    <td>20 jan, 2020</td>
+											    <td>30 jan, 2020</td>
+											    <td class="text-center"> <span class="pending-status">Pending</span></td>
+											    <td>
+											      	<a href="requested-by-verifier.php" class="view-link">View</a>
+										      	</td>
+										    </tr>
+										     <tr>
+										    	<td>350052</td>
+										      	<td>
+											      	<div class="for-flex-align">
+											      		<div class="checkbox">
+												          	<label>
+													            <img class="profile-table" src="../assets/images/other/img_user1.png">
+											      		     	<p class="line-hgt">
+											      		     		<span class="font-w-600">Jack Ma</span> <br>
+											      		     		25102
+											      		     	</p>
+												         	 </label>
+												        </div>
+													</div>
+										      	</td>
+											    <td><span class="font-w-600">John Doe </span> <br> 132556</td>
+											    <td>Requested by me</td>
+											    <td>20 jan, 2020</td>
+											    <td>30 jan, 2020</td>
+											    <td class="text-center"> <span class="pending-status">Pending</span></td>
+											    <td>
+											      	<a href="requested-by-verifier.php" class="view-link">View</a>
+										      	</td>
+										    </tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+					  	 </div>
+					  </div>-->
+					  <!--<div class="tab-pane fade" id="dashtab3" role="tabpanel" aria-labelledby="dash-tab">
+					  	<div class="row">
+					  	 	<div class="col-lg-12">
+					  	 		<h4 class="small-heading text-left ">MyReflet ID Code</h4>
+					  	 		<div class="row">
+									<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+										<div class="white-box full-box">
+											<div class="id-code-represent-heading"> 
+												<img src="../assets/images/icons/home-assets/Representative.png">
+												<span>Representative</span>
+											</div>
+											<div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/user.png">
+															<p>MyReflet ID</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>1201</p>
+													</div>
+												</div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/user.png">
+															<p>Name</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>John Doe</p>
+													</div>
+												</div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/verified-emailID.png">
+															<p>Email ID</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>johndoe@gmail.com</p>
+													</div>
+												</div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/phone.png">
+															<p>Phone Number</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>+81 7869586748</p>
+													</div>
+												</div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/ETHwallet.png">
+															<p>Wallet Address</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>85676e7d65g7ds6g7586765fdf76f76f65s676s756s756s756f756sf</p>
+													</div>
+												</div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/user.png">
+															<p>Digital ID</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>
+															<a href=""><img src="../assets/images/icons/home-assets/drivinglicense.png"></a>
+															<a href=""><img src="../assets/images/icons/home-assets/passport.png"></a>
+															<a href=""><img src="../assets/images/icons/home-assets/photoID.png"></a>
+															<a href="" class="add-icon"><i class="fas fa-plus"></i></a>
+														</p>
+													</div>
+												</div>
+												<div class="view-icon">
+													<a href="my-reflet-id-view.php"><i class="fas fa-eye"></i></a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+										<div class="white-box full-box">
+											<div class="id-code-represent-heading"> 
+												<img src="../assets/images/icons/entity.png">
+												<span>Entity</span>
+											</div>
+											<div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/user.png">
+															<p>MyReflet ID</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>1201</p>
+													</div>
+												</div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/user.png">
+															<p>Company Name</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>Quest GLT</p>
+													</div>
+												</div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/verified-emailID.png">
+															<p>Email ID</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>johndoe@gmail.com</p>
+													</div>
+												</div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/phone.png">
+															<p>Phone Number</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>+81 7869586748</p>
+													</div>
+												</div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/ETHwallet.png">
+															<p>Wallet Address</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>85676e7d65g7ds6g7586765fdf76f76f65s676s756s756s756f756sf</p>
+													</div>
+												</div>
+												<div class="row inner-box-id-code">
+													<div class="col-md-6 p-0">
+														<div class="for-flex-align">
+															<img src="../assets/images/icons/home-assets/user.png">
+															<p>Digital ID</p>
+														</div>
+													</div>
+													<div class="col-md-6 dubble-dot-after p-0">
+														<p>
+															<a href=""><img src="../assets/images/icons/home-assets/drivinglicense.png"></a>
+															<a href=""><img src="../assets/images/icons/home-assets/passport.png"></a>
+															<a href=""><img src="../assets/images/icons/home-assets/photoID.png"></a>
+															<a href="" class="add-icon"><i class="fas fa-plus"></i></a>
+														</p>
+													</div>
+												</div>
+												<div class="view-icon">
+													<a href="my-reflet-id-view.php"><i class="fas fa-eye"></i></a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row align-item-center">
+									<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="text-center">
+											<a class="btn-common-new" href="set-up-code.php">Create New Myreflet ID</a>
+										</div>
+									</div>
+								</div>
+					  	 	</div>
+					  	 </div>
+					  </div>-->
+					  <!--<div class="tab-pane fade" id="dashtab4" role="tabpanel" aria-labelledby="dash-tab">
+					  	 <div class="row">
+					  	 	<div class="col-lg-12">
+					  	 		<h4 class="small-heading text-left mb-15">Messages</h4>
+								<div class="personal-info-box table-responsive another-table">
+									<table class="table" id="myTable3">
+										<thead>
+									    	<tr> 
+										      	<th scope="col">Date</th>
+										      	<th scope="col">Verifier</th>
+										      	<th scope="col">Message</th>
+										      	<th scope="col">MyReflet ID</th>
+										      	<th scope="col">Action</th>
+									    	</tr>
+									  	</thead>
+										<tbody>
+										    <tr>
+										    	
+										      	<td>15 Aug, 2020</td>
+											    <td><span class="font-w-600">Jack MA </span> <br> 25102</td>
+											    <td>Lorem ipsume has</td>
+											    <td><span class="font-w-600">John Doe</span> <br> 25102</td>
+											    <td>
+											    	<div>
+											    		<a href="#">
+								                          <div class="doc-img">
+													      		<img src="../assets/images/icons/home-assets/eye.png">
+													      	</div>
+								                        </a>
+											    	</div>
+											      
+										      	</td>
+										    </tr>
+										    <tr>
+										    
+										      	<td>15 Aug, 2020</td>
+											    <td><span class="font-w-600">Jack MA </span> <br> 25102</td>
+											    <td>Lorem ipsume has</td>
+											    <td><span class="font-w-600">John Doe</span> <br> 25102</td>
+											   <td>
+											    	<div>
+											    		<a href="#">
+								                          <div class="doc-img">
+													      		<img src="../assets/images/icons/home-assets/eye.png">
+													      	</div>
+								                        </a>
+											    	</div>
+											      
+										      	</td>
+										    </tr>
+										    <tr>
+										    	
+										      	<td>15 Aug, 2020</td>
+											    <td><span class="font-w-600">Jack MA </span> <br> 25102</td>
+											    <td>Lorem ipsume has</td>
+											    <td><span class="font-w-600">John Doe</span> <br> 25102</td>
+											    <td>
+											    	<div>
+											    		<a href="#">
+								                          <div class="doc-img">
+													      		<img src="../assets/images/icons/home-assets/eye.png">
+													      	</div>
+								                        </a>
+											    	</div>
+											      
+										      	</td>
+										    </tr>
+										    <tr>
+										    	
+										      	<td>15 Aug, 2020</td>
+											    <td><span class="font-w-600">Jack MA </span> <br> 25102</td>
+											    <td>Lorem ipsume has</td>
+											    <td><span class="font-w-600">John Doe</span> <br> 25102</td>
+											    <td>
+											    	<div>
+											    		<a href="#">
+								                          <div class="doc-img">
+													      		<img src="../assets/images/icons/home-assets/eye.png">
+													      	</div>
+								                        </a>
+											    	</div>
+											      
+										      	</td>
+										    </tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+					  	 </div>
+					  </div>-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+            <!--modal-->
+            <div class="modal fade modal-key" id="keyModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-body" style="background-color: white;">
+        <div class="row">
+          <div class="col-md-12">
+            <h3 class="green-heading text-center">Details</h3>
+             <!--<p class="text-upper text-center">Details </p>--> 
+            <div class="form-group">
+<label for="name">From wallet address</label>
+<input type="text" name="" class="form-control" value="1262576278898" readonly style="padding: 10px 10px; width: 100%;">
+<label for="name">To wallet address</label>
+<input type="text" name="" class="form-control" placeholder="1262576277777" readonly style="padding: 10px 10px; width: 100%;">
+<label for="name">Name</label>
+<input type="text" name="" class="form-control" placeholder="John" readonly style="padding: 10px 10px; width: 100%;">
+<label for="name">Address</label>
+<input type="text" name="" class="form-control" placeholder="Unit 3 Windhilly Rd.Limavady, BT49 0RA" readonly style="padding: 10px 10px; width: 100%;">
+<label for="name">My reflet ID</label>
+<input type="text" name="" class="form-control" placeholder="3D1326" readonly style="padding: 10px 10px; width: 100%;">
+<label for="name">Document Sent</label>
+<input type="text" name="" class="form-control" placeholder="Driving license" readonly style="padding: 10px 10px; width: 100%;">
+<label for="name">Address Proof</label>
+<input type="text" name="" class="form-control" placeholder="Untility Bill" readonly style="padding: 10px 10px; width: 100%;">
+<label for="name">Date & Time</label>
+<input type="text" name="" class="form-control" placeholder="26 Apr, 2021 12:55:41" readonly style="padding: 10px 10px; width: 100%;">
+<label for="name">Transaction Made</label>
+<input type="text" name="" class="form-control" placeholder="30" readonly style="padding: 10px 10px; width: 100%;">
+<label for="name">Address(BTC)</label>
+<input type="text" name="" class="form-control" placeholder="5.2602256" readonly style="padding: 10px 10px; width: 100%;">
+<img src="../assets/images/other/accepted.png" alt="Accepted" style="margin-top: 12px;">
+            </div>
+            <div class="text-center mt-4">
+            <a href="transaction.php" class="btn-common-new single-color-btn">Back</a>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+  </div>
+</div> 
+
+            <!--modal-->
+            <div class="modal fade modal-key" id="keyModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-body" style="background-color: white;">
+        <div class="row">
+          <div class="col-md-12">
+            <h3 class="green-heading text-center">Send BTC</h3>
+             <!--<p class="text-upper text-center">Details </p>--> 
+            <div class="form-group">
+<label for="name">Reciptent Wallet Address</label>
+<input type="text" name="" class="form-control" value="1262576278898" style="padding: 10px 10px; width: 100%;">
+<label for="name" style="margin-top: 12px;">Withdraw From</label>
+<input type="text" name="" class="form-control" placeholder="0x7636782789998hngb878289vbyw89980" readonly style="padding: 10px 10px; width: 100%;">
+<label for="name" style="margin-top: 12px;">Amount</label>
+<input type="text" name="" class="form-control" placeholder="amount"  style="padding: 10px 10px; width: 100%;">
+<label for="name" style="margin-top: 12px; float: right;" >MX TX FEE: 0.000000000006</label>
+            </div>
+            <div class="text-center mt-4">
+            <a href="transaction.php" class="btn-common-new single-color-btn"  style="margin-top: 20px; margin-left: 168px;">Send</a>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+  </div>
+</div> 
+<%- include('./innerFooter')%>
+
+<script>
+	function myFunction1(i_val) {
+	  var copyText = document.getElementById("wallet_addr"+i_val);
+	  copyText.select();
+	  copyText.setSelectionRange(0, 99999);
+	  document.execCommand("copy");
+	  
+	  var tooltip = document.getElementById("myTooltip"+i_val);
+	  tooltip.innerHTML = "Copied";
+		// tooltip.innerHTML = "Copied: " + copyText.value;
+	
+	}
+	
+	function outFunc(i_val) {
+	  var tooltip = document.getElementById("myTooltip"+i_val);
+	  tooltip.innerHTML = "Copy to clipboard";
+	}
+	</script>

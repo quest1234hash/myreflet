@@ -1,0 +1,213 @@
+  <table class="table tabel-virifier"id="myTable3">
+              <thead>
+                <tr>
+                  <th width="15%">S.No. </th>
+                  <!-- <th width="15%">Level id</th> -->
+                  <th width="20%">Level Name</th>
+                   <th width="20%">Documents</th>
+                  <th width="10%" class="">Status</th>
+                  <th width="15%">Created At</th>   
+                  <th width="15%">Updated At</th>                                                                                                                             
+                  <th width="20%" class="hide_link">Action</th>
+
+                  <!-- <th width="5%">Updated At</th> -->
+                </tr>
+              </thead>
+              <tbody id="myTable">
+                    <% if(level_list.length>0)
+                    {
+                       var i=0;
+                       var t=1;
+                       level_list.forEach(function(each_data){
+                          %>
+                <tr>
+                  <td><%=t%>.</td>
+                   <!-- <td>
+                     <div>
+                       <p class="">L-<%=each_data.level_id%></p>
+                     </div>
+                   </td> -->
+                   <td>                                                       
+                     <div> 
+                       <p class="upper"><%=each_data.level_name%></p>
+                     </div>
+                   </td>
+                   <td>
+
+                        <ul>                                  
+                          
+
+                          <%if(each_data.allot_data=='undefined'){%>
+                                                   <p class="upper"style="color: green;white-space: pre-wrap;"> *Document just add but not certified </p>
+                                         <%}else{%> 
+                                                 <% each_data.allot_data.forEach(function(each_doc){%>
+
+                                                           <li><p class="upper"style="white-space: pre-wrap;"><%=each_doc.document_name%></p></li>
+                                                 <%})%>
+                                                 
+                                         <%}%> 
+                         
+                        </ul>
+                       
+                     
+                   </td>
+                   <td class="">
+                      <% 
+                      if(each_data.status=="active"){ %>
+                        
+                        <button type="button" value="<%-each_data.level_id%>" id="inactivebut"  class="btn  mr-2 btn-success_1 acvtive-id_1 ">Active </button>
+                            
+                    <%  }else{ %>
+                        
+                      <button type="button" value="<%-each_data.level_id%>" id="activebut"  class="btn  btn-danger mr-2 inacvtive-id_1 " >Inactive</button>
+            
+                    <%  }
+                      %>
+                    <!-- <div class="switch-option">
+                       <div class="inner-div ">
+                          <label class="switch ">
+                            <input type="checkbox"class="switch_user"  onchange="switchUserType(value)"> 
+                           
+                            <span class="slider round"></span>
+                          </label> 
+                       </div> 
+                    </div> -->
+    
+                   <!-- <p class="change"><%=each_data.status%></p> -->
+                   </td>
+                    <td>
+                     <p><%=moment(each_data.createdAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                   <td>
+                     <p><%=moment(each_data.updatedAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                   <td class="hide_link">
+                     <div class="dropdown-menu-new">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                           <a href="#" class="dropdown-item data_value" data-target="#editLevel<%=i%>" data-toggle="modal"><i class="mdi mdi-pencil"></i>
+
+
+                            Edit</a>
+                          <a href="/delete-master-levels?level_id=<%=each_data.level_id%>"class="dropdown-item" href="#"><i class="mdi mdi-delete "></i> Delete</a>
+                        </div>
+                     </div>
+                   </td>
+                </tr>
+                <%
+                i++;  t++;    
+            });
+                }else{
+     %>
+                       <tr>
+            <td colspan="8"><center>No record found.</center> </td>
+             </tr>       <%}%>
+             
+              </tbody>
+          </table>
+        
+      <!--  <div class="pagination-list for-user">
+          
+            <% if (level_list.totalPages > 0) { %>
+             <ul class="pagination text-center">
+               <% if (level_list.currentPage == 1) { %>
+                 <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+               <% } else { %>
+                 <li class="page-item"><a class="page-link" href="/master-levels?page=1">&lt;</a></li>
+               <% } %>
+          
+          
+          
+               <% var i = (Number(level_list.currentPage) > 5 ? Number(level_list.currentPage) - 4 : 1) %>
+               <% if (i !== 1) { %>
+                 <li class="page-item disabled"><a class="page-link" >...</a></li>
+               <% } %>
+               <% for (; i <= (Number(level_list.currentPage) + 4) && i <= level_list.totalPages; i++) { %>
+                 <% if (i == level_list.currentPage) { %>
+                   <li class="page-item active">
+                   <a class="page-link" href="#"><%= i %><span class="sr-only">(level_list.currentPage)</span></a>
+                   </li>
+                 <% } else { %>
+                   <li class="page-item"><a class="page-link" href="/master-levels?page=<%= i %>"><%= i %></a></li>
+                 <% } %>
+                 <% if (i == Number(level_list.currentPage) + 4 && i < level_list.totalPages) { %>
+                   <li class="page-item disabled"><a class="page-link" >...</a></li>
+                 <% } %>
+               <% } %>
+          
+          
+               <% if (level_list.currentPage == level_list.totalPages) { %>                       
+                 <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+               <% } else { %>
+                 <li><a class="page-link" href="/master-levels?page=<%= level_list.totalPages %>">&gt;</a></li>
+               <% } %>
+          
+             </ul>
+          <% } %>
+          
+           </div>
+ -->
+ <script type="text/javascript">
+  
+    $(".acvtive-id_1").click(function(evnt){
+         
+         var id = $(this).attr("value");
+   
+     var checkstr =  confirm('Are You Sure You Want To Inactive?');
+       if(checkstr == true){
+        // alert(id)
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-level",
+                       data: { level_id: id,
+                         status:"inactive" },
+                       success:function(resp)
+                       {
+                        // alert('t')
+
+                        // alert(id);
+                       
+                         // $('#pro_img').hide();  
+                         // $('#inactivebut').hide(); 
+                         // $('#activebut').show(); 
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ 
+ 
+
+             $(".inacvtive-id_1").click(function(evnt){
+         
+             var id = $(this).attr("value");
+           
+          var checkstr =  confirm('Are You Sure You Want To Active?');
+          if(checkstr == true){
+            // alert(id)
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-level",
+                       data: { level_id:id,status:"active" },
+                       success:function(resp)
+                       {
+                        //  alert(id);
+                         // alert(status);
+                         // $('#pro_img').hide(); 
+                         // $('#activebut').hide();  
+                         // $('#inactivebut').show(); 
+                        
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ </script>

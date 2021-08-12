@@ -1,0 +1,73 @@
+      <%
+        if(reflect_code_array.length>0)
+        {
+            var k=1;        
+          reflect_code_array.forEach(function(each_data){
+            %>
+            <input type="hidden" id="userid" name="userid" value="<%= each_data.reg_user_id %>">
+             <tr class="content_search">
+               <td><%=k%></td>
+                  <td><%= each_data.document_name %>
+                </td>
+                    <td>
+                      <div class="for-flex-align">
+                        <div class="checkbox">
+                            <label>
+                      
+                                  <%if(each_data.profile_pic){
+                                                          %>
+                              <img class="profile-table hide_link" src="<%= each_data.profile_pic%>">
+                                                                            <%}else{%>
+                                                <img  class="profile-table"src="/admin-assets/images/user-icon.jpg">
+
+                                                    <%}%>
+                             
+
+                                  <%if(each_data.rep_firstname){
+                                                          %>
+                                <p class="line-hgt">
+                                <span class="font-w-600 upper"><%= each_data.rep_firstname %></span> <br>
+                             <%= each_data.reflect_code %>
+
+                              </p>
+
+                                                                            <%}else if(each_data.entity_company_name){%>
+                                        <p class="line-hgt">
+                                <span class="font-w-600 upper"><%= each_data.entity_company_name %></span> <br>
+                             <%= each_data.reflect_code %>
+
+                              </p>
+                                                    <%}else{%>
+  <p class="line-hgt">
+                                <span class="font-w-600 upper"><%= decrypt(each_data.full_name) %></span> <br>
+                             <%= each_data.reflect_code %>
+
+                              </p>
+                                                    <%}%>
+                           </label>
+                        </div>
+                  </div>
+                    </td>
+                  <td><%=moment(each_data.expire_date).format('MMM DD, YYYY')%>
+                </td>
+                  <td class="upper"><%= each_data.certified_status %>
+                </td>
+                  <td class="upper"><%= each_data.self_assested %>
+                </td>
+                  <td><%=moment(each_data.created_doc).format('MMM DD, YYYY')%>
+                </td>
+                  <td >
+                      <a href="/my-doc-license?id=<%= each_data.doc_id%>&reflect_id=<%= each_data.reflect_id%>" class="view-link hide_link">View</a>
+                    </td>
+                 </tr>
+                 <%k++;
+        });
+
+        }else
+        {
+      %>
+                <tr>
+            <td colspan="8"><center>No record found.</center> </td>
+             </tr>
+
+              <%}%>

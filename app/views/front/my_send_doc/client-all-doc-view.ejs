@@ -1,0 +1,676 @@
+<%-include('../innerHeader')%>
+<style>
+	.m-right-20{
+		margin-right: 20px;
+	}
+	.another-drop-down .for-select-existing-doc.three-drop-custom .dropdwn-btn {
+    min-width: 150px;
+    height: 37px;
+}
+.select2-selection__rendered{
+	background-color: transparent !important;
+	border-color:#333; 
+}.select2-container--default .select2-selection--single {
+    background-color: transparent !important;
+    border: 1px solid #aaa !important;
+    border-radius: 4px;
+}
+.mobile-no-select .select2-container--default .select2-selection--single{
+	border: 1px solid #333 !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #444;
+    line-height: 28px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+}
+.close-filter.for-cross{
+	font-size: 16px;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+</style>
+
+<section class="heading-sec mb-0">
+	<div class="container">
+		<ul class="breadcrumb custom-braed">
+			<%console.log("each_data.doc_data ::::: ",reflect_id)%>
+			<li><a href="/shared-doc-client?reflect_id=<%=reflect_id%>">All Clients</a><span class="arrowBread">&gt;&gt;</span> </li>
+
+			<li class="upper">All Documents</li>
+		</ul>
+		<div class="row align-item-center">
+			<div class="col-lg-9 col-md-6 col-sm-6">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/home-assets/mydocuments-purple.png">
+					
+					<h4 class="upper">All Documents</h4>
+				</div>
+			</div>
+		</div>
+	</div> 
+</section>
+<section class="setup-id-sec">
+	<div class="container">
+		<div class="row personal-info-heading">
+			<div class="col-md-12 custom-flex-row">
+				<div class="text-right">
+					<a href="">
+						<div class="icon-for-dwnload">
+							<div class="tooltip fade" data-title="Export Data" onclick="export_table();">
+								<img src="../assets/images/icons/dashboard-assets/export.png">
+						     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+							</div>
+						</div>
+					</a>
+					<a href="">
+						<div class="icon-for-dwnload">
+							<div class="tooltip fade" data-title="Print Data"onclick="print_table();">
+								<img src="../assets/images/icons/dashboard-assets/print.png">
+							    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- Button S-->
+		<!-- <div class="btn-all-dwnload">
+			<div>
+				<a href=""><img src="../assets/images/icons/dashboard-assets/icon_add_book.png"> Add to address book</a>
+				<a href=""><img src="../assets/images/icons/dashboard-assets/icon_send.png"> Send on-boarding documents</a>
+				<a href=""><img src="../assets/images/icons/dashboard-assets/icon_eye_pur.png"> View Document</a>
+				<a href=""><img src="../assets/images/icons/dashboard-assets/icon_message.png"> Manage messages</a>
+			</div> 
+		</div> -->
+		<!-- Button E -->
+		<% if(success_msg!=undefined && success_msg !='' ){ %>
+			<div class="alert alert-success text-center  flash_msg "id="success_message">
+			  <%= success_msg %>
+		   </div>
+		  <% }%>
+		  <% if(err_msg!=undefined && err_msg !='' ){ %>
+			<div class="alert alert-danger text-center  flash_msg " id="err_message">
+					<%= err_msg %>
+				 </div>
+		   
+			<% }%>
+		<div class="personal-info-box table-responsive">
+			<table class="table" id="myTable3">
+
+				<thead>
+			    	<tr>
+			    		<th width="5%" scope="col">No.</th>
+                          <th width="15%" scope="col">Document Name</th>
+
+						  <th width="30%" scope="col">Transactions Id</th>
+						  <th width="20%" scope="col">Descriptions</th>
+
+				      	<th width="20%" scope="col">Document Status</th>
+						  <th width="15%" scope="col">Created At</th>
+						  <th width="15%" scope="col">View Documents</th>
+
+				      	<!-- <th width="10%"class="hide_link" scope="col">View Clients Document</th> -->
+			    	</tr>
+			  	</thead>
+				<tbody id="div_data">
+					<%console.log("each_data.doc_data ::::: ",SharedClientDocument)%>
+
+					<%	if(SharedClientDocument.data.length>0)
+						{
+						var i=0;
+						var k=1;
+							for(let each_data of SharedClientDocument.data){
+							%>
+				  <tr>
+					<td class="upper"><%=k%>.</td>
+					  <th scope="row">
+						  <div class="for-flex-align">
+							  <div class="checkbox">
+								  <label>
+									<!-- <input class="hide_link" type="checkbox" value=""> -->
+<!-- 							            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+-->					      		     	<div>
+										   <span class="upper">
+											   
+										   <span><%=each_data.document_name%></span>
+									   </div>
+								  </label>
+							</div>
+						</div>
+					  </th>
+
+                     
+					<td class="upper">
+						<%=each_data.transaction_hash%>
+					</td>
+					<td class="upper"><%=each_data.descriptions%></td>
+
+					<td class="upper">
+						<%if(each_data.docfile_status === "accept"){%>
+						        <span style="color: green;font-size: bold;">Approved</span>
+							<%}else{%>
+								<span style="color: red;font-size: bold;">Rejected</span>
+							<%}%>
+						
+					</td>
+					<td>
+					<p>	<%=moment(each_data.shared_created_at).format('MMM DD, YYYY')%></p> </td>
+				
+
+									
+				  
+					<td>
+                        <div class="doc-img">
+							     
+							  
+							   <a href="javascript:void(0)" onclick = "get_image_view('<%=i%>','<%=each_data.transaction_hash%>','<%=each_data.reflect_id%>')">
+
+								<i class="cr-icon fa fa-eye hide_view<%=i%>"></i>
+
+                                      
+								<span id="wait_msg<%=i%>"class="loader"><img src="../assets/images/loader-3.gif"height="42" width="62"></span>
+
+							</a>
+				 
+
+                        </div>
+                    </td>
+				</tr> 
+					<%
+					i++;k++;						
+				} 
+				   }else{
+	   %>
+                       <tr>
+						<td colspan="8"><center>No record found.</center> </td>
+					   </tr>			 <%}%>
+				</tbody>
+			</table>
+		
+			   </div>
+            <div class="pagination-list for-user">
+          
+            <% if (SharedClientDocument.totalPages > 0) { %>
+             <ul class="pagination text-center">
+               <% if (SharedClientDocument.currentPage == 1) { %>
+                 <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+               <% } else { %>
+                 <li class="page-item"><a class="page-link" href="/myreflect-client-all-doc">&lt;</a></li>
+               <% } %>
+          
+          
+          
+               <% var i = (Number(SharedClientDocument.currentPage) > 5 ? Number(SharedClientDocument.currentPage) - 4 : 1) %>
+               <% if (i !== 1) { %>
+                 <!-- <li class="disabled"><a>...</a></li> -->
+                 <li class="page-item disabled"><a class="page-link" >...</a></li>
+               <% } %>
+               <% for (; i <= (Number(SharedClientDocument.currentPage) + 4) && i <= SharedClientDocument.totalPages; i++) { %>
+                 <% if (i == SharedClientDocument.currentPage) { %>
+                   <!-- <li class="active"><a><%= i %></a></li> -->
+                   <li class="page-item active">
+                   <a class="page-link" href="#"><%= i %><span class="sr-only">(SharedClientDocument.currentPage)</span></a>
+                   </li>
+                 <% } else { %>
+                   <li class="page-item"><a class="page-link" href="/myreflect-client-all-doc"><%= i %></a></li>
+                 <% } %>
+                 <% if (i == Number(SharedClientDocument.currentPage) + 4 && i < SharedClientDocument.totalPages) { %>
+                   <!-- <li class="disabled"><a>...</a></li> -->
+                   <li class="page-item disabled"><a class="page-link" >...</a></li>
+                 <% } %>
+               <% } %>
+          
+          
+               <% if (SharedClientDocument.currentPage == SharedClientDocument.totalPages) { %>                       
+                 <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+               <% } else { %>
+                 <li><a class="page-link" href="/myreflect-client-all-doc">&gt;</a></li>
+               <% } %>
+          
+             </ul>
+          <% } %>
+          
+           </div>
+		</div>
+	</div>
+</section>
+
+
+							
+
+  	
+<div class="view_certified"></div>
+<!-- Modal S -->
+
+
+<!--Add Verifier Modal E -->
+
+<%- include('../innerFooter')%>
+<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css"> -->
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+ <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+        <script type="text/javascript" src="assets/js/custom.js"></script>
+        <link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+
+ 
+
+        <script>
+	$(document).on('click.bs.dropdown.data-api', '.dropdown.keep-inside-clicks-open', function (e) {
+	  e.stopPropagation();
+	});
+</script> 
+<script>
+	$(document).on('click','.drop-down-wrapper',function(){
+		$(".show-me-filter").removeClass("active");
+		$(".filter-custom-dropdown").removeClass("active");
+
+		$(this).parent().toggleClass("active");
+		$(this).parent().find(".hide-custom").toggleClass("active");
+	});
+	$(document).on('click','.close-filter',function(){
+		$(this).parent().parent().parent().removeClass("active");
+		$(this).parent().parent().parent().parent().removeClass("active");
+	});
+	$(".close-filter1").click(function(){
+		$(this).parent().parent().removeClass("active");
+	});
+
+	$(".drop-down-wrapper1").click(function(){
+		$(".show-me-filter").removeClass("active");
+		$(".filter-custom-dropdown").removeClass("active");
+
+		$(this).parent().parent().find(".hide-custom").toggleClass("active");
+	});
+</script> 
+<!-- for dropdown E -->
+<script>
+	$("#start-date").datepicker();
+	$("#end-date").datepicker();
+</script>
+<!-- Add Filter S -->
+
+
+
+
+
+<script>
+	
+	$('.cancel').click(function()
+{
+	location.reload();
+
+})
+$(document).ready(function() {
+				$(".select2-country").select2();
+				$(".loader").hide();
+
+         });
+</script>
+<script>
+		function export_table(){
+	//   alert('hhh') 
+	// $('.hide_link').show();
+
+	  $("#myTable3").table2excel({
+		  filename: "access-market-list.xls",
+		  exclude:'.hide_link',
+	  });
+	//   $('.hide_link').show();
+	window.location.reload(true);
+
+	};
+	
+	function print_table(){
+		$('.hide_link').hide();
+     
+     // $("#user_div").print();
+     var restorepage = $('body').html();
+  // $('.nodata').hide();
+   var printcontent = $('#myTable3').clone();
+   $('body').empty().html(printcontent);
+   window.print();
+   $('body').html(restorepage);
+ 
+   window.location.reload(true);
+
+		}  
+		setTimeout(function() {
+        $('#success_message').fadeOut('fast');
+        }, 3000);
+		setTimeout(function() {
+        $('#err_message').fadeOut('fast');
+        }, 3000);
+</script>
+<script>
+
+// $('.get_category_1').click(function(){
+// 		// alert('ref_id')
+
+// 		var ref_id = $("#ref_id").val();
+// 		// alert(ref_id)
+// 	if(ref_id!=""){
+// 		$.ajax({
+// 			type: "post",
+// 			url: "/get-category-list",
+// 			data:{reflect_id:ref_id},
+// 			success: function (data) {
+// 				alert(data);  
+// 				$('#category_list_1').html(data);
+			
+//             }
+// 		});
+// 	}else{
+// 				$('#category_list_1').html("");
+// 	}
+// })
+</script>
+<script>
+	// var reflect_id
+
+
+// $(document).on('change', ".mp_select", function(){
+// 	reflect_id =   $(this).val()
+// });
+
+// $(document).on('change', ".mp_select", function(){
+// 	reflect_id =   $(this).val()
+// });
+$('.reflect_code_1').click(function()
+{
+	// alert('mp_id')
+
+	var label = $("#label_id").val();
+	var reflect_code = $("#reflect_code").val();
+
+// alert(label)
+// alert(reflect_code)
+
+
+
+
+
+	  
+
+	  $.ajax({
+  type: "post",
+  url: "/post-address-book",
+  data:{reflect_code:reflect_code,label:label},
+  success: function (data) {
+	  
+	  location.reload();
+
+  
+  }
+});
+})
+
+
+</script>
+
+<script type="text/javascript">
+	
+	    $(document).ready(function(){
+            $.ajax({
+            type: "get",
+            url: "/manage-ind-client-message-notification-count",
+            data:{},
+            success: function (data) {
+                // alert(data[0].count_msg);
+                
+                 if(data[0].count_msg>0){
+                    $('#client_manage_msg_notifications').addClass("badge");
+                    $('#client_manage_msg_notifications').addClass("badge");
+
+                    	  }else{
+                    $('#verifier_manage_msg_notifications').removeClass("new-msg-dot");
+                    $('#verifier_manage_msg_notifications').removeClass("badge");
+
+                    $('#verifier_manage_msg_notifications').html("");
+                 }
+                
+                
+            }
+        })   
+    })
+        </script>
+        <script type="text/javascript">
+function handleSelect(elm)
+{
+	// alert(elm)
+window.location = elm.value;
+}
+</script>
+
+
+<script>
+	$('.date_apply').click(()=>
+	{
+		var startDate = $(".startDate").val();
+	     var endDate = $(".endDate").val();
+
+	     if(startDate&&endDate)
+	     {
+				     	setTimeout(function() {
+			        $('#success_message_span').fadeOut('fast');
+			        }, 100);
+                  return true;
+	     }else
+	     {
+	     			 $('.success_span').html("All the fields required");
+
+                      return false;
+	     }
+		var date_list = $('input[name=check_date]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+
+	var chunks = startDate.split('/');
+
+function GetMonthName(monthNumber) {
+
+var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+return months[monthNumber - 1];
+
+}
+var month_num=chunks[0];
+
+// alert(chunks[1])
+
+// var parseDay =  parseInt(chunks[1]);
+
+// alert(parseDay)
+
+
+var formattedDate = [chunks[1],GetMonthName(month_num),chunks[2]].join("-");
+
+
+	$('.create_class').text(formattedDate);
+	// alert('startDate : '+startDate);
+	// alert('endDate : '+endDate);
+$.ajax({
+			type: "post",
+			url: "/search-msg-by-date",
+			data:{startDate:startDate,endDate:endDate,date_list:JSON.stringify(date_list)},
+			success: function (data) {
+				// alert(data)
+				$('#div_data').html("");
+				$('#div_data').html(data);
+			}
+		})
+	})
+</script>
+<script type="text/javascript">
+	$('.checkbox_my_verifier').click(function() {
+		// var userid = `${ userid}`
+		// $('.complaints_by_status_list').html(" ")
+		$(".all_list").hide();
+
+    var reflect_list = $('input[name=status_check]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+	if(reflect_list=='')
+	{
+		// $(".complaints_by_status_list").hide();
+
+		window.location.reload(true);
+
+	}
+ // alert("check box select value : "+reflect_list) 
+	$.ajax({
+                      type : 'POST',
+                      url  : '/search-msg-by-my-verifier',
+					  data: {reflect_list:JSON.stringify(reflect_list)},
+					  
+                        success: function(data) {
+				// alert(data)
+
+							$('#div_data').html("");
+			            	$('#div_data').html(data);
+						
+			}                                                    
+           
+})
+})
+	$('.checkbox_my_client').click(function() {
+		// var userid = `${ userid}`
+		// $('.complaints_by_status_list').html(" ")
+		$(".all_list").hide();
+
+    var reflect_list = $('input[name=name_check]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+	if(reflect_list=='')
+	{
+		// $(".complaints_by_status_list").hide();
+
+		window.location.reload(true);
+
+	}
+ alert("check box select value : "+reflect_list) 
+	$.ajax({
+                      type : 'POST',
+                      url  : '/search-msg-by-my-client',
+					  data: {reflect_list:JSON.stringify(reflect_list)},
+					  
+                        success: function(data) {
+				// alert(data)
+
+							$('#div_data').html("");
+			            	$('#div_data').html(data);
+						
+			}                                                    
+           
+})
+})
+</script>
+<script type="text/javascript">
+	$(document).ready( function () {
+
+		  $("#myInputSearch").on("keyup", function() {
+
+            var value = $(this).val().toLowerCase();
+            // alert(value)
+            if(value){
+            $.ajax({
+		type: "post",
+		url: "/search-msg-data",
+		data:{query:value},
+		success: function (data) {
+			// alert(data);
+			
+			     $('#div_data').html("");
+			            	$('#div_data').html(data);
+						
+			
+	
+		
+		}
+	})
+    }else{
+	     location.reload(true)}
+	})
+		})
+</script>
+<script type="text/javascript">
+
+function get_image_view(i_val,tx_value,reflect_id){
+    
+	// alert(i_val+" - "+tx_value)
+	 
+	                    $('.hide_view'+i_val).hide();
+						$('#wait_msg'+i_val).show();
+
+		$.ajax({
+				 
+				 type: "post",
+				 url: "/shared-doc-view",
+				 data:{tx_value,reflect_id},
+				 success: function (data) {
+
+					$('.hide_view'+i_val).show();
+						$('#wait_msg'+i_val).hide();
+
+								// alert(data.length)
+								alert(data)
+
+					            // $('.download_certified').hide();
+					         	// $('#wait_msg'+l_val).show();
+								 $('.view_certified').html("");
+                                          $('.view_certified').html(data);
+                                  
+      
+
+                                       
+				 
+				 }
+			 })
+      
+}
+</script>
+<script type="text/javascript">
+
+
+	function download_img(h_val) {
+		alert(h_val)
+
+		var logo_url = $('#src_val' + h_val).val();
+
+		getImgFromUrl(logo_url, function (img) {
+				generatePDF(img);
+			});
+		
+	}
+	function getImgFromUrl(logo_url, callback) {
+
+      alert(logo_url)
+	
+	  var img = new Image();
+		img.src = logo_url;
+		img.onload = function () {
+			callback(img);
+		};
+  } 
+  function generatePDF(img){
+	// alert("img")
+	var width = img.width/4
+	var height = img.height/4
+
+    var options = {orientation: 'p', unit: 'mm'};
+	var doc = new jsPDF(options);
+	
+	alert(doc)
+
+	doc.addImage(img, 'JPEG', 0, 0,width,height);
+	doc.save("certifieDoc.pdf");
+
+	}
+	
+</script>

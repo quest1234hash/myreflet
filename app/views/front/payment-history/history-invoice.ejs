@@ -1,0 +1,115 @@
+<%-include('../innerHeader')%>
+
+<section class="heading-sec">
+	<div class="container">
+		<ul class="breadcrumb custom-braed">
+			<li><a href="/payment_history">Payment History </a><span class="arrowBread">>></span> </li>
+			<li>Invoice</li>
+		</ul>
+		<div class="row align-item-center">
+			<div class="col-lg-12">
+				<div class="row personal-info-heading">
+					<div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+						<div class="main-heading-dash">
+							<h4>Invoice</h4>
+						</div>
+					</div>
+					<div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 custom-flex-row">
+						<div class="text-right">
+							<a href="javascript:void(0)"  onclick="downloadpenlist()" >
+								<div class="icon-for-dwnload">
+									<div class="tooltip fade" data-title="Export Data">
+										<img src="../assets/images/icons/dashboard-assets/export.png">
+								     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+									</div>
+								</div>
+							</a>
+							<a href="javascript:void(0)" onclick="printpendiv()">
+								<div class="icon-for-dwnload">
+									<div class="tooltip fade" data-title="Print Data">
+										<img src="../assets/images/icons/dashboard-assets/print.png">
+									    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="row" id="paymentTable">
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                       	<div class="white-box m-0">
+                       		<div>
+                       	  		<img class="logo-img" src="../assets/images/logo.png">
+                       	  	</div>
+                       	  	<div class="table-box table-responsive">
+                       	  		<table class="another-table-wrapper">
+                   	  	 			<thead>
+                   	  	 				<tr>
+                   	  	 					<th>Date</th>
+                   	  	 					<th>Description</th>
+                   	  	 					<th>Service Period</th>
+                   	  	 					<th class="text-right">Amount</th>
+                   	  	 				</tr>
+                   	  	 			</thead>
+                   	  	 			<tbody>
+                   	  	 				<tr>
+                   	  	 					<td><%=moment(pay_history[0].createdAt).format("DD , MMM , YYYY")%></td>
+                   	  	 					<td><%=pay_history[0].plan_name%></td>
+                   	  	 					<td><%=moment(pay_history[0].createdAt).format("DD , MMM , YYYY")%> - 10 Aug, 2020(dout)</td>
+                   	  	 					<td class="text-right">$<%=pay_history[0].plan_price%></td>
+                   	  	 				</tr>
+                   	  	 				<tr>
+                   	  	 					<td colspan="2" class="p-top-100">Tax</td>
+                   	  	 					<td colspan="2" class="text-right p-top-100">CHF 0.00</td>
+                   	  	 				</tr> 
+                   	  	 				<tr class="foot-tbl-cel">
+                   	  	 					<td colspan="2">Total Paid</td>
+                   	  	 					<td colspan="2" class="text-right">CHF 0.05</td>
+                   	  	 				</tr>
+                   	  	 			</tbody>
+                   	  	 		</table>
+                       	  	</div>
+                       	</div>
+					</div>
+				</div>
+
+				
+
+
+
+				
+			
+			</div>
+			
+		</div>
+		
+	</div>
+</section>
+
+
+<%- include('../innerFooter')%>
+
+<script>
+	var reflect_id = "Paymant Invoice";
+	function downloadpenlist(){
+		html2canvas(document.getElementById('paymentTable')).then(function(canvas) {
+		var img = canvas.toDataURL("image/png");
+		var doc = new jsPDF();
+		doc.text(2,5, reflect_id);
+		doc.addImage(img,'JPEG',-10,10);
+		doc.save('Paymant_Invoice.pdf');
+		});
+	  }
+	  function printpendiv(){
+		
+		var restorepage = $('body').html();
+		  $('.nodata').hide();
+		 var printcontent = $('#paymentTable').clone();
+		 $('body').empty().html(printcontent);
+		 window.print();
+		 $('body').html(restorepage);
+	   
+	  
+	  }
+</script>

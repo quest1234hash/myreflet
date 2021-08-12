@@ -1,0 +1,27 @@
+
+	<select  class="form-control" name="reflect_id_for_share_doc" id="reflect_id_for_share_doc" data-rule-required="true" data-msg-required="Please select document type.">
+
+        <option value="">Select Reflect Id</option>
+       
+            <% reflect_list.forEach(each_data=>{%>       
+       <option value="<%=each_data.reflect_id%>">
+
+         	<%if(each_data.reflectid_by=="entity"){ %>
+												
+            <%=each_data.entity_company_name%>
+
+          <%}else if(each_data.reflectid_by=="representative"){ %>
+           
+                <%=each_data.rep_firstname%>
+                
+          
+         <%}else if(each_data.reflectid_by=="digitalWallet"){ %>
+           
+              <%=each_data.wallet_name%>
+        
+        <%}%>       -<%=each_data.reflect_code%>
+
+        </option>
+      <%})%>
+
+</select>

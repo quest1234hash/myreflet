@@ -1,0 +1,245 @@
+<%-include('../innerHeader')%>
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-6 col-md-6 col-sm-6">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/verifier-home-assets/manage-sub-verifiers.png">
+					<h4>Client's Information</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="id-code-box-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="white-box full-box view-id-heading-box">
+					<div class="id-code-represent-heading"> 
+						<img src="../assets/images/icons/home-assets/Representative.png">
+                  
+						<span><%=clintDetaile[0].reflectid_by%></span>
+                 
+					</div>
+					<div>
+				     <div class="row">
+				     	<div class="col-xl-4 col-lg-6 col-md-6">
+				     		<div class="row inner-box-id-code">
+								<div class="col-md-6 p-0">
+									<div class="for-flex-align">
+										<img src="../assets/images/icons/home-assets/user.png">
+										<p>MyReflet ID</p>
+									</div>
+								</div>
+								<div class="col-md-6 dubble-dot-after p-0">
+									<p><%=clintDetaile[0].reflect_code%></p>
+								</div>
+							</div>
+				     	</div>
+				     	<div class="col-xl-4 col-lg-6 col-md-6">
+				     		<div class="row inner-box-id-code">
+								<div class="col-md-6 p-0">
+									<div class="for-flex-align">
+										<img src="../assets/images/icons/home-assets/user.png">
+										<p>First Name</p>
+									</div>
+								</div>
+								<div class="col-md-6 dubble-dot-after p-0">
+									<p><%=clintDetaile[0].full_name%></p>
+								</div>
+							</div>
+				     	</div>
+				     	<div class="col-xl-4 col-lg-6 col-md-6">
+				     		<div class="row inner-box-id-code">
+								<div class="col-md-6 p-0">
+									<div class="for-flex-align">
+										<img src="../assets/images/icons/home-assets/user.png">
+										<p>Last Name</p>
+									</div>
+								</div>
+								<div class="col-md-6 dubble-dot-after p-0">
+									<p>-</p>
+								</div>
+							</div>
+				     	</div>
+				     	<div class="col-xl-4 col-lg-6 col-md-6">
+				     		<div class="row inner-box-id-code">
+								<div class="col-md-6 p-0">
+									<div class="for-flex-align">
+										<img src="../assets/images/icons/home-assets/verified-emailID.png">
+										<p>Email ID</p>
+									</div>
+								</div>
+								<div class="col-md-6 dubble-dot-after p-0">
+									<p><%=clintDetaile[0].email%></p>
+								</div>
+							</div>
+				     	</div>
+				    
+				     	<div class="col-xl-4 col-lg-6 col-md-6">
+				     		<div class="row inner-box-id-code">
+								<div class="col-md-6 p-0">
+									<div class="for-flex-align">
+										<img src="../assets/images/icons/home-assets/phone.png">
+										<p>Phone Number</p>
+									</div>
+								</div>
+								<div class="col-md-6 dubble-dot-after p-0">
+									<p><%=clintDetaile[0].mobile_number%></p>
+								</div>
+							</div>
+				     	</div>
+				     </div>	
+					</div>
+				</div>
+
+			    <div class="personal-info-heading">
+					<div class="row align-item-center">
+						<div class="col-md-8">
+							<h4 class="purple-heading">Documents List</h4>
+						</div>
+						<div class="col-md-4">
+							<div class="text-right">
+								<a href="javascript:void(0)" onclick="downloadpenlist()">
+								<div class="icon-for-dwnload">
+									<div class="tooltip fade" data-title="Export Data">
+										<img src="../assets/images/icons/dashboard-assets/export.png">
+										 <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+									</div>
+									
+								</div>
+							</a>
+							<a class="nodata" id="" onclick="printpendiv()">
+								<div class="icon-for-dwnload">
+									<div class="tooltip fade" data-title="Print Data">
+										<img src="../assets/images/icons/dashboard-assets/print.png">
+										<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+									</div>
+								</div>
+							</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="personal-info-box table-responsive">
+					<table class="table" id="myTable">
+					  <thead>
+					    <tr>
+					      <th scope="col">Category Type</th>
+					      <th scope="col">Expected Documents</th>
+					      <th scope="col">Received Documents</th>
+					      <th scope="col">Status</th>
+					      <th scope="col">Action</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <td><%=clintDetaile[0].category_name%></td>
+					      <td><%=clintDetaile[0].cat_count%></td>
+					      <td><%=rec_count%></td>
+					      <td>
+					      <%if(clintDetaile[0].req_status=="pending"){%>
+						  <div class="pending-status">
+					      		Pending
+					      	</div>
+						  <%}else{%>
+						  <div class="approved-status">
+					      		Approved
+					      	</div>
+						  <%}%>
+						  	
+							  
+							  
+					      </td>
+					      <td>
+					      	<div class="dropdown-menu-new">
+		                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+		                          <div class="doc-img">
+							      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+							      	</div>
+		                        </a>
+		                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+		                            <a class="dropdown-item" href="/sub_client_info?request_id=<%=clintDetaile[0].request_id%>" >
+		                            	<img src="../assets/images/icons/dashboard-assets/view.png"> View Details
+		                            </a>
+									<a class="dropdown-item" href="">
+										<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+									</a>	
+		                        </div>
+		                    </div>
+				      	</td>
+					    </tr>
+					    <!-- <tr>
+					      <td>Opening of a bank account</td>
+					      <td>-</td>
+					      <td>6</td>
+					      <td>
+					      	<div class="approved-status">
+					      		Approved
+					      	</div>
+					      </td>
+					      <td>
+					      	<div class="dropdown-menu-new">
+		                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+		                          <div class="doc-img">
+							      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+							      	</div>
+		                        </a>
+		                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+		                            <a class="dropdown-item" href="client-info-view-details.php" >
+		                            	<img src="../assets/images/icons/dashboard-assets/view.png"> View Details
+		                            </a>
+									<a class="dropdown-item" href="">
+										<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+									</a>	
+		                        </div>
+		                    </div>
+				      	</td>
+					    </tr> -->
+					  </tbody>
+					</table>
+				</div>
+			</div>			
+		</div>
+	</div>
+</section>
+
+
+
+
+<%- include('../innerFooter')%>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script>
+	$(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+</script>
+<script>
+	var reflect_id = "List";
+function downloadpenlist(){
+   html2canvas(document.getElementById('myTable')).then(function(canvas) {
+   var img = canvas.toDataURL("image/png");
+   var doc = new jsPDF();
+   doc.text(2,5, reflect_id);
+   doc.addImage(img,'JPEG',-10,10);
+   doc.save('verifier_desboard_list.pdf');
+   });
+ }
+ function printpendiv(){
+   
+   var restorepage = $('body').html();
+	 $('.nodata').hide();
+	var printcontent = $('#myTable').clone();
+	$('body').empty().html(printcontent);
+	window.print();
+	$('body').html(restorepage);
+  
+ 
+ }
+</script>

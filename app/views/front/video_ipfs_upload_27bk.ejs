@@ -1,0 +1,129 @@
+<title>Parking Software</title>
+
+<br>
+
+<button id="btn-start-recording">Start Recording</button>
+<button id="btn-stop-recording" disabled>Stop Recording</button>
+
+<hr>
+<video controls autoplay playsinline></video>
+
+<form action="/entry-video-post" method="POST">
+    <input name="photo" id="photo" hidden>
+    <input type="submit" value="Check">
+</form>
+
+<script src="https://www.webrtc-experiment.com/RecordRTC.js"></script>
+<script src="record-rtc/RecordRTC.js"></script>
+<script src="record-rtc/adapter.js"></script>
+<script>
+var video = document.querySelector('video');
+
+async function captureCamera(callback) {
+
+    await navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(function(camera) {
+        callback(camera);
+    }).catch(function(error) {
+        alert('Unable to capture your camera. Please check console logs.');
+        console.error(error);
+    });
+}
+
+function stopRecordingCallback() {
+    video.src = video.srcObject = null;
+    video.muted = false;
+    video.volume = 1;
+    video.src = URL.createObjectURL(recorder.getBlob());
+
+    console.log(video.src)
+    let blob = recorder.getBlob();
+    console.log(blob);
+
+    document.getElementById('photo').value = video.src;
+    
+    // invokeSaveAsDialog(recorder.getBlob(), 'video.webm');
+    // const downloadLink = downloadBlob(recorder.getBlob(), 'lokesh.mp4');
+    // console.log(recorder.save(file));
+    
+    recorder.camera.stop();
+    recorder.destroy();
+    recorder = null;
+
+    // document.body.appendChild(downloadLink);
+}
+
+var recorder; // globally accessible
+
+document.getElementById('btn-start-recording').onclick = async function() {
+    this.disabled = true;
+    await captureCamera(function(camera) {
+        video.muted = true;
+        video.volume = 0;
+        video.srcObject = camera;
+
+        recorder = RecordRTC(camera, {
+            type: 'video'
+        });
+
+        recorder.startRecording();
+
+        // release camera on stopRecording
+        recorder.camera = camera;
+
+        document.getElementById('btn-stop-recording').disabled = false;
+
+    });
+};
+
+document.getElementById('btn-stop-recording').onclick = async function() {
+    this.disabled = true;
+    await recorder.stopRecording(stopRecordingCallback);
+
+    document.getElementById('btn-start-recording').disabled = false;
+};
+
+
+function downloadBlob(blob, filename) {
+  // Create an object URL for the blob object
+  const url = URL.createObjectURL(blob);
+  
+  // Create a new anchor element
+  const a = document.createElement('a');
+  
+  // Set the href and download attributes for the anchor element
+  // You can optionally set other attributes like `title`, etc
+  // Especially, if the anchor element will be attached to the DOM
+  a.href = url;
+  a.download = filename || 'download';
+  
+  // Click handler that releases the object URL after the element has been clicked
+  // This is required for one-off downloads of the blob content
+  const clickHandler = () => {
+    setTimeout(() => {
+      URL.revokeObjectURL(url);
+      this.removeEventListener('click', clickHandler);
+    }, 150);
+  };
+  
+  // Add the click event listener on the anchor element
+  // Comment out this line if you don't want a one-off download of the blob content
+  a.addEventListener('click', clickHandler, false);
+  
+  // Programmatically trigger a click on the anchor element
+  // Useful if you want the download to happen automatically
+  // Without attaching the anchor element to the DOM
+  // Comment out this line if you don't want an automatic download of the blob content
+  a.click();
+  
+  // Return the anchor element
+  // Useful if you want a reference to the element
+  // in order to attach it to the DOM or use it in some other way
+  return a;
+}
+
+</script>
+
+<footer style="margin-top: 20px;"><small id="send-message"></small></footer>
+<script src="https://www.webrtc-experiment.com/common.js"></script>
+
+

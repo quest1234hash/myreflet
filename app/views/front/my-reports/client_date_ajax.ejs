@@ -1,0 +1,49 @@
+<!-- <div class="col-xl-9"> -->
+    <div class="personal-info-box table-responsive another-table">
+        <table class="table" id="myTableData">
+            <thead>
+                <tr> 
+                      <th width="25%" scope="col">Email</th>
+                      <th width="15%" scope="col">MyReflet Type</th>
+                      <th width="20%" scope="col">Name</th>
+                      <th width="15%" scope="col">MyReflet Code</th>
+                      <th width="10%" scope="col">Country</th>
+                      <th width="15%" scope="col">Status</th>
+                </tr>
+              </thead>
+            <tbody id="myTable3">
+                <%if(client_data.length>0){
+                for(let client of client_data){    
+                %>
+                <tr>
+                    <td><%=client.email%></td>
+                      <td><%=client.reflectid_by%></td>
+                        <td>
+                            <%if(client.rep_firstname){%>
+                                <span class="font-w-600"><%=client.rep_firstname%></span>
+                        <%}else{%>
+                            <span class="font-w-600"><%=client.entity_company_name%></span>
+
+                        <%}%>
+                        </td>                    
+                    <td><%=client.reflect_code%></td>
+                 
+                        <%if(client.country_name){%>
+                            <td><%=client.country_name%></td>
+                            <%}else{%>
+                                <td>NA</td>
+
+                               <%}%>
+                    <td><span class="approved-status"><%=client.status%></span></td>
+                </tr>  
+                <%}}else
+                {%>  
+                        <tr>   
+                            <td></td><td>No record found</td><td></td>
+                        </tr>
+    
+                  <%}%>
+            </tbody>
+        </table>
+    </div>
+<!-- </div> -->

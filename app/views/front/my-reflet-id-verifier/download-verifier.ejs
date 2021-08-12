@@ -1,0 +1,28 @@
+
+   <%if(download_data.length>0){%>
+    <center>
+      <% if(certify=='0'){%>
+         <%  download_data.forEach(function(each_data){%>
+         
+      <img id="image_doc" style="height:30rem;width: 50rem;"src="https://ipfs.io/ipfs/<%=each_data.file_content%>">
+        <%})%>
+        <% }else{%>
+       <%  download_data[0].req_ipfs_data.forEach(function(each_data){%>
+      <img style="height:80rem;width: 50rem;"src="<%=each_data%>">
+        <%})%>
+        <% } %>
+        <br>
+        <h4 class="card-title"> 
+          Document Name :  <%=download_data[0].document_name%>
+        </h4> 
+        <h4 class="card-title"> 
+          Unique Code :       <%=download_data[0].doc_unique_code%>
+        </h4> 
+        <h4 class="card-title"> 
+                    Created at :  <%=moment(download_data[0].doc_create_date).format('MMM DD, YYYY')%>
+        </h4> 
+        <h4 class="card-title"> 
+                    Expiry Date :  <%=moment(download_data[0].expire_date).format('MMM DD, YYYY')%>
+        </h4> 
+    </center>
+   <%}%>

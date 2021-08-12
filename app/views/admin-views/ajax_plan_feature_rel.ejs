@@ -1,0 +1,149 @@
+    <table class="table tabel-virifier" id="myTable3">
+              <thead>
+                <tr>
+                  <th width="15%">Sr.No.</th>
+                  <th width="20%">Plan name</th>
+                  <th width="20%">Features</th>
+
+                  <th width="20%"class="">Status</th>
+                  <th width="20%">Created At</th>
+
+                 <!--  <th width="20%">Updated At</th> -->
+                </tr>
+              </thead>
+              <tbody id="myTable">
+                    <% if(features_list.length>0)
+                    { 
+                       var i=0;
+                       var j=1;
+                       features_list.forEach(function(each_data){
+                          %>
+                <tr>
+                   <td>
+                     <div>
+                       <p class=""><%=j%>.</p>
+                     </div>
+                   </td>
+                   <td>
+                     <div> 
+                       <p class="upper"><%=each_data.plan_name%></p>
+                     </div>
+                    </td>
+                    <td>                         
+                      <div> 
+                            <p class="upper"><%=each_data.feature_name%></p>
+                        </div>
+                           </td>
+                   <td class="hide_status">
+                    <p class="upper "><%=each_data.status%></p>
+                   </td >
+                      <td class="hide_link" >
+
+                      <% 
+                      if(each_data.status=="yes"){ %>
+                        
+                        <div class="for-flex-align">
+                        <div class="form-check">
+                        <label class="form-check-label">
+                           <input type="radio" class="form-check-input " name="optionsRadios<%=i%>"value="<%-each_data.feature_rel_id%>" checked> Yes  <i class="input-helper"></i></label>
+                       </div>
+                       <div class="form-check" class="hide_link">
+                        <label class="form-check-label">
+                          <input type="radio" class="form-check-input acvtive-id-1" name="optionsRadios<%=i%>"value="<%-each_data.feature_rel_id%>" id="inactivebut"> No <i class="input-helper"></i></label>
+                      </div>
+                        <!-- <button type="button" value="<%-each_data.plan_feature_id%>" id="inactivebut"  class="btn  mr-2 btn-success_1 acvtive-id ">Yes </button> -->
+                        </div>
+                    <%  }else{ %>
+                      
+                      <div class="for-flex-align">
+                      <div class="form-check">
+
+                      <label class="form-check-label">
+                          <input type="radio" class="form-check-input inacvtive-id-1" name="optionsRadios<%=i%>" value="<%-each_data.feature_rel_id%>"id="optionsRadios2"id="activebut" > Yes <i class="input-helper"></i></label>
+                       </div>
+                         <div class="form-check" class="hide_link">
+                        <label class="form-check-label">
+                          <input type="radio" class="form-check-input" name="optionsRadios<%=i%>" value="<%-each_data.feature_rel_id%>"id="optionsRadios2" checked> No <i class="input-helper"></i></label>
+                      </div>
+                      <!-- <button type="button" value="<%-each_data.plan_feature_id%>" id="activebut"  class="btn  btn-danger mr-2 inacvtive-id " >No</button> -->
+                    </div>
+
+                    <%  }
+                      %>
+                   </td>
+                    <td>
+                     <p><%=moment(each_data.created_at).format('MMM DD, YYYY')%></p>
+                   </td>
+                  
+                  
+                </tr>
+                <% 
+                i++;  j++;    
+            });
+              }else{
+     %>
+                       <tr>
+            <td colspan="8"><center>No record found.</center> </td>
+             </tr>       <%}%>
+             
+              </tbody>
+            </table>
+ <script>
+     $(document).ready(function(){
+          $('.hide_status').hide();
+     })
+      
+ </script>
+<script type="text/javascript">
+  
+ 
+    $(".acvtive-id-1").click(function(evnt){
+         
+        //  var id = $(this).attr("value");
+         var id = $(this).attr("value");
+
+     var checkstr =  confirm('Are You Sure You Want To update status no?');
+       if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-plan-feature-rel",
+                       data: { feature_rel_id: id,
+                         status:"no" },
+                       success:function(resp)
+                       {
+                      
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ 
+ 
+  
+
+      $(".inacvtive-id-1").click(function(evnt){
+                
+             var id = $(this).attr("value");
+           
+          var checkstr =  confirm('Are You Sure You Want To update status yes?');
+          if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-plan-feature-rel",
+                       data: { feature_rel_id:id,
+                         status:"yes" },
+                       success:function(resp)
+                       {
+                       
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ </script>

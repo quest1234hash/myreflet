@@ -1,0 +1,355 @@
+<%-include('innerHeader')%>
+
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12">
+				<div class="custom-space-btw align-items-center">
+					<div class="main-heading-dash">
+						<img src="../assets/images/icons/home-assets/myrequests.png">
+						<h4>Certified Documents</h4>
+					</div>
+					<div>
+						<a href="#" class="btn-common-new text-center m-0" data-target="#newComplaint" data-toggle="modal">Self Certify</a>
+					</div>
+				</div>
+				<div class="custom-space-btw another-drop-down m-top-30 align-items-end sp-dropdwon">
+					<!-- <div class="for-select-existing-doc three-drop-custom">
+					    
+						<div class="input-group">
+							<div class="dropdown keep-inside-clicks-open">
+								<h3 class="small-title">MyReflet ID</h3>
+								<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    All
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 20px, 0px);">
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								        	<label>
+								          		All
+								            	<input type="checkbox" value="">
+								            	<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+								    </div>
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								         	<label>
+									          	John Doe - 1235556
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+								    </div>
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								         	<label>
+									          	Quest Glt - 1235556
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+								    </div>
+								</div>
+							</div>
+						</div>
+							
+					</div> -->
+					<div class="responsive-search">
+						<form class="response-search"> 
+		                     <div class="input-group search-address-book">
+		                        <input type="text" class="form-control autocomplete" id="myInput" placeholder="Search" onkeypress="autoSearch(this);">
+		                        <div class="input-group-append">
+		                            <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+		                        </div>
+		                    </div>
+	                  	</form>
+					</div>
+				</div>
+				<div class="personal-info-heading">
+					<div class="text-right">
+						<a href="">
+							<div class="icon-for-dwnload">
+								<div class="tooltip fade" data-title="Export Data">
+									<img src="../assets/images/icons/dashboard-assets/export.png">
+							     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+								</div>
+							</div>
+						</a>
+						<a href="">
+							<div class="icon-for-dwnload">
+								<div class="tooltip fade" data-title="Print Data">
+									<img src="../assets/images/icons/dashboard-assets/print.png">
+								    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class="personal-info-box table-responsive another-table">
+					<table class="table" id="myTable3">
+						<thead>
+					    	<tr> 
+						      	<th scope="col">S.No</th>
+						      	<th scope="col">label</th>
+						      	<th scope="col">Image</th>
+						      	<th scope="col">MyReflet ID</th>
+						      	<th scope="col">Created At</th>
+					    	</tr>
+					  	</thead>
+						<tbody>
+							<%if(certified_docs.length>0){
+								var i=1; for(let doc of certified_docs){%>
+						    <tr>
+						    	<td><%=i%></td>
+						      	<td><%=doc.document_name%></td>
+							    <td>
+							    	<div class="doc-img">
+							      		<img src="<%=doc.self_certified%>">
+							      	</div>
+							    </td>
+							    <td>
+									<%if(doc.reflectid_by=="representative"){%>
+										<%=doc.reflect_code%>-<%=doc.rep_username%>
+									<%}else{%>
+										<%=doc.reflect_code%>-<%=doc.entity_company_name%>
+									<%}%>	
+								</td>
+							    
+							    <td>
+									<%=moment(doc.createdAt).format('DD MMM, YYYY')%>
+						      	</td>
+							</tr>
+							<%i++; }}else{%>
+								<td colspan="6"><center>No record found.</center></td>
+							<%}%>	
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Modal S -->
+ 
+ <div class="modal fade field-edit-modal" id="newComplaint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">New Document</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact pt-15">
+						<div class="create-rflet-id-form">
+							<div class="form-group">
+						    	<label>MyReflet Id</label>
+						    	<div class="input-group">
+								  <select class="form-control" onchange="get_docs(this.value)" name="select_reflet">
+									<option>Select MyReflet Code</option>
+									  <%if(refletIds.length>0){%>
+										<%for (let myrefletids of refletIds){%>
+											
+								  	  <option value="<%=myrefletids.reflect_id%>"><%if(myrefletids.reflectid_by=="representative"){%>
+										<%=myrefletids.reflect_code%>-<%=myrefletids.rep_username%>
+									<%}else{%>
+										<%=myrefletids.reflect_code%>-<%=myrefletids.entity_company_name%>
+									<%}%>	</option>
+									<%}}%>
+
+								  </select>
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	
+								    </span>
+								  </div>
+								</div>
+						    </div>
+							<div id="doc_div"></div>
+							<div id="doc_img_div"></div>
+						    <div class="form-group for-signature-pad">
+								<div class="row for-heading-sign">
+									<label class="col-sm-6">Drow Your Sign</label>
+									<div class="col-sm-6 text-right">
+										<button class="clear-sign" id="clear-signature">Clear</button>
+									</div>
+								</div>
+								<canvas id="signature" width="640" height="150" style="touch-action: none;"></canvas>
+							</div>
+							<span id="canvas_error" class="error_validate"></span>
+						</div>
+						<div >
+							<input type="hidden" id="attested_doc_id" name="attested_doc">
+							<input type="hidden" id="reflect_id_for_doc" >
+							<button class="btn-common-new hide_click" id="sub_sign_btn" type="button" onclick="submit_signature()">Save</button>
+							<span class="loader"><img src="../assets/images/loader-3.gif"height="42" width="62"></span>
+							<a class="btn-common-new hide_click"  href="">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div> 
+<!-- Modal E -->
+
+<%- include('innerFooter')%>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script>
+$(document).ready( function () {
+	$('.table').DataTable();
+} );
+</script>
+<script>
+	$(document).on('click.bs.dropdown.data-api', '.dropdown.keep-inside-clicks-open', function (e) {
+	  e.stopPropagation();
+	});
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
+ <script>
+ 	jQuery(document).ready(function($){
+		$('.loader').hide();
+    var canvas = document.getElementById("signature");
+    var signaturePad = new SignaturePad(canvas);
+    
+    $('#clear-signature').on('click', function(){
+        signaturePad.clear();
+    });
+    
+});
+ </script>
+
+ <script>
+	function get_docs(reflet_id){
+		// alert(reflet_id);
+		$('#reflect_id_for_doc').val(reflet_id);
+		$.ajax({
+			type: "post",
+			url: "/get-doc-list",
+			data:{reflet_id},
+			success: function (data) {
+				// alert(data);
+				$('#doc_div').html(data);
+			}
+		})		
+	}
+
+	function get_doc_img(user_doc_id){
+		// alert(user_doc_id);
+		$('#attested_doc_id').val(user_doc_id);
+		$.ajax({
+			type: "post",
+			url: "/get-doc-imgs",
+			data:{user_doc_id},
+			success: function (data) {
+				// alert(data);
+				$('#doc_img_div').html(data);
+			}
+		})		
+	}
+
+	function submit_signature()
+ {
+
+ 	var signature=$('#signature').get(0);
+ 	var signature_url=signature.toDataURL();
+	//  alert(signature);
+	var user_doc_id = $('#attested_doc_id').val();
+	var reflect_id = $('#reflect_id_for_doc').val();
+	if(reflect_id){
+	if(user_doc_id){
+		// alert(user_doc_id);
+ 	if(signature_url)
+ 	{
+ 		
+		 var can_val =isCanvasBlank(signature);
+		//  alert(can_val);
+		if(can_val!=true){
+				$('.hide_click').hide();
+ 	        	$('.loader').show();
+		    $('#canvas_error').html("");
+			var blob_url=signature_url;
+			
+				$.ajax({
+				type:"post",
+				url:"/self-attested",
+				data:{attested_doc_id:user_doc_id,blob_url:blob_url},
+				success:function(data) {
+					// alert(data)
+					location.reload();
+					// $('#example_img').attr('src',`https://ipfs.io/ipfs/${data}`)
+					// console.log(data)
+				}
+			});
+			
+			
+
+ 	    }else{
+			$('#canvas_error').html("");
+		    $('#canvas_error').html("Please draw your signature.");
+		}
+	
+
+	}
+}else{
+				$('#canvas_error').html("");
+				$('#canvas_error').html("Please select Document.");
+			}
+		}else{
+			$('#canvas_error').html("");
+				$('#canvas_error').html("Please select MyReflet code first.");
+			}
+		}
+
+function isCanvasBlank(canvas) {
+  return !canvas.getContext('2d')
+    .getImageData(0, 0, canvas.width, canvas.height).data
+    .some(channel => channel !== 0);
+}
+function dataURItoBlob(dataURI) {
+		// alert("in");
+		console.log("canvas",dataURI);
+ // convert base64 to raw binary data held in a string
+ // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+ var byteString = atob(dataURI.split(',')[1]);
+
+ // separate out the mime component
+ var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+
+ // write the bytes of the string to an ArrayBuffer
+ var ab = new ArrayBuffer(byteString.length);
+
+ // create a view into the buffer
+ var ia = new Uint8Array(ab);
+
+ // set the bytes of the buffer to the correct values
+ for (var i = 0; i < byteString.length; i++) {
+     ia[i] = byteString.charCodeAt(i);
+ }
+
+ // write the ArrayBuffer to a blob, and you're done
+ var blob = new Blob([ab], {type: mimeString});
+ return blob;
+
+}
+ </script>

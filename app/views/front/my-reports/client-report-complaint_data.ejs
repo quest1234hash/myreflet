@@ -1,0 +1,1208 @@
+<%-include('../innerHeader')%>
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12">
+				<div class="row personal-info-heading">
+					<div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+						<div class="main-heading-dash">
+							<img src="../assets/images/icons/marketplace-assets/other-verifiers-grey.png">
+							<h4>Complaint Report</h4>
+						</div>
+					</div>
+					<div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 text-right">
+						<a href="#save-report" data-toggle="modal"  class="btn-common-new">Save</a>
+						<a href="javascript:void(0)" onclick="run_query()" class="btn-common-new">Run</a>
+						<a href="my-reports-list" class="btn-common-new">Close</a>
+					</div>
+				</div>
+
+				<div class="custom-space-btw align-items-center m-bottom-30 personal-info-heading">
+					<form class="">
+                      <div class="input-group search-address-book">
+                          <input type="text" class="form-control autocomplete" id="myInputSearch" placeholder="Search">
+                          <div class="input-group-append">
+                              <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+                          </div>
+                      </div>
+                  	</form>
+					<div class="text-right">
+						<a href="javascript:downloadPersonal()" class="nodata">
+							<div class="icon-for-dwnload">
+								<div class="tooltip fade" data-title="Export Data"onclick="export_table();">
+									<img src="../assets/images/icons/dashboard-assets/export.png">
+							     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+								</div>
+							</div>
+						</a>
+							<a class="nodata" id="" onclick="printdiv()">
+
+							<div class="icon-for-dwnload">
+								<div class="tooltip fade" data-title="Print Data"onclick="print_table();">
+									<img src="../assets/images/icons/dashboard-assets/print.png">
+								    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xl-3 col-lg-5 col-md-6 col-sm-6">
+				<div class="filter-tabs-wrapper tab-content">
+					<div class="align-item-center another-tabs-wrapper">
+						<ul class="nav nav-tabs all-doc-tabs" id="myTab" role="tablist">
+						  	<li class="nav-item">
+						    	<a class="nav-link active show" id="doc1" data-toggle="tab" href="#doc-tab1" role="tab" aria-controls="doc-tab1" aria-selected="false">Columns</a>
+						  	</li>
+						  	<li class="nav-item">
+						    	<a class="nav-link" id="doc2" data-toggle="tab" href="#doc-tab2" role="tab" aria-controls="doc-tab2" aria-selected="false">Filters</a>
+						  	</li>
+						</ul>
+					</div>
+					<div class="add-column-wrapper tab-pane fade show active" id="doc-tab1" role="tabpanel" aria-labelledby="doc1">
+						<form>
+	                      	<div class="input-group search-address-book">
+	                         	<input type="text" class="form-control autocomplete" id="myInput" placeholder="Add column..." onkeypress="autoSearch(this);">
+		                        <div class="input-group-append">
+		                            <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+		                        </div>
+	                      </div>
+	                  	</form>
+	                  	<div>
+	                  		<div>
+			            		<ul>  
+			            			<li>
+			            				<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" name="column_check" value="complain_id">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                Complaint Id
+								         	</label>
+			        					</div>
+			        					<span class="close-filter">X</span>
+			        				</li>
+			        				<li>
+			            				<div class="checkbox">
+								          	<label>
+									            <input type="checkbox"  name="column_check"value="verifier">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                Verifier								         	</label>
+			        					</div>
+			        					<span class="close-filter">X</span>
+			        				</li>
+			        				<li>
+			            				<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" name="column_check" value="complaint_message">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                Message
+								         	</label>
+			        					</div>
+			        					<span class="close-filter">X</span>
+			        				</li>
+			        				<li>
+			            				<div class="checkbox">
+								          	<label>
+									            <input type="checkbox"  name="column_check"value="reflect_code">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                My reflect Id								         	</label>
+			        					</div>
+			        					<span class="close-filter">X</span>
+			        				</li>
+			        				<li>
+			            				<div class="checkbox">
+								          	<label>
+									            <input type="checkbox"  name="column_check"value="status">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                Status
+								         	</label>
+			        					</div>
+			        					<span class="close-filter">X</span>
+			        				</li>
+			        				<!-- <li>
+			            				<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							      		     	Status
+								         	</label>
+			        					</div>
+			        					<span class="close-filter">X</span>
+			        				</li> -->
+				            	</ul>
+				            </div>
+	                  	</div>
+					</div>
+					<div class="add-column-wrapper tab-pane fade" id="doc-tab2" role="tabpanel" aria-labelledby="doc2">
+				  	 	<div class="show-me-filter mt-20">
+				  	 		<div id="addFilter" class="drop-down-wrapper">
+                      			<p>Add Filter
+                      			<img src="../assets/images/icons/search-black.png">
+                      			</p>
+                      		</div>
+                      		<div class="filter-custom-dropdown hide-custom">
+	                  			<ul>
+	                  				<li>
+			            				<label class="font-w-600">Add Filter</label>
+			        					<span class="close-filter">X</span>
+			        				</li>
+	                  			</ul>
+	                  			<div id="">
+				            		<ul>
+				            			<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox"class="filterList"name="filter_checkbox"value="Complain Id">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Complain Id
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox"class="filterList"name="filter_checkbox"value="Verifier">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													
+													<%if(user_type==='verifier'){%>
+														MyReflet ID
+													   <%}else{%>
+														Verifier
+													  <%}%>									
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox"class="filterList"name="filter_checkbox" value="Complain Messsage">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Complain Messsage
+
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox"class="filterList"name="filter_checkbox" value="MyReflet ID">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													   
+													   <%if(user_type==='verifier'){%>
+														Client ID
+													   <%}else{%>
+														MyReflet ID
+													  <%}%>
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<!-- <li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox" value="reflect_code">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													MyReflet Code
+
+									         	</label>
+				        					</div>
+				        				</li> -->
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox"class="filterList"name="filter_checkbox" value="Status">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Status
+									         	</label>
+				        					</div>
+				        				</li>
+					            	</ul>
+				            	</div>
+	                  		</div>
+              			</div>
+                  
+						  <div class="show-me-filter mt-20">
+							<div class="drop-down-wrapper">
+								<span>Created Date</span>
+								<p class="create_class">  </p>
+							</div>
+							<div class="filter-custom-dropdown hide-custom">
+								<ul>
+									<li>
+									  <label class="font-w-600">Filter by Date </label>
+									  <span class="close-filter">X</span>
+								  </li>
+								</ul>
+								<div class="setup-inner-box for-protact p-0">
+									<div class="create-rflet-id-form">
+										<div class="form-group for-select-existing-doc">
+										  <div class="input-group">
+												<div class="dropdown keep-inside-clicks-open">
+												  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												  Date
+													</button>
+													<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+													  <div class="for-doc-select">
+														  <div class="checkbox"> 	
+																<label>
+																	Created Date
+																  <input type="checkbox" value="created"name="check_date">
+																  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+																</label>
+														  </div>	
+													   </div>
+														<div class="for-doc-select">
+														  <div class="checkbox"> 	
+																<label>
+																	Last Modified Date
+																  <input type="checkbox" value="updated"name="check_date">
+																  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+																</label>
+														  </div>	
+													   </div>
+													</div>
+											  </div>
+										  </div>
+									  </div>
+									  <div class="form-group">
+										  <!-- <div class="input-group">
+											<input type="text" id="range" class="form-control" placeholder="Range">
+										  </div> -->
+									  </div>
+									  <div class="form-group">
+										  <div class="input-group">
+											<input type="text" id="start-date" class="form-control startDate" placeholder="Start Date">
+										  </div>
+									  </div>
+									  <div class="form-group">
+										  <div class="input-group">
+											<input type="text" id="end-date" class="form-control endDate"  placeholder="End Date">
+										  </div>
+									  </div>
+									  <div class="text-right">
+										  <button class="btn-common-new small-btn close-filter date_apply">Apply</button>	
+									  </div>
+									  
+								  </div>
+							  </div>
+							</div>
+						</div>
+						  <div id="appendFilter">
+							<div>
+							<div id="rowMatching" class="show-me-filter mt-20 filter-remove-bdr" style="display: block;">
+								<div class="">
+									<span>Includes Row Matching</span>
+									<p class="tabWrapper drop-down-wrapper1">1 AND ((2 OR 3) OR (4 AND 5)) <i class="fas fa-pencil-alt"></i></p>
+								</div>
+								<div class="filter-custom-dropdown hide-custom">
+									<ul>
+										<li>
+										  <label class="font-w-600">Edit Filter Logic</label>
+										  <span class="close-filter">X</span>
+									  </li>
+									</ul>
+								  <div class="edit-logic">
+									  <p>1 AND ((2 OR 3) OR (4 AND 5))</p>
+								  </div>	
+								  <div class="tabWrapper mt-15">
+									  <button class="btn-common-new small-btn close-filter1">Remove</button>	
+									  <button class="btn-common-new small-btn close-filter1">Apply</button>	
+								  </div>
+								</div>
+							</div>
+						</div>
+						<div>
+							<!--Complain Id  -->
+							<div class="show-me-filter mt-20 main-heading-dash " id="complain_id_filter">
+								<div class="drop-down-wrapper edit-filter-new-change main-heading-dash width-full">
+									<label class="font-w-600"> Complain Id</label>
+									<div class="setup-inner-box for-protact p-0">
+										<div class="create-rflet-id-form">
+											<div class="form-group for-select-existing-doc">
+												<div class="input-group">
+													<div class="dropdown keep-inside-clicks-open">
+														<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Id</button>
+														<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														  <%if(complaint_data){
+															  for(let complaint of complaint_data){    
+															  %>
+														  <div class="for-doc-select ">
+															  <div class="checkbox"> 	
+																  <label >C - <%=complaint.complain_id%>
+																	  <input type="checkbox" value="<%=complaint.complain_id%>"name="complaint_id_name"class="complain_id_class">
+																	  <span class="cr"><i class="cr-icon fa fa-check"></i></span></label>
+															  </div>
+														  </div>
+														  <%}}%>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						   <!-- Verifier -->
+							<div class="show-me-filter mt-20 main-heading-dash"id="verifier_filter">
+							  <div class="drop-down-wrapper edit-filter-new-change main-heading-dash width-full">
+								  <label class="font-w-600"> 
+									   <%if(user_type==='verifier'){%>
+									  MyReflet ID
+									  <%}else{%>
+									  Verifier
+									<%}%>
+								  </label>
+								  <div class="setup-inner-box for-protact p-0">
+									  <div class="create-rflet-id-form">
+										  <div class="form-group for-select-existing-doc">
+											  <div class="input-group">
+												  <div class="dropdown keep-inside-clicks-open">
+													  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select</button>
+													  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														  <%if(verifier_user){
+															  for(let complaint of verifier_user){    
+															  %>
+													  
+															  
+									  
+											  <div class="for-doc-select">
+												  <div class="checkbox"> 	
+														  <label>
+														
+
+
+															         <span class="font-w-600">
+                                      <%if(complaint.rep_firstname){%>
+												<%= complaint.rep_firstname%> - <%= complaint.reflect_code %>
+
+                                        <%}else if(complaint.entity_company_name){%>
+												<%= complaint.entity_company_name%> - <%= complaint.reflect_code %>
+                         <%}%>                                              
+
+                                                </span> 
+															  <input type="checkbox" name="verifier_name"value="<%= complaint.reflect_id %>"class="verifier_class">
+															  <span class="cr">
+															  <i class="cr-icon fa fa-check"></i></span></label>
+												  </div>
+											  </div>										
+																	
+																	  
+														  <%}}%>
+													  </div>
+												  </div>
+											  </div>
+										  </div>
+									  </div>
+								  </div>
+							  </div>
+						  </div>	
+						 <!-- Complain Messsage -->
+
+						  <div class="show-me-filter mt-20 main-heading-dash"id="msg_filter">
+							  <div class="drop-down-wrapper edit-filter-new-change main-heading-dash width-full">
+								  <label class="font-w-600"> Complain Messsage</label>
+								  <div class="setup-inner-box for-protact p-0">
+									  <div class="create-rflet-id-form">
+										  <div class="form-group for-select-existing-doc">
+											  <div class="input-group">
+												  <div class="dropdown keep-inside-clicks-open">
+													  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select message</button>
+													  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														  <%if(complaint_data){
+															  for(let complaint of complaint_data){    
+															  %>
+														  <div class="for-doc-select">
+															  <div class="checkbox"> 	
+																  <label><%=complaint.complain_message%><input class="msg_class" type="checkbox" value="<%=complaint.complain_message%>"name="msg_name"><span class="cr"><i class="cr-icon fa fa-check"></i></span></label>
+															  </div>
+														  </div>
+														  <%}}%>
+													  </div>
+												  </div>
+											  </div>
+										  </div>
+									  </div>
+								  </div>
+							  </div>
+						  </div>
+						   <!-- MyReflet ID -->
+						   
+							  <div class="show-me-filter mt-20 main-heading-dash"id="reflet_id_filter">
+							  <div class="drop-down-wrapper edit-filter-new-change main-heading-dash width-full">
+								  <label class="font-w-600"> 
+									  <%if(user_type==='verifier'){%>
+										  Client ID
+										  <%}else{%>
+											  MyReflet ID
+										<%}%>
+								  </label>
+								  <div class="setup-inner-box for-protact p-0">
+									  <div class="create-rflet-id-form">
+										  <div class="form-group for-select-existing-doc">
+											  <div class="input-group">
+												  <div class="dropdown keep-inside-clicks-open">
+													  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Client</button>
+													  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														  <%if(my_client_user){
+															  for(let complaint of my_client_user){    
+															  %>
+											  
+								  <div class="for-doc-select">
+									  <div class="checkbox"> 	
+											  <label>
+												  <span class="font-w-600">
+
+
+												  <%if(complaint.rep_firstname){%>
+												<%= complaint.rep_firstname%> - <%= complaint.reflect_code %>
+
+                                        <%}else if(complaint.entity_company_name){%>
+												<%= complaint.entity_company_name%> - <%= complaint.reflect_code %>
+                         <%}%>                                            
+
+										 </span> 
+												  <input type="checkbox" value="<%= complaint.reflect_code %>"class="client_class"name="client_name"><span class="cr">
+												  <i class="cr-icon fa fa-check"></i></span></label>
+									  </div>
+								  </div>		
+														  <%}}%>
+													  </div>
+												  </div>
+											  </div>
+										  </div>
+									  </div>
+								  </div>
+							  </div>
+						  </div>
+						   <!--Status -->
+						   
+							  <div class="show-me-filter mt-20 main-heading-dash "id="status_filter">
+							  <div class="drop-down-wrapper edit-filter-new-change main-heading-dash width-full">
+								  <label class="font-w-600"> Status</label>
+								  <div class="setup-inner-box for-protact p-0">
+									  <div class="create-rflet-id-form">
+										  <div class="form-group for-select-existing-doc">
+											  <div class="input-group">
+												  <div class="dropdown keep-inside-clicks-open">
+													  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Status</button>
+													  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														  <div class="for-doc-select">
+																  <div class="checkbox"> 	
+																	   <label>
+																		  Pending <input type="checkbox" value="pending"class="status_class"name="status_name">
+																		  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+																		</label>
+																  </div>	
+															  </div>
+															  <div class="for-doc-select">
+																  <div class="checkbox"> 	
+																	   <label>
+																		  Closed
+																		  <input type="checkbox" value="closed"class="status_class"name="status_name">
+																		  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+																		</label>
+																  </div>	
+															  </div>
+															  <div class="for-doc-select">
+																  <div class="checkbox "> 	
+																	  <label>
+																		  Responded
+																		  <input type="checkbox" value="responded" class="status_class"name="status_name">
+																		  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+																		</label>
+																  </div>	
+															  </div>
+
+													  </div>
+												  </div>
+											  </div>
+										  </div>
+									  </div>
+								  </div>
+							  </div>
+						  </div>
+						</div>
+
+
+						</div>
+	                </div>
+				</div>
+            </div>
+            <!-- <div id="div_data"> -->
+			<div class="col-xl-9 div_data">
+				<div class="personal-info-box table-responsive another-table">
+					<table class="table" id="myTableData">
+						<thead>
+					    	<tr> 
+                                <th width="15%" scope="col">Complaint Id</th>
+                                	<%
+									  if(user_type=='verifier')
+									  {
+									  	%>
+
+						      	<th width="15%" scope="col">Client Id</th>
+						      		<%}
+									  else
+									  {
+									  	%>
+									  	<th width="15%" scope="col">Verifier</th>
+									  	<%}%>
+
+						      	<th width="25%" scope="col">Message</th>
+						      	  	<%
+									  if(user_type=='verifier')
+									  {
+									  	%>
+
+						      		<th width="20%" scope="col">My reflect Id</th>
+						      		<%}
+									  else
+									  {
+									  	%>
+									  	<th width="20%" scope="col">My reflect Id</th>
+									  	<%}%>
+						      
+						      	<th width="15%" scope="col">Status</th>
+						      	<!-- <th width="15%" scope="col">Status</th> -->
+					    	</tr>
+					  	</thead>
+						<tbody id="myTable3">
+                            <%if(complaint_data.length>0){
+                            for(let complaint of complaint_data){    
+                            %>
+						    <tr class="search_tr"> 
+                                <td>C - <%=complaint.complain_id%></td>
+                                <td class="upper">
+							    	<%
+									  if(user_type=='client')
+									  {
+									  	%>
+
+									        <%if(complaint.rep_firstname){%>
+                                    <span class="font-w-600"><%= complaint.rep_firstname%> </span> <br> <%= complaint.reflect_code %>
+
+                                  <%}else if(complaint.entity_company_name){%>
+                                    <span class="font-w-600"> <%=complaint.entity_company_name%> </span>
+                               <br> <%= complaint.reflect_code %>
+                                <%}else{%>
+                                    <span class="font-w-600"> <%=decrypt(complaint.full_name)%> </span>
+                                    <br> <%= complaint.reflect_code %>
+                                <%}%>
+
+                
+									  
+									  	<%
+									  }
+									  else
+									  {
+									  	%>
+									  		<span class="font-w-600">
+										<%= complaint.client_reflect_name %>
+										</span> <br><%= complaint.client_reflect_code %> 
+
+
+										
+									  	<%
+									  }
+									%>
+							    </td>
+                            </td>							  
+                           <td class="upper"><%=complaint.complain_message%></td>
+                           <td class="upper">
+
+                            <%
+                              if(user_type=='client')
+                              {
+                                  %>
+
+                                  <span class="font-w-600">
+                                <%= complaint.client_reflect_name %>
+                                </span> <br><%= complaint.client_reflect_code %> 
+                                  <%
+                              }
+                              else
+                              {
+                                  %>
+                                 <%if(complaint.rep_firstname){%>
+                                    <span class="font-w-600"><%= complaint.rep_firstname%> </span> <br> <%= complaint.reflect_code %>
+
+                                  <%}else if(complaint.entity_company_name){%>
+                                    <span class="font-w-600"> <%=complaint.entity_company_name%> </span>
+                               <br> <%= complaint.reflect_code %>
+                                <%}else{%>
+                                    <span class="font-w-600"> <%=decrypt(complaint.full_name)%> </span>
+                                    <br> <%= complaint.reflect_code %>
+                                <%}%>
+
+                
+                                  <%
+                              }
+                            %>
+                            
+
+                        </td>
+                <td class="upper"><span class="pending-status"><%=complaint.complaint_status%></span></td>
+                                
+                            </tr>  
+                            <%}}else{
+	   %>
+                       <tr>
+						<td colspan="6"><center>No record found.</center> </td>
+					   </tr>			 <%}%>
+					   <tr class="tr_search">
+						<td colspan="6"><center>No record found.</center> </td>
+					   </tr>
+						</tbody>
+					</table>
+				</div>
+            </div>
+        <!-- </div> -->
+		</div>
+	</div>
+</section>
+<!--Save Report S  -->
+<div class="modal fade field-edit-modal" id="save-report" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-upload-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Save Report</h5>
+				</div>
+			</div>
+			<form method="POST" action="/save-report"id="save_validate">
+				<div class="row">
+					<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+						<div class="setup-inner-box for-protact">
+							<div class="create-rflet-id-form">
+								<div class="form-group">
+									<div class="input-group">
+										<input type="hidden" value="<%=market_list_result[0].report_id%>" name="report_id">
+										<input type="hidden" value="" id="checked_column" name="checked_column">
+									  <input type="text" id="" class="form-control" name="report_name" placeholder="Report Name"data-rule-required="true" data-msg-required="Please enter report name." >
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="input-group">
+									  <input type="text" class="form-control" name="description" placeholder="Description"data-rule-required="true" data-msg-required="Please enter description." >
+									</div>
+								</div>
+								<div class="form-group">
+							         
+											<div class="input-group">
+												<select class="form-control valid mp_select" name="reflect_id_report" data-rule-required="true" data-msg-required="Please select sub-category." aria-invalid="false">
+												
+													<option>Select Reflet Code</option>
+													<% if(all_reflet_code.length>0){
+														for(var i=0;i<all_reflet_code.length;i++){
+															%>
+													<option value="<%=all_reflet_code[i].reflect_id %>">    
+
+									<%if(all_reflet_code[i].rep_firstname){%>
+									                                      <span class="upper"><%=all_reflet_code[i].rep_firstname %>-   <%=all_reflet_code[i].reflect_code %>
+																					</span>
+									                                <%}else if(all_reflet_code[i].entity_company_name){%>
+									                                        <span class="upper"><%=all_reflet_code[i].entity_company_name %>-   <%=all_reflet_code[i].reflect_code %>
+																					</span>
+
+									                                <%}else{%>
+									 <span class="upper"> <%=all_reflet_code[i].reflect_code %>
+																					</span >                              <%}%>
+
+												
+
+												</option>
+												
+													<%}}%>
+												
+												</select>
+											</div>
+												<span class="success_message_span success_span"style="color:red"></span>
+								</div>
+							</div>
+
+							<div >
+								<button class="btn-common-new check_option hide_btn" type="submit">Save</button>
+								<a class="btn-common-new hide_btn" href="">Cancel</a>
+								<center><span class="loader"><img src="../assets/images/loader-3.gif"height="22" width="52"></span></center> 
+							</div>
+						</div>
+					</div>
+				 </div>
+				</form>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+<!-- Save Report E -->
+
+<%- include('../innerFooter')%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+
+<script>
+	$('#save_validate').validate({
+   onfocusout: function(element) {
+   this.element(element);
+   },
+   errorClass: 'error_validate',
+   errorElement:'span',
+   highlight: function(element, errorClass) {
+   $(element).removeClass(errorClass);
+   },
+   submitHandler:function(form)
+	{
+	  // $('#submit_signup').attr('disabled',true);
+	  form.submit();
+	}
+   });
+	  
+ </script>
+<script>
+$(document).ready( function () {
+	// $('.table').DataTable();
+	$('.loader').hide();
+
+			$('.tr_search').hide();
+
+	$('#rowMatching').hide();
+	$('#complain_id_filter').hide();
+	$('#reflet_id_filter').hide();
+	$('#verifier_filter').hide();
+	$('#msg_filter').hide();
+	$('#status_filter').hide();
+
+} );
+</script>
+<script>
+	$(document).on('click.bs.dropdown.data-api', '.dropdown.keep-inside-clicks-open', function (e) {
+	  e.stopPropagation();
+	});
+</script>
+<!-- for dropdown S -->
+<script>
+	$(document).on('click','.drop-down-wrapper',function(){
+		$(".show-me-filter").removeClass("active");
+		$(".filter-custom-dropdown").removeClass("active");
+
+		$(this).parent().toggleClass("active");
+		$(this).parent().find(".hide-custom").toggleClass("active");
+	});
+	$(document).on('click','.close-filter',function(){
+		$(this).parent().parent().parent().removeClass("active");
+		$(this).parent().parent().parent().parent().removeClass("active");
+	});
+	$(".close-filter1").click(function(){
+		$(this).parent().parent().removeClass("active");
+	});
+
+	$(".drop-down-wrapper1").click(function(){
+		$(".show-me-filter").removeClass("active");
+		$(".filter-custom-dropdown").removeClass("active");
+
+		$(this).parent().parent().find(".hide-custom").toggleClass("active");
+	});
+</script> 
+<!-- for dropdown E -->
+<script>
+	$("#start-date").datepicker(
+		{
+			format: 'yyyy-mm-dd'
+		}
+	);
+	$("#end-date").datepicker(
+		{
+			format: 'yyyy-mm-dd'
+
+		}
+	);
+</script>
+
+<script>
+   $(document).ready(function(){
+      $("#myInputSearch").on("keyup", function() {
+		// alert('h')
+							
+        var check_search=0;
+		var value = $(this).val().toLowerCase();
+		// alert(value)
+        $("#myTable3 tr").filter(function() {
+			// alert($(this).text().toLowerCase().indexOf(value)===-1)
+			var check=($(this).text().toLowerCase().indexOf(value)===-1);
+			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+
+	  if(check===false)
+	  {
+		check_search++;
+		$('.tr_search').hide();
+
+	  }
+		
+		}); 
+		// alert(check_search)
+		if(check_search==0)
+		{
+			$('.search_tr').hide();
+
+			$('.tr_search').show();
+
+		}
+
+		// else
+		// {
+		// 	$('.search_tr').show();
+
+		// 	$('.tr_search').hide();
+
+		// }
+      });
+    });
+ </script> 
+ <script>
+     
+	//   alert('hhh')
+	// $('.hide_link').show();
+
+	 
+ </script>
+<script>
+	function run_query(){
+		// alert("hello");
+		var checked_value=[];
+		// checked_value = $('#get_column').find('input[name="column_check"]:checked').val();
+		$.each($("input[name='column_check']:checked"), function(){
+			checked_value.push($(this).val());
+        });
+		var checked_new = checked_value.join(",")
+		$('#checked_column').val(checked_new);
+
+		// alert(checked_new);
+		$.ajax({
+			type: "post",
+			url: "/run-complaint",
+			data:{checked_new:checked_new},
+			success: function (data) {
+				// alert(data);
+				$('.div_data').html("");
+				$('.div_data').html(data);
+			}
+		})
+	}
+</script>
+<script>
+	function printdiv(){
+		
+	  var restorepage = $('body').html();
+		// $('.nodata').hide();
+	   var printcontent = $('#myTableData').clone();
+	   $('body').empty().html(printcontent);
+	   window.print();
+	   $('body').html(restorepage);
+	 
+	
+    }
+    function downloadPersonal(){
+			html2canvas(document.getElementById('myTableData')).then(function(canvas) {
+			var img = canvas.toDataURL("image/png");
+			var doc = new jsPDF();
+			doc.addImage(img,'JPEG',-20,15);
+			doc.save('report.pdf');
+			});
+	}
+</script>
+<script>
+	$('.date_apply').click(()=>
+	{
+		var startDate = $(".startDate").val();
+	     var endDate = $(".endDate").val();
+		var date_list = $('input[name=check_date]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+// alert(startDate_new)
+var chunks = startDate.split('/');
+
+function GetMonthName(monthNumber) {
+
+var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+return months[monthNumber - 1];
+
+}
+var month_num=chunks[0];
+
+var formattedDate = [chunks[1],GetMonthName(month_num),chunks[2]].join("-");
+
+
+	$('.create_class').text(formattedDate);
+
+	// alert(date_list)	
+	
+	// alert('startDate : '+startDate);
+	// alert('endDate : '+endDate);
+// alert(checked_new);
+$.ajax({
+			type: "post",
+			url: "/get-complaint-by-time",
+			data:{startDate:startDate,endDate:endDate,date_list:JSON.stringify(date_list)},
+			success: function (data) {
+				//alert(data);
+				$('.div_data').html("");
+				$('.div_data').html(data);
+			}
+		})
+	})
+</script>
+
+
+
+
+<script>
+	$('.filterList').click(()=>
+	{
+		$('#complain_id_filter').hide();
+	$('#verifier_filter').hide();
+	$('#reflet_id_filter').hide();
+			$('#status_filter').hide();
+			$('#msg_filter').hide();
+		var complain_list = $('input[name=filter_checkbox]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+
+	// alert(complain_list)
+	// if(complain_list=='')
+	// {
+	// 	$(".complaints_by_complain_id").hide();
+
+	// 	window.location.reload(true);
+
+	// }
+		// alert('checkss'+complain_list)
+		$("#rowMatching").show();
+		if(complain_list[0]==='Complain Id'||complain_list[1]==='Complain Id'||complain_list[2]==='Complain Id'||
+		complain_list[3]==='Complain Id'||complain_list[4]==='Complain Id'||complain_list[5]==='Complain Id')
+		{
+			$('#complain_id_filter').show();
+
+		}
+		if(complain_list[0]==='Verifier'||complain_list[1]==='Verifier'||complain_list[2]==='Verifier'||
+		complain_list[3]==='Verifier'||complain_list[4]==='Verifier'||complain_list[5]==='Verifier')
+		{
+			$('#verifier_filter').show();
+
+
+		}	if(complain_list[0]==='MyReflet ID'||complain_list[1]==='MyReflet ID'||complain_list[2]==='MyReflet ID'||
+		complain_list[3]==='MyReflet ID'||complain_list[4]==='MyReflet ID'||complain_list[5]==='MyReflet ID')
+		{
+			$('#reflet_id_filter').show();
+
+		}	if(complain_list[0]==='Status'||complain_list[1]==='Status'||complain_list[2]==='Status'||
+		complain_list[3]==='Status'||complain_list[4]==='Status'||complain_list[5]==='Status')
+		{
+			//alert('status')
+			$('#status_filter').show();
+
+		}	if(complain_list[0]==='Complain Messsage'||complain_list[1]==='Complain Messsage'||complain_list[2]==='Complain Messsage'||
+		complain_list[3]==='Complain Messsage'||complain_list[4]==='Complain Messsage'||complain_list[5]==='Complain Messsage')
+		{
+			$('#msg_filter').show();
+
+		}			
+	
+	
+
+	})
+</script>
+<script>
+	// filter by complaint id
+	$('.complain_id_class').click(()=>{
+		var id_list = $('input[name=complaint_id_name]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+
+	// alert(id_list)
+	if(id_list=='')
+	{
+		window.location.reload(true);
+	}
+	$.ajax({
+                      type : 'POST',
+                      url  : '/show-report-by-complain-id',
+					  data: {id_list:JSON.stringify(id_list)},
+					  
+                        success: function(data) {
+							// alert(data)
+							$('.div_data').html("");
+				$('.div_data').html(data);
+							
+			}                                                    
+           
+})
+
+    })
+
+	// filter by status
+	$('.status_class').click(()=>{
+		var id_list = $('input[name=status_name]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+
+	// alert(id_list)
+	if(id_list=='')
+	{
+		window.location.reload(true);
+	}
+	$.ajax({
+                      type : 'POST',
+                      url  : '/show-report-by-status',
+					  data: {reflect_code_list:JSON.stringify(id_list)},
+					  
+                        success: function(data) {
+							//alert(data)
+							$('.div_data').html("");
+				$('.div_data').html(data);
+							
+			}                                                    
+           
+})
+	})
+	
+	
+   // filter by client code
+   $('.client_class').click(()=>{
+		var id_list = $('input[name=client_name]:checked').map(function(_, el) {
+        return $(el).val();
+    	}).get();
+
+			//alert(id_list)
+			if(id_list=='')
+			{
+				window.location.reload(true);
+			}
+			$.ajax({
+                      type : 'POST',
+                      url  : '/show-report-by-client_code',
+					  data: {reflect_code_list:JSON.stringify(id_list)},
+					  
+                        success: function(data) {
+							//alert(data)
+							$('.div_data').html("");
+				$('.div_data').html(data);
+							
+			}    })                                                
+           
+    })
+	
+	
+	// filter by msg
+   $('.msg_class').click(()=>{
+	var id_list = $('input[name=msg_name]:checked').map(function(_, el) {
+        return $(el).val();
+    	}).get();
+
+			//alert(id_list)
+			if(id_list=='')
+			{
+				window.location.reload(true);
+			}
+			$.ajax({
+                      type : 'POST',
+                      url  : '/show-report-by-msg',
+					  data: {reflect_code_list:JSON.stringify(id_list)},
+					  
+                        success: function(data) {
+							// alert(data)
+							$('.div_data').html("");
+				$('.div_data').html(data);
+							
+			}    })                 
+	})
+    // filter by verifier
+	$('.verifier_class').click(()=>{
+		var id_list = $('input[name=verifier_name]:checked').map(function(_, el) {
+        return $(el).val();
+    	}).get();
+
+			// alert(id_list)
+			if(id_list=='')
+			{
+				window.location.reload(true);
+			}
+			$.ajax({
+                      type : 'POST',
+                      url  : '/show-report-by-verifier_code',
+					  data: {reflect_code_list:JSON.stringify(id_list)},
+					  
+                        success: function(data) {
+							// alert(data)
+							$('.div_data').html("");
+				$('.div_data').html(data);
+							
+			}    })                                                
+           
+	})
+	
+</script>
+<script>
+    function xl_data(){
+ 
+
+         
+         // alert('xls')
+
+         $("#myTableData").table2excel({
+             filename: "report-list.xls",
+             exclude:'.hide_data',
+         });
+
+
+}
+</script>
+<script type="text/javascript">
+	var option_val;
+	    $('.mp_select').click(function() {
+   
+  option_val = $(this).children("option:selected").val();
+ // alert(option_val)
+
+ });
+	 $('.check_option').click(()=>
+	   {
+	   	// alert('hhh')
+		// alert('option_val'+option_val)
+	   
+	  if(!option_val)
+	   {
+		// alert(option_val)
+     
+		   $('.success_span').html('Please Select any reflet code');
+          
+        	return false;
+
+	   }
+	   else{
+		$('.hide_btn').hide();
+
+			$('.loader').show();
+
+				setTimeout(function() {
+			$('.success_message_span').fadeOut('fast');
+			}, 3000);
+			return true;
+
+	   }
+	   })
+	</script>

@@ -1,0 +1,537 @@
+<%-include('../innerHeader')%>
+<section class="heading-sec mb-0">
+  <div class="container">
+    <ul class="breadcrumb custom-braed mb-0 p-0">
+      <li><a href="/request_on_boarding">User On-boarding Request</a><span class="arrowBread">>></span> </li>
+      <li>Request Documents</li>
+    </ul>
+  </div>
+</section>
+<%if(parent_data){
+ if(sub_request_data){
+ %>
+<section>
+  <div class="container">
+       <div class="row">
+           <div class="col-md-12">
+            <form method="POST" action="/request-update-perm">
+               <div class="personal-info-heading">
+                    <div class="row align-item-center">
+                        <div class="col-md-8">
+                            <h4 class="purple-heading">Select documents to be requested</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="row bording-request-select-doc">
+                   <div class="col-xl-3 col-lg-4 col-md-6 ">
+                      <div class="for-select-existing-doc">
+                        <div class="form-group">
+                            <label>Parent Category</label>
+                            <p><%=parent_data[0].category_name%></p>
+                        </div>
+                     </div> 
+                   </div>
+                   <div class="col-xl-3 col-lg-4 col-md-6">
+                      <div class="for-select-existing-doc">
+                          <div class="form-group">
+                            <label>Sub Category</label>
+                            <p>
+                                 <input type="hidden" id="category_id" value="<%=sub_request_data[0].sub_category_id%>">
+                                <input type="hidden" value="<%=parent_data[0].category_name%> - <%=sub_request_data[0].category_name%>" id="new_doc">
+                                <input type="hidden" id="request_id" name="request_id_s" value="<%=sub_request_data[0].request_id%>">
+                                <%=sub_request_data[0].category_name%>
+                            </p>
+                        </div>
+                     </div> 
+                   </div>  
+                   <div class="col-xl-3 col-lg-4 col-md-6">
+                      <div class="for-select-existing-doc">
+                        <div class="input-group">
+                            <div class="dropdown keep-inside-clicks-open">
+                                <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Select from document
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" >
+                                    <%for(let doc of doc_data){%>
+                                    <div class="for-doc-select">
+                                        <div class="checkbox">  
+                                            <label>
+                                                <%=doc.document_name%>
+                                                <input type="checkbox" name="user_doc_id" value="<%=doc.user_doc_id%>">
+                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                            </label>
+                                        </div>  
+                                    </div>
+                                    <%}%>
+                                </div>
+                            </div>
+                        </div>
+                     </div> 
+                   </div> 
+                </div>
+
+                 <div class="personal-info-heading ">
+                    <div class="row align-item-center">
+                        <div class="col-md-8">
+                            <h4 class="purple-heading mt-30">What permissions do you want to give on these documents?</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="white-box check-for-permission">
+                   <div class="row">
+                            <div class="col-xl-3 col-lg-3 col-md-4">
+                              <div class="checkbox">
+                                <label>
+                                    Self Certify
+                                    <input type="checkbox" name="self_certify"  disabled>
+                                    <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                </label>
+                            </div> 
+                          </div>
+                          <div class="col-xl-3 col-lg-3 col-md-4">
+                            <div class="checkbox">
+                              <label>
+                                  Sign
+                                  <input type="checkbox" name="sign"  disabled>
+                                  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                              </label>
+                          </div> 
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-4">
+                          <div class="checkbox">
+                            <label>
+                              Complete
+                                <input type="checkbox" name="complete"  disabled>
+                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                            </label>
+                        </div> 
+                      </div>
+                      <div class="col-xl-3 col-lg-3 col-md-4">
+                        <div class="checkbox">
+                          <label>
+                            Video proof
+                              <input type="checkbox" name="video_proof"  disabled>
+                              <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                          </label>
+                      </div> 
+                     </div>
+                       <div class="col-xl-3 col-lg-3 col-md-4">
+                          <div class="checkbox">
+                            <label>
+                                View
+                                <input type="checkbox" name="view" >
+                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                            </label>
+                        </div> 
+                       </div>
+                      <div class="col-xl-3 col-lg-3 col-md-4">
+                          <div class="checkbox">
+                            <label>
+                                Download
+                                <input type="checkbox" name="download" >
+                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                            </label>
+                        </div> 
+                       </div>
+                       <div class="col-xl-3 col-lg-3 col-md-4">
+                          <div class="checkbox">
+                            <label>
+                                Certify
+                                <input type="checkbox" name="certify" >
+                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                            </label>
+                        </div> 
+                       </div>
+                   </div> 
+                </div>
+             
+                <div class="text-center btn-set-doc">
+                                      <span class="success_span"style="color: red"></span>
+
+                    <div class="row">
+                        <div class="col-xl-3 offset-xl-3 col-lg-6 col-md-6 col-sm-6">
+                            <button type="submit " id="" class="btn-common-new hide_update"onclick="return check_permission()">Update</button>
+                           
+                        </div>
+                         <center><span class="loader_update"><img src="../assets/images/loader-3.gif"height="42" width="62"></span></center> 
+                        <div class="col-xl-3  col-lg-6 col-md-6 col-sm-6">
+                            <a href="" class="btn-common-new hide_update">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+               
+
+                <div class="personal-info-heading">
+                    <div class="row align-item-center">
+                        <div class="col-md-8">
+                            <h4 class="purple-heading mt-30">Want to upload a new document to on-boarding request?</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="main-outer-upload" id="append-wrapper">
+                    <div class="upload-new-doc-img" id="clone-wrapper">
+
+                       <div class="form-group browse-file-section">
+                        <button class="browse btn" type="button" data-toggle="modal" data-target="#add-new-doc-Modal">Upload</button>
+                      </div>
+                      <!-- <div class="btn-box">
+                          <button class="add-btn" title="Add" onclick="add_clone();"><img src="../assets/images/icons/add.png"></button>
+                         <button class="add-btn" style="display:"  title="Remove" onclick="remove_clone($(this));"><img src="../assets/images/icons/minus.png"></button>
+                      </div> -->
+                    </div>
+                </div>
+
+                <div >
+                        <span id="data_div_d">
+                        </span>
+                </div>
+
+                <div class="text-center btn-set-doc">
+                    <div class="row">
+                        <div class="col-xl-3 offset-xl-3 col-lg-6 col-md-6 col-sm-6">
+                            <a onclick="update_prm()" href="javascript:void(0)"  class="hide_save btn-common-new">Save</a>
+                          
+                        </div>
+                          <center><span class="loader_save"><img src="../assets/images/loader-3.gif"height="42" width="62"></span></center> 
+                        <div class="col-xl-3  col-lg-6 col-md-6 col-sm-6">
+                            <a href="" class="btn-common-new hide_save">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+           </div>
+       </div>
+  </div>
+</section>
+
+
+
+<div class="modal fade field-edit-modal" id="add-new-doc-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close hide_click" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+      <div class="row align-item-center">
+        <div class="col-xl-2 col-lg-3 col-md-3">
+          <div>
+            <img src="../assets/images/icons/createidentity-assets/popup-upload-icon.png">
+          </div>
+        </div>
+        <div class="col-xl-7 col-lg-7 col-md-7">
+          <h5 class="heading-purple">Add New Document</h5>
+        </div>
+      </div>
+      <!-- <form id="save_doc_form" action="javascript:void(0);" enctype="multipart/form-data" method="POST"> -->
+         
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+
+          <div class="setup-inner-box for-protact">
+            <div class="create-rflet-id-form">
+                <span class="success_span_upload"style="color: red"></span>
+                              <div class="form-group">
+                <div class="input-group">
+                 <select class="form-control" id="document_name" name="document_name">
+                                    <option value="">Select Document</option>
+                                        <%for(let document of drop_down_doc_data){%>
+                                    <option value="<%=document.doc_id%>"><%=document.document_name%></option>
+                                    <%}%>
+                                    <!-- <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option> -->
+                                    </select>
+                </div>
+              </div>  
+
+                <div class="form-group">
+                <div class="input-group">
+                  <textarea type="text" class="form-control" id="description" placeholder="Description"></textarea>
+                </div>
+              </div>
+              <div class="form-group browse-file-section">
+                                  <input type="file" name="staff_image" id="image" class="file" style="visibility: hidden;position: absolute;" accept="image/x-png,image/jpeg">
+                                  <div class="input-group col-xs-12">
+                                    <span class="input-group-btn">
+                                      <button class="browse btn btn-primary input-lg" type="button"> Choose a file</button>
+                                    </span>
+                                    <input type="text" class="form-control" readonly="" placeholder="">
+                                  </div>
+                              </div>
+            </div>
+            <div >
+              <button type="button" name="submit" class="btn-common-new hide_click" onclick="save_doc()">Upload</button>
+               <span class="loader"><img src="../assets/images/loader-3.gif"height="42" width="62"></span>
+              <a class="btn-common-new hide_click" href="">Cancel</a>
+            </div>
+          </div>
+        </div>
+       </div>
+      <!-- </form> -->
+      </div>
+       </div>
+    </div>
+  </div>
+</div>
+<%}}%>
+
+
+
+
+<%- include('../innerFooter')%> 
+<script type="text/javascript">
+  
+  $(document).ready( function () {
+        $('.loader').hide();
+        $('.loader_update').hide();
+        $('.loader_save').hide();
+
+    //     $("#save_doc_form").on('submit',(function(e) {
+          
+    //     e.preventDefault();
+    //     var new_data = $('#new_doc').val();
+    //     var fd = new FormData();
+    //     var description = $('#description').val(); 
+    //      var doc_id = $('#document_name').val();
+    //      var request_id = $('#request_id').val();
+    //      var files = $('#image').prop('files')[0]
+    //     //  var files = $('#image')[0].files[0];
+    //     //  let file = $('#image').get(0).files;
+    //     //  console.log("$('#image')[0] ", $('#image')[0]);
+    //     //  console.log("files ", files.File);
+    //     fd.append('file',files);
+    //     // alert("yes "+fd);
+    //     console.log("JSON.stringify(files) ",files);
+    //     var data_local = {};
+    //     data_local.description = description;
+    //     data_local.doc_id = doc_id;
+    //     data_local.request_id = request_id;
+    //     data_local.file = files;
+    //     $.ajax({
+    //           type:"post",
+    //           url:"/add-new-cat-doc",
+    //           dataType: "json",
+    //           data:data_local,   
+    //           contentType: false,//"application/json; charset=utf-8",
+    //           processData: false,      //{doc_id,description,category_id,request_id},
+    //           success:function(data) {
+    //             // alert(data);
+    //             if (data) {
+    //               // alert('inside if');
+    //               $('#add-new-doc-Modal').modal('hide');
+    //               $('#data_div_d').html("");
+    //               $('#data_div_d').html(data);
+    //               $('#p_n_s_cat').text(new_data);
+    //             }else{
+    //               // alert("else");
+    //             }
+    //           }
+    //     });
+    //   })
+    // );
+});
+</script>
+<script>
+    $(document).on('click.bs.dropdown.data-api', '.dropdown.keep-inside-clicks-open', function (e) {
+      e.stopPropagation();
+    });
+</script>
+<script>
+     $(document).on('click', '.browse', function(){
+    var file = $(this).parent().parent().parent().find('.file');
+    file.trigger('click');
+  });
+  $(document).on('change', '.file', function(){
+    $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i,''));
+  }); 
+</script> 
+
+<script>
+var countval = 1; //for Increase id num  
+function add_clone(){
+    var new_count = countval++; //for increase id number
+    // for class Clone
+    $clone1 = $("#clone-wrapper").clone();
+    $clone1.attr('id','clone-wrapper'+new_count);
+    $('#append-wrapper').append($clone1); //for append Clone Data
+}
+</script>
+<script>
+    function remove_clone(obj){
+        var parent_id = obj.parent().parent().attr('id'); //for parent ID
+        if( parent_id != 'clone-wrapper'){
+            obj.parent().parent().remove(); 
+        }    
+    }
+</script>
+
+<script>
+    function save_doc(){
+        var request_id = $('#request_id').val();
+        var doc_id=$('#document_name').val();
+        var description = $('#description').val();
+        var new_data = $('#new_doc').val();
+        var category_id = $('#category_id').val();
+        var image = $("#image")[0].files[0];   
+
+        var data = new FormData();
+
+        // alert(description)
+        // alert(doc_id)
+        //  alert(image)
+
+        if(description==""||doc_id==""||image==undefined)
+        {
+             // alert(check_doc.length)
+                $('.success_span_upload').html('All the fields are required');
+
+                $('.loader').hide();
+
+
+                $('.hide_click').show(); 
+
+                return false;
+        }
+        else
+        {
+                setTimeout(function() {
+                $('.success_span_upload').fadeOut('fast');
+                }, 100);
+
+                // $('.loader_update').show();
+
+                // $('.hide_update').hide();
+
+                data.append('image', image);
+                data.append('request_id', request_id);
+                data.append('doc_id', doc_id);
+                data.append('description', description);
+                data.append('category_id', category_id);
+                // alert("hello "+image);
+
+                // console.log("hello ",data)
+
+
+                  $('.hide_click').hide();
+                    $('.loader').show();
+                $.ajax({
+                            type:"post",
+                            url:"/add-new-cat-doc",
+                            data:data,
+                            contentType: false,
+                            processData: false,
+                            success:function(data) {
+                                // alert(data);
+                                if (data) {
+                                    // alert('inside if');
+                                    $('#add-new-doc-Modal').modal('hide');
+                                    $('#data_div_d').html("");
+                                    $('#data_div_d').html(data);
+                                    $('#p_n_s_cat').text(new_data);
+
+                                }else{
+                                    // alert("else");
+                                }
+                                
+                                
+                                
+                    }
+                    });
+        }
+       
+
+    }
+
+    function update_prm(){
+        var manage_doc_id = $('#man_doc_id').val();
+        var certified='no';
+        var self_certified='no';
+        var sign='no';
+        var complete='no';
+        var video_proof='no';
+        // alert($('input[name="self_certify"]:checked'));
+        // console.log($('#self_certify').is(":checked"));
+
+        if($('#self_certify').is(":checked")){
+            self_certified="yes";
+        }if($('#certify').is(":checked")){
+            certified="yes";
+        }if($('#sign').is(":checked")){
+            sign="yes";
+        }if($('#complete').is(":checked")){
+            complete="yes";
+        }if($('#video_proof').is(":checked")){
+            video_proof="yes";
+        }
+        // alert("self_certified "+self_certified);
+        // alert("certified "+certified);
+        // alert("sign "+sign);
+        // alert("complete "+complete);
+        // alert("video_proof "+video_proof);
+                $('.hide_save').hide();
+
+        $('.loader_save').show();
+
+        $.ajax({
+                    type:"post",
+                    url:"/req-doc-to-client",
+                    data:{manage_doc_id,self_certified,certified,sign,complete,video_proof},
+                    success:function(data) {
+                        // alert(data);
+                        location.reload();
+                        
+                        
+            }
+            });
+    }
+</script>
+<script type="text/javascript">
+  
+  // $('#click_update').click(()=>
+  // {
+  //           $('.loader_update').show();
+  //           $('.hide_update').hide();
+
+  // })
+   function check_permission () {
+    
+    // alert('ttt')
+    var check_doc = $('input[name=user_doc_id]:checked').map(function(_, el) {
+          return $(el).val();
+    }).get();
+     // alert(check_doc.length)
+
+    if(check_doc.length>0)
+     {
+          // alert(check_doc.length)
+
+            setTimeout(function() {
+            $('.success_span').fadeOut('fast');
+            }, 100);
+
+            $('.loader_update').show();
+
+            $('.hide_update').hide();
+
+            return true;
+     }
+     else{
+            // alert(check_doc.length)
+
+            $('.success_span').html('Please Select any document');
+            $('.loader_update').hide();
+
+            $('.hide_update').show();
+
+      return false;
+
+     
+
+     }
+   }
+</script>

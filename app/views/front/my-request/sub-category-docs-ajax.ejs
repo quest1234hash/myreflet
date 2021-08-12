@@ -1,0 +1,100 @@
+
+<div class="personal-info-box for-download-view-table table-responsive">
+	<table class="table" >
+	  <thead>
+		<tr>
+		  <th scope="col">Label</th>
+		  <th scope="col">Self Certify</th>
+		  <th scope="col">Sign</th>
+		  <th scope="col">Certify</th>
+		  <th scope="col">Complete</th>
+		  <th scope="col">Video proof</th>
+
+		</tr>
+	  </thead>
+	  <tbody>
+		<% if(requested_docs.length>0){
+			for(var j=0;j<requested_docs.length;j++){
+				%>
+	  <tr >
+		  <th scope="row">
+			  <div class="for-flex-align">
+				   <img src="../assets/images/icons/dashboard-assets/drivinglicense.png">
+				   <%=requested_docs[j].document_name%>
+				   
+			  </div>
+		  </th>
+		  <td>
+			  <%if(requested_docs[j].self_certified=="yes"){%>
+			<div class="for-flex-align">
+				<img src="../assets/images/icons/dashboard-assets/tick.png">
+				
+		   </div>
+		   <%}else{%>
+			<div class="for-flex-align"> - </div>
+		   <%}%>
+		  </td>
+		  <td>
+			<%if(requested_docs[j].sign=="yes"){%>
+			
+				<div class="for-flex-align">
+					<img src="../assets/images/icons/dashboard-assets/tick.png">
+					
+			   </div>
+			   <%}else{%>
+				<div class="for-flex-align"> - </div>
+			   <%}%>
+		  </td>
+		  <td>
+			<%if(requested_docs[j].certified=="yes"){%>
+				<div class="for-flex-align">
+					<img src="../assets/images/icons/dashboard-assets/tick.png">
+					
+			   </div>
+			   <%}else{%>
+				<div class="for-flex-align"> - </div>
+			   <%}%>
+		  </td>
+		  <td>
+				<%if(requested_docs[j].complete=="yes"){%>
+					<div class="for-flex-align">
+						<img src="../assets/images/icons/dashboard-assets/tick.png">
+						
+				   </div>
+				   <%}else{%>
+					<div class="for-flex-align"> - </div>
+				   <%}%>
+			  </td>
+			  <td>
+					<%if(requested_docs[j].video_proof=="yes"){%>
+						<div class="for-flex-align">
+							<img src="../assets/images/icons/dashboard-assets/tick.png">
+							
+					   </div>
+					   <%}else{%>
+						<div class="for-flex-align"> - </div>
+					   <%}%>
+				  </td>
+		</tr>
+		<%}}%>
+	</tbody>
+	</table>
+	<span id="prm_error_span" class="error_validate"></span>
+</div>
+
+<div class="input-group">
+    <select onchange="get_doc_from_myreflet(this.value)" class="form-control valid" name="my_reflet_for_req" data-rule-required="true" data-msg-required="Please select sub-category." aria-invalid="false">
+    
+        <option>Select MyReflet Id</option>
+        <% if(myIds.length>0){
+            for(var j=0;j<myIds.length;j++){
+                %>
+                <%if(myIds[j].reflectid_by=="entity"){%>
+        <option value="<%=myIds[j].reflect_id%>"><%=myIds[j].reflect_code%>-<%=myIds[j].entity_company_name%></option>
+    <%}else{%>
+        <option value="<%=myIds[j].reflect_id%>"><%=myIds[j].reflect_code%>-<%=myIds[j].rep_username%></option>
+
+        <%}}}%>
+    
+    </select>
+</div>

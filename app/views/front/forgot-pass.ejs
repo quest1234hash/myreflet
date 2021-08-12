@@ -1,0 +1,125 @@
+<%- include('partials/header.ejs') %>    
+<section class="login-sec">
+	<div class="container-fluid p-0">
+		<div class="row m-0">
+			<div class="col-md-6 p-0">
+				<div class="left-side-login">
+					<div class="logo-box">
+						<a href="">
+							<img src="assets/images/logo.png">
+						</a>
+					</div>
+					<div class="side-text">
+						<h2>
+							Forgot Password?
+						</h2>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 p-0">
+				<div class="right-side-login forgot-pass">
+					<div class="inner-div">
+						<p class="first-line">Please enter email ID and we will send you a verification code.</p>
+
+
+						<% if(err_msg!=undefined && err_msg !='' ){ %>
+						     <div class="alert alert-danger text-center  flash_msg ">
+								<%= err_msg %>
+							 </div>
+					   
+						<% }%>
+					   <% if(success_msg!=undefined && success_msg !='' ){ %>
+						  <div class="alert alert-success text-center  flash_msg ">
+							<%= success_msg %>
+						 </div>
+						<% }%>
+
+			<form action="/forgetPassword" id="validateForget" method="POST" >
+							<div class="login-form-main">
+								<div class="form-group for-warning choose-pin-radio">
+								    <label>Choose Pin or Password</label>
+								    <div class="row">
+								    	<div class="col-md-4">
+								    		<div class="radio">
+									          <label>
+									            <input type="radio" value="pin" name="request_type" class="form-control" data-rule-required="true" data-msg-required="Please choose any value ."  />
+									            <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+									            Pin
+									          </label>
+									        </div>
+								    	</div>
+								    	<div class="col-md-4">
+								    		  <div class="radio">
+										          <label>
+										            <input type="radio" value="password" name="request_type" class="form-control"  data-rule-required="true" data-msg-required="Please choose any value." />
+										            <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+										            Password
+										          </label>
+										        </div>
+								    	</div>
+									</div>
+									<span class="span_text"style="color:red"></span>
+
+								  </div>
+								 <div class="form-group for-warning">
+								    <label>Email ID</label>
+								    <input type="email" name="emailid" class="form-control"  placeholder="Enter Email-Id" data-rule-required="true" data-msg-required="Please enter email."  data-rule-email="true" value="" />
+								    <div class="info-icon" data-toggle="tooltip" data-placement="top" title="Invalid Email ID">
+								    	<img src="assets/images/icons/warning.png" >
+								    </div>
+								  </div>
+								  <div>
+									  <button type="submit" id="forgotSubmit" name="submit" class="purple-btn hide_btn ">Submit</button>
+									  <center><span class="loader"><img src="../assets/images/loader-3.gif"height="32" width="52"></span></center>
+								  </div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</span>	</div>
+</section>
+<script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+
+       
+         
+<script type="text/javascript">
+	$('#validateForget').validate({
+		 onfocusout: function(element) {
+		 this.element(element);
+		 },
+		 errorClass: 'error_validate',
+		 errorElement:'span',
+		 highlight: function(element, errorClass) {
+		 $(element).removeClass(errorClass);
+		 },
+		 submitHandler:function(form)
+			{
+				return submit_forget()
+
+			   $('#forgotSubmit').attr('disabled',true);
+			   form.submit();
+			}
+		 });
+</script>
+<script>
+	 function submit_forget() {
+       var request_type = $( "input[name='request_type']:checked").val();
+
+//    alert(request_type)
+			if(request_type==undefined){
+			  $('.span_text').html('Please select any value')
+			  return false;
+			}   
+			else{
+				loder_fun()
+
+				return true;
+			}
+     }
+</script>
+<%- include('partials/footer') %>    
+
+
+
+ 

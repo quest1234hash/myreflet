@@ -1,0 +1,313 @@
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-6 col-md-6 col-sm-6">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/home-assets/myrefletID.png">
+					<h4>Manage MyReflet ID Code</h4>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-6">
+				<div class="text-right">
+					<a class="btn-common-new" href="set-up-code.php">Add New Myreflet ID</a>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div>
+
+					<ul class="nav nav-tabs dashboard-tabs-outer" id="myTab" role="tablist">
+					  <li class="nav-item">
+					    <a class="nav-link active" id="dash-tab" data-toggle="tab" href="#dashtab1" role="tab" aria-controls="home" aria-selected="true">
+					    <span>
+					    	<img class="gray" src="../assets/images/icons/home-assets/wallet.png">
+					    	<img class="purple" src="../assets/images/icons/home-assets/wallet-purple.png">
+					    </span> 	
+					    All ID's</a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link" id="dash-tab" data-toggle="tab" href="#dashtab2" role="tab" aria-controls="profile" aria-selected="false">
+					    <span>
+					    	<img class="gray" src="../assets/images/icons/home-assets/myrequests.png">
+					    	<img class="purple" src="../assets/images/icons/home-assets/myrequests-purple.png">
+					    </span> 
+					    Shared With Me
+					    </a>
+					  </li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="col-md-12">
+	<div class="white-box client-dash-sec">
+		<% if(all_reflect_id.length>0)
+					{
+
+					all_reflect_id.forEach(function(each_reflect){
+					%>
+		<div  class="tab-content" id="myTabContent">
+		<div class="tab-pane fade show active" id="dashtab1" role="tabpanel" aria-labelledby="dash-tab">
+		<div class="row">
+			
+					<% if(each_reflect.type=='representative' ) {%>
+		<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+								<div class="white-box full-box wallet-box">
+									<div class="row align-item-center">
+									   <div class="col-xl-6 col-lg-12 col-md-12">
+									   	   <div class="id-code-represent-heading"> 
+											
+											  <img src="../assets/images/icons/home-assets/Representative.png">
+											  <span>Natural person</span>
+										  </div> 
+									   </div>
+									   <div class="col-xl-6 col-lg-12 col-md-12">
+									   	 <h9 class="mb-0 balance-value">Wallet name : <%=each_reflect.walletname%></h9>
+									   </div> 
+									</div>
+									<div>
+									<div class="row inner-box-id-code">
+											<div class="col-md-4 p-0">
+												<div class="for-flex-align">
+													<img src="../assets/images/icons/home-assets/user.png">
+													<p>Wallet ID</p>
+												</div>
+											</div>
+											<div class="col-md-6 dubble-dot-after p-0">
+												<p><%=each_reflect.walletAddress %></p>
+											</div>
+										</div>
+										<div class="row inner-box-id-code">
+											<div class="col-md-3 p-0">
+												<div class="for-flex-align">
+													<img src="../assets/images/icons/home-assets/user.png">
+													<p>MyReflet ID</p>
+												</div>
+											</div>
+											<div class="col-md-3 dubble-dot-after p-0">
+												<p><%=each_reflect.myreflectid %></p>
+											</div>
+											<div class="col-md-3 p-0">
+												<div class="for-flex-align">
+													<img src="../assets/images/icons/home-assets/user.png">
+													<p>ETH Balance</p>
+												</div>
+											</div>
+											<div class="col-md-3 dubble-dot-after p-0">
+												<p>0 ETH</p>
+											</div>
+										</div>
+										<div class="view-icon">
+							<a href="my-reflet-id-view.php"><i class="fas fa-eye"></i></a>
+						</div>
+							         </div>
+							    </div>
+				            </div>
+							<%}else {%>
+				            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+								<div class="white-box full-box wallet-box">
+									<div class="row align-item-center">
+									   <div class="col-xl-6 col-lg-12 col-md-12">
+									   	 <div class="id-code-represent-heading"> 
+						                       <img src="../assets/images/icons/entity.png">
+						                       <span>Entity</span>
+										  </div> 
+									   </div>
+									    <div class="col-xl-6 col-lg-12 col-md-12">
+									   	 <h9 class="mb-0 balance-value">Wallet name : <%=each_reflect.entity_name%> <i class="fa fa-share-alt" data-toggle="modal" data-target="#keyModal1"></i></h9>
+									   </div> 
+									</div>
+									<div>
+									<div class="row inner-box-id-code">
+											<div class="col-md-4 p-0">
+												<div class="for-flex-align">
+													<img src="../assets/images/icons/home-assets/user.png">
+													<p>Wallet ID</p>
+												</div>
+											</div>
+											<div class="col-md-6 dubble-dot-after p-0">
+												<p><%=each_reflect.walletAddress %></p>
+											</div>
+										</div>
+										<div class="row inner-box-id-code">
+											<div class="col-md-3 p-0">
+												<div class="for-flex-align">
+													<img src="../assets/images/icons/home-assets/user.png">
+													<p>MyReflet ID</p>
+												</div>
+											</div>
+											<div class="col-md-3 dubble-dot-after p-0">
+												<p><%=each_reflect.myreflectid %></p>
+											</div>
+											<div class="col-md-3 p-0">
+												<div class="for-flex-align">
+													<img src="../assets/images/icons/home-assets/user.png">
+													<p>ETH Balance</p>
+												</div>
+											</div>
+											<div class="col-md-3 dubble-dot-after p-0">
+												<p>0 ETH</p>
+											</div>
+										</div>
+										<div class="view-icon">
+							<a href="my-reflet-id-view.php"><i class="fas fa-eye"></i></a>
+						</div>
+							         </div>
+							    </div>
+				            </div>
+							<%}%>
+		</div>
+	</div>
+	
+	<div class="tab-pane fade" id="dashtab2" role="tabpanel" aria-labelledby="dash-tab">
+		<div class="row">
+				            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" data-toggle="modal" data-target="#keyModal3">
+								<div class="white-box full-box wallet-box">
+									<div class="row align-item-center">
+									   <div class="col-xl-6 col-lg-12 col-md-12">
+									   	 <div class="id-code-represent-heading"> 
+						                       <img src="../assets/images/icons/entity.png">
+						                       <span>Entity</span>
+										  </div> 
+									   </div>
+									    <div class="col-xl-6 col-lg-12 col-md-12">
+									   	 <h5 class="mb-0 balance-value">Wallet name : quest</h5>
+									   </div> 
+									</div>
+									<div>
+									<div class="row inner-box-id-code">
+											<div class="col-md-3 p-0">
+												<div class="for-flex-align">
+													<img src="../assets/images/icons/home-assets/user.png">
+													<p>Wallet ID</p>
+												</div>
+											</div>
+											<div class="col-md-8 dubble-dot-after p-0">
+												<p>1019920ee9wdj0192209019djkshdi1010dkhdsjdhkl</p>
+											</div>
+										</div>
+										<div class="row inner-box-id-code">
+											<div class="col-md-3 p-0">
+												<div class="for-flex-align">
+													<img src="../assets/images/icons/home-assets/user.png">
+													<p>MyReflet ID</p>
+												</div>
+											</div>
+											<div class="col-md-3 dubble-dot-after p-0">
+												<p>13089</p>
+											</div>
+											<div class="col-md-3 p-0">
+												<div class="for-flex-align">
+													<img src="../assets/images/icons/home-assets/user.png">
+													<p>ETH Balance</p>
+												</div>
+											</div>
+											<div class="col-md-3 dubble-dot-after p-0">
+												<p>0</p>
+											</div>
+										</div>
+							         </div>
+							    </div>
+				            </div>
+		</div>
+	</div>
+	</div>
+	<% }); }else{ %>
+		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+			<div class="white-box create-wallet-box">
+				<div class="row align-item-center">
+
+					<div class="col-xl-12 col-lg-12 col-md-12">
+						<!-- <h5 class="heading-purple">Create a New Wallet</h5> -->
+						<p>
+							<center>Currently, No MyReflet code available.</center>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<%}%>
+	</div>
+</section>
+
+           <!--modal1   share entity-->  
+		   <div class="modal fade modal-key" id="keyModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-body" style="background-color: white;">
+        <div class="row">
+          <div class="col-md-12">
+            <h3 class="green-heading text-center">Share</h3>
+            <div class="form-group">
+<label for="name">Natural MyReflet ID</label>
+<input type="text" name="" class="form-control" value="Enter MyReflet ID"  style="padding: 10px 10px; width: 100%;">
+            </div>
+            <div class="text-center mt-4">
+            <a href="#" class="btn-common-new single-color-btn" style="margin-right: 14px; border-radius: 20px; padding:11px 30px">Cancel</a>
+			<a href="#" class="btn-common-new single-color-btn" style="border-radius: 20px; padding:11px 30px">Sumbit</a>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+  </div>
+</div> 
+
+           <!--modal2-->
+		   <div class="modal fade modal-key" id="keyModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-body" style="background-color: white;">
+        <div class="row">
+          <div class="col-md-12">
+            <h3 class="green-heading text-center">Password</h3>
+            <div class="form-group">
+<input type="text" name="" class="form-control" value="Enter Password"  style="padding: 10px 10px; width: 100%;">
+            </div>
+            <div class="text-center mt-4">
+            <a href="#" class="btn-common-new single-color-btn" style="margin-right: 14px; border-radius: 20px; padding:11px 30px">Cancel</a>
+			<a href="#" class="btn-common-new single-color-btn" style="border-radius: 20px; padding:11px 30px">Sumbit</a>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+  </div>
+</div> 
+
+
+           <!--modal3-->
+		   <div class="modal fade modal-key" id="keyModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-body" style="background-color: white;">
+        <div class="row">
+          <div class="col-md-18">
+            <h4 class="green-heading text-center">Please copy or download and save the password</h4>
+			<div class="private-key-copy-box mt-15">
+											<div class="form-group">
+												<div class="input-group mb-3">
+												  <input type="text" class="form-control" placeholder="75kln55nlk5lk75k7n5lk7lkn5nkfsflskskjl6;k64j64;6kj46kj">
+												  <div class="input-group-append">
+												  	<a class="btn-copy" href=""><img src="../assets/images/icons/createidentity-assets/copy.png"></a>
+												  </div>
+												</div>
+											</div>
+										</div>
+            <div class="text-center mt-4">
+            <a href="#" class="btn-common-new single-color-btn" style="margin-right: 14px; border-radius: 20px; padding:11px 30px">I Have Save My Password</a>
+
+            </div>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+  </div>
+</div> 

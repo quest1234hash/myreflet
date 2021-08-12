@@ -1,0 +1,441 @@
+<%-include('../innerHeader')%>
+
+
+
+<section class="id-code-box-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+
+			    <div class="personal-info-heading">
+					<div class="row align-item-center">
+						<div class="col-md-8">
+							<h4 class="purple-heading">Details</h4>
+						</div>
+					</div>
+				</div>
+				<div class="white-box info-view-details-box">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="address-box-full">
+								<p>Submitted By</p>
+								<h6><%=decrypt(clientANDrequestData[0].full_name)%></h6>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="address-box-full">
+								<p>Submitted On</p>
+								<h6><%=moment(clientANDrequestData[0].createdAt).format("DD,MMM,YYYY")%></h6>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="address-box-full">
+								<p>Status</p>
+								<h5 class="pending-status"><%=clientANDrequestData[0].request_status%></h5>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			    <div class="personal-info-heading">
+					<div class="row align-item-center">
+						<div class="col-md-8">
+							<h4 class="purple-heading">Personal Information</h4>
+						</div>
+					</div>
+				</div>
+
+				<div class="personal-info-box table-responsive">
+					<table class="table" id="myTable">
+					  <thead>
+					    <tr>
+					      <th width="30%" scope="col">Label</th>
+					      <th scope="col">Content</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <td scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/createidentity-assets/user.png">
+					      		First Name
+					      	</div>
+					      </td>
+					      <td><%=decrypt(clientANDrequestData[0].full_name)%></td>
+					     
+					    </tr>
+					     <tr>
+					      <td scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/createidentity-assets/user.png">
+					      		Middle Name
+					      	</div>
+					      </td>
+					      <td>-</td>
+					     
+					    </tr>
+					     <tr>
+					      <td scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/createidentity-assets/user.png">
+					      		Last Name
+					      	</div>
+					      </td>
+					      <td><%=decrypt(clientANDrequestData[0].last_name)%></td>
+					      
+					    </tr>
+					     <tr>
+					      <td scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/dashboard-assets/country.png">
+					      		Country
+					      	</div>
+					      </td>
+					      <td><%=clientANDrequestData[0].country_id%></td>
+					     
+					    </tr>
+					     <tr>
+					      <td scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/dashboard-assets/verified-emailID.png">
+					      		Email ID
+					      	</div>
+					      </td>
+					      <td><%=decrypt(clientANDrequestData[0].email)%></td>
+					     
+					    </tr>
+					      <tr>
+					      <th scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/dashboard-assets/phone.png">
+					      		Phone Number
+					      	</div>
+					      </th>
+					      <td><%=decrypt(clientANDrequestData[0].mobile_number)%></td>
+					     
+					    </tr>
+					  </tbody>
+					</table>
+				</div>
+
+				 <div class="personal-info-heading">
+					<div class="row align-item-center">
+						<div class="col-md-8">
+							<h4 class="purple-heading">Requested Documents</h4>
+						</div>
+					</div>
+				</div>
+
+				<div class="personal-info-box table-responsive">
+					<table class="table" id="myTable">
+					  <thead>
+					    <tr>
+					      <th width="25%" scope="col">Document Name</th>
+					      <th width="25%" scope="col">Discription</th>
+					      <th width="25%" scope="col">Submit Form</th>
+					      <th width="25%" scope="col">Form Template</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+				<%if(clientANDrequestData.length>0){%>
+                      <%clientANDrequestData.forEach(requestDoc=>{%>
+
+					    <tr>
+					      <td><%=requestDoc.document_name%></td>
+					      <td><%=requestDoc.descriptions%>.</td>
+					      <td>
+					      	<div>
+								
+								<%if(requestDoc.doc_file){%>
+									<img src="../assets/images/icons/tick.png">
+								     
+								<%}else{%>
+									<img src="../assets/images/icons/close.png">
+								<%}%>
+					      	</div>
+					      </td>
+					      <td>
+							<%if(requestDoc.doc_file){%>
+								<div class="doc-img" onclick="showform('<%=requestDoc.doc_file%>')">
+									<a href="" data-toggle="modal" data-target="#doc-img-Modal">
+										<img src="../assets/images/icons/dashboard-assets/doc.png" class="img-fluid">
+									</a>
+								</div>
+							 
+							<%}else{%>
+								-
+							<%}%>
+						  </td>
+					    </tr>
+					  <%})%>
+                 <%}%>
+					     <!-- <tr>
+					      <td>Driving License</td>
+					      <td>Please send a scanned copy of driving license.</td>
+					      <td>
+					      	<div>
+					      		<img src="../assets/images/icons/tick.png">
+					      	</div>
+					      </td>
+					      <td>
+					      	<div class="doc-img">
+					      		<a href="" data-toggle="modal" data-target="#doc-img-Modal">
+					      			<img src="../assets/images/icons/dashboard-assets/doc.png" class="img-fluid">
+					      		</a>
+					      	</div>
+					      </td>
+					    </tr>
+					     <tr>
+					      <td>Driving License</td>
+					      <td>Please send a scanned copy of driving license.</td>
+					      <td>
+					      	<div>
+					      		<img src="../assets/images/icons/close.png">
+					      	</div>
+					      </td>
+					      <td>-</td>
+					    </tr> -->
+					  </tbody>
+					</table>
+				</div>
+
+				 <div class="personal-info-heading">
+					<div class="row align-item-center">
+						<div class="col-md-8">
+							<h4 class="purple-heading">Received Documents</h4>
+						</div>
+					</div>
+				</div>
+        <%if(requestUploadDoc.length>0){  %>
+			<%
+				
+			      var filtered = requestUploadDoc.reduce((filtered, item) => {
+										if( !filtered.some(filteredItem => JSON.stringify(filteredItem.request_doc_id) == JSON.stringify(item.request_doc_id)) )
+										  filtered.push(item)
+										return filtered
+									  }, [])
+
+									 
+			 %>
+		
+        
+            <%if(filtered.length>0){
+             var i =0;
+            %>
+          <%filtered.forEach(recivedData=>{%>
+	<div class="white-box received-doc-list">
+					<div class="row">
+						<div class="col-md-12">
+							<ul>
+								<li>
+									<%=recivedData.document_name%>
+								</li>
+								<li>
+
+
+                                  <%var d=0;
+                                  requestUploadDoc[i].has_array.forEach(req_doc_ids=>{%>
+										 %>  
+										<%if(req_doc_ids.type === 'image'){%>
+                                                <a href="" data-toggle="modal" onclick="show_doc_img('<%=i%><%=d%>')" data-target="#doc-Modal">
+											<img id="img_tag<%=i%><%=d%>" src="<%=req_doc_ids.hash%>" data-toggle="tooltip" data-placement="top" title="Click here to view Document Images">
+										     </a>
+										<%}else if(req_doc_ids.type === 'pdf'){%>
+                                             
+                                               	<a href="" data-toggle="modal" onclick="show_doc_pdf('<%=i%><%=d%>')" data-target="#doc-Modal">
+											
+												<object id="pdf_tag<%=i%><%=d%>" class="PDFdoc" width="50" height="50" type="application/pdf" data="https://ipfs.io/ipfs/<%=req_doc_ids.hash%>" ></object>
+											</a>
+						               <%}else{%>
+                                               
+
+												<a href="" data-toggle="modal" onclick="show_doc_vid('<%=i%><%=d%>')" data-target="#doc-Modal">
+												    <video width="100" height="100" controls>
+														<source id="vid_tag<%=i%><%=d%>" src="https://ipfs.io/ipfs/<%=req_doc_ids.hash%>" type="video/mp4">
+													</video>
+										        </a>
+						               <%}%>
+
+                               <%d++;})%>
+								</li>
+								<li>
+								<%if(recivedData.approve_status=="approved"){%>
+								<h5 class="approved-status">Approved</h5>
+							    	<%requestUploadDoc.forEach(req_doc_ids=>{%>
+                                      <%if(recivedData.request_doc_id==req_doc_ids.request_doc_id){%>  
+									   <div class="for-transaction-id">
+										  <span class="heading">Transaction ID:</span>
+										  <span class="details"><%=req_doc_ids.transaction_hash%></span>
+									    </div>
+								      <%}%>
+                                    <%})%>
+								<%}%>
+								<%if(recivedData.approve_status=="pending"){%>
+								<h5 class="pending-status">Pending</h5>
+								<%}%>
+								<%if(recivedData.approve_status=="rejected"){%>
+								<h5 class="approved-status">Rejected</h5>
+								<%}%>
+									
+                                <!-- <%requestUploadDoc.forEach(req_doc_ids=>{%>
+                                    <%if(recivedData.request_doc_id==req_doc_ids.request_doc_id){%>  
+									<div class="for-transaction-id">
+										<span class="heading">Transaction ID:</span>
+										<span class="details"><%=req_doc_ids.transaction_hash%></span>
+									</div>
+								   <%}%>
+                               <%})%> -->
+								</li>
+							</ul>
+						</div>
+					</div>
+	</div>
+			
+		 <% i++;})%>
+		
+			
+			<% } %>
+<% } %>				
+<%if(clientANDrequestData.length>0){%>
+	<%clientANDrequestData.forEach(requestDoc=>{%>
+				
+				<%if(requestDoc.doc_file){%>
+					<!-- <div class="white-box received-doc-list">
+					<div class="row">
+						<div class="col-md-12">
+							<ul>
+								<li>
+									Form 
+								</li>
+								<li>
+									<img src='https://ipfs.io/ipfs/<%=requestDoc.doc_file%>'>
+									<a class="btn-common-new border-btn" href=""> Download </a>
+								</li>
+								<li>
+									<h5 class="approved-status">Approved</h5>
+									<div class="for-transaction-id">
+										<span class="heading">Transaction ID:</span>
+										<span class="details">6hg3j6kg6g36gh363ghj6hgjgh3gh6g636g3j6ghj6hghgjg6j6hg3hkj6gghh34g2ghjg4g2h4g24</span>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				  -->
+				<%}%>
+			
+				<% })%>
+			<% } %>		
+			</div>			
+		</div>
+	</div>
+</section>
+
+
+<div class="modal fade field-edit-modal" id="doc-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="modal-img-big" id="img_modal">
+			<!-- <img src="https://ipfs.io/ipfs/QmdQJj1wds5KxNrT8cgTxLmiJiC2HCmiJTDEjqFVeJTuKP"> -->
+        	<!-- <img src="../assets/images/icons/dashboard-assets/doc.png"> -->
+        </div>
+       </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade field-edit-modal" id="doc-img-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="modal-img-big" id="imageshow">
+			<!-- <img src="https://ipfs.io/ipfs/QmdQJj1wds5KxNrT8cgTxLmiJiC2HCmiJTDEjqFVeJTuKP"> -->
+        	<!-- <img src="../assets/images/icons/dashboard-assets/doc.png"> -->
+        </div>
+       </div>
+    </div>
+  </div>
+</div>
+<%- include('../innerFooter')%>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script>
+	$(document).ready( function () {
+    // $('#myTable').DataTable();
+
+} );
+</script>
+<script>
+	function showform(hash){
+		$("#imageshow").html("")
+		$("#imageshow").html(`<img src="https://ipfs.io/ipfs/${hash}">`)
+		// alert(hash)
+// 		$.get("https://ipfs.io/ipfs/"+hash, function(data, status){
+// 			console.log("data",data.toString('utf8'))
+//     // alert("Data: " + data + "\nStatus: " + status);
+//   });
+		// request('https://ipfs.io/ipfs/'+hash, function(error, response, body) {
+		// 	alert("dsgsdfg")
+		// })
+		// $.ajax({
+        //         type: 'GET',
+        //         url: "https://ipfs.io/ipfs/QmdQJj1wds5KxNrT8cgTxLmiJiC2HCmiJTDEjqFVeJTuKP",
+        //        // data: {},
+        //        // dataType: 'json',
+        //         success: function(data) 
+		// 		{ alert(data);
+		// 	$("#imageshow").html(`<img src="${data}">`)
+		// 	},
+        //         error: function() { alert('something bad happened'); }
+        //         });
+	}
+</script>
+<script>
+
+    function show_doc_img(img_val){
+		var img = $('#img_tag'+img_val).attr('src');
+		// alert(img_val);
+		// alert(img);
+        if(img!=""){
+			$('#img_modal').html("");
+            $('#img_modal').html(`<img src="${img}" class="img-fluid">`);
+			$('#doc-Modal').show();
+
+		}
+	}
+
+	function show_doc_vid(vid_val){
+		var vid = $('#vid_tag'+vid_val).attr('src');
+		// alert(img);
+        if(vid!=""){
+			$('#img_modal').html("");
+            $('#img_modal').html(`<video id="vid_modal" width="400" height="400" controls>
+					
+				<source src="${vid}" type="video/mp4"></video>`);
+			$('#doc-Modal').show();
+
+		}
+	}
+    function show_doc_pdf(doc_val){
+		var doc = $('#pdf_tag'+doc_val).attr('data');
+		// alert(doc_val);
+		// alert(doc);
+        if(doc!=""){
+			$('#img_modal').html("");
+
+
+            $('#img_modal').html(`<object id="pdf_tag" class="PDFdoc" width="100%" height="500px" type="application/pdf" data="${doc}"></object>`);
+			$('#doc-Modal').show();
+
+		}
+	}
+	</script>

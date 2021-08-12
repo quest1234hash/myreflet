@@ -1,0 +1,1351 @@
+<%-include('../innerHeader')%>
+
+<style>
+
+	.client-dash-sec .wallet-box{
+		position: relative;
+		
+	}
+	
+	.balance-value.alert.alert-warning {
+		padding: 2px 10px;
+		border-radius: 5px !important;
+		color: #fff;
+		position: absolute;
+		right: 0;
+		top: -16px;
+	}
+	.alert-warning {
+		color: #856404;
+		background-color: #28a745  !important;
+		border-color: #28a745  !important;
+	}
+	
+	.balance-value2.alert.alert-warning2 {
+		padding: 3px 10px;
+		border-radius: 5px !important;
+		color: #fff;
+		position: absolute;
+		right: 0;
+		top: -16px;
+	}
+	.alert-warning2 {
+		color: #856404;
+		background-color: #f2081e  !important;
+		border-color: #f2081e  !important;
+	}
+	
+	</style>
+	
+	
+	
+	
+	
+	<section class="heading-sec">
+		<div class="container">
+			<div class="row align-item-center">
+				<div class="col-lg-9">
+					<div class="custom-space-btw align-items-center">
+						<div class="main-heading-dash">
+							<img src="../assets/images/icons/home-assets/dashbord-grey.png">
+							<h4>Dashboard: What Can I Do With My Reflet?</h4>
+						</div>
+						<div>
+							
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+						<div class="responsive-search">
+									<form class="response-search"> 
+										 <div class="input-group search-address-book">
+											<input type="text" class="form-control autocomplete" id="myInput" placeholder="Search" onkeyup="autoSearch(value);" minlength="4" maxlength="4">
+											<div class="input-group-append">
+												<button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+											</div>
+										</div>
+									  </form>
+								</div>
+				</div>
+				<div class="col-md-12">
+					<div>
+	
+						<ul class="nav nav-tabs dashboard-tabs-outer" id="myTab" role="tablist">
+						  <li class="nav-item">
+							<a class="nav-link active" id="dash-tab" data-toggle="tab" href="#dashtab1" role="tab" aria-controls="home" aria-selected="true">
+							<span>
+								<img class="gray" src="../assets/images/icons/home-assets/wallet.png">
+								<img class="purple" src="../assets/images/icons/home-assets/wallet-white.png">
+							</span> 	
+							Manage Wallet</a>
+						  </li>
+						  <li class="nav-item">
+							<a class="nav-link" id="dash-tab" data-toggle="tab" href="#dashtab2" role="tab" aria-controls="profile" aria-selected="false">
+							<span>
+								<img class="gray" src="../assets/images/icons/home-assets/myrequests.png">
+								<img class="purple" src="../assets/images/icons/home-assets/myrequests-white.png">
+							</span> 
+							New Requests
+							</a>
+						  </li>
+						  <li class="nav-item">
+							<a class="nav-link" id="dash-tab" data-toggle="tab" href="#dashtab3" role="tab" aria-controls="contact" aria-selected="false">
+							<span>
+								<img class="gray" src="../assets/images/icons/home-assets/myrefletID.png">
+								<img class="purple" src="../assets/images/icons/home-assets/myrefletID-white.png">
+							</span> 
+							Create New MyReflet ID</a>
+						  </li>
+						  <li class="nav-item">
+							<a class="nav-link" id="dash-tab" data-toggle="tab" href="#dashtab4" role="tab" aria-controls="contact" aria-selected="false">
+							<span>
+								<img class="gray" src="../assets/images/icons/home-assets/icon_message1.png">
+								<img class="purple" src="../assets/images/icons/home-assets/icon_message1-white.png">
+							</span> 
+							Send Messages</a>
+						  </li>
+						   <li class="nav-item">
+							<a class="nav-link"  href="/address-book">
+							<span>
+								<img class="gray" src="../assets/images/icons/home-assets/addressbook.png">
+								<img class="purple" src="../assets/images/icons/home-assets/addressbook-white.png">
+							</span> 
+							Address Book</a>
+						  </li>
+						   <li class="nav-item">
+							<a class="nav-link" href="/complaint-list">
+							<span>
+								<img class="gray" src="../assets/images/icons/home-assets/complaints.png">
+								<img class="purple" src="../assets/images/icons/home-assets/complaints-white.png">
+							</span> 
+						   Manage Complaints</a>
+						  </li>
+						   <li class="nav-item">
+							<a class="nav-link" href="/get-certified-doc-list">
+							<span>
+								<img class="gray" src="../assets/images/icons/home-assets/code-verification-tool.png">
+								<img class="purple" src="../assets/images/icons/home-assets/code-verification-tool-white.png">
+							</span> 
+							Self Certification</a>
+						  </li>
+						   <li class="nav-item">
+							<a class="nav-link" href="/myrequest">
+							<span>
+								<img class="gray" src="../assets/images/icons/home-assets/mydocuments.png">
+								<img class="purple" src="../assets/images/icons/home-assets/mydocuments-white.png">
+							</span> 
+							Send Document</a>
+						  </li>
+						   <li class="nav-item">
+							<a class="nav-link" href="/my-reports-list">
+							<span>
+								<img class="gray" src="../assets/images/icons/home-assets/myrequests.png">
+								<img class="purple" src="../assets/images/icons/home-assets/myrequests-white.png">
+							</span> 
+							Create New Report</a>
+						  </li>
+						  <li class="nav-item">
+							<a class="nav-link" href="/verifier">
+							<span>
+								<img class="gray" src="../assets/images/icons/home-assets/verifiers.png">
+								<img class="purple" src="../assets/images/icons/home-assets/verifiers-white.png">
+							</span> 
+							Become A Verifier</a>
+						  </li>
+						  <!-- <li class="nav-item">
+							  <div class="dropdown-menu-new">
+											<a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+											  <span>
+												<img class="gray" src="../assets/images/icons/home-assets/dashbord-grey.png">
+												<img class="purple" src="../assets/images/icons/home-assets/dashboard.png">
+											  </span> 
+											  All Dashboards
+											</a>
+											<div class="dropdown-menu" aria-labelledby="profileDropdown">
+												<a class="dropdown-item" href="/address-book" >
+													<img src="../assets/images/icons/home-assets/addressbook.png"> Address Book
+												</a>
+												<a class="dropdown-item" href="/complaint-list">
+													<img src="../assets/images/icons/home-assets/complaints.png"> Manage Complaints
+												</a>
+												<a class="dropdown-item" href="/get-certified-doc-list"><img src="../assets/images/icons/home-assets/code-verification-tool.png"> Self Certification
+												</a>
+												<a class="dropdown-item" href="/myrequest">
+													<img src="../assets/images/icons/home-assets/mydocuments.png"> Send Document
+												</a>
+												<a class="dropdown-item" href="/my-reports-list">
+													<img src="../assets/images/icons/home-assets/myrequests.png"> Create New Report
+												</a>
+												<a class="dropdown-item" href="/verifier">
+													<img src="../assets/images/icons/home-assets/verifiers.png"> Become A Verifier
+												</a>
+	
+											</div>
+							</div>
+						  </li> -->
+						</ul>
+					</div>
+				</div>
+					<div>
+	
+						<ul class="nav nav-tabs dashboard-tabs-outer" id="myTab" role="tablist">
+						 <li class="nav-item search-dash">
+								  <div class="responsive-search">
+									<form class="response-search"> 
+										 <div class="input-group search-address-book">
+											<input type="text" class="form-control autocomplete" id="myInput" placeholder="Search" onkeypress="autoSearch(this);">
+											<div class="input-group-append">
+												<button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+											</div>
+										</div>
+									  </form>
+								</div>
+						  </li> 
+						   <li class="nav-item">
+							<a class="nav-link active" id="dash-tab" data-toggle="tab" href="#dashtab1" role="tab" aria-controls="home" aria-selected="true">
+							<span>
+								<img class="gray" src="../assets/images/icons/home-assets/wallet.png">
+								<img class="purple" src="../assets/images/icons/home-assets/wallet-purple.png">
+							</span> 	
+							Manage Wallet</a>
+						  </li>
+						  <li class="nav-item">
+							<a class="nav-link" id="dash-tab" data-toggle="tab" href="#dashtab2" role="tab" aria-controls="profile" aria-selected="false">
+							<span>
+								<img class="gray" src="../assets/images/icons/home-assets/myrequests.png">
+								<img class="purple" src="../assets/images/icons/home-assets/myrequests-purple.png">
+							</span> 
+							New Requests
+							</a>
+						  </li>
+						  <li class="nav-item">
+							<a class="nav-link" id="dash-tab" data-toggle="tab" href="#dashtab3" role="tab" aria-controls="contact" aria-selected="false">
+							<span>
+								<img class="gray" src="../assets/images/icons/home-assets/myrefletID.png">
+								<img class="purple" src="../assets/images/icons/home-assets/myrefletID-purple.png">
+							</span> 
+							Create New MyReflet ID</a>
+						  </li> 
+						  <li class="nav-item">
+							<a class="nav-link" id="dash-tab" data-toggle="tab" href="#dashtab4" role="tab" aria-controls="contact" aria-selected="false">
+							<span>
+								<img class="gray" src="../assets/images/icons/home-assets/icon_message1.png">
+								<img class="purple" src="../assets/images/icons/home-assets/icon_message.png">
+							</span> 
+							Send Messages</a>
+						  </li> 
+						   <li class="nav-item">
+							  <div class="dropdown-menu-new">
+											<a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+											  <span>
+												<img class="gray" src="../assets/images/icons/home-assets/dashbord-grey.png">
+												<img class="purple" src="../assets/images/icons/home-assets/dashboard.png">
+											  </span> 
+											  All Dashboards
+											</a>
+											<div class="dropdown-menu" aria-labelledby="profileDropdown">
+												<a class="dropdown-item" href="" >
+													<img src="../assets/images/icons/home-assets/addressbook.png"> Address Book
+												</a>
+												<a class="dropdown-item" href="">
+													<img src="../assets/images/icons/home-assets/complaints.png"> Manage Complaints
+												</a>
+												<a class="dropdown-item" href=""><img src="../assets/images/icons/home-assets/code-verification-tool.png"> Self Certification
+												</a>
+												<a class="dropdown-item" href="">
+													<img src="../assets/images/icons/home-assets/mydocuments.png"> Send Document
+												</a>
+												<a class="dropdown-item" href="">
+													<img src="../assets/images/icons/home-assets/myrequests.png"> Create New Report
+												</a>
+												<a class="dropdown-item" href="">
+													<img src="../assets/images/icons/home-assets/verifiers.png"> Become A Verifier
+												</a>
+	
+											</div>
+							</div>
+						  </li> 
+						</ul>
+					</div>
+				</div>-->
+				<div class="col-lg-12 col-md-8 col-sm-8">
+					<div class="text-right">
+						<a class="btn-common-new" href="../my-reflet-id/protact-your-wallet.php" style="margin-inline: 6px;">
+						<!-- <img class="purple" src="../assets/images/icons/home-assets/wallet-purple.png"> -->
+						Add New Wallet
+					</a>
+						<a class="btn-common-new" href="../my-reflet-id/import-wallet.php">
+						<!-- <img class="purple" src="../assets/images/icons/home-assets/wallet-purple.png"> -->
+						Link MyReflet ID
+					</a>
+					</div>
+				</div> 
+				<div class="col-md-12"> 
+					<div class="white-box client-dash-sec">
+						<div class="tab-content" id="myTabContent">
+	
+						  <div class="tab-pane fade show active" id="dashtab1" role="tabpanel" aria-labelledby="dash-tab">
+						   <h4 class="small-heading text-center"> My Crypto wallet
+							  <td>
+								<a href="requested-by-verifier.php" class="view-link" style="float: right;">View All</a>
+						</td>
+						</h4> 
+							  <div class="row">
+								<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+									<div class="white-box full-box wallet-box">
+										<div class="row align-item-center">
+										   <div class="col-xl-6 col-lg-12 col-md-12">
+												 <!-- <div class="id-code-represent-heading"> 
+												  <img src="../assets/images/icons/home-assets/Representative.png">
+												  <span>Representative</span>
+											  </div> -->
+										   </div>
+										   <div class="col-xl-12 col-lg-12 col-md-12 text-right">
+												<label class="mb-0 balance-value ml-auto alert alert-warning" >My-reflet-user-linked</label>
+										   </div>
+										</div>
+										<div>
+										<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>Wallet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>1201</p>
+												</div>
+											</div>
+											<div class="private-key-copy-box mt-15">
+												<div class="form-group">
+													<label>Public key</label>
+													<div class="input-group mb-3">
+													  <input type="text" class="form-control" placeholder="75kln55nlk5lk75k7n5lk7lkn5nkfsflskskjl6;k64j64;6kj46kj">
+													  <div class="input-group-append">
+														  <a class="btn-copy" href=""><img src="../assets/images/icons/createidentity-assets/copy.png"></a>
+													  </div>
+													</div>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>MyReflet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>13089</p>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>ETH Balance</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>0</p>
+												</div>
+											</div>
+											<!-- <div class="row">
+												<div class="col-md-3">
+													<img src="../assets/images/icons/wallet/qrcode.png" class="img-fluid">
+												</div>
+												<div class="col-md-9">
+													<h4 class="purple-heading">Just scan the wallet address</h4>
+													<p>You can share this QR code with friends to receive ether or tokens in your wallet.</p>
+													<div class="row mt-15">-->
+														<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+														<a href="my-reflet-id-view.php"class="btn-common-new" style="padding: 4px 9px 3px 9px;"><i class="fas fa-eye"></i></a>
+														</div>
+														<!-- <div class="col-xl-6 col-lg-12 col-md-12">
+															<a class="btn-common-new border-btn" href="" data-toggle="modal" data-target="#share-Modal"><img src="../assets/images/icons/wallet/share.png"> Share</a>
+														</div>
+													</div>
+												</div>
+											</div> -->
+										 </div>
+									</div>
+								</div>
+								<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+									<div class="white-box full-box wallet-box">
+										<div class="row align-item-center">
+										   <div class="col-xl-6 col-lg-12 col-md-12">
+												 <!-- <div class="id-code-represent-heading"> 
+												  <img src="../assets/images/icons/home-assets/Representative.png">
+												  <span>Representative</span>
+											  </div> -->
+										   </div>
+										   <div class="col-xl-12 col-lg-12 col-md-12 text-right">
+												<label class="mb-0 balance-value ml-auto alert alert-warning" >My-reflet-user-linked</label>
+										   </div>
+										</div>
+										<div>
+										<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>Wallet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>1201</p>
+												</div>
+											</div>
+											<div class="private-key-copy-box mt-15">
+												<div class="form-group">
+													<label>Public key</label>
+													<div class="input-group mb-3">
+													  <input type="text" class="form-control" placeholder="75kln55nlk5lk75k7n5lk7lkn5nkfsflskskjl6;k64j64;6kj46kj">
+													  <div class="input-group-append">
+														  <a class="btn-copy" href=""><img src="../assets/images/icons/createidentity-assets/copy.png"></a>
+													  </div>
+													</div>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>MyReflet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>13089</p>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>Crypto Balance</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>0</p>
+												</div>
+											</div>
+											<!-- <div class="row">
+												<div class="col-md-3">
+													<img src="../assets/images/icons/wallet/qrcode.png" class="img-fluid">
+												</div>
+												<div class="col-md-9">
+													<h4 class="purple-heading">Just scan the wallet address</h4>
+													<p>You can share this QR code with friends to receive ether or tokens in your wallet.</p>
+													<div class="row mt-15">-->
+														<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+														<a href="my-reflet-id-view.php"class="btn-common-new" style="padding: 4px 9px 3px 9px;"><i class="fas fa-eye"></i></a>
+														</div>
+														<!--<div class="col-xl-6 col-lg-12 col-md-12">
+															<a class="btn-common-new border-btn" href="" data-toggle="modal" data-target="#share-Modal"><img src="../assets/images/icons/wallet/share.png"> Share</a>
+														</div>
+													</div>
+												</div>
+											</div> -->
+										 </div>
+									</div>
+								</div>
+							 </div>
+							 <div class="row">
+								<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+									<div class="white-box full-box wallet-box">
+										<div class="row align-item-center">
+										   <div class="col-xl-6 col-lg-12 col-md-12">
+												 <!-- <div class="id-code-represent-heading"> 
+												  <img src="../assets/images/icons/home-assets/Representative.png">
+												  <span>Representative</span>
+											  </div> -->
+										   </div>
+										   <div class="col-xl-12 col-lg-12 col-md-12 text-right">
+												<label class="mb-0 balance-value ml-auto alert alert-warning" >My-reflet-user-linked</label>
+										   </div>
+										</div>
+										<div>
+										<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>Wallet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>1201</p>
+												</div>
+											</div>
+											<div class="private-key-copy-box mt-15">
+												<div class="form-group">
+													<label>Public key</label>
+													<div class="input-group mb-3">
+													  <input type="text" class="form-control" placeholder="75kln55nlk5lk75k7n5lk7lkn5nkfsflskskjl6;k64j64;6kj46kj">
+													  <div class="input-group-append">
+														  <a class="btn-copy" href=""><img src="../assets/images/icons/createidentity-assets/copy.png"></a>
+													  </div>
+													</div>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>MyReflet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>13089</p>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>ETH Balance</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>0</p>
+												</div>
+											</div>
+											<!-- <div class="row">
+												<div class="col-md-3">
+													<img src="../assets/images/icons/wallet/qrcode.png" class="img-fluid">
+												</div>
+												<div class="col-md-9">
+													<h4 class="purple-heading">Just scan the wallet address</h4>
+													<p>You can share this QR code with friends to receive ether or tokens in your wallet.</p>
+													<div class="row mt-15">-->
+													<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+														<a href="my-reflet-id-view.php"class="btn-common-new" style="padding: 4px 9px 3px 9px;"><i class="fas fa-eye"></i></a>
+														</div>
+														<!-- <div class="col-xl-6 col-lg-12 col-md-12">
+															<a class="btn-common-new border-btn" href="" data-toggle="modal" data-target="#share-Modal"><img src="../assets/images/icons/wallet/share.png"> Share</a>
+														</div>
+													</div>
+												</div>
+											</div> -->
+										 </div>
+									</div>
+								</div>
+								<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+									<div class="white-box full-box wallet-box">
+										<div class="row align-item-center">
+										   <div class="col-xl-6 col-lg-12 col-md-12">
+												 <!-- <div class="id-code-represent-heading"> 
+												  <img src="../assets/images/icons/home-assets/Representative.png">
+												  <span>Representative</span>
+											  </div> -->
+										   </div>
+										   <div class="col-xl-12 col-lg-12 col-md-12 text-right">
+												<label class="mb-0 balance-value ml-auto alert alert-warning" >My-reflet-user-linked</label>
+										   </div>
+										</div>
+										<div>
+										<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>Wallet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>1201</p>
+												</div>
+											</div>
+											<div class="private-key-copy-box mt-15">
+												<div class="form-group">
+													<label>Public key</label>
+													<div class="input-group mb-3">
+													  <input type="text" class="form-control" placeholder="75kln55nlk5lk75k7n5lk7lkn5nkfsflskskjl6;k64j64;6kj46kj">
+													  <div class="input-group-append">
+														  <a class="btn-copy" href=""><img src="../assets/images/icons/createidentity-assets/copy.png"></a>
+													  </div>
+													</div>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>MyReflet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>13089</p>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>Crypto Balance</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>0</p>
+												</div>
+											</div>
+											<!-- <div class="row">
+												<div class="col-md-3">
+													<img src="../assets/images/icons/wallet/qrcode.png" class="img-fluid">
+												</div>
+												<div class="col-md-9">
+													<h4 class="purple-heading">Just scan the wallet address</h4>
+													<p>You can share this QR code with friends to receive ether or tokens in your wallet.</p>
+													<div class="row mt-15">-->
+													<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+														<a href="my-reflet-id-view.php"class="btn-common-new" style="padding: 4px 9px 3px 9px;"><i class="fas fa-eye"></i></a>
+														</div>
+														<!-- <div class="col-xl-6 col-lg-12 col-md-12">
+															<a class="btn-common-new border-btn" href="" data-toggle="modal" data-target="#share-Modal"><img src="../assets/images/icons/wallet/share.png"> Share</a>
+														</div>
+													</div>
+												</div>
+											</div> -->
+										 </div>
+									</div>
+								</div>
+							 </div>
+						  </div>
+						  <!-- <div class="tab-pane fade" id="dashtab2" role="tabpanel" aria-labelledby="dash-tab">
+							   <h4 class="small-heading text-center">Manage your existing wallets or create a new wallet.</h4> -->
+							<div class="row">
+								<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+									<div class="white-box full-box wallet-box">
+										<div class="row align-item-center">
+										   <div class="col-xl-6 col-lg-12 col-md-12">
+												 <!-- <div class="id-code-represent-heading"> 
+												  <img src="../assets/images/icons/home-assets/Representative.png">
+												  <span>Representative</span>
+											  </div> -->
+										   </div>
+										   <div class="col-xl-12 col-lg-12 col-md-12 text-right">
+												<label class="mb-0 balance-value ml-auto alert alert-warning" >My-reflet-user-linked</label>
+										   </div>
+										</div>
+										<div>
+										<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>Wallet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>1201</p>
+												</div>
+											</div>
+											<div class="private-key-copy-box mt-15">
+												<div class="form-group">
+													<label>Public key</label>
+													<div class="input-group mb-3">
+													  <input type="text" class="form-control" placeholder="75kln55nlk5lk75k7n5lk7lkn5nkfsflskskjl6;k64j64;6kj46kj">
+													  <div class="input-group-append">
+														  <a class="btn-copy" href=""><img src="../assets/images/icons/createidentity-assets/copy.png"></a>
+													  </div>
+													</div>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>MyReflet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>13089</p>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>ETH Balance</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>0</p>
+												</div>
+											</div>
+											<!-- <div class="row">
+												<div class="col-md-3">
+													<img src="../assets/images/icons/wallet/qrcode.png" class="img-fluid">
+												</div>
+												<div class="col-md-9">
+													<h4 class="purple-heading">Just scan the wallet address</h4>
+													<p>You can share this QR code with friends to receive ether or tokens in your wallet.</p>
+													<div class="row mt-15">-->
+													<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+														<a href="my-reflet-id-view.php"class="btn-common-new" style="padding: 4px 9px 3px 9px;"><i class="fas fa-eye"></i></a>
+														</div>
+														<!--<div class="col-xl-6 col-lg-12 col-md-12">
+															<a class="btn-common-new border-btn" href="" data-toggle="modal" data-target="#share-Modal"><img src="../assets/images/icons/wallet/share.png"> Share</a>
+														</div>
+													</div>
+												</div>
+											</div> -->
+										 </div>
+									</div>
+								</div>
+								<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+									<div class="white-box full-box wallet-box">
+										<div class="row align-item-center">
+										   <div class="col-xl-6 col-lg-12 col-md-12">
+												 <!-- <div class="id-code-represent-heading"> 
+												  <img src="../assets/images/icons/home-assets/Representative.png">
+												  <span>Representative</span>
+											  </div> -->
+										   </div>
+										   <div class="col-xl-12 col-lg-12 col-md-12 text-right">
+												<label class="mb-0 balance-value2 ml-auto alert alert-warning2" >My-reflet-user-linked</label>
+										   </div>
+										</div>
+										<div>
+										<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>Wallet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>1201</p>
+												</div>
+											</div>
+											<div class="private-key-copy-box mt-15">
+												<div class="form-group">
+													<label>Public key</label>
+													<div class="input-group mb-3">
+													  <input type="text" class="form-control" placeholder="75kln55nlk5lk75k7n5lk7lkn5nkfsflskskjl6;k64j64;6kj46kj">
+													  <div class="input-group-append">
+														  <a class="btn-copy" href=""><img src="../assets/images/icons/createidentity-assets/copy.png"></a>
+													  </div>
+													</div>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>MyReflet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>13089</p>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>ETH Balance</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>0</p>
+												</div>
+											</div>
+											<!-- <div class="row">
+												<div class="col-md-3">
+													<img src="../assets/images/icons/wallet/qrcode.png" class="img-fluid">
+												</div>
+												<div class="col-md-9">
+													<h4 class="purple-heading">Just scan the wallet address</h4>
+													<p>You can share this QR code with friends to receive ether or tokens in your wallet.</p>
+													<div class="row mt-15">-->
+													<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+														<a href="my-reflet-id-view.php"class="btn-common-new" style="padding: 4px 9px 3px 9px;"><i class="fas fa-eye"></i></a>
+														</div>
+														<!--<div class="col-xl-6 col-lg-12 col-md-12">
+															<a class="btn-common-new border-btn" href="" data-toggle="modal" data-target="#share-Modal"><img src="../assets/images/icons/wallet/share.png"> Share</a>
+														</div>
+													</div>
+												</div>
+											</div> -->
+										 </div>
+									</div>
+								</div>
+							 </div>
+							 <div class="row">
+								<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+									<div class="white-box full-box wallet-box">
+										<div class="row align-item-center">
+										   <div class="col-xl-6 col-lg-12 col-md-12">
+												 <!-- <div class="id-code-represent-heading"> 
+												  <img src="../assets/images/icons/home-assets/Representative.png">
+												  <span>Representative</span>
+											  </div> -->
+										   </div>
+										   <div class="col-xl-12 col-lg-12 col-md-12 text-right">
+												<label class="mb-0 balance-value2 ml-auto alert alert-warning2" >My-reflet-user-linked</label>
+										   </div>
+										</div>
+										<div>
+										<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>Wallet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>1201</p>
+												</div>
+											</div>
+											<div class="private-key-copy-box mt-15">
+												<div class="form-group">
+													<label>Public key</label>
+													<div class="input-group mb-3">
+													  <input type="text" class="form-control" placeholder="75kln55nlk5lk75k7n5lk7lkn5nkfsflskskjl6;k64j64;6kj46kj">
+													  <div class="input-group-append">
+														  <a class="btn-copy" href=""><img src="../assets/images/icons/createidentity-assets/copy.png"></a>
+													  </div>
+													</div>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>MyReflet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>13089</p>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>ETH Balance</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>0</p>
+												</div>
+											</div>
+											<!-- <div class="row">
+												<div class="col-md-3">
+													<img src="../assets/images/icons/wallet/qrcode.png" class="img-fluid">
+												</div>
+												<div class="col-md-9">
+													<h4 class="purple-heading">Just scan the wallet address</h4>
+													<p>You can share this QR code with friends to receive ether or tokens in your wallet.</p>
+													<div class="row mt-15">-->
+													<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+														<a href="my-reflet-id-view.php"class="btn-common-new" style="padding: 4px 9px 3px 9px;"><i class="fas fa-eye"></i></a>
+														</div>
+														<!--<div class="col-xl-6 col-lg-12 col-md-12">
+															<a class="btn-common-new border-btn" href="" data-toggle="modal" data-target="#share-Modal"><img src="../assets/images/icons/wallet/share.png"> Share</a>
+														</div>
+													</div>
+												</div>
+											</div> -->
+										 </div>
+									</div>
+								</div>
+								<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+									<div class="white-box full-box wallet-box">
+										<div class="row align-item-center">
+										   <div class="col-xl-6 col-lg-12 col-md-12">
+												 <!-- <div class="id-code-represent-heading"> 
+												  <img src="../assets/images/icons/home-assets/Representative.png">
+												  <span>Representative</span>
+											  </div> -->
+										   </div>
+										   <div class="col-xl-12 col-lg-12 col-md-12 text-right">
+												<label class="mb-0 balance-value2 ml-auto alert alert-warning2" >My-reflet-user-linked</label>
+										   </div>
+										</div>
+										<div>
+										<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>Wallet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>1201</p>
+												</div>
+											</div>
+											<div class="private-key-copy-box mt-15">
+												<div class="form-group">
+													<label>Public key</label>
+													<div class="input-group mb-3">
+													  <input type="text" class="form-control" placeholder="75kln55nlk5lk75k7n5lk7lkn5nkfsflskskjl6;k64j64;6kj46kj">
+													  <div class="input-group-append">
+														  <a class="btn-copy" href=""><img src="../assets/images/icons/createidentity-assets/copy.png"></a>
+													  </div>
+													</div>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>MyReflet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>13089</p>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>ETH Balance</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>0</p>
+												</div>
+											</div>
+											<!-- <div class="row">
+												<div class="col-md-3">
+													<img src="../assets/images/icons/wallet/qrcode.png" class="img-fluid">
+												</div>
+												<div class="col-md-9">
+													<h4 class="purple-heading">Just scan the wallet address</h4>
+													<p>You can share this QR code with friends to receive ether or tokens in your wallet.</p>
+													<div class="row mt-15">
+														<div class="col-xl-6 col-lg-12 col-md-12">
+															<a class="btn-common-new single-color-btn" href="send-ether.php"><img src="../assets/images/icons/wallet/send.png"> Send</a>
+														</div>
+														<div class="col-xl-6 col-lg-12 col-md-12">
+															<a class="btn-common-new border-btn" href="" data-toggle="modal" data-target="#share-Modal"><img src="../assets/images/icons/wallet/share.png"> Share</a>
+														</div>
+													</div>
+												</div>
+											</div> 
+										 </div>
+									</div>
+								</div>
+							 </div>
+						  </div> -->
+						  <!-- <div class="tab-pane fade" id="dashtab3" role="tabpanel" aria-labelledby="dash-tab">
+							   <h4 class="small-heading text-center">Manage your existing wallets or create a new wallet.</h4>
+							<div class="row">
+								<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+									<div class="white-box full-box wallet-box">
+										<div class="row align-item-center">
+										   <div class="col-xl-6 col-lg-12 col-md-12">
+												  <div class="id-code-represent-heading"> 
+												  <img src="../assets/images/icons/home-assets/Representative.png">
+												  <span>Representative</span>
+											  </div> 
+										   </div>
+										   <div class="col-xl-6 col-lg-12 col-md-12">
+												<h5 class="mb-0 balance-value">Balance : 0.245 ETH</h5>
+										   </div> 
+										</div>
+										<div>
+										<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>Wallet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>1201</p>
+												</div>
+											</div>
+											<div class="private-key-copy-box mt-15">
+												<div class="form-group">
+													<label>Public key</label>
+													<div class="input-group mb-3">
+													  <input type="text" class="form-control" placeholder="75kln55nlk5lk75k7n5lk7lkn5nkfsflskskjl6;k64j64;6kj46kj">
+													  <div class="input-group-append">
+														  <a class="btn-copy" href=""><img src="../assets/images/icons/createidentity-assets/copy.png"></a>
+													  </div>
+													</div>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>MyReflet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>13089</p>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>ETH Balance</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>0</p>
+												</div>
+											</div>
+											 <div class="row">
+												<div class="col-md-3">
+													<img src="../assets/images/icons/wallet/qrcode.png" class="img-fluid">
+												</div>
+												<div class="col-md-9">
+													<h4 class="purple-heading">Just scan the wallet address</h4>
+													<p>You can share this QR code with friends to receive ether or tokens in your wallet.</p>
+													<div class="row mt-15">
+														<div class="col-xl-6 col-lg-12 col-md-12">
+															<a class="btn-common-new single-color-btn" href="send-ether.php"><img src="../assets/images/icons/wallet/send.png"> Send</a>
+														</div>
+														<div class="col-xl-6 col-lg-12 col-md-12">
+															<a class="btn-common-new border-btn" href="" data-toggle="modal" data-target="#share-Modal"><img src="../assets/images/icons/wallet/share.png"> Share</a>
+														</div>
+													</div>
+												</div>
+											</div> 
+										 </div>
+									</div>
+								</div>
+								<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+									<div class="white-box full-box wallet-box">
+										<div class="row align-item-center">
+										   <div class="col-xl-6 col-lg-12 col-md-12">
+												  <div class="id-code-represent-heading"> 
+												  <img src="../assets/images/icons/home-assets/Representative.png">
+												  <span>Representative</span>
+											  </div> 
+										   </div>
+										   <div class="col-xl-6 col-lg-12 col-md-12">
+												<h5 class="mb-0 balance-value">Balance : 0.245 ETH</h5>
+										   </div> 
+										</div>
+										<div>
+										<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>Wallet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>1201</p>
+												</div>
+											</div>
+											<div class="private-key-copy-box mt-15">
+												<div class="form-group">
+													<label>Public key</label>
+													<div class="input-group mb-3">
+													  <input type="text" class="form-control" placeholder="75kln55nlk5lk75k7n5lk7lkn5nkfsflskskjl6;k64j64;6kj46kj">
+													  <div class="input-group-append">
+														  <a class="btn-copy" href=""><img src="../assets/images/icons/createidentity-assets/copy.png"></a>
+													  </div>
+													</div>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>MyReflet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>13089</p>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>Crypto Balance</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>0</p>
+												</div>
+											</div>
+										 <div class="row">
+												<div class="col-md-3">
+													<img src="../assets/images/icons/wallet/qrcode.png" class="img-fluid">
+												</div>
+												<div class="col-md-9">
+													<h4 class="purple-heading">Just scan the wallet address</h4>
+													<p>You can share this QR code with friends to receive ether or tokens in your wallet.</p>
+													<div class="row mt-15">-->
+													<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+														<a href="my-reflet-id-view.php"class="btn-common-new" style="padding: 4px 9px 3px 9px;"><i class="fas fa-eye"></i></a>
+														</div>
+														<!-- <div class="col-xl-6 col-lg-12 col-md-12">
+															<a class="btn-common-new border-btn" href="" data-toggle="modal" data-target="#share-Modal"><img src="../assets/images/icons/wallet/share.png"> Share</a>
+														</div>
+													</div>
+												</div>
+											</div> -->
+										 </div>
+									</div>
+								</div>
+							 </div>
+							 <div class="row">
+								<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+									<div class="white-box full-box wallet-box">
+										<div class="row align-item-center">
+										   <div class="col-xl-6 col-lg-12 col-md-12">
+												 <!-- <div class="id-code-represent-heading"> 
+												  <img src="../assets/images/icons/home-assets/Representative.png">
+												  <span>Representative</span>
+											  </div> -->
+										   </div>
+										   <div class="col-xl-12 col-lg-12 col-md-12 text-right">
+												<label class="mb-0 balance-value2 ml-auto alert alert-warning2" >My-reflet-user-linked</label>
+										   </div>
+										</div>
+										<div>
+										<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>Wallet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>1201</p>
+												</div>
+											</div>
+											<div class="private-key-copy-box mt-15">
+												<div class="form-group">
+													<label>Public key</label>
+													<div class="input-group mb-3">
+													  <input type="text" class="form-control" placeholder="75kln55nlk5lk75k7n5lk7lkn5nkfsflskskjl6;k64j64;6kj46kj">
+													  <div class="input-group-append">
+														  <a class="btn-copy" href=""><img src="../assets/images/icons/createidentity-assets/copy.png"></a>
+													  </div>
+													</div>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>MyReflet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>13089</p>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>ETH Balance</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>0</p>
+												</div>
+											</div>
+											<!-- <div class="row">
+												<div class="col-md-3">
+													<img src="../assets/images/icons/wallet/qrcode.png" class="img-fluid">
+												</div>
+												<div class="col-md-9">
+													<h4 class="purple-heading">Just scan the wallet address</h4>
+													<p>You can share this QR code with friends to receive ether or tokens in your wallet.</p>
+													<div class="row mt-15">-->
+													<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+														<a href="my-reflet-id-view.php"class="btn-common-new" style="padding: 4px 9px 3px 9px;"><i class="fas fa-eye"></i></a>
+														</div>
+														<!--<div class="col-xl-6 col-lg-12 col-md-12">
+															<a class="btn-common-new border-btn" href="" data-toggle="modal" data-target="#share-Modal"><img src="../assets/images/icons/wallet/share.png"> Share</a>
+														</div>
+													</div>
+												</div>
+											</div> -->
+										 </div>
+									</div>
+								</div>
+								<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+									<div class="white-box full-box wallet-box">
+										<div class="row align-item-center">
+										   <div class="col-xl-6 col-lg-12 col-md-12">
+												 <!-- <div class="id-code-represent-heading"> 
+												  <img src="../assets/images/icons/home-assets/Representative.png">
+												  <span>Representative</span>
+											  </div> -->
+										   </div>
+										   <div class="col-xl-12 col-lg-12 col-md-12 text-right">
+												<label class="mb-0 balance-value2 ml-auto alert alert-warning2" >My-reflet-user-linked</label>
+										   </div>
+										</div>
+										<div>
+										<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>Wallet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>1201</p>
+												</div>
+											</div>
+											<div class="private-key-copy-box mt-15">
+												<div class="form-group">
+													<label>Public key</label>
+													<div class="input-group mb-3">
+													  <input type="text" class="form-control" placeholder="75kln55nlk5lk75k7n5lk7lkn5nkfsflskskjl6;k64j64;6kj46kj">
+													  <div class="input-group-append">
+														  <a class="btn-copy" href=""><img src="../assets/images/icons/createidentity-assets/copy.png"></a>
+													  </div>
+													</div>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>MyReflet ID</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>13089</p>
+												</div>
+											</div>
+											<div class="row inner-box-id-code">
+												<div class="col-md-4 p-0">
+													<div class="for-flex-align">
+														<img src="../assets/images/icons/home-assets/user.png">
+														<p>ETH Balance</p>
+													</div>
+												</div>
+												<div class="col-md-6 dubble-dot-after p-0">
+													<p>0</p>
+												</div>
+											</div>
+											<!-- <div class="row">
+												<div class="col-md-3">
+													<img src="../assets/images/icons/wallet/qrcode.png" class="img-fluid">
+												</div>
+												<div class="col-md-9">
+													<h4 class="purple-heading">Just scan the wallet address</h4>
+													<p>You can share this QR code with friends to receive ether or tokens in your wallet.</p>
+													<div class="row mt-15">-->
+													<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+														<a href="my-reflet-id-view.php"class="btn-common-new" style="padding: 4px 9px 3px 9px;"><i class="fas fa-eye"></i></a>
+														</div>
+														<!-- <div class="col-xl-6 col-lg-12 col-md-12">
+															<a class="btn-common-new border-btn" href="" data-toggle="modal" data-target="#share-Modal"><img src="../assets/images/icons/wallet/share.png"> Share</a>
+														</div>
+													</div>
+												</div>
+											</div> 
+										 </div>
+									</div>
+								</div>
+							 </div>
+						  </div> -->
+						  <!-- <div class="tab-pane fade" id="dashtab4" role="tabpanel" aria-labelledby="dash-tab">
+							   <div class="row">
+								   <div class="col-lg-12">
+									   <h4 class="small-heading text-left mb-15">Messages</h4>
+									<div class="personal-info-box table-responsive another-table">
+										<table class="table" id="myTable3">
+											<thead>
+												<tr> 
+													  <th scope="col">Date</th>
+													  <th scope="col">Verifier</th>
+													  <th scope="col">Message</th>
+													  <th scope="col">MyReflet ID</th>
+													  <th scope="col">Action</th>
+												</tr>
+											  </thead>
+											<tbody>
+												<tr>
+													
+													  <td>15 Aug, 2020</td>
+													<td><span class="font-w-600">Jack MA </span> <br> 25102</td>
+													<td>Lorem ipsume has</td>
+													<td><span class="font-w-600">John Doe</span> <br> 25102</td>
+													<td>
+														<div>
+															<a href="#">
+															  <div class="doc-img">
+																	  <img src="../assets/images/icons/home-assets/eye.png">
+																  </div>
+															</a>
+														</div>
+													  
+													  </td>
+												</tr>
+												<tr>
+												
+													  <td>15 Aug, 2020</td>
+													<td><span class="font-w-600">Jack MA </span> <br> 25102</td>
+													<td>Lorem ipsume has</td>
+													<td><span class="font-w-600">John Doe</span> <br> 25102</td>
+												   <td>
+														<div>
+															<a href="#">
+															  <div class="doc-img">
+																	  <img src="../assets/images/icons/home-assets/eye.png">
+																  </div>
+															</a>
+														</div>
+													  
+													  </td>
+												</tr>
+												<tr>
+													
+													  <td>15 Aug, 2020</td>
+													<td><span class="font-w-600">Jack MA </span> <br> 25102</td>
+													<td>Lorem ipsume has</td>
+													<td><span class="font-w-600">John Doe</span> <br> 25102</td>
+													<td>
+														<div>
+															<a href="#">
+															  <div class="doc-img">
+																	  <img src="../assets/images/icons/home-assets/eye.png">
+																  </div>
+															</a>
+														</div>
+													  
+													  </td>
+												</tr>
+												<tr>
+													
+													  <td>15 Aug, 2020</td>
+													<td><span class="font-w-600">Jack MA </span> <br> 25102</td>
+													<td>Lorem ipsume has</td>
+													<td><span class="font-w-600">John Doe</span> <br> 25102</td>
+													<td>
+														<div>
+															<a href="#">
+															  <div class="doc-img">
+																	  <img src="../assets/images/icons/home-assets/eye.png">
+																  </div>
+															</a>
+														</div>
+													  
+													  </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							   </div>
+						  </div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+
+
+<%- include('../innerFooter')%>
+
+
+
+ 

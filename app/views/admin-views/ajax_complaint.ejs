@@ -1,0 +1,89 @@
+          <% if(complaint_list.length>0)
+                    { 
+                       var i=0;
+                       complaint_list.forEach(function(each_data){
+                          %>
+                <tr>
+                   <td>
+                     <div>
+                       <p class="">UI-<%=each_data.complain_id%></p>
+                     </div>
+                   </td>
+                   <td>
+                     <div> 
+         
+                                   <%if(each_data.rep_firstname){%>
+                                        <p class="upper"><%=each_data.rep_firstname%></p>
+                                        
+                                <%}else if(each_data.entity_company_name){%>
+                                     <p class="upper"><%=each_data.entity_company_name%></p>
+
+                                <%}else{%>
+                                 <p class="upper"><%=each_data.full_name%></p>
+                                  
+                                <%}%>
+                                                 
+                       <p class="upper"><%=each_data.reflect_code%></p>
+                     </div>
+                    </td>
+                    <td>
+                            <div> 
+                              <p class="upper"><%=each_data.client_reflect_name%></p>
+                              <p class="upper"><%=each_data.client_reflect_code%></p>
+
+                            </div>
+                    </td>
+                    <td>
+                            <div> 
+                              <p class="upper"><%=each_data.complain_message%></p>
+                            </div>
+                    </td>
+                    <td>
+                            <div> 
+                              <p class="upper"><%=each_data.complaint_status%></p>
+                            </div>
+                         
+
+                    </td>
+                    <td>
+                        <p><%=moment(each_data.created_at).format('MMM DD, YYYY')%></p>
+                      </td>
+                     
+                  
+                     <!-- <td class="show_link">
+                        <% 
+                        if(each_data.status=="active"){ %>
+
+                            <div> 
+                               <p class="upper"><%=each_data.status%></p>
+                           </div>
+                      <%}else{%>
+                       <div> 
+                           <p class="upper"><%=each_data.status%></p>
+                       </div>
+                       <%}%> -->
+                      </td>
+                    <td class=""> 
+                        <!-- <% 
+                        if(each_data.status=="active"){ %>
+                           -->
+                          <!-- <button type="button" value="<%-each_data.reg_user_id%>" id="inactivebut"  class="btn  mr-2 btn-success_2 block-id ">Block </button> -->
+                              
+                      <!-- <%  }else{ %> -->
+                          
+                        <!-- <button type="button" value="<%-each_data.reg_user_id%>" id="activebut"  class="btn  btn-danger_1 mr-2 unblock-id " >Unblock</button> -->
+               
+                      <!-- <%  }
+                        %> -->
+                       
+                  
+                 
+                </tr>
+                <%
+                i++;      
+            });
+            }else{
+     %>
+                       <tr>
+            <td colspan="8"><center>No record found.</center> </td>
+             </tr>       <%}%>

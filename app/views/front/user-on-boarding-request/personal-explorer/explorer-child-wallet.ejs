@@ -1,0 +1,452 @@
+<%-include('../innerHeader')%>
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12 m-bottom-30">
+				<div class="row personal-info-heading">
+					<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+						<div class="main-heading-dash">
+							<img src="../assets/images/icons/marketplace-assets/other-verifiers-grey.png">
+							<h4>Wallets list</h4>
+						</div>
+					</div>
+					<!-- <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 custom-flex-row">
+						<div class="another-dropdown1-wrapper">
+							<div class="another-dropdown1" data-toggle="dropdown" aria-expanded="false">
+								<a href="#" class="btn-common-new" >edit</a>
+								<span><i class="fas fa-sort-down"></i></span>
+							</div>
+							<div class="dropdown-menu" aria-labelledby="profileDropdown" x-placement="bottom-start">
+								<a href="#export-report" data-toggle="modal" class="dropdown-item">Export</a>
+								<a href="#deletePlan" data-toggle="modal" class="dropdown-item">Delete</a>
+								<a href="#schedule" data-toggle="modal" class="dropdown-item">Schedule</a>
+								<a href="#save-report" data-toggle="modal" class="dropdown-item">Save As</a>
+								<a href="" class="dropdown-item">Print</a>
+							</div>
+						</div>
+					
+					</div>  -->
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class="personal-info-box table-responsive another-table">
+					<table class="table" id="myTable3">
+						<thead>
+					    	<tr> 
+								  <th width="25%" scope="col">Wallet Adderess</th>
+								  <th width="25%" scope="col">reflect code</th>
+								  <th width="25%" scope="col">Action</th>
+								
+
+					    	</tr>
+					  	</thead>
+						<tbody>
+
+							<%if(childWalletData){%>
+
+								<%childWalletData.forEach(data=>{%>
+						    <tr>
+						    	<td><%-data.wallet_address%></td>
+						      	<td><%-data.reflect_code%></td>
+							    <td>-</td>
+							    <!-- <td>215485</td>
+							    <td>US</td>
+							    <td ><span class="pending-status">Pending</span></td> -->
+							</tr>
+							<%})}%>
+
+						    <!-- <tr>
+						    	<td>jackmag@gmail.com</td>
+						      	<td>Entity</td>
+							    <td>Jack Ma</td>
+							    <td>215485</td>
+							    <td>US</td>
+							    <td ><span class="cancel-statu">Rejected</span></td>
+						    </tr> -->
+						    <!-- <tr>
+						    	<td>jackmag@gmail.com</td>
+						      	<td>Entity</td>
+							    <td>Jack Ma</td>
+							    <td>215485</td>
+							    <td>US</td>
+							    <td ><span class="approved-status">Approved</span></td>
+							</tr>
+							<tr>
+						    	<td>jackmag@gmail.com</td>
+						      	<td>Entity</td>
+							    <td>Jack Ma</td>
+							    <td>215485</td>
+							    <td>US</td>
+							    <td ><span class="pending-status">Pending</span></td>
+						    </tr>
+						    <tr>
+						    	<td>jackmag@gmail.com</td>
+						      	<td>Entity</td>
+							    <td>Jack Ma</td>
+							    <td>215485</td>
+							    <td>US</td>
+							    <td ><span class="cancel-statu">Rejected</span></td>
+						    </tr>
+						    <tr>
+						    	<td>jackmag@gmail.com</td>
+						      	<td>Entity</td>
+							    <td>Jack Ma</td>
+							    <td>215485</td>
+							    <td>US</td>
+							    <td ><span class="approved-status">Approved</span></td>
+						    </tr> -->
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Modal S -->
+ 
+<div class="modal fade field-edit-modal" id="deletePlan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/img_close.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Delete Report</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="offset-2 col-xl-7 col-lg-12 col-md-12">
+					<p>Are you sure you want to delete report?</p>
+				</div>
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact pt-15">
+						<div>
+							<a class="btn-common-new" href="">Cancel</a>
+							<a class="btn-common-new" href="">Delete</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div> 
+<!-- Modal E -->
+<!-- Modal Export Report S -->
+<div class="modal field-edit-modal" id="export-report" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-10 col-lg-9 col-md-9">
+					<h5 class="heading-purple">Export Report</h5>
+					<p>Export only the details rows. Use this to do further calculations or for uploading  to other systems.</p>
+				</div>
+			</div>
+			<div class="row m-top-30">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact pt-15">
+						<div class="create-rflet-id-form">
+						    <div class="form-group for-select-existing-doc">
+						    	<div class="input-group">
+								  <div class="dropdown keep-inside-clicks-open">
+									  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									    Select Format
+									  </button>
+									  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									     <div class="for-doc-select">
+									    	<div class="checkbox"> 	
+									          <label>
+									          	Excel - .xls
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									          </label>
+									        </div>	
+									     </div>
+									      <div class="for-doc-select">
+									    	<div class="checkbox"> 	
+									          <label>
+									          	PDF
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									          </label>
+									        </div>	
+									     </div>
+									  </div>
+									</div>
+								  
+								</div>
+						    </div>
+						</div>
+						<div >
+							<a class="btn-common-new" href="" data-toggle="modal" data-target="#doc-permission-Modal" data-dismiss="modal">Export</a>
+							<a class="btn-common-new" href="">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Export Report S -->
+<!--Save Report S  -->
+<div class="modal fade field-edit-modal" id="save-report" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-upload-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Save Report</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+								<div class="input-group">
+								  <input type="text" id="" class="form-control" placeholder="Report Name">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group">
+								  <input type="text" class="form-control" placeholder="Description">
+								</div>
+							</div>
+						</div>
+						<div >
+							<a class="btn-common-new" href="">Save</a>
+							<a class="btn-common-new" href="">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+<!-- Save Report E -->
+<!--Schedule Report S  -->
+<div class="modal fade field-edit-modal modal-responsive" id="schedule" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-nationality-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Schedule Report</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+							<div class="form-group wrapper-relative">
+								<label for="">Frequency</label>
+								<div class="input-group-append for-radio-check-id-as">
+									<span class="input-group-text">
+								    	<div class="radio">
+								        	<label>
+								            	<input class="freq-field" type="radio" name="freq" value="Daily">
+								            	<span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+								            	Daily
+								          	</label>
+								        </div>
+									    <div class="radio">
+									        <label>
+									        	<input class="freq-field" type="radio" name="freq" value="Weekly">
+									        	<span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+									            Weekly
+									        </label>
+									    </div>
+									    <div class="radio">
+									        <label>
+									        	<input class="freq-field" type="radio" name="freq" value="Monthly">
+									        	<span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+									            Monthly
+									        </label>
+									    </div>
+									</span>
+								</div>
+								<div class="freq-drop-wrapper hide" id="freqWeekly">
+				            		<ul>
+				            			<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox" value="">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Sunday
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox" value="">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Monday
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox" value="">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Tuesday
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox" value="">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Wednesday
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox" value="">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Thursday
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox" value="">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Friday
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox" value="">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Saturady
+									         	</label>
+				        					</div>
+				        				</li>
+				            		</ul>
+				            	</div>
+				            	<div class="freq-drop-wrapper monthly-freq hide"  id="freqMonthly">
+				            		<div>On Day 
+				            			<select>
+				            				<option value="">1</option>
+				            				<option value="">2</option>
+				            				<option value="">3</option>
+				            			</select>
+				            			of every month
+				            		</div>
+				            	</div>
+							</div>
+						    <div class="form-group">
+								<div class="input-group">
+								  <input type="text" id="start-date" class="form-control" placeholder="Start Date">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group">
+								  <input type="text" id="end-date" class="form-control" placeholder="End Date">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group">
+								  <input type="text" class="form-control" placeholder="Preferred Start Time">
+								</div>
+							</div>
+						</div>
+						<div >
+							<a class="btn-common-new" href="">Schedule</a>
+							<a class="btn-common-new" href="">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+<!-- Schedule Report E -->
+<%- include('../innerFooter')%>
+ <script>
+ 	$(document).ready(function(){
+ 		$(".freq-field").change(function(){
+ 			var getvalue = $(this).val();
+ 			if(getvalue == "Weekly"){
+ 				$("#freqWeekly").slideDown(300);
+ 				$("#freqMonthly").slideUp(300);
+ 			}
+ 			else if(getvalue == "Monthly"){
+ 				$("#freqMonthly").slideDown(300);
+ 				$("#freqWeekly").slideUp(300);
+ 			}
+ 			else{
+ 				$("#freqMonthly").slideUp(300);
+ 				$("#freqWeekly").slideUp(300);
+ 			}
+ 		});
+ 	});
+ </script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script>
+$(document).ready( function () {
+	$('.table').DataTable();
+} );
+</script>
+<script>
+	$(document).on('click.bs.dropdown.data-api', '.dropdown.keep-inside-clicks-open', function (e) {
+	  e.stopPropagation();
+	});
+</script> 
+<script>
+$("#start-date").datepicker();
+$("#end-date").datepicker();
+</script>

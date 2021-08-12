@@ -1,0 +1,400 @@
+<%- include('header'); -%>
+
+<div>
+   <div class="main-bredcrum-box">
+        <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            All Reflet User
+          </li>
+        </ul>
+      </nav>
+    </div>
+  <div class="page-header">
+      <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+          <i class="mdi mdi-contacts"></i>
+        </span> All Reflet User </h3>
+    </div>
+    <div class="row align-bottom-flex">
+      <div class="col-md-2">
+        <div>
+          <div class="form-group">
+                    <label for="exampleInputUsername1">Select Verifier Type</label>
+                    <select class="form-control form-control-sm select-new2" id="exampleFormControlSelect3" onchange="nameFilter(value)" id="exampleFormControlSelect3">
+                    
+                          
+                        <option myTag="all">All</option>
+                        <option myTag="client">Client</option>
+                        <option myTag="Verifier">Verifier</option>
+                      </select>
+            </div>
+           
+        </div>
+        
+      </div>
+
+      <div class="col-md-2">
+        <!-- <div>
+          <div class="form-group">
+                    <label for="exampleInputUsername1">POB</label>
+                    <select class="form-control form-control-sm " onchange="nameFilter(value)" id="exampleFormControlSelect3">
+                      <option value="all">Select POB</option>
+                      <% if(count_verifier_list.data.length>0)
+                      { 
+                         count_verifier_list.data.forEach(function(each_data){
+                            %>
+                            <option><%=each_data.birthplace%></option>
+                            <%})}%>
+                      </select>
+            </div>
+           
+        </div> -->
+        
+      </div>
+
+      <div class="col-md-2">
+    <!--    <div>
+          <div class="form-group">
+                    <label for="exampleInputUsername1">Status</label>
+                    <select class="form-control form-control-sm " onchange="nameFilter(value)" id="exampleFormControlSelect3">
+                        <option value="all">All</option>
+                        <option>Active</option>
+                         <option>Inactive</option>
+                      </select>
+            </div>
+           
+        </div> -->
+        
+      </div>
+     
+    <div class="col-md-2">
+        <div>
+         <!--  <div class="form-group">
+              <a href="javascript:void(0);" onclick="export_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-export"></i>
+                   </span> 
+                 </span>
+               </a>
+              <a href="javascript:void(0);" onclick="print_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-printer"></i>
+                   </span> 
+                 </span>
+              </a>
+          </div> -->
+        </div>
+        
+      </div>
+      <!--
+        <div>
+          <div class="form-group">
+                    <label for="exampleInputUsername1">MyReflet ID</label>
+                    <select class="form-control form-control-sm" id="exampleFormControlSelect3">
+                        <option>All</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                  </div>
+        </div>
+      </div> -->
+      
+      <div class="col-md-3 offset-md-9">
+        <div>
+           <div class="form-group">
+              <a href="javascript:void(0);" onclick="export_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-export"></i>
+                   </span> 
+                 </span>
+               </a>
+              <a href="javascript:void(0);" onclick="print_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-printer"></i>
+                   </span> 
+                 </span>
+              </a>
+          </div>
+          <div class="form-group">
+                      <div class="input-group search-input">
+                        <input type="text" class="form-control"id="myInput" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                          <button class="btn btn-sm" type="button"><i class=" mdi mdi-magnify"></i></button>
+                        </div>
+                      </div>
+                    </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12"> 
+        <div class="table-responsive">
+          <% if(success_msg!=undefined && success_msg !='' ){ %>
+            <div class="alert alert-success text-center  flash_msg "id="success_message">
+            <%= success_msg %>
+           </div>
+          <% }%>
+          <% if(err_msg!=undefined && err_msg !='' ){ %>
+            <div class="alert alert-danger text-center  flash_msg " id="error_msg">
+                <%= err_msg %>
+               </div>
+             
+            <% }%>
+            <div  class="data_table">
+          <table class="table tabel-virifier"id="myTable3">
+              <thead> 
+                <tr>
+                   <th>S.No.</th>
+                   <th>Reflet User</th>
+                  <th>Type</th>
+                  <th > All Levels</th>
+                  <!-- <th class="hide_link">View All Documents</th> -->
+                </tr>
+              </thead>
+              <tbody id="myTable">
+                  <% if(count_verifier_list.data.length>0)
+                  { 
+                     var i=0;
+                     var j=1;
+                     count_verifier_list.data.forEach(function(each_data){
+                        %>
+              <tr>
+                 
+                 <td>
+                   <div>
+                     <p class=""><%=j%>.</p>
+                   </div>
+                 </td>
+                 <td>
+                   <div> 
+                     <p class="upper">
+                           <%if(each_data.entity_company_name){%>
+                                    <span class="font-w-600"> <%=each_data.entity_company_name%> </span>
+                                    <br><%=each_data.reflect_code%>
+                                <%}else if(each_data.rep_firstname){%>
+                                    <span class="font-w-600"> <%=each_data.rep_firstname%> </span>
+                                    <br><%=each_data.reflect_code%>
+                                   
+                                <%}%>
+                    </p>
+                   </div>
+                  </td>
+                              
+                   <td>
+                          <div> 
+                            <p class="upper"><%=each_data.user_as%></p>
+                          </div>
+                   </td>
+                      
+                  <td>
+
+                        <ul>                                  
+                          
+
+                          <%if(each_data.level_name=='undefined'){%>
+                                                     <p class="upper"style="color: green"> *Default Level </p>
+                                         <%}else{%> 
+                                                 <% each_data.level_name.forEach(function(each_doc){%>
+
+                                                           <li><p class="upper"style="white-space: pre-wrap;"><%=each_doc%></p></li>
+                                                 <%})%>
+                                                 
+                                         <%}%> 
+                         
+                        </ul>
+                       
+                     
+                   </td>
+
+                 
+                  
+                  <!-- <td><a class="dropdown-item hide_link" href="/view-levels-by-userid?reflect_id=<%=each_data.reflect_id%>&user_as=<%=each_data.user_as%>"><i class="fas fa-eye"></i></a></td> -->
+
+
+              <!-- <td><a class="dropdown-item hide_link" href="/view-levels-by-userid?reflect_id=<%=each_data.reflect_id%>&user_as=<%=each_data.user_as%>"><i class="fas fa-eye"></i></a></td> -->
+             
+                </tr>
+                <%
+                i++;  j++;    
+            });
+                }else{
+     %>
+                       <tr>
+            <td colspan="6"><center>No record found.</center> </td>
+             </tr>       <%}%>
+              </tbody>
+              <tbody class="status_table"></tbody>
+            </table>
+         
+       <div class="pagination-list for-user">
+          
+            <% if (count_verifier_list.totalPages > 0) { %>
+             <ul class="pagination text-center">
+               <% if (count_verifier_list.currentPage == 1) { %>
+                 <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+               <% } else { %>
+                 <li class="page-item"><a class="page-link" href="/entity-client-verifier-report?page=1">&lt;</a></li>
+               <% } %>
+          
+          
+          
+               <% var i = (Number(count_verifier_list.currentPage) > 5 ? Number(count_verifier_list.currentPage) - 4 : 1) %>
+               <% if (i !== 1) { %>
+                 <!-- <li class="disabled"><a>...</a></li> -->
+                 <li class="page-item disabled"><a class="page-link" >...</a></li>
+               <% } %>
+               <% for (; i <= (Number(count_verifier_list.currentPage) + 4) && i <= count_verifier_list.totalPages; i++) { %>
+                 <% if (i == count_verifier_list.currentPage) { %>
+                   <!-- <li class="active"><a><%= i %></a></li> -->
+                   <li class="page-item active">
+                   <a class="page-link" href="#"><%= i %><span class="sr-only">(count_verifier_list.currentPage)</span></a>
+                   </li>
+                 <% } else { %>
+                   <li class="page-item"><a class="page-link" href="/entity-client-verifier-report?page=<%= i %>"><%= i %></a></li>
+                 <% } %>
+                 <% if (i == Number(count_verifier_list.currentPage) + 4 && i < count_verifier_list.totalPages) { %>
+                   <!-- <li class="disabled"><a>...</a></li> -->
+                   <li class="page-item disabled"><a class="page-link" >...</a></li>
+                 <% } %>
+               <% } %>
+          
+          
+               <% if (count_verifier_list.currentPage == count_verifier_list.totalPages) { %>                       
+                 <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+               <% } else { %>
+                 <li><a class="page-link" href="/entity-client-verifier-report?page=<%= count_verifier_list.totalPages %>">&gt;</a></li>
+               <% } %>
+          
+             </ul>
+          <% } %>
+           </div>
+           </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<%- include('footer'); -%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script src="/assets/js/select2.full.min.js"></script>
+<script src="/assets/js/jquery.nice-select.min.js"></script>
+
+
+<script>
+  $(function () {
+  $(".select-new").select2();
+   $(".select-new1").select2();
+  $(".select-new2").select2();
+  $("#select-new3").select2();
+ 
+});
+</script>
+<script>
+
+
+    function export_table(){
+        // alert('hhh')
+      // $('.hide_link').show();
+    
+        $("#myTable3").table2excel({
+          filename: "Verifier-list.xls",
+          exclude:'.hide_link',
+        });
+      //   $('.hide_link').show();
+      window.location.reload(true);
+    
+      };
+      
+      function print_table(){
+        $('.hide_link').hide();
+     
+     // $("#user_div").print();
+     var restorepage = $('body').html();
+  // $('.nodata').hide();
+   var printcontent = $('#myTable3').clone();
+   $('body').empty().html(printcontent);
+   window.print();
+   $('body').html(restorepage);
+ 
+   window.location.reload(true);
+        }   
+   </script>
+<script>
+    $(document).ready(function(){
+      // (".status_table").hide();
+                $("#myInput").on("keyup", function() {
+
+            var value = $(this).val().toLowerCase();
+             if(value)
+            {
+            $.ajax({
+                          type: "post",
+                           url: "/search-reflet",
+                          data:{query:value,reg_user_id:`<%=reg_user_id%>`},
+                          success: function (data) {
+                            // alert(data);
+                            
+                                 $('.data_table').html("");
+                                          $('.data_table').html(data);
+                                  
+      
+  
+    
+    }
+  })
+ }
+            else
+            {
+              location.reload(true);
+            }
+  })
+    });
+ </script> 
+
+
+
+<script>
+  function nameFilter(value){
+    // alert(value)
+ 
+    if(value != 'All'){
+                           
+ 
+                $.ajax({
+                                    type: "post",
+                                    url: "/search-reflet",
+                                    data:{query:value,reg_user_id:`<%=reg_user_id%>`},
+                                    success: function (data) {
+                                      // alert(data);
+                                      
+                                          $('.data_table').html("");
+                                          $('.data_table').html(data);
+                                            
+                
+                                    }
+                  })
+       } else {
+
+        window.location.reload()
+
+       }
+  }
+ </script>

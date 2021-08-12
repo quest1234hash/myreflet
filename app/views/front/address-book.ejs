@@ -1,0 +1,505 @@
+<%-include('innerHeader')%>
+
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-9 col-md-6 col-sm-6">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/home-assets/addressbook.png">
+					<h4>Address Book</h4>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</section>
+
+<section class="setup-id-sec">
+	<div class="container">
+			<% if(err_msg!=undefined && err_msg !='' ){ %>
+				<div class="alert alert-danger text-center  flash_msg ">
+						<%= err_msg %>
+					 </div>
+			   
+				<% }%>
+			   <% if(success_msg!=undefined && success_msg !='' ){ %>
+				  <div class="alert alert-success text-center  flash_msg ">
+					<%= success_msg %>
+				 </div>
+				<% }%>
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="white-box">
+					<div class="row">
+						<div class="col-xl-7 col-lg-8 col-md-8 m-auto">
+							<div class="setup-inner-box for-protact">
+								<p>Create and assign labels to save commonly used verifiers when sending document for verification.</p>
+
+								<div class="private-key-copy-box">
+									<a class="btn-common-new" href="" data-toggle="modal" data-target="#add-verifier-Modal">Add verifier</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12">
+				 <div class="personal-info-heading">
+					<div class="row align-item-center">
+							<div class="col-lg-3 col-md-6 col-sm-6">
+									<div class="text-right">
+										<form class="">
+										  <div class="input-group search-address-book">
+											  <input type="text" class="form-control autocomplete" id="searchuni" placeholder="Search"  >
+											  <div class="input-group-append">
+												  <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+											  </div>
+										  </div>
+			 						  </form>
+									</div>
+								</div>
+						<div class="col-md-4 offset-md-8">
+							
+							<div class="text-right">
+								<a href="javascript:downloadVerifierList()">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Export Data">
+											<img src="../assets/images/icons/dashboard-assets/export.png">
+									     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+										
+									</div>
+								</a>
+								<a href="">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Print Data" onclick="printdiv()">
+											<img src="../assets/images/icons/dashboard-assets/print.png">
+										    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="personal-info-box table-responsive" id="verifierListDiv">
+					<table class="table" id="myTable">
+					  <thead>
+					    <tr>
+					      <th width="20%" scope="col">Label</th>
+					      <th width="20%" scope="col">Verifier Name</th>
+					      <th width="20%" scope="col">Verifier Code</th>
+					      <th width="20%" scope="col" class="hide_link">Action</th>
+					    </tr>
+					  </thead>
+					  <tbody id="undiv">
+					<%if(addressBookArray[0]==null){%>
+						<tr>
+						<td colspan="4"><center>No record found.</center> </td>
+					   </tr>
+					<%}else{%>
+							
+						  <%var i=0;addressBookArray.forEach(adressDataBook=>{%>
+							<tr class="classTr">
+									<td scope="row">
+										<div class="for-flex-align">
+											 
+											 <%-adressDataBook.address_data.lable_name.charAt(0).toUpperCase()+ adressDataBook.address_data.lable_name.slice(1);%>
+										</div>
+									</td>
+								<%if(adressDataBook.myreflectdata.reflectid_by=="entity"){%>
+									<td>		<%-adressDataBook.myreflectdata.entity_company_name.charAt(0).toUpperCase()+ adressDataBook.myreflectdata.entity_company_name.slice(1);%></td>
+							
+							   <%}else{%>
+							
+
+								<td>		<%-adressDataBook.myreflectdata.rep_username.charAt(0).toUpperCase()+ adressDataBook.myreflectdata.rep_username.slice(1);%></td>
+								   <%}%>
+								   <td ><%=adressDataBook.address_data.verifier_code%></td>
+								   <input type="hidden" class="form-control"id="reflect_code"value="<%=adressDataBook.address_data.verifier_code%>" readonly="readonly">
+
+									<td class="hide_link">
+										<div>
+												<!-- <a class="btn-copy" href="javascript:void(0);" onclick="myFunction('<%=adressDataBook.address_data.verifier_code%>')">
+													<img src="../assets/images/icons/createidentity-assets/copy.png">
+												</a> -->
+												<a class="btn-copy copy-link" href="javascript:void(0);" mytag="<%=adressDataBook.address_data.verifier_code%>">
+													<img src="../assets/images/icons/createidentity-assets/copy.png">
+												</a>
+											<!-- <a h ref="" >
+												<img src="../assets/images/icons/dashboard-assets/document.png">
+											</a> -->
+											
+											<a href="" onclick="editfunction('<%=adressDataBook.address_data.verifier_code%>,<%=adressDataBook.address_data.lable_name%>,<%=adressDataBook.myreflectdata.verifier_type%>')" data-toggle="modal" data-target="#edit-verifier-Modal">
+												<img src="../assets/images/icons/dashboard-assets/edit.png">
+											</a>
+										<!-- 	<a href="/delete_addressBooke_verifier?verifier_code=<%=adressDataBook.address_data.verifier_code%>" >
+												<img src="../assets/images/icons/dashboard-assets/trash.png">
+											</a> -->
+											<a  href="#deleteAddresbook<%=i%>" data-toggle="modal">
+													<img src="../assets/images/icons/dashboard-assets/trash.png">
+												</a>
+										</div>
+									</td>
+								  </tr>
+						 <% i++;})%>
+					 <%}%>
+					    <!-- <tr>
+					      <th scope="row">
+					      	<div class="for-flex-align">
+					      		Lawyer
+					      	</div>
+					      </th>
+					      <td>Jack Ma</td>
+					      <td>253004</td>
+					      <td>
+					      	<div>
+					      		<a href="" >
+					      			<img src="../assets/images/icons/dashboard-assets/document.png">
+					      		</a>
+					      		<a href="" data-toggle="modal" data-target="#edit-verifier-Modal">
+					      			<img src="../assets/images/icons/dashboard-assets/edit.png">
+					      		</a>
+					      		<a href="" >
+					      			<img src="../assets/images/icons/dashboard-assets/trash.png">
+					      		</a>
+					      	</div>
+					      </td>
+					    </tr>
+					    <tr>
+					      <th scope="row">
+					      	<div class="for-flex-align">
+					      		Lawyer
+					      	</div>
+					      </th>
+					      <td>George Strong</td>
+					      <td>253004</td>
+					      <td>
+					      	<div>
+					      		<a href="" >
+					      			<img src="../assets/images/icons/dashboard-assets/document.png">
+					      		</a>
+					      		<a href="" data-toggle="modal" data-target="#edit-verifier-Modal">
+					      			<img src="../assets/images/icons/dashboard-assets/edit.png">
+					      		</a>
+					      		<a href="" >
+					      			<img src="../assets/images/icons/dashboard-assets/trash.png">
+					      		</a>
+					      	</div>
+					      </td>
+					    </tr> -->
+					  </tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<div class="modal fade field-edit-modal" id="add-verifier-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" onclick="clearModelFiled()" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+		</button>
+		<form action="/submit-address-book" method="POST" id="formId">
+
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-address-book-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Add Verifier</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+								<label for=""> Label</label>
+						    	<div class="input-group">
+									
+								  <input type="text" class="form-control" placeholder="Label" data-rule-required="true" data-msg-required="Please enter lable." name="lable" id="lable" maxlength="15">
+								</div>
+						    </div>
+						    <div class="form-group">
+								<label for="">Verifier Code</label>
+								<div class="input-group">
+									
+								  <input type="text" class="form-control" placeholder="Verifier Code"   data-rule-required="true" data-msg-required="Please enter Verifier Code."  name="verifier_code" id="verifier_code" maxlength="4" data-rule-digits=”true”>
+								</div>
+							</div>
+						</div>
+						<div >
+								<!-- <a class="btn-common-new"  href="">Save</a> -->
+								<button class="btn-common-new add_verifier hide_btn" type="submit" id="sub_btn">Save</button>
+								  
+								<a class="btn-common-new hide_btn" href="/address-book">Cancel</a>
+								<center><span class="loader"><img src="../assets/images/loader-3.gif"height="32" width="52"></span></center> 
+						</div>
+					</div>
+				</div>
+			 </div>
+		   </div>
+		</form>
+
+       </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade field-edit-modal" id="edit-verifier-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+		</button>
+		<form action="/update-address-book" method="POST" id="editformId">
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-address-book-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Edit Verifier</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+						    	<label>Label</label>
+						    	<div class="input-group">
+									<label for=""> Edit Label</label>
+								  <input type="text" id="edir_lable" name="edit_lable" class="form-control"  placeholder="Label"
+								  data-rule-required="true"  data-msg-required="Please enter lable." >
+								</div>
+						    </div>
+						    <div class="form-group">
+						    	<label>MyReflet ID Code</label>
+								<div class="input-group mb-0">
+								  <input type="text" class="form-control" id="edit_code" name="edit_code" placeholder="Content" 
+								  data-rule-required="true"  data-msg-required="Please enter code." readonly>
+								</div>
+								<p class="text-left info-line-blue" id="pub_pri_type_id"></p>
+							</div>
+						</div>
+						<div >
+							<!-- <a class="btn-common-new"  href="">Save</a> -->
+							<button class="btn-common-new" type="submit" id="sub_btn_edit">Save</button>
+							<a class="btn-common-new" href="/address-book">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+		   </div>
+		</form>
+       </div>
+    </div>
+  </div>
+</div>
+<% if(addressBookArray.length>0)
+{ 
+   var i=0;
+addressBookArray.forEach(adressDataBook=>{	  %>
+<div class="modal fade field-edit-modal" id="deleteAddresbook<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/img_close.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Delete Report</h5>
+				</div>
+			</div>	
+			<form method="POST" action="/individual-delete-report">
+			<div class="row">
+				<div class="offset-2 col-xl-7 col-lg-12 col-md-12">
+					<p>Are you sure you want to delete verifier?</p>
+				</div>
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact pt-15">
+						<div>
+<!-- 							<button class="btn-common-new" type="submit">Delete</button>
+ -->                          
+   <a class="btn-common-new" href="/delete_addressBooke_verifier?verifier_code=<%=adressDataBook.address_data.verifier_code%>">Delete </a>
+							<a class="btn-common-new" href="">Cancel</a>
+
+						</div>
+					</div>
+				</div>
+			 </div>
+			</form>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div> 
+<%
+	i++;			
+		});
+		   }
+	   %>
+
+<%- include('innerFooter')%>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script>
+	$(document).on('click', '.copy-link', function() {
+	  var link = $(this).attr('mytag');
+	 
+	  var tempInput = document.createElement("input");
+	  tempInput.style = "position: absolute; left: -1000px; top: -1000px";
+	  tempInput.value = link;
+	  document.body.appendChild(tempInput);
+	  tempInput.select();
+	  document.execCommand("copy");
+	  alert("Copied the text :"+ tempInput.value);
+	  document.body.removeChild(tempInput);
+	});
+	</script>
+<script>
+	$(document).ready( function () {
+    $('.loader').hide()
+
+    $('#myTable').DataTable();
+} );
+
+</script>
+
+ <script type="text/javascript">
+ 	function myFunction(value) {
+	  alert(value)
+	  if(value!="")
+	  {
+	  value.select();
+	  document.execCommand("copy");
+	  alert("Verifier code is copied.");
+	  }  
+	}  
+	$('#formId').validate({
+		 onfocusout: function(element) {
+		 this.element(element);
+		 },
+		 errorClass: 'error_validate',
+		 errorElement:'span',
+		 highlight: function(element, errorClass) {
+		 $(element).removeClass(errorClass);
+		 },
+		 submitHandler:function(form)
+			{
+			  $('#sub_btn').attr('disabled',true);
+			  form.submit();
+			}
+		 });
+	</script>
+	 <script type="text/javascript">
+		$('#editformId').validate({
+			 onfocusout: function(element) {
+			 this.element(element);
+			 },
+			 errorClass: 'error_validate',
+			 errorElement:'span',
+			 highlight: function(element, errorClass) {
+			 $(element).removeClass(errorClass);
+			 },
+			 submitHandler:function(form)
+				{
+				  $('#sub_btn_edit').attr('disabled',true);
+				  form.submit();
+				}
+			 });
+		</script>
+<script>
+	var reflect_id = "VERIFIER LIST";
+function printdiv(){
+	
+  var restorepage = $('body').html();
+	$('.nodata').hide();
+   var printcontent = $('#verifierListDiv').clone();
+   $('body').empty().html(printcontent);
+   window.print();
+   $('body').html(restorepage);
+ 
+
+}
+
+function downloadVerifierList(){
+                  	$("#myTable").table2excel({
+												filename: "address_book_list",
+												exclude:'.hide_link',
+												exclude_img:true,
+												exclude_inputs:true,
+												fileext:".xls",
+
+										});
+			  }
+
+function editfunction(v_code ,lable){
+	var test = v_code.split(",")
+	// alert(test)
+	// console.log(test)
+	var pu_pri_type = test[2]
+	$("#edir_lable").val(test[1])
+	$("#edit_code").val(test[0])
+	$("#pub_pri_type_id").text(`This is a ${pu_pri_type} Verifier`)
+
+}
+function clearModelFiled(){
+	$("#lable").val("")
+	$("#verifier_code").val("")
+
+}
+
+</script>
+
+
+<script>
+		// $(document).ready(function(){
+		$("#searchuni").on("keyup", function () {
+			var value = $(this).val().toLowerCase();
+        $("#undiv .classTr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+		});
+		// });
+	</script>
+<script type="text/javascript">
+	$('.add_verifier').click(()=>{
+						$('.hide_btn').hide();
+
+		$('.loader').show();
+
+	})
+	 setTimeout(function() {
+						    $('.flash_msg').fadeOut('fast');
+							}, 3000);
+</script>

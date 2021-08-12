@@ -1,0 +1,1101 @@
+<%-include('../innerHeader')%>
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12">
+				<div class="row personal-info-heading">
+					<div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+						<div class="main-heading-dash">
+							<img src="../assets/images/icons/marketplace-assets/other-verifiers-grey.png">
+							<h4>User-onBoarding Report</h4>
+						</div>
+					</div>
+					<div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 text-right">
+						<a href="#save-report" data-toggle="modal"  class="btn-common-new">Save</a>
+						<a href="javascript:void(0)" onclick="run_query()" class="btn-common-new">Run</a>
+						<a href="my-reports-list" class="btn-common-new">Close</a>
+					</div>
+				</div>
+
+				<div class="custom-space-btw align-items-center m-bottom-30 personal-info-heading">
+					<form class="">
+                      <div class="input-group search-address-book">
+                         <input type="text" class="form-control autocomplete" id="myInputSearch" placeholder="Search" >
+                          <div class="input-group-append">
+                              <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+                          </div>
+                      </div>
+                  	</form>
+					<div class="text-right">
+						<a href="javascript:javascriptvoid(0)" class="nodata">
+							<div class="icon-for-dwnload">
+								<div class="tooltip fade" data-title="Export Data"onclick="xl_data()">
+									<img src="../assets/images/icons/dashboard-assets/export.png">
+							     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+								</div>
+							</div>
+						</a>
+						<a class="nodata" id="" onclick="printdiv()">
+							<div class="icon-for-dwnload">
+								<div class="tooltip fade" data-title="Print Data">
+									<img src="../assets/images/icons/dashboard-assets/print.png">
+								    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xl-3 col-lg-5 col-md-6 col-sm-6">
+				<div class="filter-tabs-wrapper tab-content">
+					<div class="align-item-center another-tabs-wrapper">
+						<ul class="nav nav-tabs all-doc-tabs" id="myTab" role="tablist">
+						  	<li class="nav-item">
+						    	<a class="nav-link active show" id="doc1" data-toggle="tab" href="#doc-tab1" role="tab" aria-controls="doc-tab1" aria-selected="false">Columns</a>
+						  	</li>
+						  	<li class="nav-item">
+						    	<a class="nav-link" id="doc2" data-toggle="tab" href="#doc-tab2" role="tab" aria-controls="doc-tab2" aria-selected="false">Filters</a>
+						  	</li>
+						</ul>
+					</div>
+					<div class="add-column-wrapper tab-pane fade show active" id="doc-tab1" role="tabpanel" aria-labelledby="doc1">
+						<form>
+	                      	<div class="input-group search-address-book">
+	                         	<input type="text" class="form-control autocomplete" id="myInput" placeholder="Add column..." onkeypress="autoSearch(this);">
+		                        <div class="input-group-append">
+		                            <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+		                        </div>
+	                      </div>
+	                  	</form>
+	                  	<div>
+	                  		<div id="get_column">
+			            		<ul>
+			            			<li>
+			            				<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" name="column_check" value="request_code">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                Request Code
+								         	</label>
+			        					</div>
+			        					<span class="close-filter">X</span>
+			        				</li>
+			        				<li>
+			            				<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" name="column_check" value="reflectid">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                MyReflet Code
+								         	</label>
+			        					</div>
+			        					<span class="close-filter">X</span>
+			        				</li>
+			        				<li>
+			            				<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" name="column_check" value="client_info">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							      		     	Client
+								         	</label>
+			        					</div>
+			        					<span class="close-filter">X</span>
+			        				</li>
+			        				<li>
+			            				<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" name="column_check" value="parent_cat">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                Parent Category
+								         	</label>
+			        					</div>
+			        					<span class="close-filter">X</span>
+			        				</li>
+			        				<li>
+			            				<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" name="column_check" value="sub_cat">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							      		     	Sub-Category
+								         	</label>
+			        					</div>
+			        					<span class="close-filter">X</span>
+			        				</li>
+			        				<li>
+			            				<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" name="column_check" value="request_status">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							      		     	Status
+								         	</label>
+			        					</div>
+			        					<span class="close-filter">X</span>
+			        				</li>
+				            	</ul>
+				            </div>
+	                  	</div>
+					</div>
+					<div class="add-column-wrapper tab-pane fade" id="doc-tab2" role="tabpanel" aria-labelledby="doc2">
+				  	 	<div class="show-me-filter mt-20">
+				  	 		<div id="addFilter" class="drop-down-wrapper">
+                      			<p>Add Filter
+                      			<img src="../assets/images/icons/search-black.png">
+                      			</p>
+                      		</div>
+                      		<div class="filter-custom-dropdown hide-custom">
+	                  			<ul>
+	                  				<li>
+			            				<label class="font-w-600">Add Filter</label>
+			        					<span class="close-filter">X</span>
+			        				</li>
+	                  			</ul>
+	                  			<div id="">
+				            		<ul>
+				            			<li>
+				            				<div class="checkbox">
+									          	<label>
+													<input type="checkbox" name="filter_checkbox"class="filterList" value="request_code">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													Request Code
+									         	</label>
+				        					</div>
+                                        </li>
+                                        <li>
+				            				<div class="checkbox">
+									          	<label>
+													<input type="checkbox" name="filter_checkbox"class="filterList" value="reflectid">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													MyReflet Code
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										         <input type="checkbox"name="filter_checkbox"class="filterList" value="client_info">
+									             <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							      		     	Client
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										        <input type="checkbox" name="filter_checkbox"class="filterList" value="parent_cat">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                Parent Category
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+													<input type="checkbox" name="filter_checkbox"class="filterList" value="sub_cat">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													Sub-Category
+									         	</label>
+				        					</div>
+                                        </li>
+                                        <li>
+				            				<div class="checkbox">
+									          	<label>
+													<input type="checkbox" name="filter_checkbox"class="filterList" value="request_status">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													   Status
+									         	</label>
+				        					</div>
+				        				</li>
+					            	</ul>
+				            	</div>
+	                  		</div>
+              			</div>
+                      	
+						  <div class="show-me-filter mt-20">
+							<div class="drop-down-wrapper">
+								<span>Created Date</span>
+								<p class="create_class"> </p>
+							</div>
+							<div class="filter-custom-dropdown hide-custom">
+								<ul>
+									<li>
+									  <label class="font-w-600">Filter by Date </label>
+									  <span class="close-filter">X</span>
+								  </li>
+								</ul>
+								<div class="setup-inner-box for-protact p-0">
+								  <div class="create-rflet-id-form">
+									  <div class="form-group for-select-existing-doc">
+										<div class="input-group">
+											  <div class="dropdown keep-inside-clicks-open">
+												<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												Date
+												  </button>
+												  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+													<div class="for-doc-select">
+														<div class="checkbox"> 	
+															  <label>
+																  Created Date
+																<input type="checkbox" value="created"name="check_date">
+																<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+															  </label>
+														</div>	
+													 </div>
+													  <div class="for-doc-select">
+														<div class="checkbox"> 	
+															  <label>
+																  Last Modified Date
+																<input type="checkbox" value="updated"name="check_date">
+																<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+															  </label>
+														</div>	
+													 </div>
+												  </div>
+											</div>
+										</div>
+									</div>
+									<!-- <div class="form-group"> -->
+										<!-- <div class="input-group">
+										  <input type="text" id="range" class="form-control" placeholder="Range">
+										</div> -->
+									<!-- </div> -->
+									<div class="form-group">
+										<div class="input-group">
+										  <input type="text" id="start-date" class="form-control startDate" placeholder="Start Date">
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="input-group">
+										  <input type="text" id="end-date" class="form-control endDate"  placeholder="End Date">
+										</div>
+									</div>
+									<div class="text-right">
+										<button class="btn-common-new small-btn close-filter date_apply">Apply</button>	
+									</div>
+									
+								</div>
+							</div>
+							</div>
+						</div>
+					
+						<div id="appendFilter">
+						  <div>
+						  <div id="rowMatching" class="show-me-filter mt-20 filter-remove-bdr" style="display: block;">
+							  <div class="">
+								  <span>Includes Row Matching</span>
+								  <p class="tabWrapper drop-down-wrapper1">1 AND ((2 OR 3) OR (4 AND 5)) <i class="fas fa-pencil-alt"></i></p>
+							  </div>
+							  <div class="filter-custom-dropdown hide-custom">
+								  <ul>
+									  <li>
+										<label class="font-w-600">Edit Filter Logic</label>
+										<span class="close-filter">X</span>
+									</li>
+								  </ul>
+								<div class="edit-logic">
+									<p>1 AND ((2 OR 3) OR (4 AND 5))</p>
+								</div>	
+								<div class="tabWrapper mt-15">
+									<button class="btn-common-new small-btn close-filter1">Remove</button>	
+									<button class="btn-common-new small-btn close-filter1">Apply</button>	
+								</div>
+							  </div>
+						  </div>
+					  </div>
+					  <div>
+						  <!--Request Code  -->
+						  <div class="show-me-filter mt-20 main-heading-dash " id="request_filter">
+							  <div class="drop-down-wrapper edit-filter-new-change main-heading-dash width-full">
+								  <label class="font-w-600"> Request Code</label>
+								  <div class="setup-inner-box for-protact p-0">
+									  <div class="create-rflet-id-form">
+										  <div class="form-group for-select-existing-doc">
+											  <div class="input-group">
+												  <div class="dropdown keep-inside-clicks-open">
+													  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Request Code</button>
+													  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														<%if(ver_par_cat_data){
+															for(let par_data of ver_par_cat_data){    
+															%>
+														<div class="for-doc-select ">
+															<div class="checkbox"> 	
+																<label ><%=par_data.request_code%>
+																	<input type="checkbox" value="<%=par_data.request_code%>"name="request_name"class="request_class">
+																	<span class="cr"><i class="cr-icon fa fa-check"></i></span></label>
+															</div>
+														</div>
+														<%}}%>
+													  </div>
+												  </div>
+											  </div>
+										  </div>
+									  </div>
+								  </div>
+							  </div>
+						  </div>
+						   <!-- MyReflet ID -->
+						  <div class="show-me-filter mt-20 main-heading-dash"id="reflet_id_filter">
+						  <div class="drop-down-wrapper edit-filter-new-change main-heading-dash width-full">
+							  <label class="font-w-600"> 
+							  MyReflet ID
+							  </label>
+							  <div class="setup-inner-box for-protact p-0">
+								  <div class="create-rflet-id-form">
+									  <div class="form-group for-select-existing-doc">
+										  <div class="input-group">
+											  <div class="dropdown keep-inside-clicks-open">
+												  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select MyReflect ID</button>
+												  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+													  <%if(verifier_user){
+														  for(let verifier of verifier_user){    
+														  %>
+										  
+							  <div class="for-doc-select">
+								  <div class="checkbox"> 	
+										  <label>
+											  <span class="font-w-600">
+												  <%= verifier.rep_firstname%> - <%= verifier.reflect_code %>
+											  </span> 
+											  <input type="checkbox" value="<%= verifier.reflect_code %>"class="reflet_class"name="reflect_code_name"><span class="cr">
+											  <i class="cr-icon fa fa-check"></i></span></label>
+								  </div>
+							  </div>		
+													  <%}}%>
+												  </div>
+											  </div>
+										  </div>
+									  </div>
+								  </div>
+							  </div>
+						  </div>
+						   </div>
+						  <!-- Client -->
+						  <div class="show-me-filter mt-20 main-heading-dash"id="client_filter">
+							<div class="drop-down-wrapper edit-filter-new-change main-heading-dash width-full">
+								<label class="font-w-600"> 
+								  Client
+								</label>
+								<div class="setup-inner-box for-protact p-0">
+									<div class="create-rflet-id-form">
+										<div class="form-group for-select-existing-doc">
+											<div class="input-group">
+												<div class="dropdown keep-inside-clicks-open">
+													<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Client</button>
+													<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+													  <%if(client_user){
+														  var j=0;
+														  for(let client of client_user){    
+														  %>
+										  
+							  <div class="for-doc-select">
+								  <div class="checkbox"> 	
+										  <label>
+											  <span class="font-w-600">
+												  <%=client.rep_username%> - <%=client.reflect_code%>
+											  </span> 
+											  <input type="checkbox" value="<%=client.reflect_code%>"class="client_class"name="client_name">
+
+											  <span class="cr">
+											  <i class="cr-icon fa fa-check"></i></span></label>
+								  </div>
+							  </div>		
+							  <!-- <input type="hidden" value="<%= client.request_id%>"class="client_class"name=""id="request_id<%=j%>"> -->
+		
+							  <%j++}}%>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						  </div>	
+						 <!-- Parent Category -->
+						  <div class="show-me-filter mt-20 main-heading-dash"id="parent_filter">
+							  <div class="drop-down-wrapper edit-filter-new-change main-heading-dash width-full">
+								  <label class="font-w-600"> Parent Category</label>
+								  <div class="setup-inner-box for-protact p-0">
+									  <div class="create-rflet-id-form">
+										  <div class="form-group for-select-existing-doc">
+											  <div class="input-group">
+												  <div class="dropdown keep-inside-clicks-open">
+													  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Parent Category</button>
+													  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														  <%if(parent_category){
+															  for(let par_cat of parent_category){    
+															  %>
+														  <div class="for-doc-select">
+															  <div class="checkbox"> 	
+																  <label><%=par_cat.category_name%><input class="parent_class" type="checkbox" value="<%=par_cat.category_name%>"name="parent_name"><span class="cr"><i class="cr-icon fa fa-check"></i></span></label>
+															  </div>
+														  </div>
+														  <%}}%>
+													  </div>
+												  </div>
+											  </div>
+										  </div>
+									  </div>
+								  </div>
+							  </div>
+						  </div>
+						
+						  <!--Sub-category -->
+						  <div class="show-me-filter mt-20 main-heading-dash "id="sub_filter">
+						  <div class="drop-down-wrapper edit-filter-new-change main-heading-dash width-full">
+							  <label class="font-w-600"> Sub-Category</label>
+							  <div class="setup-inner-box for-protact p-0">
+								  <div class="create-rflet-id-form">
+									  <div class="form-group for-select-existing-doc">
+										  <div class="input-group">
+											  <div class="dropdown keep-inside-clicks-open">
+												  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Sub-Category</button>
+												  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+												  <%if(sub_category){
+													  for(let sub_cat of sub_category){    
+													  %>
+									  
+													  <div class="for-doc-select">
+														  <div class="checkbox"> 	
+																  <label>
+																	  <span class="font-w-600">
+																		  <%= sub_cat.category_name%>
+																		  </span><input type="checkbox" value="<%= sub_cat.category_name%>"class="sub_cat_class"name="sub_cat_name"><span class="cr">
+																	  <i class="cr-icon fa fa-check"></i></span>
+																  </label>
+														  </div>
+													  </div>		
+												  <%}}%>
+												  </div>
+											  </div>
+										  </div>
+									  </div>
+								  </div>
+							  </div>
+						  </div>
+						  </div>
+						  <!--Status -->
+						   <div class="show-me-filter mt-20 main-heading-dash "id="status_filter">
+								  <div class="drop-down-wrapper edit-filter-new-change main-heading-dash width-full">
+									  <label class="font-w-600"> Status</label>
+									  <div class="setup-inner-box for-protact p-0">
+										  <div class="create-rflet-id-form">
+											  <div class="form-group for-select-existing-doc">
+												  <div class="input-group">
+													  <div class="dropdown keep-inside-clicks-open">
+														  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Status</button>
+														  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+																				  
+																  <div class="for-doc-select">
+																	  <div class="checkbox"> 	
+																		  <label>
+																			  Pending <input type="checkbox" value="pending"class="status_class"name="status_name">
+																			  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+																		  </label>
+																	  </div>	
+																  </div>
+																  <div class="for-doc-select">
+																	  <div class="checkbox"> 	
+																		  <label>
+																			  Accept
+																			  <input type="checkbox" value="accept"class="status_class"name="status_name">
+																			  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+																		  </label>
+																	  </div>	
+																  </div>	
+																  <div class="for-doc-select">
+																	  <div class="checkbox"> 	
+																		  <label>
+																			  Reject
+																			  <input type="checkbox" value="reject"class="status_class"name="status_name">
+																			  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+																		  </label>
+																	  </div>	
+																  </div>	
+															  
+														  </div>
+													  </div>
+												  </div>
+											  </div>
+										  </div>
+									  </div>
+								  </div>
+						   </div>
+			  </div>
+
+
+					  </div>
+	                </div>
+				</div>
+            </div>
+            <!-- <div id="div_data"> -->
+			<div class="col-xl-9" id="div_data">
+				<div class="personal-info-box table-responsive another-table">
+					<table class="table" id="myTable3">
+						<thead>
+					    	<tr> 
+						      	<th width="10%" scope="col">Request Code</th>
+						      	<th width="10%" scope="col"> MyReflet Code</th>
+						      	<th width="10%" scope="col">Client</th>
+						      	<th width="10%" scope="col">Parent Category</th>
+						      	<th width="10%" scope="col">Sub-Category</th>
+						      	<th width="10%" scope="col">Status</th>
+					    	</tr>
+					  	</thead>
+						<tbody id="myTableContent">
+                            <%if(ver_par_cat_data.length>0){
+                            for(let request_data of ver_par_cat_data){    
+                            %>
+						    <tr class="search_tr">
+						    	<td><%=request_data.request_code%></td>
+						      	<td><%=request_data.reflect_code%></td>
+							    <td><%=request_data.client_sub[0].rep_username%> - <%=request_data.client_sub[0].reflect_code%></td>
+							    <td><%=request_data.category_name%></td>
+							    <td><%=request_data.client_sub[0].category_name%></td>
+								<td>
+									<%if(request_data.request_status=="pending"){%>
+									<div class="pending-status">
+									   Pending
+									</div>
+									<%}%>
+									<%if(request_data.request_status=="reject"){%>
+									   <div class="cancel-status">
+										  Reject
+									   </div>
+									<%}%>
+									<%if(request_data.request_status=="accept"){%>
+										  <div class="approved-status">
+											 Accept
+										  </div>
+									<%}%>
+		 
+								 </td>                                  </tr>  
+                            <%}}else{
+	   %>
+                       <tr>
+						<td colspan="6"><center>No record found.</center> </td>
+					   </tr>			 <%}%>
+					   <tr class="tr_search">
+						<td colspan="6"><center>No record found.</center> </td>
+					   </tr>
+						</tbody>
+					</table>
+				</div>
+            </div>
+        <!-- </div> -->
+		</div>
+	</div>
+</section>
+<!--Save Report S  -->
+<div class="modal fade field-edit-modal" id="save-report" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		  <div class="create-wallet-box">
+			  <div class="row align-item-center">
+				  <div class="col-xl-2 col-lg-3 col-md-3">
+					  <div>
+						  <img src="../assets/images/icons/createidentity-assets/popup-upload-icon.png">
+					  </div>
+				  </div>
+				  <div class="col-xl-7 col-lg-7 col-md-7">
+					  <h5 class="heading-purple">Save Report</h5>
+				  </div>
+			  </div>
+			  <form method="POST" action="/save-report"id="save_validate">
+				<div class="row">
+					<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+						<div class="setup-inner-box for-protact">
+							<div class="create-rflet-id-form">
+								<div class="form-group">
+									<div class="input-group">
+										<input type="hidden" value="<%=market_list_result[0].report_id%>" name="report_id">
+										<input type="hidden" value="" id="checked_column" name="checked_column[]">
+									  <input type="text" id="" class="form-control" name="report_name" placeholder="Report Name"data-rule-required="true" data-msg-required="Please enter report name." >
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="input-group">
+									  <input type="text" class="form-control" name="description" placeholder="Description"data-rule-required="true" data-msg-required="Please enter description." >
+									</div>
+								</div>
+							</div>
+							<div >
+								<button class="btn-common-new" type="submit">Save</button>
+								<a class="btn-common-new" href="">Cancel</a>
+							</div>
+						</div>
+					</div>
+				 </div>
+				</form>
+			 </div>
+		 </div>
+	  </div>
+	</div>
+  </div>
+<!-- Save Report E -->
+
+<%- include('../innerFooter')%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+
+<script>
+	$('#save_validate').validate({
+   onfocusout: function(element) {
+   this.element(element);
+   },
+   errorClass: 'error_validate',
+   errorElement:'span',
+   highlight: function(element, errorClass) {
+   $(element).removeClass(errorClass);
+   },
+   submitHandler:function(form)
+	{
+	  // $('#submit_signup').attr('disabled',true);
+	  form.submit();
+	}
+   });
+	  
+ </script>
+<script>
+$(document).ready( function () {
+	// $('.table').DataTable();
+			$('.tr_search').hide();
+
+	$('#rowMatching').hide();
+	$('#client_filter').hide();
+	$('#parent_filter').hide();
+	$('#reflet_id_filter').hide();
+	$('#sub_filter').hide();
+	$('#request_filter').hide();
+	$('#status_filter').hide();
+} );
+</script>
+<script>
+	$(document).on('click.bs.dropdown.data-api', '.dropdown.keep-inside-clicks-open', function (e) {
+	  e.stopPropagation();
+	});
+</script>
+<!-- for dropdown S -->
+<script>
+	$(document).on('click','.drop-down-wrapper',function(){
+		$(".show-me-filter").removeClass("active");
+		$(".filter-custom-dropdown").removeClass("active");
+
+		$(this).parent().toggleClass("active");
+		$(this).parent().find(".hide-custom").toggleClass("active");
+	});
+	$(document).on('click','.close-filter',function(){
+		$(this).parent().parent().parent().removeClass("active");
+		$(this).parent().parent().parent().parent().removeClass("active");
+	});
+	$(".close-filter1").click(function(){
+		$(this).parent().parent().removeClass("active");
+	});
+
+	$(".drop-down-wrapper1").click(function(){
+		$(".show-me-filter").removeClass("active");
+		$(".filter-custom-dropdown").removeClass("active");
+
+		$(this).parent().parent().find(".hide-custom").toggleClass("active");
+	});
+</script> 
+<!-- for dropdown E -->
+<script>
+	$("#start-date").datepicker();
+	$("#end-date").datepicker();
+</script>
+<!-- Add Filter S -->
+
+<!-- Add Filter E -->
+
+<script>
+	function downloadPersonal(){
+			html2canvas(document.getElementById('div_data')).then(function(canvas) {
+			var img = canvas.toDataURL("image/png");
+			var doc = new jsPDF();
+			doc.addImage(img,'JPEG',-20,15);
+			doc.save('report.pdf');
+			});
+	}
+</script>
+<script>
+	function printdiv(){
+		
+	  var restorepage = $('body').html();
+		$('.nodata').hide();
+	   var printcontent = $('#div_data').clone();
+	   $('body').empty().html(printcontent);
+	   window.print();
+	   $('body').html(restorepage);
+	 
+	
+	}
+</script>
+
+<script>
+	function run_query(){
+		// alert("hello");
+		var checked_value=[];
+		// checked_value = $('#get_column').find('input[name="column_check"]:checked').val();
+		$.each($("input[name='column_check']:checked"), function(){
+			checked_value.push($(this).val());
+        });
+		var checked_new = checked_value.join(",");
+		$('#checked_column').val(checked_new);
+		// alert(checked_new);
+		$.ajax({
+			type: "post",
+			url: "/run-on-boarding",
+			data:{checked_new:checked_new},
+			success: function (data) {
+				// alert(data);
+				$('#div_data').html("");
+				$('#div_data').html(data);
+			}
+		})
+	}
+</script>
+<script>
+	$('.date_apply').click(()=>
+	{
+		var startDate = $(".startDate").val();
+	     var endDate = $(".endDate").val();
+		var date_list = $('input[name=check_date]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+
+	var chunks = startDate.split('/');
+
+function GetMonthName(monthNumber) {
+
+var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+return months[monthNumber - 1];
+
+}
+var month_num=chunks[0];
+
+var formattedDate = [chunks[1],GetMonthName(month_num),chunks[2]].join("-");
+
+
+	$('.create_class').text(formattedDate);
+	// alert('startDate : '+startDate);
+	// alert('endDate : '+endDate);
+// alert(checked_new);
+$.ajax({
+			type: "post",
+			url: "/get-boarding-by-time",
+			data:{startDate:startDate,endDate:endDate,date_list:JSON.stringify(date_list)},
+			success: function (data) {
+				//alert(data);
+				$('#div_data').html("");
+				$('#div_data').html(data);
+			}
+		})
+	})
+</script>
+
+<script>
+	$('.filterList').click(()=>
+	{
+	$('#client_filter').hide();
+	$('#parent_filter').hide();
+	$('#reflet_id_filter').hide();
+	$('#sub_filter').hide();
+	$('#request_filter').hide();
+	$('#status_filter').hide();
+
+		var boarding_list = $('input[name=filter_checkbox]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+
+	// alert(boarding_list)
+	// if(complain_list=='')
+	// {
+	// 	$(".complaints_by_complain_id").hide();
+
+	// 	window.location.reload(true);
+
+	// }
+		// alert('checkss'+complain_list)
+		$("#rowMatching").show();
+		if(boarding_list[0]==='request_code'||boarding_list[1]==='request_code'||boarding_list[2]==='request_code'||
+		boarding_list[3]==='request_code'||boarding_list[4]==='request_code'||boarding_list[5]==='request_code')
+		{
+            $('#request_filter').show();
+
+		}
+		if(boarding_list[0]==='reflectid'||boarding_list[1]==='reflectid'||boarding_list[2]==='reflectid'||
+		boarding_list[3]==='reflectid'||boarding_list[4]==='reflectid'||boarding_list[5]==='reflectid')
+		{
+            $('#reflet_id_filter').show();
+
+
+        }	
+        if(boarding_list[0]==='client_info'||boarding_list[1]==='client_info'||boarding_list[2]==='client_info'||
+		boarding_list[3]==='client_info'||boarding_list[4]==='client_info'||boarding_list[5]==='client_info')
+		{
+            $('#client_filter').show();
+
+        }	
+        if(boarding_list[0]==='parent_cat'||boarding_list[1]==='parent_cat'||boarding_list[2]==='parent_cat'||
+		boarding_list[3]==='parent_cat'||boarding_list[4]==='parent_cat'||boarding_list[5]==='parent_cat')
+		{
+            $('#parent_filter').show();
+
+		}	
+		if(boarding_list[0]==='sub_cat'||boarding_list[1]==='sub_cat'||boarding_list[2]==='sub_cat'||
+		boarding_list[3]==='sub_cat'||boarding_list[4]==='sub_cat'||boarding_list[5]==='sub_cat')
+		{
+            $('#sub_filter').show();
+
+		}			
+		if(boarding_list[0]==='request_status'||boarding_list[1]==='request_status'||boarding_list[2]==='request_status'||
+		boarding_list[3]==='request_status'||boarding_list[4]==='request_status'||boarding_list[5]==='request_status')
+		{
+			$('#status_filter').show();
+
+		}	
+	
+
+	})
+</script>
+<script>
+    var i_val;
+	// filter by request_class id
+	$('.request_class').click(()=>{
+		var id_list = $('input[name=request_name]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+
+	//alert(id_list)
+	if(id_list=='')
+	{
+		window.location.reload(true);
+	}
+	$.ajax({
+                      type : 'POST',
+                      url  : '/show-report-by-boarding-request-code',
+					  data: {request_list:JSON.stringify(id_list)},
+					  
+                        success: function(data) {
+							//alert(data)
+							$('#div_data').html("");
+				$('#div_data').html(data);
+							
+			}                                                    
+           
+})
+
+    })
+
+	// filter by sub_cat_class
+	$('.sub_cat_class').click(()=>{
+		var id_list = $('input[name=sub_cat_name]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+
+	//alert(id_list)
+	if(id_list=='')
+	{
+		window.location.reload(true);
+	}
+	$.ajax({
+                      type : 'POST',
+                      url  : '/show-report-by-boarding-sub_cat',
+					  data: {boarding_list:JSON.stringify(id_list)},
+					  
+                        success: function(data) {
+							//alert(data)
+							$('#div_data').html("");
+				$('#div_data').html(data);
+							
+			}                                                    
+           
+})
+	})
+	
+	
+   // filter by reflect code
+   $('.reflet_class').click(()=>{
+		var id_list = $('input[name=reflect_code_name]:checked').map(function(_, el) {
+        return $(el).val();
+    	}).get();
+
+			//alert(id_list)
+			if(id_list=='')
+			{
+				window.location.reload(true);
+			}
+			$.ajax({
+                      type : 'POST',
+                      url  : '/show-report-by-boardng-reflect_code',
+					  data: {boarding_list:JSON.stringify(id_list)},
+					  
+                        success: function(data) {
+							//alert(data)
+							$('#div_data').html("");
+				$('#div_data').html(data);
+							
+			}    })                                                
+           
+    })
+	
+	// filter by client_class
+   $('.client_class').click(()=>{
+    var request_id = $("#request_id"+i_val).val();
+	var id_list = $('input[name=client_name]:checked').map(function(_, el) {
+        return $(el).val();
+    	}).get();
+
+			//alert(id_list)
+			if(id_list=='')
+			{
+				window.location.reload(true);
+			}
+			$.ajax({
+                      type : 'POST',
+                      url  : '/show-report-by-boarding-client_code',
+					  data: {boarding_list:JSON.stringify(id_list)},
+					  
+                        success: function(data) {
+							//alert(data)
+							$('#div_data').html("");
+				$('#div_data').html(data);
+							
+			}    })                 
+	})
+    // filter by parent_class
+	$('.parent_class').click(()=>{
+		var id_list = $('input[name=parent_name]:checked').map(function(_, el) {
+        return $(el).val();
+    	}).get();
+
+			//alert(id_list)
+			if(id_list=='')
+			{
+				window.location.reload(true);
+			}
+			$.ajax({
+                      type : 'POST',
+                      url  : '/show-report-by-boarding-parent',
+					  data: {boarding_list:JSON.stringify(id_list)},
+					  
+                        success: function(data) {
+							//alert(data)
+							$('#div_data').html("");
+				$('#div_data').html(data);
+							
+			}    })                                                
+           
+	})
+	  // filter by status
+    $('.status_class').click(()=>{
+		var id_list = $('input[name=status_name]:checked').map(function(_, el) {
+        return $(el).val();
+    	}).get();
+
+			//alert(id_list)
+			if(id_list=='')
+			{
+				window.location.reload(true);
+			}
+			$.ajax({
+                      type : 'POST',
+                      url  : '/show-report-by-boarding-status',
+					  data: {boarding_list:JSON.stringify(id_list)},
+					  
+                        success: function(data) {
+							//alert(data)
+							$('#div_data').html("");
+				$('#div_data').html(data);
+							
+			}    })                                                
+           
+	})
+	
+</script>
+<script>
+    function xl_data(){
+ 
+
+         
+         // alert('xls')
+
+         $("#myTableData").table2excel({
+             filename: "report-list.xls",
+             exclude:'.hide_data',
+         });
+
+
+}
+</script>
+<script>
+    $(document).ready(function(){
+      $("#myInputSearch").on("keyup", function() {
+		// alert('h')
+							
+        var check_search=0;
+		var value = $(this).val().toLowerCase();
+		// alert(value)
+        $("#myTableContent tr").filter(function() {
+			// alert($(this).text().toLowerCase().indexOf(value)===-1)
+			var check=($(this).text().toLowerCase().indexOf(value)===-1);
+			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+
+	  if(check===false)
+	  {
+		check_search++;
+		$('.tr_search').hide();
+
+	  }
+		
+		}); 
+		// alert(check_search)
+		if(check_search==0)
+		{
+			$('.search_tr').hide();
+
+			$('.tr_search').show();
+
+		}
+
+		// else
+		// {
+		// 	$('.search_tr').show();
+
+		// 	$('.tr_search').hide();
+
+		// }
+      });
+    });
+ </script> 
+ <script>
+	function printdiv(){
+		
+	  var restorepage = $('body').html();
+		$('.hide_data').hide();
+	   var printcontent = $('#myTable3').clone();
+	   $('body').empty().html(printcontent);
+	   window.print();
+	   $('body').html(restorepage);
+	   window.location.reload(true);
+
+	
+    }
+    function downloadPersonal(){
+		$('.hide_data').hide();
+
+			html2canvas(document.getElementById('myTable3')).then(function(canvas) {
+			var img = canvas.toDataURL("image/png");
+			var doc = new jsPDF();
+			doc.addImage(img,'JPEG',-0,15);
+			doc.save('report.pdf');
+			});
+	}
+</script>

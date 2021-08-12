@@ -1,0 +1,112 @@
+<div class="form-group">
+<div class="personal-info-box for-download-view-table table-responsive">
+	<table class="table" >
+	  <thead>
+		<tr>
+		  <th scope="col">Label</th>
+		  <th scope="col">Self Certify</th>
+		  <th scope="col">Sign</th>
+		  <th scope="col">Certify</th>
+		  <th scope="col">Complete</th>
+		  <th scope="col">Video proof</th>
+
+		</tr>
+	  </thead>
+	  <tbody>
+		<% if(requested_docs.length>0){
+			for(var j=0;j<requested_docs.length;j++){
+				%>
+	  <tr >
+		  <th scope="row">
+			  <div class="for-flex-align">
+				   <img src="../assets/images/icons/dashboard-assets/drivinglicense.png">
+				   <%=requested_docs[j].document_name%>
+				   
+			  </div>
+		  </th>
+		  <td>
+			  <%if(requested_docs[j].self_certified=="yes"){%>
+			<div class="for-flex-align">
+				<img src="../assets/images/icons/dashboard-assets/tick.png">
+				
+		   </div>
+		   <%}else{%>
+			<div class="for-flex-align"> - </div>
+		   <%}%>
+		  </td>
+		  <td>
+			<%if(requested_docs[j].sign=="yes"){%>
+			
+				<div class="for-flex-align">
+					<img src="../assets/images/icons/dashboard-assets/tick.png">
+					
+			   </div>
+			   <%}else{%>
+				<div class="for-flex-align"> - </div>
+			   <%}%>
+		  </td>
+		  <td>
+			<%if(requested_docs[j].certified=="yes"){%>
+				<div class="for-flex-align">
+					<img src="../assets/images/icons/dashboard-assets/tick.png">
+					
+			   </div>
+			   <%}else{%>
+				<div class="for-flex-align"> - </div>
+			   <%}%>
+		  </td>
+		  <td>
+				<%if(requested_docs[j].complete=="yes"){%>
+					<div class="for-flex-align">
+						<img src="../assets/images/icons/dashboard-assets/tick.png">
+						
+				   </div>
+				   <%}else{%>
+					<div class="for-flex-align"> - </div>
+				   <%}%>
+			  </td>
+			  <td>
+					<%if(requested_docs[j].video_proof=="yes"){%>
+						<div class="for-flex-align">
+							<img src="../assets/images/icons/dashboard-assets/tick.png">
+							
+					   </div>
+					   <%}else{%>
+						<div class="for-flex-align"> - </div>
+					   <%}%>
+				  </td>
+		</tr>
+		<%}}%>
+	</tbody>
+	</table>
+	<span id="prm_error_span" class="error_validate"></span>
+</div>
+</div>
+<%if(documents.length>0){%>
+<div class="form-group for-select-existing-doc" id="hide_div_of_exist_doc">
+						    	<div class="input-group">
+								  <div class="dropdown keep-inside-clicks-open">
+									  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									    Select from existing documents
+									  </button>
+									  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+											<%if(documents!=null && documents!="" && documents!=undefined){
+												var i=0;
+												for(let document of documents){%>
+									     <div class="for-doc-select">
+									    	<div class="checkbox"> 	
+									          <label>
+													<%=document.document_name%>
+									            <input type="checkbox" onclick="get_check_doc('<%=i%>','<%=document.user_doc_id%>')" id="doc_check<%=i%>" value="<%=document.user_doc_id%>" name="doc_check">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									          </label>
+									        </div>	
+										 </div>
+										 <% i++; }}%>
+									     
+									  </div>
+									</div>
+								  
+								</div>
+						    </div>
+<%}%>

@@ -1,0 +1,120 @@
+<%-include('../innerHeader')%>
+
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/createidentity-assets/success.png">
+					<h4>Import Your Wallet</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="setup-id-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="white-box">
+					<div class="row">
+						<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+							<form action="/submit-import-btc-wallet-address" method="POST" >
+
+								<div class="setup-inner-box for-protact">
+									<p>Here is your wallet address. Your wallet address is a unique address on the Ethereum Blockchain. Think of it like a bank account number that you own, used to send and receive Ether and tokens. The ability to authenticate transactions on this address is encrypted by the private key you just created. Download a backup and save this address in a convenient location.</p>
+
+									<div class="private-key-copy-box">
+										<div class="form-group">
+											<label>Your Wallet Address</label>
+											<div class="input-group mb-3">
+											<input type="text" name="wallet_address"  class="form-control" value="<%=wallet_address%>" readonly="readonly">
+											
+										</div>
+										<div class="form-group">
+											<label>Your Public Key</label>
+											<div class="input-group mb-3">
+											<input type="text" name="pubkey"  class="form-control" value="<%=pubkey%>" readonly="readonly">
+											
+											</div>
+										<div class="form-group">
+												<div class="input-group">
+													  <select class="form-control select_document_list mp_select" data-rule-required="true" data-msg-required="Please select reflet code. " name="reflect_id">
+														  <option value="empty">Select Reflet-Code</option>
+			  
+														  <%if(allClientReflet){
+																  for(let reflet_data of allClientReflet){%>
+																	<%if(reflet_data.rep_firstname){%>
+
+																		<option value="<%=reflet_data.reflect_id%>" ><%=reflet_data.rep_firstname%> - <%=reflet_data.reflect_code%>
+																		</option>
+																		
+																		<%}else if(reflet_data.entity_company_name){%>
+
+																		<option value="<%=reflet_data.reflect_id%>" ><%=reflet_data.entity_company_name%> - <%=reflet_data.reflect_code%>
+																		</option>
+
+																		<%}else{%>
+
+																		<option value="<%=reflet_data.reflect_id%>" ><%=decrypt(reflet_data.full_name)%> - <%=reflet_data.reflect_code%></option>
+														                <%}%>
+					   
+														  
+														  <%}}%>
+												  </select>
+												</div>
+										</div>  
+										<span class="success_message_span success_span"style="color:red"></span>
+
+										</div>
+										<!-- <a class="btn-common-new" href="/submit-import-wallet?wallet_address=<%=wallet_address%>">Continue</a> -->
+										<button type="submit" id="submit_key" class="btn-common-new check_option"on >Continue</button>
+
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+<%- include('../innerFooter')%>
+<script>
+	  var option_val;
+	    $('.mp_select').click(function() {
+   
+  option_val = $(this).children("option:selected").val();
+//   alert(option_val)
+
+ });
+	 $('.check_option').click(()=>
+	   {
+		// alert('option_val'+option_val)
+	   
+	  if(option_val==undefined||option_val=='empty')
+	   {
+		// alert(option_val)
+		$('.success_span').html('Please Select any reflet-code');
+     
+			return false;
+
+	   }
+	   else{
+		   
+            setTimeout(function() {
+			$('.success_message_span').fadeOut('fast');
+			}, 1000);
+		return true;
+
+	   }
+	   })
+</script>
+
+ 

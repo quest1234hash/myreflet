@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+     <title>My Reflet User</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+  <!-- Bootstrap Core CSS -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../assets/css/bootstrap-dropdownhover.min.css" rel="stylesheet"/>
+  <!-- Animate CSS -->
+    <link href="../assets/css/animate.css" rel="stylesheet"/>
+    <!-- hover-min CSS -->
+    <link href="../assets/css/hover-min.css" rel="stylesheet"/>
+    <!-- yamm css -->
+    <link href="../assets/css/yamm.css" rel="stylesheet"/>
+    <!-- Font-awesome web fonts with css -->
+    <link href="../assets/css/fontawesome-all.css" rel="stylesheet" type="text/css"/>
+    <!-- Font-awesome web fonts with css -->
+    <!-- loader css -->
+    <link href="../assets/css/loader.css" rel="stylesheet"/>
+  <!-- Custom CSS -->
+    <link href="../assets/css/custom.css" rel="stylesheet"/>
+    <link href="../assets/css/custom-new.css" rel="stylesheet"/>
+
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+     <link rel="stylesheet" href="../assets/css/jquery-ui.css">
+     <script>window.$ = window.jQuery = require('jquery');</script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+      .stripe-button-el.btn-common-new {
+        /* background: linear-gradient(to right, #3a3183 59%,#938bd8 100%); */
+        background-color:#0a3291;
+        padding: 5px 20px;
+        border-radius: 8px;
+      }
+      .stripe-button-el.btn-common-new span {
+        margin: 0;
+        background: transparent !important;
+        box-shadow: none !important;
+      }
+    </style>
+</head>
+<body class="choose-plan-body">
+
+
+<div id="warpper" class="side-menu mobile-menu">
+<!-- Header html -->
+
+<!-- Header html end -->
+
+
+<header class="header-main dashboard-header" id="dash-head">
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="/verifier_deshboard"><img src="../assets/images/logo-white.png" align="horse chain logo"></a>
+        </nav>
+    </div>
+</header>
+
+<section class="choose-plan-heading-sec">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7 m-auto">
+        <div>
+          <h3>Choose the right plan for you</h3>
+          <h6>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+
+<section class="pricing-main-sec">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 m-auto">
+          <% if(err_msg!=undefined && err_msg !='' ){ %>
+            <div class="alert alert-danger text-center  flash_msg ">
+                    <%= err_msg %>
+                 </div>
+           
+            <% }%>
+           <% if(success_msg!=undefined && success_msg !='' ){ %>
+              <div class="alert alert-success text-center  flash_msg ">
+                <%= success_msg %>
+             </div>
+            <% }%>
+        <div class="pricing-table">
+           <h3>Pricing Table</h3>
+           <ul>
+             <%var i=0;featureNmaeData.forEach(featureName=>{ i++;%>
+             <li><span><%=i%>.</span> <%=featureName.feature_name%></li>
+          <%  })%>
+             <!-- <li><span>2.</span> SSL Encyrption Transfer Data</li>
+             <li><span>3.</span> Common server IP address</li>
+             <li><span>4.</span> Back-up 3 Fold</li>
+             <li><span>5.</span> Storage (minimum purchase of 100)</li>
+             <li><span>6.</span> Verifiers 10 Years archive for regulatory docs</li>
+             <li><span>7.</span> Dedicated IP address</li>
+             <li><span>8.</span> Segregated Server</li>
+             <li><span>9.</span> Back up 5 x fold</li>
+             <li><span>10.</span> Private Firewall</li>
+             <li><span>11.</span> Private Hardware Firewall</li> -->
+           </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+           <!-- <div class="col-md-6 col-xs-6 col-6">
+              <div class="plan-table">
+                <h3>Basic</h3>
+                <ul>
+                  <li><i class="far fa-check-circle"></i></li>
+                  <li><i class="far fa-check-circle"></i></li>
+                  <li><i class="far fa-check-circle"></i></li>
+                  <li><i class="far fa-check-circle"></i></li>
+                  <li>
+                    <span>0.05 CHF/Month</span>
+                  </li>
+                  <li>
+                    <span>0.1 CHF/Month</span>
+                  </li>
+                  <li><i class="far fa-times-circle"></i></li>
+                  <li><i class="far fa-times-circle"></i></li>
+                  <li><i class="far fa-times-circle"></i></li>
+                  <li><i class="far fa-times-circle"></i></li>
+                  <li><i class="far fa-times-circle"></i></li>
+                </ul>
+                <div class="text-center">
+                  <a href="create-wallet.php" class="btn-common-new">Buy Plan</a>
+
+                  <form action="/charge" method="post" id="paymentForm" style="visibility: hidden;">
+                    
+                    <script class="btn-common-new stripe-button" src="//checkout.stripe.com/v2/checkout.js" data-key="pk_test_p6ntwdcnekw2fjCR8TwFdxUd001lOE1dPe" data-locale="auto" data-description="Subscription Charge" data-amount="3000"></script>
+            
+                </form>
+                </div>
+              </div>
+          </div> -->
+          <%resultPlan.forEach(planMaster=>{%>
+
+          <div class="col-md-3">
+              <div class="plan-table">
+                <h3><%=planMaster.plan_name%></h3>
+                <ul>
+               <% for(var i=0; i<plan_rel_data.length; i++){ %>
+                       <%if(planMaster.plan_id==plan_rel_data[i].plan_id){
+                        %>
+                        <%if(plan_rel_data[i].feature_status=="yes"){%>
+                         <li><i class="far fa-check-circle"></i></li>
+                         <%}else{%>
+                          <li><i class="far fa-times-circle"></i></li>
+                          <%}%>
+                      <%  } %>
+                       
+
+                  
+               <%}%>
+
+                  <li>
+                    <span> Total amount : $<%=planMaster.plan_price%></span>
+                  </li>
+                </ul>
+                <div class="text-center">
+                  <!-- <a href="create-wallet.php" class="btn-common-new">Buy Plan</a> -->
+                    <% var priceAmount=(planMaster.plan_price*100)%>
+                  <form action="/charge" method="post" id="paymentForm" style="visibility: hidden;">
+                    <input type="hidden" name="amount" value="<%=planMaster.plan_price%>" >
+                    <input type="hidden" name="plan_id" value="<%=planMaster.plan_id%>" >
+                    <input type="hidden" name="plan_name" value="<%=planMaster.plan_name%>" >
+
+                    <script class="stripe-button btn-common-new" src="//checkout.stripe.com/v2/checkout.js" data-key="pk_test_p6ntwdcnekw2fjCR8TwFdxUd001lOE1dPe" data-label="Buy Now" data-locale="auto" data-description="select plan" data-amount="<%=priceAmount%>"></script>
+            
+                </form>
+            
+            
+                </div>
+              </div>
+          </div>
+          <%})%>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+</div><!--  wrapper close -->
+
+
+  <!-- JQuery -->
+        <script type="text/javascript" src="../assets/js/jquery-3.3.1.min.js"></script>
+        <!-- <script type="text/javascript" src="../assets/js/jquery-1.11.3.min.js"></script> -->
+        <!-- Bootstrap Core JavaScript -->
+        <script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
+        <!-- dropdownhover effects JavaScript -->
+        <script type="text/javascript" src="../assets/js/bootstrap-dropdownhover.min.js"></script>
+        <!-- wow JavaScript -->
+        <script type="text/javascript" src="../assets/js/wow.min.js"></script>
+        <!-- video player JavaScript -->
+
+        <!-- Custom JavaScript -->
+        <script type="text/javascript" src="../assets/js/custom.js"></script>
+
+       
+           <script>
+            $(document).ready(function(){
+                $('#menuToggle').click(function(){
+                    $("#warpper").toggleClass("side-menu");
+                });
+            });
+
+        </script>
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+       <script type="text/javascript">
+         $(document).ready(function(){
+           // alert('hii');
+         $(".stripe-button-el").addClass('btn-common-new');
+       });
+       </script>
+
+    </body>
+</html>
+
+
+        
+      

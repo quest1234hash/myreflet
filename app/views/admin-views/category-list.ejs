@@ -1,0 +1,682 @@
+<%- include('header'); -%>
+
+<div>
+  <!--  <div class="main-bredcrum-box">
+        <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            Verifier Category List
+          </li>
+        </ul>
+      </nav>
+    </div> -->
+  <div class="page-header">
+      <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+          <i class="mdi mdi-contacts"></i>
+        </span> Verifier Category List </h3>
+            <div>
+                <a href="#" class="btn btn-common bg-gradient-primary text-center m-0" data-target="#newCategory" data-toggle="modal">New Category</a>
+
+              <a href="javascript:void(0);" onclick="export_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-export"></i>
+                   </span> 
+                 </span>
+               </a>
+              <a href="javascript:void(0);" onclick="print_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-printer"></i>
+                   </span> 
+                 </span>
+              </a>
+          </div>
+    </div> 
+    
+    <div class="row align-bottom-flex">
+       <div class="col-md-2">           
+                <div class="form-group">
+                          <label for="exampleInputUsername1">Category Name</label>
+                          <select class="form-control form-control-sm select-new1" id="exampleFormControlSelect3"onchange="nameFilter(value)">
+                                  <option>All</option>
+
+                                  <% if(category_name_data.length>0)
+                                    {
+                                     var i=0;
+                                    category_name_data.forEach(function(each_data){
+                                        %>
+                                  <option value="<%=each_data.category_name%>"><%=each_data.category_name%></option>
+                                <%});}%>
+                          </select>
+               </div>
+          
+      </div>  
+       <div class="col-md-2"> 
+               <div class="form-group">
+                    <label for="exampleInputUsername1">Status</label>
+                    <select class="form-control form-control-sm select-new2" id="exampleFormControlSelect3" onchange="statusFilter(value)">
+                        <option>All</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                      </select>
+
+         </div>
+        </div>
+
+        
+      
+ 
+     <!--  <div class="col-md-2"> 
+        <div>
+          <div class="form-group">
+                    <label for="exampleInputUsername1">MyReflet ID</label>
+                    <select class="form-control form-control-sm" id="exampleFormControlSelect3">
+                        <option>All</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                  </div>
+        </div>
+      </div> -->
+      <div class="col-md-3 ml-auto">
+          <% if(err_msg!=undefined && err_msg !='' ){ %>
+            <div class="alert alert-danger text-center  flash_msg " id="error_msg">
+                <%= err_msg %>
+               </div>
+             
+            <% }%>
+           
+        <div>
+          
+          <div class="form-group">
+              
+                      <div class="input-group search-input">
+                        <input type="text" class="form-control"id="myInput" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                          <button class="btn btn-sm" type="button"><i class=" mdi mdi-magnify"></i></button>
+                        </div>
+                      </div>  
+                    </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          <% if(success_msg!=undefined && success_msg !='' ){ %>
+            <div class="alert alert-success text-center  flash_msg "id="success_message">
+            <%= success_msg %>
+           </div>
+          <% }%>
+          <div class="data_table_1">
+          <table class="table tabel-virifier "id="myTable3">
+              <thead>
+                <tr>
+                  <th width="10%">Sr.No.</th>
+                  <th width="20%">Category Name</th>
+                  <th width="20%"class="">Status</th>
+                  <th width="20%">Created At</th>
+                  <th width="20%">Updated At</th>
+                  <th width="20%"class="hide_link">Action</th>
+
+                  <!-- <th width="5%">Updated At</th> -->
+                </tr>
+              </thead>
+              <tbody id="myTable" class="">
+                    <% if(category_list.data.length>0)
+                    {
+                       var i=0;k=1;
+                       category_list.data.forEach(function(each_data){
+                          %>
+                <tr>
+                   <td>
+                     <div>
+                       <p class=""><%=k%>.</p>
+                     </div>
+                   </td>
+                   <td>
+                     <div> 
+                       <p class="upper"><%=each_data.category_name%></p>
+                     </div>
+                    </td>
+                   <td class="">
+                      <% 
+                      if(each_data.status=="active"){ %>
+                        
+                        <button type="button" value="<%-each_data.category_id%>" id="inactivebut"  class="btn  mr-2 btn-success_1 acvtive-id ">Active </button>
+                            
+                    <%  }else{ %>
+                        
+                      <button type="button" value="<%-each_data.category_id%>" id="activebut"  class="btn  btn-danger mr-2 inacvtive-id " >Inactive</button>
+            
+                    <%  }
+                      %>
+                    <!-- <div class="switch-option">
+                       <div class="inner-div ">
+                          <label class="switch ">
+                            <input type="checkbox"class="switch_user"  onchange="switchUserType(value)"> 
+                           
+                            <span class="slider round"></span>
+                          </label> 
+                       </div> 
+                    </div> -->
+    
+                   <!-- <p class="change"><%=each_data.status%></p> -->
+                   </td>
+                    <td>
+                     <p><%=moment(each_data.createdAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                  <td>
+                     <p><%=moment(each_data.updatedAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                   <td class="hide_link"> 
+                     <div class="dropdown-menu-new">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                           <a href="#" class="dropdown-item data_value" data-target="#editCategory<%=i%>" data-toggle="modal"><i class="mdi mdi-pencil"></i> Edit</a>
+                          <a href="/delete-category/:<%=each_data.category_id%>"class="dropdown-item" href="#"><i class="mdi mdi-delete "></i> Delete</a>
+                        </div>
+                     </div>
+                   </td>
+                </tr>
+                <%
+                i++;     k++; 
+            });}
+              else{
+     %>
+                       <tr>
+            <td colspan="8"><center>No record found.</center> </td>
+             </tr>       <%}%>
+             
+              </tbody>
+          </table>
+        
+       <div>
+
+       <div class="pagination-list for-user">
+          
+            <% if (category_list.totalPages > 0) { %>
+             <ul class="pagination text-center">
+               <% if (category_list.currentPage == 1) { %>
+                 <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+               <% } else { %>
+                 <li class="page-item"><a class="page-link" href="/verifier-category-list?page=1">&lt;</a></li>
+               <% } %>
+          
+          
+          
+               <% var i = (Number(category_list.currentPage) > 5 ? Number(category_list.currentPage) - 4 : 1) %>
+               <% if (i !== 1) { %>
+                 <!-- <li class="disabled"><a>...</a></li> -->
+                 <li class="page-item disabled"><a class="page-link" >...</a></li>
+               <% } %>
+               <% for (; i <= (Number(category_list.currentPage) + 4) && i <= category_list.totalPages; i++) { %>
+                 <% if (i == category_list.currentPage) { %>
+                   <!-- <li class="active"><a><%= i %></a></li> -->
+                   <li class="page-item active">
+                   <a class="page-link" href="#"><%= i %><span class="sr-only">(category_list.currentPage)</span></a>
+                   </li>
+                 <% } else { %>
+                   <li class="page-item"><a class="page-link" href="/verifier-category-list?page=<%= i %>"><%= i %></a></li>
+                 <% } %>
+                 <% if (i == Number(category_list.currentPage) + 4 && i < category_list.totalPages) { %>
+                   <!-- <li class="disabled"><a>...</a></li> -->
+                   <li class="page-item disabled"><a class="page-link" >...</a></li>
+                 <% } %>
+               <% } %>
+          
+          
+               <% if (category_list.currentPage == category_list.totalPages) { %>                       
+                 <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+               <% } else { %>
+                 <li><a class="page-link" href="/verifier-category-list?page=<%= category_list.totalPages %>">&gt;</a></li>
+               <% } %>
+          
+             </ul>
+          <% } %>
+          </div>
+           </div>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+
+
+<!--ADD Modal -->
+<div class="modal fade" id="newCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+        <div class="profile-form">
+                      
+                         
+                    <form action="/add-category-type" method="post" class="validate">
+
+                     <div class="form-group">
+                        <label>Category Name</label>
+                        <input type="text" class="form-control" name="category_name" id=""data-rule-required="true" data-msg-required="Please enter category name.">
+                      </div>
+                      <!-- <div class="form-group">
+                        <label>Plan Price</label>
+                        <input type="text" class="form-control" name="plan_price" id="plan_price"data-rule-required="true" data-rule-number=”true” data-msg-required="Please enter price".>
+                      </div> -->
+                      
+                     
+     
+                   
+                      <div class="popup-btn text-center">
+                        <button class="btn btn-common bg-gradient-primary ">Save</button>
+                       
+                        <a href="/verifier-category-list" class="btn btn-common bg-gradient-primary ">Cancel</a>
+                      </div>
+                  
+                 </form> 
+               </div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+<!--EDIT Modal -->
+<% if(category_list.data.length>0)
+{
+   var i=0;
+   category_list.data.forEach(function(each_data){
+      %>
+<div class="modal fade" id="editCategory<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+  
+          <div class="profile-form">
+                        
+                           
+                      <form action="/edit-category" method="post" id="validate1">
+  
+                       <div class="form-group">
+                          <label class="upper">Category Name</label>
+                          <input type="text" class="form-control"value="<%=each_data.category_name %>" name="category_name" id=""data-rule-required="true" data-msg-required="Please enter category name.">
+                        </div>
+                        <!-- <div class="form-group">
+                          <label>Plan Price</label>
+                          <input type="text" class="form-control"value="<%=each_data.plan_price %>" name="plan_price" id=""data-rule-number=”true” data-rule-required="true" data-msg-required="Please enter price".>
+                        </div> -->
+                        
+                        <input type="hidden" class="form-control"value="<%=each_data.category_id%>" name="category_id" id="">
+
+       
+                     
+                          <div class="popup-btn text-center">
+                          <button class="btn btn-common bg-gradient-primary check ">Save</button>
+                         
+                          <a href="/verifier-category-list" class="btn btn-common bg-gradient-primary ">Cancel</a>
+                        </div>
+                    
+                   </form> 
+                 </div>
+  
+  
+  
+   
+        </div>
+      </div>
+    </div>
+  </div>
+  <%
+                i++;      
+            });
+               }
+           %>
+
+
+<%- include('footer'); -%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+
+<script src="/assets/js/select2.full.min.js"></script>
+<script src="/assets/js/jquery.nice-select.min.js"></script>
+
+
+<script>
+  $(function () {
+  $(".select-new").select2();
+   $(".select-new1").select2();
+  $(".select-new2").select2();
+  $("#select-new3").select2();
+ 
+});
+</script>
+<script>
+
+
+    function export_table(){
+        // alert('hhh')
+      // $('.hide_link').show();
+    
+        $("#myTable3").table2excel({
+          filename: "Verifier-category-list.xls",
+          exclude:'.hide_link',
+        });
+      //   $('.hide_link').show();
+      window.location.reload(true);
+    
+      };
+      
+      function print_table(){
+        $('.hide_link').hide();
+     
+     // $("#user_div").print();
+     var restorepage = $('body').html();
+  // $('.nodata').hide();
+   var printcontent = $('#myTable3').clone();
+   $('body').empty().html(printcontent);
+   window.print();
+   $('body').html(restorepage);
+ 
+   window.location.reload(true);
+    
+        }   
+   </script>
+<script type="text/javascript">
+var plan_status;
+  // $('.d1').on('click', '.menu-for-id a', function() {
+
+  //    $('.d2').$(this).val(); 
+
+  // //   var lastID = $(this).html();
+  //    plan_status = $(this).find(".change_status").attr("value");
+  //  // console.log("text", lastID); 
+
+
+  //  });
+ $('.active_change').click(()=>{
+  var plan_status= $('.change_status').val()
+  var plan_id= $('.plan_id_1').val()
+
+  alert(plan_status)
+  alert(plan_id)
+
+  $.ajax({
+      type: "post",
+      url: "/status-submit",
+      data:{plan_is:plan_id,plan_status:plan_status},
+      success: function (data) {
+        
+        location.reload();
+
+      
+      }
+    });
+ })
+
+  $('.validate').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#submit_signup').attr('disabled',true);
+        form.submit();
+      }
+     });
+     $('#validate1').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#submit_signup').attr('disabled',true);
+        form.submit();
+      }
+     });
+ 
+     setTimeout(function() {
+    $('#success_message').fadeOut('fast');
+    }, 3000);
+    
+    setTimeout(function() {
+    $('#error_msg').fadeOut('fast');
+    }, 3000);
+  </script>
+
+<!-- <script>
+function switchUserType(value){
+
+var value1 = $(".switch_user").val();
+alert(value1)
+var plan_status;
+  // alert($("#switch_user").val())
+if(value1=="on"){
+  plan_status='active';
+  $(".switch_user").val("off");
+  $(".change").text("active");
+
+
+}
+if(value1=="off"){
+  plan_status='inactive';
+
+  $(".switch_user").val("on");
+  $(".change").text("inactive");
+
+}
+alert(plan_status)
+$.ajax({
+            type: "post",
+            url: "/change-plan-status",
+            data: { plan_status : plan_status},
+            success: function(data){
+            alert('ver')
+
+            //   $('#div_sidebar').html("");
+            // $('#div_sidebar').html(``);
+            location.reload()
+            }
+    });
+}
+
+
+
+</script> -->
+<script type="text/javascript">
+  
+  // function activestatuschnage(){
+    // alert($(this).find("button").val("value"))
+    $(".acvtive-id").click(function(evnt){
+         
+         var id = $(this).attr("value");
+    //       alert('active')
+    // // var id =$("#activebut").val()
+    // alert(id);
+     var checkstr =  confirm('Are You Sure You Want To Inactive?');
+       if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-category",
+                       data: { category_id: id,
+                         status:"inactive" },
+                       success:function(resp)
+                       {
+                        // alert('t')
+
+                        // alert(id);
+                       
+                         // $('#pro_img').hide();  
+                         // $('#inactivebut').hide(); 
+                         // $('#activebut').show(); 
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ 
+ 
+  
+  // function inactivestatuschnage(obj1){
+             // alert(obj1)
+             $(".inacvtive-id").click(function(evnt){
+         
+             var id = $(this).attr("value");
+            //  alert(id)
+            //  alert('inactive')
+             //  console.log($(".abc").find("button"))
+            // var preview_div=$(this).parent(".inabc").parent().attr('id');
+            //  var image_name = $(this).parent(".inabc").find('input').attr('value');
+    
+     
+     //var id =$("#inactivebut").val()
+          //alert("Are You Sure You Want To inctive");
+          var checkstr =  confirm('Are You Sure You Want To Active?');
+          if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-category",
+                       data: { category_id:id,
+                         status:"active" },
+                       success:function(resp)
+                       {
+                        //  alert(id);
+                         // alert(status);
+                         // $('#pro_img').hide(); 
+                         // $('#activebut').hide();  
+                         // $('#inactivebut').show(); 
+                        
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ </script>
+ <script>
+        $(document).ready(function(){
+   
+          $("#myInput").on("keyup", function() {
+            // alert('value')
+
+            var value = $(this).val().toLowerCase();
+             if(value)
+            {
+                          // alert('value'+value)
+
+            $.ajax({
+                          type: "post",
+                          url: "/search-admin-category",
+                          data:{query:value},
+                          success: function (data) {
+                            // alert('data');
+                            
+                                 $('.data_table_1').html("");
+                                          $('.data_table_1').html(data);
+                                  
+      
+  
+    
+    }
+  })
+ }
+            else
+            {
+              location.reload(true);
+            }
+  })
+        });
+        </script>
+<script type="text/javascript">
+  
+   function nameFilter(value){
+   // alert(value)
+
+   if(value!='All'){
+                          
+
+            $.ajax({
+                          type: "post",
+                          url: "/search-admin-category",
+                          data:{query:value},
+                          success: function (data) {
+                            // alert('data');
+                            
+                                 $('.data_table_1').html("");
+                                          $('.data_table_1').html(data);
+                                  
+      
+  
+    
+                           }
+            })
+      } else {
+
+        window.location.reload()
+
+       }
+ }
+
+   function statusFilter(value){
+   // alert(value)
+
+   if(value!='All'){
+            // alert(value)
+             
+       
+            $.ajax({
+                          type: "post",
+                          url: "/search-admin-category-status",
+                          data:{query:value},
+                          success: function (data) {
+                            // alert('data');
+                             
+                                 $('.data_table_1').html("");
+                                          $('.data_table_1').html(data);
+                                  
+      
+  
+    
+                           }
+            })
+      } else {
+
+        window.location.reload()
+
+       }
+ }
+</script>

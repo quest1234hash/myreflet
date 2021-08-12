@@ -1,0 +1,79 @@
+<table class="table" id="myTable3">
+
+	<thead>
+		<tr>
+			<th width="5%" scope="col">No.</th>
+			  <th width="20%" scope="col">Client MyReflete ID</th>
+			  <th width="15%" scope="col">Client Type</th>
+			  <th width="10%" scope="col">Created At</th>
+			  <th width="10%"class="hide_link" scope="col">View Clients Document</th>
+		</tr>
+	  </thead>
+	<tbody >
+		<%	if(client_result.length>0)
+  {
+var i=0;
+var j=0;
+var k=1;
+	for(let each_data of client_result){
+	  %>
+		<tr>
+			<td class="upper"><%=k%>.</td>
+			  <th scope="row">
+				  <div class="for-flex-align">
+					  <div class="checkbox">
+						  <label>
+							<!-- <input class="hide_link" type="checkbox" value=""> -->
+<!-- 							            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+-->					      		     	<div>
+								   <span class="upper">
+									   <%if(each_data.rep_firstname){%>
+									   <%=each_data.rep_firstname%>
+										   <%}else if(each_data.entity_company_name){%>
+
+							 <%= each_data.entity_company_name %>
+							 <%}else{%>
+									   <%= decrypt(each_data.full_name) %>
+									   <%}%>
+									   </span><br>
+								   <span><%=each_data.reflect_code%></span>
+							   </div>
+						  </label>
+					</div>
+				</div>
+			  </th>
+
+		<!-- 	  <%if(each_data.rep_email)
+			  {%>
+				<td><%=each_data.rep_email%></td>
+
+				<%}else{%> 
+			 <td> <%=each_data.email%>
+				
+		  </td>
+					<%}%> -->
+			<td class="upper"><%=each_data.reflectid_by%></td>
+			<td>
+			<p>	<%=moment(each_data.shared_created_id).format('MMM DD, YYYY')%></p> </td>
+		
+
+							
+		  
+			<td class="hide_link" >
+				
+				  <a class="dropdown-item" href="/myreflect-all-client-view-doc?sender_my_reflect_id=<%=each_data.sender_my_reflect_id%>">
+							<i class="cr-icon fa fa-eye"></i>
+			   </a>	
+			  </td>
+		</tr> 
+	   
+		<%
+		i++;k++;		j++;				
+	} 
+	   }else{
+%>
+		   <tr>
+			<td colspan="8"><center>No record found.</center> </td>
+		   </tr>			 <%}%>
+	</tbody>
+</table>

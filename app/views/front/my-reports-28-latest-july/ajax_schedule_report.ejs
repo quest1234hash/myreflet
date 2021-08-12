@@ -1,0 +1,596 @@
+              <table class="table class div_data" id="myTable3">
+
+      <thead>
+                <tr> 
+                    <th width="24%" scope="col">Report Name</th>
+                    <th width="26%" scope="col">Description</th>
+                    <th width="26%" scope="col">Scheduled For</th>
+                    <th width="20%" scope="col">Created By</th>
+                    <th width="25%" scope="col">Created On</th>
+                    <th width="5%" scope="col" class="hide_data">Action</th>
+                </tr>
+              </thead>
+          <tbody id="myTableContent">
+          <% if(report_list.length>0)
+                       { 
+                       var i=0;
+                       report_list.forEach(function(each_data){
+                          %>
+                <tr class="search_tr">
+                  <td>
+                    <div class="for-flex-align">
+                        <div class="checkbox">
+                          <label class="upper">
+                            <input type="checkbox" name="report_check"value="<%=i%>"class="" onclick="global_link_report_id_fun('<%=each_data.report_filter_id%>','<%=each_data.report_id%>')">
+                              <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                        <%=each_data.report_name%>     </label>
+                        </div>
+                  </div>
+                </td>
+                <input type="hidden" value="<%=each_data.report_filter_id%>" id="" name="report_filter_id">
+
+                    <td class="upper"><%=each_data.description%></td>
+                        <td class="upper">
+                                   <% if(each_data.weekly){%>
+                                        <p><%=each_data.weekly%></p>
+                                        
+                                <%}else if(each_data.monthly){%>
+                                    <p>every &nbsp <%=each_data.monthly%><sup>th</sup> of each month<p>
+                                <%}else if(each_data.daily){%>
+                                    <p><%=each_data.daily%><p>
+                                <%}%>
+                                </td>
+                                 <td class="upper">
+                                    <%if(each_data.rep_firstname){%>
+                                        <span class="font-w-600"><%=each_data.rep_firstname%></span>
+                                        <br><%=each_data.reflect_code%>
+                                <%}else if(each_data.entity_company_name){%>
+                                    <span class="font-w-600"> <%=each_data.entity_company_name%> </span>
+                                    <br><%=each_data.reflect_code%>
+                                <%}else{%>
+                                    <span class="font-w-600"> <%=each_data.full_name%> </span>
+                                    <br><%=each_data.reflect_code%>
+                                <%}%>
+                                </td>
+<!--                  <td><span class="font-w-600">George Strong</span> <br>25102</td>
+ -->                  <td><%=moment(each_data.createdAt).format('MMM DD, YYYY')%></td>
+                  <td class="hide_data">
+                      <div class="dropdown-menu-new">
+                                <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                                  <div class="doc-img"onclick="get_ival_filter('<%=i%>','<%=each_data.report_filter_id%>')">
+                            <img src="../assets/images/icons/dashboard-assets/menu.png">
+                          </div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="profileDropdown">
+                                    <a class="dropdown-item" href="view-report-list?id=<%=each_data.report_filter_id%>&report_id=<%=each_data.report_id%>">
+                                      <img src="../assets/images/icons/dashboard-assets/view.png"> View
+                                    </a>
+                      <a class="dropdown-item" href="individual-report-edit?id=<%=each_data.report_filter_id%>&report_id=<%=each_data.report_id%>">
+                                      <img src="../assets/images/icons/dashboard-assets/edit.png"> Edit
+                                    </a>
+                      <a class="dropdown-item" href="#export-report_<%=i%>" data-toggle="modal">
+                        <img src="../assets/images/icons/dashboard-assets/upload.png"> Export
+                      </a>
+                      <a class="dropdown-item" href="#deletePlan_<%=i%>" data-toggle="modal">
+                        <img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+                      </a>
+                      <a class="dropdown-item" href="#schedule_<%=i%>"  data-toggle="modal">
+                        <img src="../assets/images/icons/self-attest.png"> Schedule
+                      </a>
+                      <a class="dropdown-item" href="#save-report_<%=i%>" data-toggle="modal">
+                        <img src="../assets/images/icons/home-assets/myrefletID.png"> Save As
+                      </a>
+                      <a class="dropdown-item"href="javascript:void(0)"onclick="single_print('<%=each_data.report_id%>','<%=each_data.report_filter_id%>')">
+
+                        <img src="../assets/images/icons/dashboard-assets/print-grey.png"> Print
+                      </a>
+                      <a class="dropdown-item" href="individual-archive-report?id=<%=each_data.report_filter_id%>">
+                        <img src="../assets/images/icons/home-assets/mydocuments.png"> Archive
+                      </a>
+                                </div>
+                            </div>
+                    </td>
+                </tr>
+              <%
+              i++;      
+    });
+       }else{
+     %>
+                       <tr>
+            <td colspan="6"><center>No record found.</center> </td>
+             </tr>       <%}%>
+           <!--   <tr class="tr_search hide_data">
+            <td colspan="6"><center>No record found.</center> </td>
+             </tr> -->
+            </tbody>
+                      </table>
+
+<% if(report_list.length>0)
+{ 
+   var i=0;
+   report_list.forEach(function(each_data){
+    %>
+<div class="modal fade field-edit-modal" id="save-report_<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+      <div class="row align-item-center">
+        <div class="col-xl-2 col-lg-3 col-md-3">
+          <div>
+            <img src="../assets/images/icons/createidentity-assets/popup-upload-icon.png">
+          </div>
+        </div>
+        <div class="col-xl-7 col-lg-7 col-md-7">
+          <h5 class="heading-purple">Save Report</h5>
+        </div>
+      </div>
+      <form method="POST" action="/individual-saveas-report"id="save_validate<%=i%>">
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+          <div class="setup-inner-box for-protact">
+            <div class="create-rflet-id-form">
+                <div class="form-group">
+                <div class="input-group">
+                  <input type="text" id="test<%=i%>" class="form-control" value="<%=each_data.report_name%>"name="report_name"data-rule-required="true" data-msg-required="Please enter report name.">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text" class="form-control" value="<%=each_data.description%>"name="description"data-rule-required="true" data-msg-required="Please enter description.">
+                </div>
+              </div>
+            </div>
+            <input type="hidden"value="<%=each_data.report_filter_id%>"name="report_filter_id">
+            <input type="hidden"value="<%=each_data.report_id%>"name="report_id">
+            <input type="hidden"value="<%=each_data.reflect_id%>"name="reflect_id_report">
+
+            <div >
+              <button class="btn-common-new" type="submit">Save</button>
+
+              <a class="btn-common-new" href="">Cancel</a>
+            </div>
+          </div>
+        </div>
+       </div>
+       </form>
+      </div>
+       </div>
+    </div>
+  </div>
+</div>
+<%
+  i++;      
+    });
+       }
+     %>
+     <div></div>
+
+<% if(report_list.length>0)
+{ 
+   var i=0;
+   report_list.forEach(function(each_data){
+    %>
+<div class="modal fade field-edit-modal" id="deletePlan_<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+      <div class="row align-item-center">
+        <div class="col-xl-2 col-lg-3 col-md-3">
+          <div>
+            <img src="../assets/images/icons/createidentity-assets/img_close.png">
+          </div>
+        </div>
+        <div class="col-xl-7 col-lg-7 col-md-7">
+          <h5 class="heading-purple">Delete Report</h5>
+        </div>
+      </div>  
+      <form method="POST" action="/individual-delete-report">
+      <div class="row">
+        <div class="offset-2 col-xl-7 col-lg-12 col-md-12">
+          <p>Are you sure you want to delete report?</p>
+        </div>
+        <input type="text" value="<%=each_data.report_filter_id%>" id="delete_report_id" name="report_filter_id">
+
+        <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+          <div class="setup-inner-box for-protact pt-15">
+            <div>
+              <button class="btn-common-new" type="submit">Delete</button>
+
+              <a class="btn-common-new" href="">Cancel</a>
+
+            </div>
+          </div>
+        </div>
+       </div>
+      </form>
+      </div>
+       </div>
+    </div>
+  </div>
+</div> 
+<%
+  i++;      
+    });
+       }
+     %>
+
+<div></div>
+ <% if(report_list.length>0)
+{ 
+   var i=0;
+   report_list.forEach(function(each_data){
+    %>
+<div class="modal field-edit-modal" id="export-report_<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+      <div class="row align-item-center">
+        <div class="col-xl-2 col-lg-3 col-md-3">
+          <div>
+            <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+          </div>
+        </div>
+        <div class="col-xl-10 col-lg-9 col-md-9">
+          <h5 class="heading-purple">Export Report</h5>
+          <p>Export only the details rows. Use this to do further calculations or for uploading  to other systems.</p>
+        </div>
+      </div>
+      <div class="row m-top-30">
+        <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+          <div class="setup-inner-box for-protact pt-15">
+            <div class="create-rflet-id-form">
+                <div class="form-group for-select-existing-doc">
+                  <div class="input-group">
+                  <div class="dropdown keep-inside-clicks-open">
+                    <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Select Format
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                       <div class="for-doc-select">
+                        <div class="checkbox">  
+                            <label>
+                              Excel - .xls
+                              <input type="checkbox" value="xls"name="save_checkbox">
+                              <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                            </label>
+                          </div>  
+                       </div>
+                        <div class="for-doc-select">
+                        <div class="checkbox">  
+                            <label>
+                              PDF
+                              <input type="checkbox" value="pdf"name="save_checkbox">
+                              <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                            </label>
+                          </div>  
+                       </div>
+                    </div>
+                  </div>
+                  
+                </div>
+                </div>
+            </div>
+            <div >
+          
+              <!-- <a class="btn-common-new" href="" data-toggle="modal" data-target="#doc-permission-Modal" data-dismiss="modal">Export</a> -->
+              <a class="btn-common-new" href="javascript:void(0)"onclick="multi_export('<%=each_data.report_id%>','<%=each_data.report_filter_id%>')" >Export</a>
+              <a class="btn-common-new" href="">Cancel</a>
+            </div>
+          </div>
+        </div>
+       </div>
+      </div>
+       </div>
+    </div>
+  </div>
+</div>
+<%
+  i++;      
+    });
+       }
+     %>
+<div></div>
+
+
+<% if(report_list.length>0)
+{ 
+   var i=0;
+   report_list.forEach(function(each_data){
+    %>
+<div class="modal fade field-edit-modal modal-responsive" id="schedule_<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+      <div class="row align-item-center">
+        <div class="col-xl-2 col-lg-3 col-md-3">
+          <div>
+            <img src="../assets/images/icons/createidentity-assets/popup-nationality-icon.png">
+          </div>
+        </div>
+        <div class="col-xl-7 col-lg-7 col-md-7">
+          <h5 class="heading-purple">Schedule Report</h5>
+        </div>
+      </div>
+    <span class="err_msg_all"style="color:red"></span>
+    <span class="success_message_div success"style="color:green"></span>
+
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+          <div class="setup-inner-box for-protact">
+            <div class="create-rflet-id-form">
+              <div class="form-group wrapper-relative">
+                <label for="">Frequency</label>
+                <div class="input-group-append for-radio-check-id-as">
+                  <span class="input-group-text">
+                      <div class="radio"name="frequency">
+                          <label>
+                            <% if(each_data.daily!=null){%>
+                      
+                                  <input class="freq-field" type="radio"id="daily<%=i%>" name="freq<%=i%>" value="Daily"checked />
+                              <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+      
+                              <% }else{%>
+                                      <input class="freq-field" type="radio"id="daily<%=i%>" name="freq<%=i%>"" value="Daily">
+                              <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+      
+                              <% }%>
+                              Daily
+                            </label>
+                    </div>
+                    <span class="err_msg"></span>
+
+                      <div class="radio"name="frequency">
+                          <label>
+
+                            <% if(each_data.weekly!=null){%>
+
+                            
+                              
+                              <input class="freq-field" type="radio" name="freq<%=i%>" value="Weekly"id="i_weekly<%=i%>" type="radio" checked />
+                            
+                            <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+
+                            <% }else{%>
+                            
+                              <input class="freq-field" type="radio" name="freq<%=i%>" value="Weekly"id="i_weekly<%=i%>">
+                            <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                            <% }%>
+                              Weekly
+                          </label>
+                      </div>
+                      <div class="radio"name="frequency">
+                          <label>
+                            <% if(each_data.monthly!=null){%>
+                            <input class="freq-field" type="radio" name="freq<%=i%>" value="Monthly"id="i_monthly<%=i%>"checked  />
+                            <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                            <% }else{%>
+                            <input class="freq-field" type="radio" name="freq<%=i%>" value="Monthly"id="i_monthly<%=i%>">
+                            <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                              <% }%>
+                              Monthly
+                          </label>
+                      </div>
+                  </span>
+                </div>
+                <div class="freq-drop-wrapper hide" id="freqWeekly<%=i%>">
+                        <ul>
+                          <li>
+                            <div class="radio">
+                              <label>
+                                <input type="radio" value="sunday"name="weekly_checkbox"class="sun<%=i%>">
+                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                Sunday
+                            </label>
+                          </div>
+                        </li>
+                        <li>
+                            <div class="radio">
+                              <label>
+                                <input type="radio" value="monday"name="weekly_checkbox"class="mon<%=i%>">
+                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                Monday
+                            </label>
+                          </div>
+                        </li>
+                        <li>
+                            <div class="radio">
+                              <label>
+                                <input type="radio" value="tuesday"name="weekly_checkbox"class="tue<%=i%>">
+                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                Tuesday
+                            </label>
+                          </div>
+                        </li>
+                        <li>
+                            <div class="radio">
+                              <label>
+                                <input type="radio" value="wednesday"name="weekly_checkbox"class="wed<%=i%>">
+                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                Wednesday
+                            </label>
+                          </div>
+                        </li>
+                        <li>
+                            <div class="radio">
+                              <label>
+                                <input type="radio" value="thursday"name="weekly_checkbox"class="thur<%=i%>">
+                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                Thursday
+                            </label>
+                          </div>
+                        </li>
+                        <li>
+                            <div class="radio">
+                              <label>
+                                <input type="radio" value="friday"name="weekly_checkbox"class="fri<%=i%>">
+                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                Friday
+                            </label>
+                          </div>
+                        </li>
+                        <li>
+                            <div class="radio">
+                              <label>
+                                <input type="radio" value="saturady"name="weekly_checkbox"class="sat<%=i%>">
+                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                Saturady
+                            </label>
+                          </div>
+                        </li>
+                        </ul>
+                      </div>
+                      <div class="freq-drop-wrapper monthly-freq hide"  id="freqMonthly<%=i%>">
+                        <div>On Day 
+                    
+                          <select class="monthly<%=i%>"id="freqmonthly<%=i%>">
+                      <%for(var k=1;k<= 31;k++)
+                    {%>
+                      <option value="<%=k%>"><%=k%></option>
+                    <%  }%>
+                          </select>
+                          of every month
+                        </div>
+                      </div>
+              </div>
+                <div class="form-group">
+                <div class="input-group">
+
+                  <input type="text" id="startDate<%=i%>" class="form-control start_date   " placeholder="Start Date "data-rule-required="true" data-msg-required="Please select start date."value="<%=each_data.start_date%>">
+                      <span class="err_msg"></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  
+                  <input type="text" id="endDate<%=i%>" class="form-control end_date " placeholder="End Date"name="end_date"data-rule-required="true" data-msg-required="Please select end date."value="<%=each_data.end_date%>">
+                  <span class="err_msg"></span>
+
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text"id="preferred_time<%=i%>" class="datetimepickernew form-control datetimepicker3<%=i%> " placeholder="Preferred Start Time"name="preferred_time"data-rule-required="true" data-msg-required="Please enter preferred time."value="<%=each_data.preferred_time%>">
+                  <span class="err_msg"></span>
+
+                </div>
+              </div>
+            </div>
+            <div >
+              <input type="hidden"id="report_name<%=i%>" class="form-control" placeholder=""name=""value="<%=each_data.report_name%>">
+
+              <a class="btn-common-new"href="javascript:void(0)"onclick="schedule_report('<%=i%>','<%=each_data.report_filter_id%>')">Schedule</a>
+              <a class="btn-common-new" href="">Cancel</a>
+            </div>
+          </div>
+        </div>
+       </div>
+      </div>
+       </div>
+    </div>
+  </div>
+</div>
+<%
+  i++;      
+    });
+       }
+     %>
+     <div></div>
+
+     <script type="text/javascript">
+
+     
+    function export_check()
+        {
+
+       var doc_list = $("input[name='report_check']:checked").val()
+                      if(doc_list.length>1){
+                
+              }else{
+                    
+                $('#export_btn').attr('data-toggle','modal');                     
+               $('#export_btn').attr('data-target','#export-report_'+doc_list);   
+                }
+                    
+        }
+
+    function delete_check()
+        {
+      var doc_list = $("input[name='report_check']:checked").val()
+    // alert(doc_list)
+    
+              if(doc_list.length>1){
+                
+              }else{
+                    
+                $('#delete_btn').attr('data-toggle','modal');                     
+    $('#delete_btn').attr('data-target','#deletePlan_'+doc_list);   
+  
+                }
+                  
+  }
+  function schedule_check()
+        {
+      var doc_list = $("input[name='report_check']:checked").val()
+    // alert(doc_list)
+    
+              if(doc_list.length>1){
+                
+              }else{
+                    
+                $('#schedule_btn').attr('data-toggle','modal');                     
+                            $('#schedule_btn').attr('data-target','#schedule_'+doc_list);   
+  
+                }
+                  
+  }
+  function saveas_check()
+        {
+      var doc_list = $("input[name='report_check']:checked").val()
+    // alert(doc_list)
+    
+              if(doc_list.length>1){
+                
+              }else{
+                    
+                $('#saveas_btn').attr('data-toggle','modal');                     
+    $('#saveas_btn').attr('data-target','#save-report_'+doc_list);  
+  
+                }
+                  
+  }
+  function view_check1()
+        {
+      // var doc_list = $("input[name='report_check']:checked").val()
+    // alert(global_link_report_id)
+    
+              if(doc_list.length>1){
+                
+              }else{
+                    
+                // $('#global_link_report_id').val(report_id);
+          var url="view-report-list?id="+global_link_filter_report_id+"&report_id="+global_link_report_id;
+                    $("a").attr("href", url)
+  
+                }
+                  
+  }
+
+
+
+  </script>

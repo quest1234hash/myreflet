@@ -1,0 +1,1517 @@
+<%-include('../innerHeader')%>
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-6 col-md-6 col-sm-6">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/verifier-home-assets/manage-sub-verifiers.png">
+					<h4>Client's Information</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="id-code-box-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="white-box full-box view-id-heading-box">
+					<div class="id-code-represent-heading"> 
+						<img src="../assets/images/icons/home-assets/Representative.png">
+						<span><%if(requestData.tbl_wallet_reflectid_rel.reflectid_by == 'entity'){%>
+									Entity
+							<%}else{%>	
+								Representative
+							<%}%>		
+						</span>
+					</div>
+					<div>
+				     <div class="row">
+				     	<div class="col-xl-4 col-lg-6 col-md-6">
+				     		<div class="row inner-box-id-code">
+								<div class="col-md-6 p-0">
+									<div class="for-flex-align">
+										<img src="../assets/images/icons/home-assets/user.png">
+										<p>MyReflet ID</p>
+									</div>
+								</div>
+								<div class="col-md-6 dubble-dot-after p-0">
+									<p><%=requestData.tbl_wallet_reflectid_rel.reflect_code%></p>
+								</div>
+							</div>
+						 </div>
+						 <%if(requestData.tbl_wallet_reflectid_rel.reflectid_by == 'entity'){%>
+							<div class="col-xl-4 col-lg-6 col-md-6">
+								<div class="row inner-box-id-code">
+								   <div class="col-md-6 p-0">
+									   <div class="for-flex-align">
+										   <img src="../assets/images/icons/home-assets/user.png">
+										   <p>Company Name</p>
+									   </div>
+								   </div>
+								   <div class="col-md-6 dubble-dot-after p-0">
+									   <p><%=requestData.tbl_wallet_reflectid_rel.entity_company_name%></p>
+								   </div>
+							   </div>
+							</div>
+							<%}else{%>	
+								<div class="col-xl-4 col-lg-6 col-md-6">
+									<div class="row inner-box-id-code">
+									   <div class="col-md-6 p-0">
+										   <div class="for-flex-align">
+											   <img src="../assets/images/icons/home-assets/user.png">
+											   <p>First Name</p>
+										   </div>
+									   </div>
+									   <div class="col-md-6 dubble-dot-after p-0">
+										   <p><%=requestData.tbl_wallet_reflectid_rel.rep_firstname%></p>
+									   </div>
+								   </div>
+								</div>
+								<div class="col-xl-4 col-lg-6 col-md-6">
+									<div class="row inner-box-id-code">
+									   <div class="col-md-6 p-0">
+										   <div class="for-flex-align">
+											   <img src="../assets/images/icons/home-assets/user.png">
+											   <p>Last Name</p>
+										   </div>
+									   </div>
+									   <div class="col-md-6 dubble-dot-after p-0">
+										   <p><%=requestData.tbl_wallet_reflectid_rel.rep_lastname%></p>
+									   </div>
+								   </div>
+								</div>
+							<%}%>		
+				     	
+				     	
+				     	<div class="col-xl-4 col-lg-6 col-md-6">
+				     		<div class="row inner-box-id-code">
+								<div class="col-md-6 p-0">
+									<div class="for-flex-align">
+										<img src="../assets/images/icons/home-assets/verified-emailID.png">
+										<p>Email ID</p>
+									</div>
+								</div>
+								<div class="col-md-6 dubble-dot-after p-0">
+									<%console.log("my tesing",contact_n_country)%>
+									<p><%=decrypt(contact_n_country[0].email)%></p>
+									<!-- <p><%//contact_n_country[0].email%></p> -->
+								</div>
+							</div>
+				     	</div>
+				    
+				     	<div class="col-xl-4 col-lg-6 col-md-6">
+				     		<div class="row inner-box-id-code">
+								<div class="col-md-6 p-0">
+									<div class="for-flex-align">
+										<img src="../assets/images/icons/home-assets/phone.png">
+										<p>Phone Number</p>
+									</div>
+								</div>
+								<div class="col-md-6 dubble-dot-after p-0">
+									<p><%=decrypt(contact_n_country[0].mobile_number)%></p>
+								</div>
+							</div>
+				     	</div>
+				     	<div class="col-xl-4 col-lg-6 col-md-6">
+				     		<div class="row inner-box-id-code">
+								<div class="col-md-6 p-0">
+									<div class="for-flex-align">
+										<img src="../assets/images/icons/dashboard-assets/country.png">
+										<p>Country</p>
+									</div>
+								</div>
+								<div class="col-md-6 dubble-dot-after p-0">
+									<p><%=contact_n_country[0].country_name%>
+										</p>
+								</div>
+							</div>
+				     	</div>
+				     	<div class="col-xl-4 col-lg-6 col-md-6">
+				     		<div class="row inner-box-id-code">
+								<div class="col-md-6 p-0">
+									<div class="for-flex-align">
+										<img src="../assets/images/icons/dashboard-assets/DOB.png">
+										<p>Submitted On</p>
+									</div>
+								</div>
+								<div class="col-md-6 dubble-dot-after p-0">
+									<p>
+										<%=moment(requestData.createdAt).format("MMM DD,YYYY")%>
+										</p>
+								</div>
+							</div>
+				     	</div>
+				     	<div class="col-xl-4 col-lg-6 col-md-6">
+				     		<div class="row inner-box-id-code">
+								<div class="col-md-6 p-0">
+									<div class="for-flex-align">
+										<img src="../assets/images/icons/tick-new.png">
+										<p>Status</p>
+									</div>
+								</div>
+								<div class="col-md-6 dubble-dot-after p-0">
+									<%if(requestData.request_status=="pending"){%>
+										<div class="pending-status">
+											Pending
+										</div>
+										<%}%>
+										<%if(requestData.request_status=="reject"){%>
+											<div class="cancel-status">
+												Rejected
+											</div>
+											<%}%>
+										<%if(requestData.request_status=="accept"){%>
+											<div class="approved-status">
+												Accepted
+											</div>
+											<%}%>
+									<!-- <div class="pending-status">
+										<%=requestData.request_status%>
+					             	</div> -->
+								</div>
+							</div>
+				     	</div>
+				     
+				     </div>	
+					</div>
+				</div>
+
+				
+
+			    <div class="personal-info-heading">
+					<div class="row align-item-center">
+						<div class="col-md-8">
+							<h4 class="purple-heading">Personal Information</h4>
+						</div>
+					</div>
+				</div>
+             <%-console.log(" contact_n_country : ",contact_n_country)%>
+				<div class="personal-info-box table-responsive">
+					<table class="table">
+					  <thead>
+					    <tr>
+					      <th width="30%" scope="col">Label</th>
+					      <th scope="col">Content</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <th scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/createidentity-assets/user.png">
+					      		First Name
+					      	</div>
+					      </th>
+					      <td><%=decrypt(contact_n_country[0].full_name)%></td>
+					     
+					    </tr>
+					     <!-- <tr>
+					      <th scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/createidentity-assets/user.png">
+					      		Middle Name
+					      	</div>
+					      </th>
+					      <td><%=contact_n_country.email%></td>
+					     
+					    </tr> -->
+					     <tr>
+					      <th scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/createidentity-assets/user.png">
+					      		Last Name
+					      	</div>
+					      </th>
+					      <td><%=decrypt(contact_n_country[0].last_name)%></td>
+					      
+					    </tr>
+					     <tr>
+					      <th scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/dashboard-assets/country.png">
+					      		Country
+					      	</div>
+					      </th>
+					      <td><%=contact_n_country[0].country_name%></td>
+					     
+					    </tr>
+					     <tr>
+					      <th scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/dashboard-assets/verified-emailID.png">
+					      		Email ID
+					      	</div>
+					      </th>
+					      <td><%=decrypt(contact_n_country[0].email)%></td>
+					     
+					    </tr>
+					      <tr>
+					      <th scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/dashboard-assets/phone.png">
+					      		Phone Number
+					      	</div>
+					      </th>
+					      <td>
+
+					      	<div>
+								<%=decrypt(contact_n_country[0].mobile_number)%>
+					      	</div>
+					      </td>
+					     
+					    </tr>
+					  </tbody>
+					</table>
+				</div>
+                <%if(requestData.request_status=="accept"){%>
+				<div class="table-responsive-box">
+			        <div class=" table-form-box">
+			        	<div class="row align-item-center">
+						<div class="col-xl-9 col-lg-8 col-md-8">
+							<h4 class="purple-heading for-mobile-margin">Requested/Send to me Documents</h4>
+						</div>
+						<div class="col-xl-3 col-lg-4 col-md-4 col-3">
+							<div>
+								<a href="/ver-req-doc?request_id=<%=requestData.request_id%>"  class="btn-common-new btn-with-extra-padding">Requested Document</a>
+							</div>
+						</div>
+					</div>
+					<div>
+						<div class="colomn-row-new colom-row-request-doc mt-30">
+		                        <div class="common-colomn first-colomn for-document">
+		                           <h5>Document Name</h5>
+		                        </div>
+		                        <div class="common-colomn first-colomn">
+		                           <h5>Discription</h5>
+		                        </div>
+		                         <div class="common-colomn text-center">
+		                           <h5>Self Certify</h5>
+		                        </div>
+		                         <div class="common-colomn text-center">
+		                           <h5>Certify</h5>
+		                        </div>
+		                         <div class="common-colomn text-center">
+		                           <h5>Sign</h5>
+		                        </div>
+		                         <div class="common-colomn text-center">
+		                           <h5>Complete</h5>
+		                        </div>
+		                         <div class="common-colomn text-center video-proof-text">
+		                           <span class="tooltip fade" data-title="Record your video so that we can do the identify verification.">
+		                           	<h5 class="tooltip-inner-img">Video Proof</h5>
+						      			<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+						      		</span>
+		                        </div>
+		                         <div class="common-colomn first-colomn text-center">
+		                           <h5>Status</h5>
+		                        </div>
+		                        
+		                       </div>
+					</div>
+			<%var i=0;documentsData.forEach(docData=>{%>
+
+			        <div id="accordion" class="accordianWrapper">
+			            <div class="white-box personal-info-box for-download-view-table for-request-doc-btn-row">
+			            	<div class="colomn-row-new">
+		                        <div class="common-colomn first-colomn for-document">
+		                           <h5 class="mb-0 clearfix">
+		                            <span class="tooltip fade" data-title="Your email is verified.">
+							      			<img class="tooltip-inner-img" src="../assets/images/icons/dashboard-assets/verified.png">
+							      			<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+							      		</span>
+									
+									<%=docData.document_name%> 
+								  </h5>
+								  <a  href="javascript:void(0)" onclick="assignTovalidatore('<%=requestData.request_id%>-<%=docData.doc_id%>-<%=docData.request_doc_id%>-<%=docData.document_name%>')">Assign to validatore</a>
+		                        </div>
+		                        <div class="common-colomn first-colomn">
+		                           <h5 class="mb-0 clearfix">
+		                            Please send a scanned copy of <%=docData.document_name%>.
+		                          </h5>
+								</div>
+						
+		                         <div class="common-colomn">
+		                            <div class="checkbox text-center">
+		                              <label>
+									<%if(docData.self_assested=="yes"){%>
+										<input type="checkbox" value="" disabled  checked>
+									<%}else{%>		
+										<input type="checkbox" value="" disabled>
+
+                                    <%}%>
+		                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+		                              </label>
+		                            </div>
+								</div>
+								
+		                         <div class="common-colomn">
+		                           <div class="checkbox text-center">
+		                              <label>
+											<%if(docData.certified=="yes"){%>
+												<input type="checkbox" value="" disabled checked>
+											<%}else{%>		
+												<input type="checkbox" value="" disabled>
+		
+											<%}%>
+		                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+		                              </label>
+		                            </div>
+		                        </div>
+		                         <div class="common-colomn">
+		                           <div class="checkbox text-center">
+		                              <label>
+											<%if(docData.sign == "yes"){%>
+												<input type="checkbox" value="" disabled checked>
+											<%}else{%>		
+												<input type="checkbox" value="" disabled>
+		
+											<%}%>
+		                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+		                              </label>
+		                            </div>
+		                        </div>
+		                         <div class="common-colomn">
+		                           <div class="checkbox text-center">
+		                              <label>
+		                                <%if(docData.complete == "yes"){%>
+											<input type="checkbox" value="" disabled checked>
+										<%}else{%>		
+											<input type="checkbox" value="" disabled>
+	
+										<%}%>
+		                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+		                              </label>
+		                            </div>
+		                        </div>
+		                         <div class="common-colomn">
+		                           <div class="checkbox text-center">
+		                              <label>
+										<%if(docData.video_proof == "yes"){%>
+											<input type="checkbox" value="" disabled checked>
+										<%}else{%>		
+											<input type="checkbox" value="" disabled>
+	
+										<%}%>
+		                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+		                              </label>
+		                            </div>
+		                        </div>
+		                         <div class="common-colomn first-colomn text-right">
+		                           <h5 class="mb-0 clearfix">
+		                            <span class="approved-status">Received</span>
+
+		                          
+		                          <a class="btn-common-new btn-arrow" data-toggle="collapse" data-target="#collapseOne<%=i%>" aria-expanded="false" aria-controls="collapseOne">
+					                            <i class="fas fa-sort-down"></i>
+					                       </a>
+		                               </h5>
+		                        </div>
+		                       </div>
+		                   </div>
+			                <div id="collapseOne<%=i%>" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+			                    <div class="personal-info-box for-download-view-table table-responsive table-another-wrapper">
+			                        <table class="table dataTable no-footer another-table2">
+			                            <tr>
+			                                <th width="10%">Version</th>
+			                                <th width="10%">Document</th>
+			                                <th width="10%">Date</th>
+											<th width="10%">Document Number</th>
+			                                <th width="10%">Nature of Request</th>
+			                                <th width="13%">Note</th>
+			                                <th width="9%">Status</th>
+			                                <th width="10%">Reason</th>
+			                                <th width="10%">Validatore Status</th>
+			                                <th width="8%">Action</th>
+										</tr>
+										<% var j=0;for(let file_hash_data of docData.request_doc_data){%>
+			                            <tr>
+											<td><%=docData.document_name%> <%=file_hash_data.version%></td>
+											<td>
+												
+											<%var k=0;for(let file_hashes of file_hash_data.request_doc_file){%>
+												<%-console.log("file_hash_data.request_doc_file : ",file_hash_data.request_doc_file[k].doc_type)%>
+
+												<%if(docData.view=="yes"){
+															if(file_hash_data.request_doc_file[k].doc_type =='image'){
+															%>
+
+													<a href="#validate-pin-Modal<%=i%><%=j%><%=k%>" data-target="#validate-pin-Modal<%=i%><%=j%><%=k%>" data-toggle="modal"><img id="image1" src="../assets/images/icons/dashboard-assets/doc.png" alt=""></a>
+										    	<%}else if(file_hash_data.request_doc_file[k].doc_type =='video'){%>
+													
+
+													<a href="#validate-pin-Modal<%=i%><%=j%><%=k%>" data-target="#validate-pin-Modal<%=i%><%=j%><%=k%>" data-toggle="modal">
+														<video width="22" height="20" controls>
+														   
+													    </video>
+													</a>
+                                            <%}else if(file_hash_data.request_doc_file[k].doc_type =='pdf'){%>
+													
+
+													<a href="#validate-pin-Modal<%=i%><%=j%><%=k%>" data-target="#validate-pin-Modal<%=i%><%=j%><%=k%>" data-toggle="modal">
+
+														<img id="image1" src="../assets/images/icons/dashboard-assets/doc.png" alt="">
+													</a>
+												<%}%>	
+												<% //console.log(" PDFFFFFFFFFFFFFFFFFFv+ : ",file_hash_data.request_doc_file[k].doc_type)%>											
+											<%}else{%>
+												<img id="image1" src="../assets/images/icons/dashboard-assets/doc.png" alt="">
+												<p>Client did't provide you view documents permission for that you have to request him.</p>
+											<%}k++;}%>
+										</td>
+			                                <td><%=moment(docData.req_doc_date).format('MMM DD, YYYY')%></td>
+			                                <td><%=docData.doc_unique_code%></td>
+			                                <td>Certification</td>
+											<td><%=docData.message!=null ? docData.message :'--' %></td>
+											<%if(file_hash_data.docfile_status=="reject"){%>
+												<td><div class="cancel-status">Rejected</div></td>
+												<td><%=file_hash_data.reason%></td>
+												<%}else if(file_hash_data.docfile_status=="accept"){%>
+												<td><div class="approved-status">Accepted</div></td>
+												<td>--</td>
+												<%}else{%>
+												<td><div class="pending-status">Pending</div></td>
+												<td>--</td>
+												<%}%>
+
+												<%if(docData.validatore_status=="NA"){%>
+												<td><div class="pending-status">NA</div></td>
+												<%}%>
+												<%if(docData.validatore_status=="assigned"){%>
+													<td><div class="pending-status">Assigned</div></td>
+												<%}%>
+												<%if(docData.validatore_status=="accept"){%>
+														<td><div class="approved-status">Accepted</div></td>
+												<%}%>
+												<%if(docData.validatore_status=="reject"){%>
+													<td><div class="cancel-status">Rejected</div></td>
+											    <%}%>
+												
+			                               
+												<td>
+													<%var file_data = docData.file_content;
+													%>
+													<div class="check-uncheck">
+														<input type="hidden" id="request_doc_id<%=i%>" value="<%=docData.request_doc_id%>">
+
+														    <% if (!sub_verifer_reflect_id) {%>
+														<input type="hidden" id="ver_reflect_id<%=i%>" value="<%=requestData.verifer_my_reflect_id%>">
+													 <% } else {%>
+														<input type="hidden" id="ver_reflect_id<%=i%>" value="<%=sub_verifer_reflect_id%>">
+														<% } %>
+														
+														<input type="hidden" id="client_reflect_id<%=i%>" value="<%=requestData.tbl_wallet_reflectid_rel.reflect_id%>">
+														<input type="hidden" id="request_id<%=i%>" value="<%=requestData.request_id%>">
+														<%if(file_hash_data.docfile_status=="pending"){%>
+															<%if(docData.validatore_status=="NA"){%>
+														<a href="" data-toggle="modal" data-target="#private-key-accept-Modal<%=i%>"><img src="../assets/images/icons/check.png"></a>
+														
+														<a href="" data-toggle="modal" data-target="#private-key-reject-Modal<%=i%>"><img src="../assets/images/icons/cancel.png"></a>
+														<%}else{%>
+																 <%if(docData.validatore_status=="accept"){%>
+																	<a href="" data-toggle="modal" data-target="#private-key-accept-Modal<%=i%>"><img src="../assets/images/icons/check.png"></a>
+																 <%}%>
+																 <%if(docData.validatore_status=="reject"){%>
+																	<a href="" data-toggle="modal" data-target="#private-key-reject-Modal<%=i%>"><img src="../assets/images/icons/cancel.png"></a>
+																 <%}%>
+																 <%if(docData.validatore_status=="assigned"){%>
+																	--
+																 <%}%>
+														<%}%>
+														<%}else{%>
+															--
+														<%}%>	 
+													</div>
+												</td>
+										</tr>
+										<%j++;}%>
+			                            <!-- <tr>
+			                                <td>Driving Licence 1</td>
+			                                <td><img src="../assets/images/icons/dashboard-assets/doc.png" alt=""></td>
+			                                <td>Jun 20, 2020</td>
+			                                <td>DL-1254</td>
+			                                <td>Certification</td>
+			                                <td>Lorem ipsume</td>
+			                                <td><span class="clr-green">Approved</span></td>
+			                                <td>-</td>
+			                                <td>
+			                                	<div class="check-uncheck">
+			                                		<a href=""><img src="../assets/images/icons/check.png"></a>
+			                                		<a href=""><img src="../assets/images/icons/cancel.png"></a>
+			                                	</div>
+			                                </td>
+			                            </tr> -->
+			                        </table>
+
+			                    </div>
+			                </div>
+						</div>
+			<%i++;})%>
+
+			            <!-- section End -->
+			            <!-- <div class="white-box personal-info-box for-download-view-table for-request-doc-btn-row">-->
+			               <!-- <div class="colomn-row-new"> 
+		                        <div class="common-colomn first-colomn for-document">
+		                           <h5 class="mb-0 clearfix">
+		                            <span class="tooltip fade" data-title="Your email is verified.">
+							      			<img class="tooltip-inner-img" src="../assets/images/icons/dashboard-assets/verified.png">
+							      			<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+							      		</span>
+		                            Driving License
+		                          </h5>
+		                        </div>
+		                        <div class="common-colomn first-colomn">
+		                           <h5 class="mb-0 clearfix">
+		                            Please send a scanned copy of driving license.
+		                          </h5>
+		                        </div>
+		                         <div class="common-colomn">
+		                            <div class="checkbox text-center">
+		                              <label>
+		                                <input type="checkbox" value="">
+		                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+		                              </label>
+		                            </div>
+		                        </div>
+		                         <div class="common-colomn">
+		                           <div class="checkbox text-center">
+		                              <label>
+		                                <input type="checkbox" value="">
+		                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+		                              </label>
+		                            </div>
+		                        </div>
+		                         <div class="common-colomn">
+		                           <div class="checkbox text-center">
+		                              <label>
+		                                <input type="checkbox" value="">
+		                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+		                              </label>
+		                            </div>
+		                        </div>
+		                         <div class="common-colomn">
+		                           <div class="checkbox text-center">
+		                              <label>
+		                                <input type="checkbox" value="">
+		                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+		                              </label>
+		                            </div>
+		                        </div>
+		                         <div class="common-colomn">
+		                           <div class="checkbox text-center">
+		                              <label>
+		                                <input type="checkbox" value="">
+		                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+		                              </label>
+		                            </div>
+		                        </div>
+		                         <div class="common-colomn first-colomn text-right">
+		                           <h5 class="mb-0 clearfix">
+		                            <span class="approved-status">Received</span>
+
+		                          
+		                          <a class="btn-common-new btn-arrow" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseOne">
+					                            <i class="fas fa-sort-down"></i>
+					                       </a>
+		                               </h5>
+		                        </div>
+		                       </div> -->
+
+		                       </div>
+			                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+			                    <div class="personal-info-box for-download-view-table table-responsive table-another-wrapper">
+			                        <table class="table dataTable no-footer another-table2">
+			                            <tr>
+			                                <th>Version</th>
+			                                <th>Document</th>
+			                                <th>Date</th>
+			                                <th>ID Code</th>
+			                                <th>Nature of Request</th>
+			                                <th>Message</th>
+			                                <th>Status</th>
+			                                <th>Reason</th>
+			                                <th>Action</th>
+			                            </tr>
+			                            <tr>
+			                                <td>Driving Licence 1</td>
+			                                <td><img src="../assets/images/icons/dashboard-assets/doc.png" alt=""></td>
+			                                <td>Jun 20, 2020</td>
+			                                <td>DL-1254</td>
+			                                <td>Certification</td>
+			                                <td>Lorem ipsume</td>
+			                                <td><div class="cancel-status">Rejected</div></td>
+			                                <td>The Picture was not clear</td>
+			                                <td>
+			                                	-
+			                                </td>
+			                            </tr>
+			                            <tr>
+			                                <td>Driving Licence 1</td>
+			                                <td><img src="../assets/images/icons/dashboard-assets/doc.png" alt=""></td>
+			                                <td>Jun 20, 2020</td>
+			                                <td>DL-1254</td>
+			                                <td>Certification</td>
+			                                <td>Lorem ipsume</td>
+			                                <td><span class="clr-green">Approved</span></td>
+			                                <td>-</td>
+			                                <td>
+			                                	<div class="check-uncheck">
+			                                		<a href=""><img src="../assets/images/icons/check.png"></a>
+			                                		<a href=""><img src="../assets/images/icons/cancel.png"></a>
+			                                	</div>
+			                                </td>
+			                            </tr>
+			                        </table>
+
+			                    </div>
+			                </div>
+				</div>
+				<%}%>
+			        </div>
+			    </div>
+			</div>			
+		</div>
+	</div>
+</section>
+<%var i=0;documentsData.forEach(docData=>{%>
+	<% var j=0;for(let file_hash_data of docData.request_doc_data){%>
+		<%var k=0;for(let file_hashes of file_hash_data.request_doc_file){%>
+<div class="modal fade field-edit-modal" id="doc-img-Modal<%=i%><%=j%><%=k%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		 
+		  <div id="img_modal<%=i%><%=j%><%=k%>" class="modal-img-big">
+			<!-- <img id="image1" src="../assets/images/icons/dashboard-assets/doc.png" alt="">-->
+			
+		  </div>
+		  <%if(docData.download=="yes"){%>
+			
+		
+		  <div class="modal-img-big" id="download_link<%=j%><%=k%>">
+			<input type="hidden" id="src_val<%=i%><%=j%><%=k%>">
+			<!-- <button type="button" onclick="download_img('<%=j%><%=k%>')">click here to download</button> -->
+			<a href=""class="hide_click download_class" onclick="download_img('<%=i%><%=j%><%=k%>')">click here to download</a>
+			  <center><span class="loader"><img src="../assets/images/loader-3.gif"height="42" width="62"></span></center> 
+		  </div>
+		  <%}else{%>
+
+			<div class="modal-img-big">
+				
+				<a href="#" class="hide_click download_class" >You don`t have a permission to download it.</a>
+				  
+			  </div>
+		 <% }%>
+			
+		 </div>
+	  </div>
+	</div>
+  </div>
+  <%k++;}%>
+  <%j++;}%>
+<%i++;})%>
+<%var i=0;documentsData.forEach(docData=>{%>
+	<% var j=0;for(let file_hash_data of docData.request_doc_data){%>
+		<%var k=0;for(let file_hashes of file_hash_data.request_doc_file){%>
+<div class="modal fade field-edit-modal" id="doc-vid-Modal<%=i%><%=j%><%=k%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		 
+		  <div id="vid_modal<%=i%><%=j%><%=k%>" class="modal-img-big">
+			<!-- <img id="image1" src="../assets/images/icons/dashboard-assets/doc.png" alt="">-->
+			
+		  </div>
+		  <%if(docData.download=="yes"){%>
+			
+		
+		  <div class="modal-img-big" id="download_link<%=j%><%=k%>">
+			<input type="hidden" id="vid_src_val<%=i%><%=j%><%=k%>">
+			<!-- <button type="button" onclick="download_img('<%=j%><%=k%>')">click here to download</button> -->
+			<a href=""class="hide_click download_class" onclick="download_img('<%=i%><%=j%><%=k%>')">click here to download</a>
+			  <center><span class="loader"><img src="../assets/images/loader-3.gif"height="42" width="62"></span></center> 
+		  </div>
+		  <%}else{%>
+
+			<div class="modal-img-big">
+				
+				<a href="#" class="hide_click download_class" >You don`t have a permission to download it.</a>
+				  
+			  </div>
+		 <% }%>
+			
+			
+		 </div>
+	  </div>
+	</div>
+  </div>
+  <%k++;}%>
+  <%j++;}%>
+<%i++;})%>
+<%var i=0;documentsData.forEach(docData=>{%>
+	<% var j=0;for(let file_hash_data of docData.request_doc_data){%>
+		<%var k=0;for(let file_hashes of file_hash_data.request_doc_file){%>
+<div class="modal field-edit-modal" id="validate-pin-Modal<%=i%><%=j%><%=k%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		  <div class="create-wallet-box">
+			  <div class="row align-item-center">
+				  <div class="col-xl-2 col-lg-3 col-md-3">
+					  <div class="for-icon-bg">
+						  <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+					  </div>
+				  </div>
+				  <%-console.log("file_hash_data.request_doc_file p[in] : ",file_hash_data.request_doc_file[k].doc_type)%>				  
+				  <input type="hidden" id="hash_value<%=i%><%=j%><%=k%>" value="<%=file_hash_data.request_doc_file[k].request_file_hash%>">
+				  <input type="hidden" id="doc_type<%=i%><%=j%><%=k%>" value="<%=file_hash_data.request_doc_file[k].doc_type%>">
+				  <input type="hidden" id="request_id<%=i%><%=j%><%=k%>" value="<%=requestData.request_id%>">
+				  <div class="col-xl-10 col-lg-10 col-md-10">
+					  <h5 class="heading-purple">Validate Pin</h5>
+					  <p>Enter Your PIN to Continue</p>
+				  </div>
+			  </div>
+				 <div class="login-form-main phone-otp mt-15">
+				   <div class="form-group mb-0">
+					  <label>PIN</label>
+					  <div class="otp-box digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+						  <input type="text" id="otp1<%=i%><%=j%><%=k%>" name="otp1" class="form-control text-center" placeholder="-" maxlength="1" data-next="otp2<%=i%><%=j%><%=k%>">
+						  <input type="text" id="otp2<%=i%><%=j%><%=k%>" name="otp2" class="form-control" placeholder="-" maxlength="1" data-next="otp3<%=i%><%=j%><%=k%>" data-previous="otp1<%=i%><%=j%><%=k%>">
+						  <input type="text" id="otp3<%=i%><%=j%><%=k%>" name="otp3" class="form-control" placeholder="-" maxlength="1" data-next="otp4<%=i%><%=j%><%=k%>" data-previous="otp2<%=i%><%=j%><%=k%>">
+						  <input type="text" id="otp4<%=i%><%=j%><%=k%>" name="otp4" class="form-control" placeholder="-" maxlength="1" data-previous="otp3<%=i%><%=j%><%=k%>">
+					  </div>
+					</div>
+			  </div>
+			  <span class="error_validate" id="req_err_prm<%=i%><%=j%><%=k%>"></span>
+			  <div class="setup-inner-box for-protact pt-15">
+				  <div>
+					  <%if(file_hash_data.request_doc_file[k].doc_type=='image'){%>
+					  <a class="btn-common-new" href="#doc-img-Modal<%=i%><%=j%><%=k%>" onclick="validate_pin('<%=i%><%=j%><%=k%>')" id="validate_pin<%=i%><%=j%><%=k%>" data-dismiss="modal" data-toggle="modal" >Confirm</a>
+					  <%}else if(file_hash_data.request_doc_file[k].doc_type=='video'){%>
+						<a class="btn-common-new" href="#doc-video-Modal<%=i%><%=j%><%=k%>" onclick="validate_pin('<%=i%><%=j%><%=k%>')" id="validate_pin<%=i%><%=j%><%=k%>" data-dismiss="modal" data-toggle="modal" >Confirm</a>
+						 <%}else if(file_hash_data.request_doc_file[k].doc_type=='pdf'){%>
+						<a class="btn-common-new" href="#doc-pdf-Modal<%=i%><%=j%><%=k%>" onclick="validate_pin('<%=i%><%=j%><%=k%>')" id="validate_pin<%=i%><%=j%><%=k%>" data-dismiss="modal" data-toggle="modal" >Confirm</a>
+						<%}%>					  
+						<a class="btn-common-new" href="">Cancel</a>
+
+				  </div>
+			  </div>
+			 </div>
+		 </div>
+	  </div>
+	</div>
+  </div>
+  <%k++;}%>
+  <%j++;}%>
+<%i++;})%>
+<%var i=0;documentsData.forEach(docData=>{%>
+	<% var j=0;for(let file_hash_data of docData.request_doc_data){%>
+		<%var k=0;for(let file_hashes of file_hash_data.request_doc_file){%>
+<div class="modal field-edit-modal" id="validate-vid-pin-Modal<%=i%><%=j%><%=k%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		  <div class="create-wallet-box">
+			  <div class="row align-item-center">
+				  <div class="col-xl-2 col-lg-3 col-md-3">
+					  <div class="for-icon-bg">
+						  <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+					  </div>
+				  </div>
+				  <input type="hidden" id="hash_value<%=i%><%=j%><%=k%>" value="<%=file_hashes%>">
+				  <input type="hidden" id="request_id<%=i%><%=j%><%=k%>" value="<%=requestData.request_id%>">
+				  <div class="col-xl-10 col-lg-10 col-md-10">
+					  <h5 class="heading-purple">Validate Pin</h5>
+					  <p>Enter Your PIN to Continue</p>
+				  </div>
+			  </div>
+				 <div class="login-form-main phone-otp mt-15">
+				   <div class="form-group mb-0">
+					  <label>PIN</label>
+					  <div class="otp-box digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+						  <input type="text" id="otp1<%=i%><%=j%><%=k%>" name="otp1" class="form-control text-center" placeholder="-" maxlength="1" data-next="otp2<%=i%><%=j%><%=k%>">
+						  <input type="text" id="otp2<%=i%><%=j%><%=k%>" name="otp2" class="form-control" placeholder="-" maxlength="1" data-next="otp3<%=i%><%=j%><%=k%>" data-previous="otp1<%=i%><%=j%><%=k%>">
+						  <input type="text" id="otp3<%=i%><%=j%><%=k%>" name="otp3" class="form-control" placeholder="-" maxlength="1" data-next="otp4<%=i%><%=j%><%=k%>" data-previous="otp2<%=i%><%=j%><%=k%>">
+						  <input type="text" id="otp4<%=i%><%=j%><%=k%>" name="otp4" class="form-control" placeholder="-" maxlength="1" data-previous="otp3<%=i%><%=j%><%=k%>">
+					  </div>
+					</div>
+			  </div>
+			  <span class="error_validate" id="req_err_prm<%=i%><%=j%><%=k%>"></span>
+			  <div class="setup-inner-box for-protact pt-15">
+				  <div>
+					  <a class="btn-common-new" href="#doc-img-Modal<%=i%><%=j%><%=k%>" onclick="validate_vid_pin('<%=i%><%=j%><%=k%>')" id="validate_pin<%=i%><%=j%><%=k%>" data-dismiss="modal" data-toggle="modal" >Confirm</a>
+					  <a class="btn-common-new" href="">Cancel</a>
+				  </div>
+			  </div>
+			 </div>
+		 </div>
+	  </div>
+	</div>
+  </div>
+  <%k++;}%>
+  <%j++;}%>
+<%i++;})%>
+<div class="modal fade field-edit-modal" id="phone-not-verified-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div class="for-icon-bg">
+						<img src="../assets/images/icons/createidentity-assets/popup-mobile-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-10 col-lg-10 col-md-10">
+					<h5 class="heading-purple">Phone Number Verification</h5>
+					<p>Verify your phone number by entering the OTP sent to your registered email address.</p>
+				</div>
+			</div>
+		   	<div class="login-form-main phone-otp">
+				 <div class="form-group">
+				    <label>OTP</label>
+                    <div class="otp-box digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+                        <input type="text" id="otp1" name="otp1" class="form-control text-center" placeholder="-" maxlength="1" data-next="otp2">
+                        <input type="text" id="otp2" name="otp2" class="form-control" placeholder="-" maxlength="1" data-next="otp3" data-previous="otp1">
+                        <input type="text" id="otp3" name="otp3" class="form-control" placeholder="-" maxlength="1" data-next="otp4" data-previous="otp2">
+                        <input type="text" id="otp4" name="otp4" class="form-control" placeholder="-" maxlength="1" data-previous="otp3">
+                    </div>
+				  </div>
+				  <div class="private-key-copy-box">
+				  	<button class="btn-common-new">Continue</button>
+                    <p class="extra-link">Don't got OTP?<a href="">Resend</a></p>
+				  </div>
+			</div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+
+<%var j=0;documentsData.forEach(docData=>{%>
+
+<div class="modal fade field-edit-modal" id="private-key-accept-Modal<%=j%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close hide_click" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		  <div class="create-wallet-box">
+			  <div class="row align-item-center">
+				  <div class="col-xl-2 col-lg-3 col-md-3">
+					  <div class="for-icon-bg">
+						  <img src="../assets/images/icons/createidentity-assets/popup-mobile-icon.png">
+					  </div>
+				  </div>
+				  <div class="col-xl-10 col-lg-10 col-md-10">
+					  <h5 class="heading-purple">Please enter your private key.</h5>
+					  <!-- <p>Verify your phone number by entering the OTP sent to your registered email address.</p> -->
+					  <div id="error_message"><span class="error_validate" id="accept_error<%=j%>"></span></div>
+
+				  </div>
+			  </div>
+				 <div class="login-form-main phone-otp">
+				   <div class="form-group">
+					  <label>Private Key</label>
+					  
+						  <input type="text" id="private_key_accept<%=j%>" name="private_key_accept" class="form-control text-center">
+						  
+					 
+					</div>
+
+					<div class="form-group for-signature-pad">
+						<div class="row for-heading-sign">
+							<label class="col-sm-6">Draw Your Sign</label>
+							<div class="col-sm-6 text-right">
+								<button class="clear-sign" id="clear-signature">Clear</button>
+							</div>
+						</div>
+						<canvas id="signature<%=j%>" class="signature-data" width="640" height="150"></canvas>
+					</div>
+					<span id="canvas_error" class="error_validate"></span>
+				
+
+					<div class="private-key-copy-box">
+						<button class="btn-common-new check hide_click" onclick="accept_request('<%=j%>')">Continue</button>
+					<center><span class="loader"><img src="../assets/images/loader-3.gif"></span></center>
+
+					</div>
+			  </div>
+			 </div>
+		 </div>
+	  </div>
+	</div>
+  </div>
+
+<div class="modal fade field-edit-modal" id="private-key-reject-Modal<%=j%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close hide_click" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		  <div class="create-wallet-box">
+			  <div class="row align-item-center">
+				  <div class="col-xl-2 col-lg-3 col-md-3">
+					  <div class="for-icon-bg">
+						  <img src="../assets/images/icons/createidentity-assets/popup-mobile-icon.png">
+					  </div>
+				  </div>
+				  <div class="col-xl-10 col-lg-10 col-md-10">
+					  <h5 class="heading-purple">Please enter your private key.</h5>
+					  <!-- <p>Verify your phone number by entering the OTP sent to your registered email address.</p> -->
+					  <div id="error_message"><span class="error_validate" id="reject_error<%=j%>"></span></div>
+				  </div>
+			  </div>
+				 <div class="login-form-main phone-otp">
+					<div class="form-group">
+						<label>Reason to reject</label>
+						
+							
+							<textarea class="form-control" id="reject_reason<%=j%>"></textarea>
+					   
+					  </div>
+				   <div class="form-group">
+					  <label>Private Key</label>
+					  
+						  <input type="text" id="private_key_reject<%=j%>" name="private_key_reject" class="form-control text-center">
+						  
+					 
+					</div>
+
+					<div class="form-group for-signature-pad">
+						<div class="row for-heading-sign">
+							<label class="col-sm-6">Draw Your Sign</label>
+							<div class="col-sm-6 text-right">
+								<button class="clear-sign" id="clear-signature">Clear</button>
+							</div>
+						</div>
+						<canvas id="signature_reject<%=j%>" class="signature-data" width="640" height="150"></canvas>
+					</div>
+					<span id="canvas_error" class="error_validate"></span>
+				
+
+					<div class="private-key-copy-box">
+						<button class="btn-common-new hide_click" onclick="reject_request('<%=j%>')">Continue</button>
+					  <p class="extra-link hide_click"><a href="">Cancel</a></p>
+					</div>
+										<center><span class="loader"><img src="../assets/images/loader-3.gif"></span></center>
+
+			  </div>
+			 </div>
+		 </div>
+	  </div>
+	</div>
+  </div>
+  <%j++;})%>
+
+
+  <%var i=0;documentsData.forEach(docData=>{%>
+	<% var j=0;for(let file_hash_data of docData.request_doc_data){%>
+		<%var k=0;for(let file_hashes of file_hash_data.request_doc_file){%>
+  
+  <div class="modal fade field-edit-modal" id="doc-video-Modal<%=i%><%=j%><%=k%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		 
+		  <div id="doc_video_Modal<%=i%><%=j%><%=k%>" class="modal-img-big">
+			  
+		  </div>
+		 
+			
+			
+		 </div>
+	  </div>
+	</div>
+  </div>
+  <%k++;}%>
+  <%j++;}%>
+<%i++;})%>
+
+<%var i=0;documentsData.forEach(docData=>{%>
+	<% var j=0;for(let file_hash_data of docData.request_doc_data){%>
+		<%var k=0;for(let file_hashes of file_hash_data.request_doc_file){%>
+  
+  <div class="modal fade field-edit-modal" id="doc-pdf-Modal<%=i%><%=j%><%=k%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		 
+		  <div id="doc_pdf_Modal<%=i%><%=j%><%=k%>" class="modal-img-big">
+			  
+		  </div>
+		 
+			
+			
+		 </div>
+	  </div>
+	</div>
+  </div>
+  <%k++;}%>
+  <%j++;}%>
+<%i++;})%>
+<%- include('../innerFooter')%>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script>
+	$(document).ready( function () {
+				$('.loader').hide();
+	$('#myTable').DataTable();
+	
+} );
+</script>
+        <script>
+    $('.digit-group').find('input').each(function() {
+    $(this).attr('maxlength', 1);
+    $(this).on('keyup', function(e) {
+        var parent = $($(this).parent());
+        
+        if(e.keyCode === 8 || e.keyCode === 37) {
+            var prev = parent.find('input#' + $(this).data('previous'));
+            
+            if(prev.length) {
+                $(prev).select();
+            }
+        } else if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
+            var next = parent.find('input#' + $(this).data('next'));
+            
+            if(next.length) {
+                $(next).select();
+            } else {
+                if(parent.data('autosubmit')) {
+                    parent.submit();
+                }
+            }
+        }
+    });
+});
+</script>
+
+<script>
+
+$(document).ready(function() {
+      $(document).bind("contextmenu",function(e){
+             return false;
+      });
+})
+function validate_pin(pin_val){
+	// alert(pin_val);
+	var request_id = $('#request_id'+pin_val).val();
+	var hash = $('#hash_value'+pin_val).val();
+	var doc_type = $('#doc_type'+pin_val).val();
+
+	var otp1 = $('#otp1'+pin_val).val();
+	var otp2 = $('#otp2'+pin_val).val();
+	var otp3 = $('#otp3'+pin_val).val();
+	var otp4 = $('#otp4'+pin_val).val();
+	var otp = otp1+""+otp2+""+otp3+""+otp4;
+	// alert(doc_type);
+	// 	alert(hash);
+
+	$.ajax({
+					type:"post",
+					url:"/pin-for-img",
+					data:{request_id,hash,otp,doc_type},
+					success:function(data) {
+						// alert(data.success);
+						var success = data.success;
+						var failure = data.fail;
+						if(failure=="true"){
+							$('#req_err_prm'+pin_val).html("");
+							$('#req_err_prm'+pin_val).html("Your pin is incorrect.");
+						}else{
+							if(doc_type=='image'){
+								$('#img_modal'+pin_val).html('<img src="'+success+'">');
+								// $('#download_link'+pin_val).html('');
+								$('#src_val'+pin_val).val(success);
+							
+								$('#validate_pin'+pin_val).attr("data-target","#doc-img-Modal"+pin_val);
+							}else if(doc_type=='video'){
+
+								$('#doc_video_Modal'+pin_val).html("");
+								$('#doc_video_Modal'+pin_val).html(`<video id="vid_modal" width="400" height="400" controls>
+										
+									<source src="https://ipfs.io/ipfs/${hash}" type="video/mp4"></video>
+									
+									`);
+										$('#validate_pin'+pin_val).attr("data-target","#doc-img-Modal"+pin_val);
+							
+							
+							}else if(doc_type=='pdf'){
+								$('#doc_pdf_Modal'+pin_val).html("");
+								$('#doc_pdf_Modal'+pin_val).html(`<object id="pdf_tag" class="PDFdoc" width="100%" height="500px" type="application/pdf" data="https://ipfs.io/ipfs/${hash}"></object>
+`);
+										$('#validate_pin'+pin_val).attr("data-target","#doc-img-Modal"+pin_val);
+							
+							}
+							
+						}
+						
+						
+					}
+				});
+}
+function download_img(img_src){
+				$('.hide_click').hide();
+
+					$('.loader').show();
+
+	var success = $('#src_val'+img_src).val();
+var url = success.replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
+           $(".download_class").attr("download", "client.png").attr("href", url);
+
+                            // window.open(url);
+}
+
+</script>
+
+<script>
+	function accept_request(value){
+
+		var signature=$(`#signature${value}`).get(0);
+		 var signature_url=signature.toDataURL();
+	
+		var blob_url=signature_url;
+		var request_doc_id= $('#request_doc_id'+value).val();
+		var client_reflect_id= $('#client_reflect_id'+value).val();
+		var ver_reflect_id= $('#ver_reflect_id'+value).val();
+		var request_id= $('#request_id'+value).val();
+		var private_key = $('#private_key_accept'+value).val();
+		if(private_key!=""){
+
+			if(private_key.length<64){
+				$('#accept_error'+value).html("");
+				$('#accept_error'+value).html("Please enter valid private key.");
+			}else if( private_key.length>66){
+				$('#accept_error'+value).html("");
+				$('#accept_error'+value).html("Please enter valid private key.");
+			}else{
+							$('.hide_click').hide();
+
+								$('.loader').show()
+                         var new_quantity = 0;    
+
+                           // alert(private_key);
+                             $.ajax({
+									type : 'POST',
+									url:'/check-verifier-balance-ether', 
+									data:{new_quantity,sender_pk:private_key},
+									success:function(data)
+									{
+										// alert(data);
+									// 	$('.btn_check').hide()
+									// 	$('.btn_submit').show()
+									if(data>=new_quantity)
+									{
+										// alert('data');
+
+						                    setTimeout(function() {
+										    $('#accept_error'+value).fadeOut('fast');
+											}, 1000);
+					                       
+												$.ajax({
+														type:"post",
+														url:"/accept-request",
+														data:{client_reflect_id,request_doc_id,ver_reflect_id,request_id,private_key,blob_url},
+														success:function(data) {
+															// alert(data);
+															var success = data.success;
+															var failure = data.fail;
+															if(failure=="true"){
+																
+																$('.hide_click').show();
+																				$('.loader').hide()
+
+                                                                        //   alert(value)
+
+																$('#accept_error'+value).html("");
+																$('#accept_error'+value).html("Your private key is incorrect.");
+																$('#accept_error'+value).show()
+															}else{
+															location.reload();
+															}
+															
+															
+														}
+													});
+									}
+									else
+							        {
+							        											// alert(data);
+
+							        	$('.loader').hide()
+
+															$('.hide_click').show();
+
+							             $('#accept_error'+value).html("You have insufficient balance");
+								           return false;
+							        }
+							    }
+							    })
+			}	
+	    }else{
+			$('.hide_click').show();
+											$('.loader').hide()
+			$('#accept_error'+value).html("");
+			$('#accept_error'+value).html("Please enter your private key.");
+		}
+	}
+
+	function reject_request(value){
+
+
+		var signature=$(`#signature_reject${value}`).get(0);
+		 var signature_url=signature.toDataURL();
+	
+		var blob_url=signature_url;
+        // alert(blob_url)
+		var request_doc_id= $('#request_doc_id'+value).val();
+		var client_reflect_id= $('#client_reflect_id'+value).val();
+		var ver_reflect_id= $('#ver_reflect_id'+value).val();
+		var request_id= $('#request_id'+value).val();
+		var private_key = $('#private_key_reject'+value).val();
+		var reason = $('#reject_reason'+value).val();
+		// alert(private_key.length);
+		if(reason==""){
+			$('#reject_error'+value).html("");
+			$('#reject_error'+value).html("Please enter reason.");
+		}else if(private_key==""){
+			$('#reject_error'+value).html("");
+			$('#reject_error'+value).html("Please enter your private key.");
+		}else{
+			if(private_key.length<64){
+				$('#reject_error'+value).html("");
+				$('#reject_error'+value).html("Please enter valid private key.");
+			}else if( private_key.length>66){
+				$('#reject_error'+value).html("");
+				$('#reject_error'+value).html("Please enter valid private key.");
+			}else{
+							$('.hide_click').hide();
+
+				           $('.loader').show()
+
+                         var new_quantity = 0;    
+
+                           // alert(private_key);
+
+                             $.ajax({
+									type : 'POST',
+									url:'/check-verifier-balance-ether', 
+									data:{new_quantity,sender_pk:private_key},
+									success:function(data)
+									{
+										// alert(data);
+									// 	$('.btn_check').hide()
+									// 	$('.btn_submit').show()
+									if(data>=new_quantity)
+									{
+										// alert(data);
+
+						                    setTimeout(function() {
+										    $('#reject_error'+value).fadeOut('fast');
+											}, 1000);
+					                       
+					                       $.ajax({
+
+									 	            type:"post",
+													url:"/reject-request",
+													data:{client_reflect_id,request_doc_id,ver_reflect_id,request_id,private_key,reason,blob_url},
+													success:function(data) {
+														var success = data.success;
+														var failure = data.fail;
+														if(failure=="true"){
+																			$('.loader').hide()
+
+															$('.hide_click').show();
+
+															$('#reject_error'+value).html("");
+															$('#reject_error'+value).html("Your private key is incorrect.");
+															$('#reject_error'+value).show()
+
+														}else{
+														location.reload();
+														}
+														
+											
+									             	}
+									          });
+									}
+									else
+							        {
+							        	$('.loader').hide()
+
+															$('.hide_click').show();
+
+							             $('#reject_error'+value).html("You have insufficient balance");
+								           return false;
+							        }
+								}
+					  	 });
+								
+			}
+		}
+	}
+
+	setTimeout(function() {
+        $('error_message').fadeOut('fast');
+        }, 3000);
+</script>
+
+<script>
+	function assignTovalidatore(value){
+										var reflect_id      =   `<%=requestData.tbl_wallet_reflectid_rel.reflect_id%>`
+										var verifier_name   =   `<%=verifier_name%>`
+										var temp			=	value.split('-')
+										var request_id		=	temp[0]
+										var doc_id			=	temp[1]
+										var request_doc_id	=	temp[2]
+									    var document_name	=	temp[3]
+
+										// alert(verifier_name)
+										// alert(doc_id)
+
+										$.ajax({
+
+													type:"post",
+													url:"/assign_request_to_validatore",
+													data:{request_id,doc_id,request_doc_id,reflect_id,verifier_name,document_name},
+													success:function(data) {
+
+																			//    alert(data)
+																			   if(data=="done"){
+																				   alert("Assigned to validatore successfully")
+																			   }
+																			   if(data=="notdone"){
+																				   alert("Somthing went wrong try again")
+																			   }
+																			   if(data=="validatoreIsNotTheir"){
+																				   alert("Validatore is not available for this document")
+																			   }
+																			   if(data=="alreadyAssigned"){
+																				   alert("Request already assiened.")
+																			   }
+																			
+																			  window.location=window.location 
+																			}
+													});
+
+	}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
+ <script>
+ 	jQuery(document).ready(function($){
+	
+		
+
+
+		$('.signature-data').each(function(){
+
+	var canvas_id=$(this).attr('id');
+     
+	var canvas = document.getElementById(canvas_id);
+	var signaturePad = new SignaturePad(canvas);
+	
+	$('#clear-signature').on('click', function(){
+		signaturePad.clear();
+   });
+
+});
+    
+});
+ </script>
+ <!-- <script type="text/javascript">
+	 function check_wallet_balance()
+	{
+		// var amount=parseInt($('#amount').val());
+		var sender_pk=$('#sender_pk').val();
+	   	var receiver_address=$('#receiver_address').val();
+
+       var new_quantity=0.042;
+
+
+
+  	 $.ajax({
+				type : 'POST',
+				url:'/check-verifier-balance-ether', 
+				data:{new_quantity,sender_pk},
+				success:function(data)
+				{
+					// alert(data);
+				// 	$('.btn_check').hide()
+				// 	$('.btn_submit').show()
+				if(data>new_quantity)
+				{
+	                    setTimeout(function() {
+					    $('.success_message_span').fadeOut('fast');
+						}, 1000);
+                       
+                       $.ajax({
+
+				 	            type:"post",
+								url:"/reject-request",
+								data:{client_reflect_id,request_doc_id,ver_reflect_id,request_id,private_key,reason,blob_url},
+								success:function(data) {
+									var success = data.success;
+									var failure = data.fail;
+									if(failure=="true"){
+														$('.loader').hide()
+
+										$('.hide_click').show();
+
+										$('#reject_error'+value).html("");
+										$('#reject_error'+value).html("Your private key is incorrect.");
+									}else{
+									location.reload();
+									}
+									
+						
+				             	}
+				          });
+				}
+				else
+		        {
+		             $('.success_span').html("You have insufficient balance");
+			           return false;
+		        }
+			}
+  		    });
+  
+  
+
+
+
+			
+		
+	
+			// $('#errr_msg').html("Please enter private key.");
+		
+	  }
+</script> -->
+

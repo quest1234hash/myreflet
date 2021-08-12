@@ -1,0 +1,829 @@
+<%-include('../innerHeader')%>
+<style>
+    
+    .dis-able-btn {
+		color: currentColor;
+		pointer-events: none;
+        cursor: default;
+        text-decoration: none;
+  /* color: black; */
+        opacity: 0.5;
+        text-decoration: none;
+        /* cursor: not-allowed;
+		background: #dddddd; */
+    }
+    .active {
+        text-decoration-color: yellow;
+    }
+
+    .resend-lint-count {
+        color: #ffb15a;
+        font-weight: 500;
+        margin-right: 6px;
+        text-decoration: none;
+        background-color: transparent;
+        border: none;
+    }
+
+    .count-no {
+        font-size: 20px;
+        margin: 0 20px;
+        color: #000;
+    }
+    </style>
+<style>
+.for-select-existing-doc .dropdown-menu {
+    max-height: 200px;
+    overflow-y: scroll;
+}	
+</style>
+
+
+
+<section class="id-code-box-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="personal-info-heading">
+					<div class="row align-item-center">
+							<div class="col-xl-3 col-lg-4 col-md-4 ml-auto">
+									
+								</div>
+								<div class="col-xl-2 col-lg-3 col-md-3">
+									<div class="text-right">
+										<a href="javascript:void(0)" onclick="downloaddoclist()">
+											<div class="icon-for-dwnload">
+												<div class="tooltip fade" data-title="Export Data">
+													<img src="../assets/images/icons/dashboard-assets/export.png">
+													 <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+												</div>
+												
+											</div>
+										</a>
+										<a class="nodata" onclick="printDocdiv()">
+											<div class="icon-for-dwnload">
+												<div class="tooltip fade" data-title="Print Data">
+													<img src="../assets/images/icons/dashboard-assets/print.png">
+													<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+												</div>
+											</div>
+										</a>
+									</div>
+								</div>
+					</div>
+				</div>
+<div id="list_div">
+<%var i=0;catreflectdata.forEach(cat_ref_data=>{%>
+	
+	<div>
+		<div class="personal-info-heading">
+				<div class="row align-item-center mt-15">
+					<div class="col-xl-7 col-lg-5 col-md-5">
+						<div class="main-heading-dash">
+							<img src="../assets/images/icons/home-assets/addressbook.png">
+						 
+
+							<h4><%=cat_ref_data.category_name%></h4>
+
+							
+							
+						  
+							
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		
+			<div class="tab-content m-top-30" id="myTabContent">
+			  <div class="tab-pane fade show active" id="doc-tab1" role="tabpanel" aria-labelledby="doc1">
+				   <div class="personal-info-box table-responsive">
+					<table class="table" id="myTable3">
+					  <thead>
+						<tr>
+							<th scope="col">Sub Catagory</th>
+							<th scope="col">Total Documents</th>
+							<th scope="col">Documents Name</th>
+						</tr>
+					  </thead>
+					  <tbody>
+						  <%if(cat_ref_data.sub_array[0]==null){%>
+						
+                       <tr>
+						   <td colspan="5"><center>No record found.</center> </td>
+					   </tr>
+							<%}else{%>
+                     <%cat_ref_data.sub_array.forEach(sundata=>{%>
+						<tr>
+								<th scope="row">
+									<div class="for-flex-align">
+										 <div >
+										<label>
+										  
+										   <%=sundata.category_name%> 
+										</label>
+									  </div>
+								  </div>
+								</th>
+								<td><%=sundata.total%></td>
+								<td><%sundata.cat_doc_req.forEach(doc_name=>{%>
+                                         <%=doc_name.document_name%>
+									<%})%>
+								</td>
+								<!-- <td>
+									<div class="for-flex-align">
+										<div class="checkbox">
+											<label>
+												<%=decrypt(sundata.full_name)%> <%=decrypt(sundata.last_name)%> -->
+											  <!-- <img class="profile-table" src="../assets/images/other/img_user1.png">
+												 <p class="line-hgt">
+													 <span class="font-w-600">Jack Ma</span> <br>
+													 25102
+												 </p> -->
+											<!-- </label>
+									  </div>
+								  </div>
+								</td>
+							
+							  </tr> -->
+					 <%})%>
+						<%}%>
+
+						<!-- <tr>
+						  <th scope="row">
+							  <div class="for-flex-align">
+								   <div class="checkbox">
+								  <label>
+									<input type="checkbox" value="">
+									<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									 Legal Person 
+								  </label>
+								</div>
+							</div>
+						  </th>
+						  <td>3</td>
+						  <td>jun 28, 2025</td>
+						  <td>
+							  <div class="for-flex-align">
+								  <div class="checkbox">
+									  <label>
+										<img class="profile-table" src="../assets/images/other/img_user1.png">
+										   <p class="line-hgt">
+											   <span class="font-w-600">Jack Ma</span> <br>
+											   25102
+										   </p>
+									  </label>
+								</div>
+							</div>
+						  </td>
+						  <td>
+							  <div class="dropdown-menu-new">
+								<a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+								  <div class="doc-img">
+										  <img src="../assets/images/icons/dashboard-assets/menu.png">
+									  </div>
+								</a>
+								<div class="dropdown-menu" aria-labelledby="profileDropdown">
+									<a class="dropdown-item" href="../my-reflet-id-verifier/edit-user.php" ><img src="../assets/images/icons/dashboard-assets/edit.png"> Edit</a>
+									<a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/trash.png"> Delete</a>
+									<a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/self-attest.png"> Manage Documents</a>
+								</div>
+							 </div>
+						  </td>
+						</tr>
+						<tr>
+						  <th scope="row">
+							  <div class="for-flex-align">
+								   <div class="checkbox">
+								  <label>
+									<input type="checkbox" value="">
+									<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									 Physical Person
+								  </label>
+								</div>
+							</div>
+						  </th>
+						  <td>3</td>
+						  <td>jun 28, 2025</td>
+						  <td>
+							  <div class="for-flex-align">
+								  <div class="checkbox">
+									  <label>
+										<img class="profile-table" src="../assets/images/other/img_user1.png">
+										   <p class="line-hgt">
+											   <span class="font-w-600">Jack Ma</span> <br>
+												25102
+										   </p>
+									  </label>
+								</div>
+							</div>
+						  </td>
+						  <td>
+							  <div class="dropdown-menu-new">
+								<a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+								  <div class="doc-img">
+										  <img src="../assets/images/icons/dashboard-assets/menu.png">
+									  </div>
+								</a>
+								<div class="dropdown-menu" aria-labelledby="profileDropdown">
+									<a class="dropdown-item" href="../my-reflet-id-verifier/edit-user.php"><img src="../assets/images/icons/dashboard-assets/edit.png"> Edit</a>
+									<a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/trash.png"> Delete</a>
+									<a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/self-attest.png"> Manage Documents</a>
+								</div>
+							 </div>
+						  </td>
+						</tr> -->
+					 
+
+						
+					  </tbody>
+					</table>
+				 </div>
+			  </div>
+			</div>
+</div>
+<%i++;})%>
+</div>
+
+				
+
+			</div>			
+		</div>
+
+		<!-- <div class="row ">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="personal-info-heading">
+					<div class="row align-item-center">
+						<div class="col-xl-7 col-lg-5 col-md-5">
+							<div class="main-heading-dash">
+								<h4>Closing of Account</h4>
+								<a href="" class="edit-heading"><img src="../assets/images/icons/dashboard-assets/edit.png" alt=""></a>
+								<a href=""  class="edit-heading"><img src="../assets/images/icons/dashboard-assets/trash.png" alt=""></a>
+							</div>
+						</div>
+						<div class="col-xl-5 col-lg-7 col-md-7">
+							<div class="text-right">
+								<a href="">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Export Data">
+											<img src="../assets/images/icons/dashboard-assets/export.png">
+									     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+										
+									</div>
+								</a>
+								<a href="">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Print Data">
+											<img src="../assets/images/icons/dashboard-assets/print.png"> 
+										    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="btn-all-dwnload">
+					<a href=""><img src="../assets/images/icons/dashboard-assets/edit_per.png"> Edit</a>
+					<a href=""><img src="../assets/images/icons/dashboard-assets/trash_per.png"> Delete</a>
+					<a href=""><img src="../assets/images/icons/dashboard-assets/trash_per.png"> Manage documents</a>
+				</div>
+				<div class="tab-content m-top-30" id="myTabContent">
+				  <div class="tab-pane fade show active" id="doc-tab1" role="tabpanel" aria-labelledby="doc1">
+				  	 <div class="personal-info-box table-responsive">
+						<table class="table" id="myTable3">
+						  <thead>
+						    <tr>
+						      <th scope="col">Sub Category Name</th>
+						      <th scope="col">Total Documents</th>
+						      <th scope="col">Created Date</th>
+						      <th scope="col">Created By</th>
+						      <th scope="col">Actions</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr>
+						      <th scope="row">
+						      	<div class="for-flex-align">
+						      		 <div class="checkbox">
+							          <label>
+							            <input type="checkbox" value="">
+							            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							             USA Client 
+							          </label>
+							        </div>
+								</div>
+						      </th>
+						      <td>3</td>
+						      <td>jun 28, 2025</td>
+						      <td>
+						      	<div class="for-flex-align">
+						      		<div class="checkbox">
+							          	<label>
+								            <img class="profile-table" src="../assets/images/other/img_user1.png">
+						      		     	<p class="line-hgt">
+						      		     		<span class="font-w-600">Jack Ma</span> <br>
+						      		     		25102
+						      		     	</p>
+							         	 </label>
+							        </div>
+								</div>
+						      </td>
+						      <td>
+						      	<div class="dropdown-menu-new">
+			                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+			                          <div class="doc-img">
+								      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+								      	</div>
+			                        </a>
+			                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+			                            <a class="dropdown-item" href="" data-toggle="modal" data-target="#upload-doc-Modal"><img src="../assets/images/icons/dashboard-assets/edit.png"> Edit</a>
+										<a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/trash.png"> Delete</a>
+										<a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/self-attest.png"> Manage Documents</a>
+			                        </div>
+			                     </div>
+						      </td>
+						    </tr>
+						    <tr>
+						      <th scope="row">
+						      	<div class="for-flex-align">
+						      		 <div class="checkbox">
+							          <label>
+							            <input type="checkbox" value="">
+							            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							             Legal Person 
+							          </label>
+							        </div>
+								</div>
+						      </th>
+						      <td>3</td>
+						      <td>jun 28, 2025</td>
+						      <td>
+						      	<div class="for-flex-align">
+						      		<div class="checkbox">
+							          	<label>
+								            <img class="profile-table" src="../assets/images/other/img_user1.png">
+						      		     	<p class="line-hgt">
+						      		     		<span class="font-w-600">Jack Ma</span> <br>
+						      		     		25102
+						      		     	</p>
+							         	 </label>
+							        </div>
+								</div>
+						      </td>
+						      <td>
+						      	<div class="dropdown-menu-new">
+			                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+			                          <div class="doc-img">
+								      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+								      	</div>
+			                        </a>
+			                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+			                            <a class="dropdown-item" href="" data-toggle="modal" data-target="#upload-doc-Modal"><img src="../assets/images/icons/dashboard-assets/edit.png"> Edit</a>
+										<a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/trash.png"> Delete</a>
+										<a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/self-attest.png"> Manage Documents</a>
+			                        </div>
+			                     </div>
+						      </td>
+						    </tr>
+						    <tr>
+						      <th scope="row">
+						      	<div class="for-flex-align">
+						      		 <div class="checkbox">
+							          <label>
+							            <input type="checkbox" value="">
+							            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							             Physical Person
+							          </label>
+							        </div>
+								</div>
+						      </th>
+						      <td>3</td>
+						      <td>jun 28, 2025</td>
+						      <td>
+						      	<div class="for-flex-align">
+						      		<div class="checkbox">
+							          	<label>
+								            <img class="profile-table" src="../assets/images/other/img_user1.png">
+						      		     	<p class="line-hgt">
+						      		     		<span class="font-w-600">Jack Ma</span> <br>
+						      		     		25102
+						      		     	</p>
+							         	 </label>
+							        </div>
+								</div>
+						      </td>
+						      <td>
+						      	<div class="dropdown-menu-new">
+			                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+			                          <div class="doc-img">
+								      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+								      	</div>
+			                        </a>
+			                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+			                            <a class="dropdown-item" href="" data-toggle="modal" data-target="#upload-doc-Modal"><img src="../assets/images/icons/dashboard-assets/edit.png"> Edit</a>
+										<a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/trash.png"> Delete</a>
+										<a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/self-attest.png"> Manage Documents</a>
+			                        </div>
+			                     </div>
+						      </td>
+						    </tr>
+						 
+
+						    
+						  </tbody>
+						</table>
+					 </div>
+				  </div>
+				</div>
+			</div>			
+		</div> -->
+	</div>
+</section>
+
+<!-- Add Document Modal S -->
+<div class="modal fade field-edit-modal" id="addCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-add-info-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Add Category</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+						<!-- <form action="/submit_register" method="POST" id="validate"> -->
+	<form action="/submit_manage_category" method="POST" enctype="multipart/form-data" id="validate">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+						    	<div class="input-group">
+										<select class="form-control" name="parent_cat" >
+										 
+												<option value="">Select parent category</option>
+												<%catreflectdata.forEach(p_cat=>{%> 
+													<option value="<%=p_cat.category_id%>"><%=p_cat.category_name%></option>
+													<!-- <%if(p_cat.category_id!="0"){%>
+														<option value="<%=p_cat.category_id%>"><%=p_cat.category_name%></option>
+														<%}else{%>
+															<option value="<%=p_cat.category_id%>"><%=p_cat.parent_category%></option>
+													<%}%> -->
+												<%})%>
+												<!-- <option value="2">2</option> -->
+	  
+												</select>
+								</div>
+						    </div>
+						    <div class="form-group">
+								<div class="input-group">
+								  <input type="text" name="sub_cat" class="form-control" placeholder="Sub Category Name"data-rule-required="true" data-msg-required="Please select sub category."autocomplete="off">
+								</div>
+							</div>
+							 <div class="form-group for-select-existing-doc">
+						    	<div class="input-group">
+								  <div class="dropdown keep-inside-clicks-open">
+									  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									    Select reflect ID
+									  </button>
+									  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <%myrefelctData.forEach(myRef_id=>{%>
+
+										
+									     <div class="for-doc-select">
+									    	<div class="checkbox"> 	
+									          <label>
+													<%=myRef_id.reflect_code%>
+									            <input type="checkbox" name="checkRelectID" value="<%=myRef_id.reflect_id%>" onclick="checkID()">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									          </label>
+									        </div>	
+										 </div>
+										 
+										 <%})%> 
+									      <!-- <div class="for-doc-select">
+									    	<div class="checkbox"> 	
+									          <label>
+									          	Passport
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									          </label>
+									        </div>	
+									     </div>
+									      <div class="for-doc-select">
+									    	<div class="checkbox"> 	
+									          <label>
+									          	Form 3
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									          </label>
+									        </div>	
+									     </div>
+									      <div class="for-doc-select">
+									    	<div class="checkbox"> 	
+									          <label>
+									          	Utility bill
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									          </label>
+									        </div>	
+									     </div> -->
+									  </div>
+									</div>
+								  
+								</div>
+						    </div>
+							<!-- <div class="form-group">
+								<div class="input-group">
+									  <select class="form-control" name="reflect_id" data-rule-required="true" data-msg-required="Please select reflect code.">
+										 
+										  <option value="">Select</option>
+										  <option value="1">1</option>
+										  <option value="2">2</option>
+
+										  </select>
+								</div>
+							</div>   -->
+							<div class="form-group browse-file-section">
+				                <input type="file" name="addCatIcon" class="file" style="visibility: hidden;position: absolute;" accept="image/x-png,image/jpeg" multiple>
+				                <div class="input-group col-xs-12">
+				                    <span class="input-group-btn">
+				                      <button class="browse btn btn-primary input-lg" type="button"> Choose a file</button>
+				                    </span>
+				                    <input type="text" class="form-control" readonly="" placeholder="">
+				                </div>
+							</div>
+							
+						</div>
+						<div >
+							<input  type="hidden" id="reflectid" name="reflect_id">
+						<button type="submit" class="purple-btn">Save</button>
+
+							<a class="btn-common-new" href="">Cancel</a>
+						</div>
+					</div>
+					</form>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+	</div>
+	
+  </div>
+</div> 
+
+
+<!--Add Document Modal E -->
+
+
+<div class="modal fade field-edit-modal" id="chnageParentName" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+  
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		  <div class="create-wallet-box">
+			  <div class="row align-item-center">
+				  <div class="col-xl-2 col-lg-3 col-md-3">
+					  <div>
+						  <img src="../assets/images/icons/createidentity-assets/popup-add-info-icon.png">
+					  </div>
+				  </div>
+				  <div class="col-xl-7 col-lg-7 col-md-7">
+					  <h5 class="heading-purple">Change Name</h5>
+				  </div>
+			  </div>
+			  <div class="row">
+				  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+						  <!-- <form action="/submit_register" method="POST" id="validate"> -->
+	  <form action="/change_p_name_manage_category" method="POST" id="validate1">
+					  <div class="setup-inner-box for-protact">
+						  <div class="create-rflet-id-form">
+							  
+							  <div class="form-group">
+								  <div class="input-group">
+									<input type="text" name="p_name_cat" class="form-control" placeholder="Parent Category Name"data-rule-required="true" data-msg-required="Parent Category Name.">
+								  </div>
+							  </div>
+							  
+							 
+							  
+						  </div>
+						  <div >
+							  <input  type="hidden" id="reflectid" name="reflect_id">
+							  <input  type="hidden" id="pName" name="pName">
+						  <button type="submit" class="purple-btn">Save</button>
+  
+							  <a class="btn-common-new" href="">Cancel</a>
+						  </div>
+					  </div>
+					  </form>
+				  </div>
+			   </div>
+			 </div>
+		 </div>
+	  </div>
+	  
+	</div>
+  </div> 
+<%- include('../innerFooter')%>
+
+
+	
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+
+<!-- Custom JavaScript -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script>
+	$(document).on('click.bs.dropdown.data-api', '.dropdown.keep-inside-clicks-open', function (e) {
+	  e.stopPropagation();
+	});
+</script>
+
+<script>
+	$(document).ready( function () {
+    	$('#myTable').DataTable();
+	});
+</script>
+
+	<script type="text/javascript">
+		/*$( "#datepicker2" ).datepicker();*/
+
+	$('#validate').validate({
+		 onfocusout: function(element) {
+		 this.element(element);
+		 },
+		 errorClass: 'error_validate',
+		 errorElement:'span',
+		 highlight: function(element, errorClass) {
+		 $(element).removeClass(errorClass);
+		 },
+		 submitHandler:function(form)
+			{
+			  $('#submit_signup').attr('disabled',true);
+		
+			  form.submit();
+			}
+		 });
+		 
+		 $('#validate1').validate({
+		 onfocusout: function(element) {
+		 this.element(element);
+		 },
+		 errorClass: 'error_validate',
+		 errorElement:'span',
+		 highlight: function(element, errorClass) {
+		 $(element).removeClass(errorClass);
+		 },
+		 submitHandler:function(form)
+			{
+			  $('#submit_signup').attr('disabled',true);
+		
+			  form.submit();
+			}
+		 });
+	</script>
+
+	<script>
+	 $(document).on('click', '.browse', function(){
+    var file = $(this).parent().parent().parent().find('.file');
+    file.trigger('click');
+  });
+  $(document).on('change', '.file', function(){
+    $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i,''));
+  }); 
+</script>
+
+<script>
+function checkID(){
+		  var check_val = [];
+        $.each($("input[name='checkRelectID']:checked"), function(){
+            check_val.push($(this).val());
+                                      });
+                     var reflectIds = JSON.stringify(check_val)
+					 $("#reflectid").val(reflectIds)
+					//  console.log("data..",check_val)
+	// alert(check_val)
+	// console.log("data",$("#reflectid").val())
+	// alert($("#reflectid").val())
+}
+</script>
+<script>
+	var reflect_id = "Catagories List";
+	function downloaddoclist(){
+		$("#myTable3").table2excel({
+												filename: "address_book_list",
+												exclude:'.hide_link',
+												exclude_img:true,
+												exclude_inputs:true,
+												fileext:".xls",
+
+										});
+	  }
+	  function printDocdiv(){
+		
+		var restorepage = $('body').html();
+		  $('.nodata').hide();
+		 var printcontent = $('#list_div').clone();
+		 $('body').empty().html(printcontent);
+		 window.print();
+		 $('body').html(restorepage);
+	   
+	  
+	  }
+	</script>
+
+		
+<script>
+	function checkForSelect(value) {
+		var linkID=value.split('-')
+		var idOflink=linkID[2]
+			var cat_ids = [];
+			$.each($("input[name='checkName']:checked"), function(){
+				cat_ids.push($(this).val());
+				});
+				// alert(value)
+				// console.log("request_ids",invite_client_id)
+				if(cat_ids.length>1){
+												// $("#md_id").addClass('dis-able-btn')
+												$("#e_id"+idOflink).addClass('dis-able-btn')
+												// $("#m_msg").addClass('dis-able-btn')
+				}else{
+												$("#e_id"+idOflink).removeClass('dis-able-btn')
+												// $("#md_id").removeClass('dis-able-btn')
+												// $("#m_msg").removeClass('dis-able-btn')
+	
+	// 								if(value!=undefined){
+	// 									                 if(value=="m_request"){
+	
+												
+	// 								}			
+	
+				}
+	
+	}
+	</script>
+
+	<script>
+		function editOnclick(){
+
+			
+			var cat_ids = [];
+			$.each($("input[name='checkName']:checked"), function(){
+				cat_ids.push($(this).val());
+				});
+
+				var test =cat_ids[0].split('-')
+				var cat_id =test[0]
+				var category_name =test[1]
+				// alert(test[0])
+				// alert(test[1])
+				if(cat_ids[0]!=null){
+					window.location=window.location.origin+"/edit-sub_cat_per?category_id="+cat_id+"&p_cat_name="+category_name
+				}
+				
+
+		}
+
+		function MdOnclick(){
+
+			
+			var cat_ids = [];
+			$.each($("input[name='checkName']:checked"), function(){
+				cat_ids.push($(this).val());
+				});
+
+				var test =cat_ids[0].split('-')
+				var cat_id =test[0]
+				var category_name =test[1]
+				// alert(test[0])
+				// alert(test[1])
+				window.location=window.location.origin+"/edit-sub_cat_per?category_id="+cat_id+"&p_cat_name="+category_name
+			
+		}
+	</script>
+	<script>
+		function changename(value){
+			$("#pName").val(value)
+		}
+	</script>

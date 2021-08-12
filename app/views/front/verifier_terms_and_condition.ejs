@@ -1,0 +1,79 @@
+<%- include('partials/header.ejs') %>  
+
+
+<header class="terms-header">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="logo-box">
+					<a href="">
+						<img src="assets/images/logo-white.png">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+
+<section class="terms-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 m-auto">
+				<div class="white-box" style="padding: 40px;">
+					<h5>Terms and Conditions</h5>
+
+				<center><p><%- data[0] != null ? data[0].terms_and_condition : "Verifier not defined terms and conditions." %></p></center>
+				</div>
+				
+			</div>
+			<div class="col-md-8 offset-md-2">
+				<form action="/terms-and-conditions-submit" method="POST">
+			<!-- 	<div class="text-center check-with-terms">
+					 <div class="checkbox checkbox-reflet">
+                      <label>
+                        <input type="checkbox" value="">
+                        <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                        I have read and I agree to the terms & Conditions.
+					  </label>
+					  <input type="hidden" name="user_id" id="userid">
+                    </div>
+                    <button type="submit" class="purple-btn">Submit</button>
+				</div> -->
+			</form>
+			</div>
+		</div>
+	</div>
+</section>
+<%- include('partials/footer.ejs') %>  
+
+	<!-- JQuery -->
+        <script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- <script type="text/javascript" src="assets/js/jquery-1.11.3.min.js"></script> -->
+        <!-- Bootstrap Core JavaScript -->
+        <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+        <!-- dropdownhover effects JavaScript -->
+        <script type="text/javascript" src="assets/js/bootstrap-dropdownhover.min.js"></script>
+        <!-- wow JavaScript -->
+        <script type="text/javascript" src="assets/js/wow.min.js"></script>
+        <!-- video player JavaScript -->
+
+        <!-- Custom JavaScript -->
+		<script type="text/javascript" src="assets/js/custom.js"></script>
+		
+
+
+		<script>
+		$(function(){
+
+var url = new URL( window.location.href);
+var userId = url.searchParams.get("userId");
+// alert(userId)
+$("#userid").val(userId)
+
+})
+</script>
+<%- include('partials/footer.ejs') %>    
+
+
+
+ 

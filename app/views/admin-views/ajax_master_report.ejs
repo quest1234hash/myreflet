@@ -1,0 +1,66 @@
+  <table class="table tabel-virifier"id="myTable3">
+              <thead>
+                <tr>
+                  <th width="10%">Sr.No.</th>
+                  <th width="20%">Report Name</th>
+                  <th width="20%" class="">User Type</th>
+                  <th width="20%" class="">Status</th>
+                  <th width="20%">Created At</th>
+                  <!-- <th width="20%" class="hide_link">Action</th> -->
+
+                  <!-- <th width="5%">Updated At</th> -->
+                </tr>
+              </thead>
+              <tbody id="myTable">
+                    <% if(report_list.length>0)
+                    {
+                       var i=0;k=1;
+                       report_list.forEach(function(each_data){
+                          %>
+                <tr>
+                   <td>
+                     <div>
+                       <p class=""><%=k%>.</p>
+                     </div>
+                   </td>
+                   <td>
+                     <div> 
+                       <p class="upper"><%=each_data.report_name%></p>
+                     </div>
+                   </td>
+                   <td>
+                    <p class="upper"><%=each_data.user_type%></p>
+
+                   
+                   </td>
+                   <td class="">
+                      <% 
+                      if(each_data.status=="active"){ %>
+                        
+                        <button type="button" value="<%-each_data.report_id%>" id="inactivebut"  class="btn  mr-2 btn-success_1 acvtive-id ">Active </button>
+                            
+                    <%  }else{ %>
+                        
+                      <button type="button" value="<%-each_data.report_id%>" id="activebut"  class="btn  btn-danger mr-2 inacvtive-id " >Inactive</button>
+            
+                    <%  }
+                      %>
+                    
+                   </td>
+                    <td>
+                     <p><%=moment(each_data.createdAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                  
+                
+                </tr>
+                <%
+                i++;  k++;    
+            });
+               }else{
+           %>
+           
+             <tr>
+            <td colspan="8"><center>No record found.</center> </td>
+             </tr>       <%}%>
+              </tbody>
+          </table>

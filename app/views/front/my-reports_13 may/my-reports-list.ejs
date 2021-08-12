@@ -1,0 +1,1318 @@
+<%-include('../innerHeader')%>
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12">
+				<div class="row personal-info-heading mt-0">
+					<div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+						<div class="main-heading-dash">
+							<img src="../assets/images/icons/marketplace-assets/other-verifiers-grey.png">
+							<h4>My Reports</h4>
+						</div>
+					</div>
+					<div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 custom-flex-row">
+						<a href="#chooseReport" class="btn-common-new" data-toggle="modal">Create Report</a>
+						<div class="text-right">
+							<a href="javascript:void(0)" class="nodata"onclick="xl_data()">
+								<div class="icon-for-dwnload">
+									<div class="tooltip fade" data-title="Export Data">
+										<img src="../assets/images/icons/dashboard-assets/export.png">
+								     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+									</div>
+								</div>
+							</a>
+							<a class="nodata" id="" onclick="printdiv()">
+								<div class="icon-for-dwnload">
+									<div class="tooltip fade" data-title="Print Data">
+										<img src="../assets/images/icons/dashboard-assets/print.png">
+									    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="custom-space-btw align-items-center m-bottom-30 sp-block">
+					<form class="">
+                      <div class="input-group search-address-book">
+                          <input type="text" class="form-control autocomplete" id="myInputSearch" placeholder="Search" >
+                          <div class="input-group-append">
+                              <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+                          </div>
+                      </div>
+                  	</form>
+					<div class="btn-all-dwnload">				
+						<a href=""class="view_check"><img src="../assets/images/icons/dashboard-assets/icon_eye_pur.png"> View</a>
+						<a href=""class="edit_check"><img src="../assets/images/icons/dashboard-assets/edit_per.png"> Edit </a>
+						<a href="#"class="export_check"><img src="../assets/images/icons/dashboard-assets/upload-purple.png"> Export</a>
+						<a href="#"class="delete_check"><img src="../assets/images/icons/verifier-home-assets/delete.png"> Delete</a>
+						<a href="#"class="schedule_check"><img src="../assets/images/icons/verifier-home-assets/requestdoc.png"> Schedule</a>
+						<a href="#"class="saveas_check"><img src="../assets/images/icons/verifier-home-assets/my-reflet-purple.png"> Save as</a>
+						<a href="#"class="print_check"><img src="../assets/images/icons/dashboard-assets/print-purple.png"> Print</a>
+						<a href="#"class="archive_check"><img src="../assets/images/icons/home-assets/mydocuments-purple.png"> Archive</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class="personal-info-box table-responsive another-table">
+					<% if(success_msg!=undefined && success_msg !='' ){ %>
+						<div class="alert alert-success text-center  flash_msg "id="success_message">
+						<%= success_msg %>
+					   </div>
+					  <% }%>
+
+					<table class="table" id="myTable3">
+						<thead>
+					    	<tr> 
+						      	<th width="24%" scope="col">Report Name</th>
+						      	<th width="26%" scope="col">Description</th>
+						      	<th width="20%" scope="col">Created By</th>
+						      	<th width="25%" scope="col">Created On</th>
+						      	<th width="5%" scope="col" class="hide_data">Action</th>
+					    	</tr>
+					  	</thead>
+						<tbody id="myTableContent">
+					<% if(report_list.data.length>0)
+                       { 
+                       var i=0;
+                       report_list.data.forEach(function(each_data){
+                          %>
+						    <tr class="search_tr">
+						    	<td>
+						    		<div class="for-flex-align">
+							      		<div class="checkbox">
+							      			<label>
+							      				<input type="checkbox" value="<%=i%>"class="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+												<%=each_data.report_name%>	 	 </label>
+								        </div>
+									</div>
+						    	</td>
+						      	<td><%=each_data.description%></td>
+					            <td>-----</td>
+
+<!-- 							    <td><span class="font-w-600">George Strong</span> <br>25102</td>
+ -->							    <td><%=moment(each_data.createdAt).format('MMM DD, YYYY')%></td>
+							    <td class="hide_data">
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img"onclick="get_ival_filter('<%=i%>','<%=each_data.report_filter_id%>')">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="view-report-list?id=<%=each_data.report_filter_id%>&report_id=<%=each_data.report_id%>">
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> View
+				                            </a>
+											<a class="dropdown-item" href="individual-report-edit?id=<%=each_data.report_filter_id%>&report_id=<%=each_data.report_id%>">
+				                            	<img src="../assets/images/icons/dashboard-assets/edit.png"> Edit
+				                            </a>
+											<a class="dropdown-item" href="#export-report<%=i%>" data-toggle="modal">
+												<img src="../assets/images/icons/dashboard-assets/upload.png"> Export
+											</a>
+											<a class="dropdown-item" href="#deletePlan" data-toggle="modal"onclick="delete_get_report_id('<%=each_data.report_filter_id%>')">
+												<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+											</a>
+											<a class="dropdown-item schedule_data" href="#schedule<%=i%>"  data-toggle="modal">
+												<img src="../assets/images/icons/self-attest.png"> Schedule
+											</a>
+											<a class="dropdown-item" href="#save-report<%=i%>" data-toggle="modal">
+												<img src="../assets/images/icons/home-assets/myrefletID.png"> Save As
+											</a>
+											<a class="dropdown-item"href="javascript:void(0)"onclick="single_print('<%=each_data.report_id%>','<%=each_data.report_filter_id%>')">
+
+												<img src="../assets/images/icons/dashboard-assets/print-grey.png"> Print
+											</a>
+											<a class="dropdown-item" href="individual-archive-report?id=<%=each_data.report_filter_id%>">
+												<img src="../assets/images/icons/home-assets/mydocuments.png"> Archive
+											</a>
+				                        </div>
+				                    </div>
+						      	</td>
+						    </tr>
+							<%
+							i++;			
+		});
+		   }else{
+	   %>
+                       <tr>
+						<td colspan="6"><center>No record found.</center> </td>
+					   </tr>			 <%}%>
+					   <tr class="tr_search hide_data">
+						<td colspan="6"><center>No record found.</center> </td>
+					   </tr>
+						</tbody>
+					</table>
+					<table class="paginate_table">
+						<div class="pagination-list for-ava">
+					  <% if (report_list.totalPages> 0) { %>
+						
+						<ul class="pagination text-center">
+						  <% if (report_list.currentPage == 1) { %>
+							<li class="disabled"><a>First &nbsp;</a></li>
+						  <% } else { %>
+							<li><a href="/my-reports-list?page=1">First &nbsp;</a></li>
+						  <% } %>
+						  <% var i = (Number(report_list.currentPage) > 5 ? Number(report_list.currentPage) - 4 : 1) %>
+						  <% if (i !== 1) { %>
+							<li class="disabled"><a>...</a></li>
+						  <% } %>
+						  <% for (; i <= (Number(report_list.currentPage) + 4) && i < report_list.totalPages; i++) { %>
+							<% if (i == report_list.currentPage) { %>
+							  
+							  <li class="active"><a><%= i %> &nbsp;</a></li>
+							<% } else { %>
+							  <li><a href="/my-reports-list?page=<%= i %>"><%= i %> &nbsp;</a></li>
+							<% } %>
+							<% if (i == Number(report_list.currentPage) + 4 && i <= report_list.totalPages) { %>
+							  <li class="disabled"><a>...</a></li>
+							<% } %>
+						  <% } %>
+						  <% if (report_list.currentPage ==report_list.totalPages) { %>
+							<li class="disabled"><a>Next</a></li>
+						  <% } else { %>
+							<li><a href="/my-reports-list?page=<%= report_list.totalPages %>"> &gt;Next</a></li>
+						  <% } %>
+						</ul>
+					  <% } %>
+						</div>
+					</table>
+					<div class="export_data">
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Delete Report S -->
+<div class="modal fade field-edit-modal" id="deletePlan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/img_close.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Delete Report</h5>
+				</div>
+			</div>	
+			<form method="POST" action="/individual-delete-report">
+			<div class="row">
+				<div class="offset-2 col-xl-7 col-lg-12 col-md-12">
+					<p>Are you sure you want to delete report?</p>
+				</div>
+				<input type="hidden" value="" id="delete_report_id" name="report_filter_id">
+
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact pt-15">
+						<div>
+							<button class="btn-common-new" type="submit">Delete</button>
+
+							<a class="btn-common-new" href="">Cancel</a>
+
+						</div>
+					</div>
+				</div>
+			 </div>
+			</form>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div> 
+<!-- Delete Report E -->
+<!-- Modal Export Report S -->
+<% if(report_list.data.length>0)
+{ 
+   var i=0;
+   report_list.data.forEach(function(each_data){
+	  %>
+<div class="modal field-edit-modal" id="export-report<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-10 col-lg-9 col-md-9">
+					<h5 class="heading-purple">Export Report</h5>
+					<p>Export only the details rows. Use this to do further calculations or for uploading  to other systems.</p>
+				</div>
+			</div>
+			<div class="row m-top-30">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact pt-15">
+						<div class="create-rflet-id-form">
+						    <div class="form-group for-select-existing-doc">
+						    	<div class="input-group">
+								  <div class="dropdown keep-inside-clicks-open">
+									  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									    Select Format
+									  </button>
+									  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									     <div class="for-doc-select">
+									    	<div class="checkbox"> 	
+									          <label>
+									          	Excel - .xls
+									            <input type="checkbox" value="xls"name="save_checkbox">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									          </label>
+									        </div>	
+									     </div>
+									      <div class="for-doc-select">
+									    	<div class="checkbox"> 	
+									          <label>
+									          	PDF
+									            <input type="checkbox" value="pdf"name="save_checkbox">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									          </label>
+									        </div>	
+									     </div>
+									  </div>
+									</div>
+								  
+								</div>
+						    </div>
+						</div>
+						<div >
+					
+							<!-- <a class="btn-common-new" href="" data-toggle="modal" data-target="#doc-permission-Modal" data-dismiss="modal">Export</a> -->
+							<a class="btn-common-new" href="javascript:void(0)"onclick="multi_export('<%=each_data.report_id%>','<%=each_data.report_filter_id%>')" >Export</a>
+							<a class="btn-common-new" href="">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+<%
+	i++;			
+		});
+		   }
+	   %>
+<!-- Modal Export Report E -->
+<!-- Modal Report Type S -->
+<div class="modal field-edit-modal" id="chooseReport" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<form method="POST" action="/get-on-edit">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-10 col-lg-9 col-md-9">
+					<h5 class="heading-purple">Choose Report Type</h5>
+				</div>
+			</div>
+			
+			<div class="row m-top-30">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact pt-15">
+						<div class="create-rflet-id-form">
+									<div class="form-group">
+                                <div class="input-group">
+                                   <select class="form-control mp_select "name="checked_value">
+                                     
+                                      <option  class="" value="empty">Select Report Type</option>
+                                     
+									  <%if(master_report_list){
+										if(session.user_type == "client"){
+											
+										for(let type of master_report_list){
+											if(type.user_type != "verifier"){
+											%>
+										<div class="for-doc-select">
+											<div class="checkbox"> 	
+											<label>
+												<%=type.report_name%>
+												<option  class="getId2 " value="<%=type.report_id%>"><%=type.report_name%></option>
+
+												<!-- <input type="checkbox" name="checked_value" value="<%=type.report_id%>">
+												<span class="cr"><i class="cr-icon fa fa-check"></i></span> -->
+											</label>
+											</div>	
+										</div>
+									 <%}}}else{
+										for(let type of master_report_list){
+											if(type.user_type != "client"){
+											%>
+										<div class="for-doc-select">
+											<div class="checkbox"> 	
+											<label>
+												<option  class="getId2 " value="<%=type.report_id%>"><%=type.report_name%></option>
+												<!-- <input type="checkbox" name="checked_value" value="<%=type.report_id%>">
+												<span class="cr"><i class="cr-icon fa fa-check"></i></span> -->
+											</label>
+											</div>	
+										</div>
+										<% }}}}%>
+
+                                    </select>
+                                </div>
+                            </div>
+							<span class="success_message_span success_span"style="color:red"></span>
+
+						   <!--  <div class="form-group for-select-existing-doc">
+						    	<div class="input-group">
+								  <div class="dropdown keep-inside-clicks-open">
+									  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									    Select Report Type
+									  </button>
+									  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+										<%if(master_report_list){
+											if(session.user_type == "client"){
+												
+											for(let type of master_report_list){
+												if(type.user_type != "verifier"){
+												%>
+											<div class="for-doc-select">
+												<div class="checkbox"> 	
+												<label>
+													<%=type.report_name%>
+													<input type="checkbox" name="checked_value" value="<%=type.report_id%>">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+												</label>
+												</div>	
+											</div>
+										 <%}}}else{
+											for(let type of master_report_list){
+												if(type.user_type != "client"){
+												%>
+											<div class="for-doc-select">
+												<div class="checkbox"> 	
+												<label>
+													<%=type.report_name%>
+													<input type="checkbox" name="checked_value" value="<%=type.report_id%>">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+												</label>
+												</div>	
+											</div>
+											<% }}}}%>
+
+									  </div>
+									</div>
+								  
+								</div>
+						    </div> -->
+						</div>
+						<div >
+							<button class="btn-common-new check_option" type="submit">Continue</button>
+							<a class="btn-common-new" href="">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+		
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</form>
+</div>
+<!-- Modal Report Type E -->
+<!--Schedule Report S  -->
+<% if(report_list.data.length>0)
+{ 
+   var i=0;
+   report_list.data.forEach(function(each_data){
+	  %>
+<div class="modal fade field-edit-modal modal-responsive" id="schedule<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-nationality-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Schedule Report</h5>
+				</div>
+			</div>
+		<span class="err_msg_all"style="color:red"></span>
+		<span class="success_message_div success"style="color:green"></span>
+
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+							<div class="form-group wrapper-relative">
+								<label for="">Frequency</label>
+								<div class="input-group-append for-radio-check-id-as">
+									<span class="input-group-text">
+								    	<div class="radio"name="frequency">
+								        	<label>
+								            	<input class="freq-field" type="radio"id="daily<%=i%>" name="freq" value="Daily">
+								            	<span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+								            	Daily
+								          	</label>
+										</div>
+										<span class="err_msg"></span>
+
+									    <div class="radio"name="frequency">
+									        <label>
+									        	<input class="freq-field" type="radio" name="freq" value="Weekly"id="i_weekly<%=i%>">
+									        	<span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+									            Weekly
+									        </label>
+									    </div>
+									    <div class="radio"name="frequency">
+									        <label>
+									        	<input class="freq-field" type="radio" name="freq" value="Monthly"id="i_monthly<%=i%>">
+									        	<span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+									            Monthly
+									        </label>
+									    </div>
+									</span>
+								</div>
+								<div class="freq-drop-wrapper hide" id="freqWeekly<%=i%>">
+				            		<ul>
+				            			<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox" value="sunday"name="weekly_checkbox"class="sun<%=i%>">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Sunday
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox" value="monday"name="weekly_checkbox"class="mon<%=i%>">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Monday
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox" value="tuesday"name="weekly_checkbox"class="tue<%=i%>">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Tuesday
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox" value="wednesday"name="weekly_checkbox"class="wed<%=i%>">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Wednesday
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox" value="thursday"name="weekly_checkbox"class="thur<%=i%>">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Thursday
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox" value="friday"name="weekly_checkbox"class="fri<%=i%>">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Friday
+									         	</label>
+				        					</div>
+				        				</li>
+				        				<li>
+				            				<div class="checkbox">
+									          	<label>
+										            <input type="checkbox" value="saturady"name="weekly_checkbox"class="sat<%=i%>">
+										            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								      		     	Saturady
+									         	</label>
+				        					</div>
+				        				</li>
+				            		</ul>
+				            	</div>
+				            	<div class="freq-drop-wrapper monthly-freq hide"  id="freqMonthly<%=i%>">
+				            		<div>On Day 
+										
+				            			<select class="monthly<%=i%>"id="freqmonthly<%=i%>">
+											<%for(var k=1;k<= 31;k++)
+										{%>
+											<option value="<%=k%>"><%=k%></option>
+										<%	}%>
+				            			</select>
+				            			of every month
+				            		</div>
+				            	</div>
+							</div>
+						    <div class="form-group">
+								<div class="input-group">
+
+								  <input type="text" id="startDate<%=i%>" class="form-control start-date<%=i%>  " placeholder="Start Date "data-rule-required="true" data-msg-required="Please select start date.">
+			<span class="err_msg"></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group">
+									
+								  <input type="text" id="endDate<%=i%>" class="form-control end-date<%=i%> " placeholder="End Date"name="end_date"data-rule-required="true" data-msg-required="Please select end date.">
+								  <span class="err_msg"></span>
+
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group">
+								  <input type="text"id="preferred_time<%=i%>" class="form-control preferred_time<%=i%>" placeholder="Preferred Start Time"name="preferred_time"data-rule-required="true" data-msg-required="Please enter preferred time.">
+								  <span class="err_msg"></span>
+
+								</div>
+							</div>
+						</div>
+						<div >
+							<input type="hidden"id="report_name<%=i%>" class="form-control" placeholder=""name=""value="<%=each_data.report_name%>">
+
+							<a class="btn-common-new"href="javascript:void(0)"onclick="schedule_report('<%=i%>','<%=each_data.report_filter_id%>')">Schedule</a>
+							<a class="btn-common-new" href="">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+<%
+	i++;			
+		});
+		   }
+	   %>
+<!-- Schedule Report E -->
+<!--Save Report S  -->
+<% if(report_list.data.length>0)
+{ 
+   var i=0;
+   report_list.data.forEach(function(each_data){
+	  %>
+<div class="modal fade field-edit-modal" id="save-report<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-upload-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Save Report</h5>
+				</div>
+			</div>
+			<form method="POST" action="/individual-saveas-report"id="save_validate">
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+								<div class="input-group">
+								  <input type="text" id="" class="form-control" value="<%=each_data.report_name%>"name="report_name"data-rule-required="true" data-msg-required="Please enter report name.">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group">
+								  <input type="text" class="form-control" value="<%=each_data.description%>"name="description"data-rule-required="true" data-msg-required="Please enter description.">
+								</div>
+							</div>
+						</div>
+						<input type="hidden"value="<%=each_data.report_filter_id%>"name="report_filter_id">
+						<input type="hidden"value="<%=each_data.report_id%>"name="report_id">
+
+						<div >
+							<button class="btn-common-new" type="submit">Save</button>
+
+							<a class="btn-common-new" href="">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+			 </form>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+<%
+	i++;			
+		});
+		   }
+	   %>
+<!-- Save Report E -->
+<%- include('../innerFooter')%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<!-- <script src="/bootstrap.min.js"></script>
+ -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+$(document).ready( function () {
+	// $('.table').DataTable();
+	$('.tr_search').hide();
+} );
+</script>
+<script>
+	$(document).on('click.bs.dropdown.data-api', '.dropdown.keep-inside-clicks-open', function (e) {
+	  e.stopPropagation();
+	});
+</script>
+<script>
+// 	$(document).on('focus',".startDate", function(){
+// 		// alert('l')
+//     $(this).datepicker();
+// });
+// $(document).on('focus',".endDate", function(){
+// 		// alert('l')
+//     $(this).datepicker();
+// });
+	var i_global,g_report_filter_id;
+	function get_ival_filter(i_val,report_filter_id)
+	{
+	//  alert(report_filter_id)
+	 i_global=i_val;
+	 g_report_filter_id=report_filter_id
+	//  alert(i_global)
+	 $(".startDate"+i_global).datepicker();
+	$(".endDate"+i_global).datepicker();
+	// alert('g_report_filter_id : '+g_report_filter_id)
+			$.ajax({
+				type: "post",
+				url: "/sechdule-data",
+				data:{report_filter_id:g_report_filter_id},
+				success: function (data) {
+			// alert(data);
+			$('.start-date'+i_global).val(data[0].start_date);
+			$('.end-date'+i_global).val(data[0].end_date);
+			$('.preferred_time'+i_global).val(data[0].preferred_time);
+			if(data[0].daily!=null)
+			{
+				// alert('d')
+				$('#daily'+i_global).prop("checked", true)
+
+			}
+			else if(data[0].monthly!=null)
+			{
+				// alert('m')
+
+				$('#i_monthly'+i_global).prop("checked", true)
+
+			}else{
+				// alert('d4')  
+             var data_list=JSON.parse(data[0].weekly)
+				// alert(data_list)
+				$('#i_weekly'+i_global).prop("checked", true)
+
+				
+				if(data_list[0]==='sunday'||data_list[1]==='sunday'||data_list[2]==='sunday'||data_list[3]==='sunday'||data_list[4]==='sunday'||data_list[5]==='sunday'||data_list[6]==='sunday')
+				{
+					// alert('sunday')
+
+				$('.sun'+i_global).prop("checked")
+
+				}
+				 if(data_list[0]==='monday'||data_list[1]==='monday'||data_list[2]==='monday'||data_list[3]==='monday'||data_list[4]==='monday'||data_list[5]==='monday'||data_list[6]==='monday')
+				{
+					// alert('monday')
+
+				$('.mon'+i_global).prop("checked")
+
+				}
+				 if(data_list[0]==='tuesday'||data_list[1]==='tuesday'||data_list[2]==='tuesday'||data_list[3]==='tuesday'||data_list[4]==='tuesday'||data_list[5]==='tuesday'||data_list[6]==='tuesday')
+				{
+					// alert('tuesday')
+
+					$('.tue'+i_global).prop("checked")
+
+				} if(data_list[0]==='wednesday'||data_list[1]==='wednesday'||data_list[2]==='wednesday'||data_list[3]==='wednesday'||data_list[4]==='wednesday'||data_list[5]==='wednesday'||data_list[6]==='wednesday')
+				{
+					// alert('wednesday')
+
+					$('.wed'+i_global).prop("checked")
+
+				} if(data_list[0]==='thursday'||data_list[1]==='thursday'||data_list[2]==='thursday'||data_list[3]==='thursday'||data_list[4]==='thursday'||data_list[5]==='thursday'||data_list[6]==='thursday')
+				{
+					// alert('thursday')
+					$('.thur'+i_global).prop("checked")
+
+				} if(data_list[0]==='friday'||data_list[1]==='friday'||data_list[2]==='friday'||data_list[3]==='friday'||data_list[4]==='friday'||data_list[5]==='friday'||data_list[6]==='friday')
+				{
+					// alert('friday')
+
+					$('.fri'+i_global).prop("checked")
+
+				} if(data_list[0]==='saturday'||data_list[1]==='saturday'||data_list[2]==='saturday'||data_list[3]==='saturday'||data_list[4]==='saturday'||data_list[5]==='saturday'||data_list[6]==='saturday')
+				{
+					// alert('saturday')
+
+				$('.sat'+i_global).prop('checked',true)
+
+				}
+			}
+
+				// window.location.reload(true);
+
+		
+		}
+	})
+	$("#startDate"+i_global).datepicker();
+   $("#endDate"+i_global).datepicker();
+	}
+	
+ 	$(document).ready(function(){
+ 		$(".freq-field").change(function(){
+ 			var getvalue = $(this).val();
+ 			if(getvalue == "Weekly"){
+ 				$("#freqWeekly"+i_global).slideDown(300);
+ 				$("#freqMonthly"+i_global).slideUp(300);
+ 			}
+ 			else if(getvalue == "Monthly"){
+ 				$("#freqMonthly"+i_global).slideDown(300);
+ 				$("#freqWeekly"+i_global).slideUp(300);
+ 			}
+ 			else{
+ 				$("#freqMonthly"+i_global).slideUp(300);
+ 				$("#freqWeekly"+i_global).slideUp(300);
+ 			}
+ 		});
+ 	});
+</script>
+<script>
+
+</script> 
+<script>
+    $(document).ready(function(){
+      $("#myInputSearch").on("keyup", function() {
+		// alert('h')
+							
+        var check_search=0;
+		var value = $(this).val().toLowerCase();
+		// alert(value)
+        $("#myTableContent tr").filter(function() {
+			// alert($(this).text().toLowerCase().indexOf(value)===-1)
+			var check=($(this).text().toLowerCase().indexOf(value)===-1);
+			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+
+	  if(check===false)
+	  {
+		check_search++;
+		$('.tr_search').hide();
+
+	  }
+		
+		}); 
+		// alert(check_search)
+		if(check_search==0)
+		{
+			$('.search_tr').hide();
+
+			$('.tr_search').show();
+
+		}
+
+		// else
+		// {
+		// 	$('.search_tr').show();
+
+		// 	$('.tr_search').hide();
+
+		// }
+      });
+    });
+ </script> 
+ <script>
+	function printdiv(){
+		
+	  var restorepage = $('body').html();
+		$('.hide_data').hide();
+	   var printcontent = $('#myTable3').clone();
+	   $('body').empty().html(printcontent);
+	   window.print();
+	   $('body').html(restorepage);
+	   window.location.reload(true);
+
+	
+    }
+    function downloadPersonal(){
+		$('.hide_data').hide();
+
+			html2canvas(document.getElementById('myTable3')).then(function(canvas) {
+			var img = canvas.toDataURL("image/png");
+			var doc = new jsPDF();
+			doc.addImage(img,'JPEG',-0,15);
+			doc.save('report.pdf');
+			});
+	}
+</script>
+<script>
+	function delete_get_report_id(report_id){
+		//alert(report_id)
+		$('#delete_report_id').val(report_id);
+	}
+	setTimeout(function() {
+    $('#success_message').fadeOut('fast');
+    }, 3000);
+</script>
+<script>
+		function multi_export(report_id,report_filter_id){
+		// alert('report_id '+report_id)
+		// alert('report_filter_id '+report_filter_id)
+
+		var save_list = $('input[name=save_checkbox]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+	if(save_list=='')
+	{
+        
+		window.location.reload(true);
+
+	}
+    var checked_column =JSON.stringify(save_list)
+	var complain_list=[]
+ complain_list=JSON.parse(checked_column);
+
+	// alert('v : '+complain_list[0])
+	// alert('v : '+complain_list[1])
+
+	$.ajax({
+			type: "post",
+			url: "/export-individual-report",
+			data:{report_id:report_id,report_filter_id:report_filter_id},
+			success: function (data) {
+				// alert(data);
+				$('.export_data').html("");
+				$('.export_data').html(data);
+				if(complain_list[0]=='xls'||complain_list[1]=='xls')
+               {
+				// alert('xls')
+
+				$(".export_data").table2excel({
+					filename: "report-list.xls",
+					exclude:'.hide_link',
+				});
+			   } 
+				if(complain_list[0]=='pdf'||complain_list[1]=='pdf')
+				{
+					// alert('pdf')
+					
+				var restorepage = $('body').html();
+				// $('.hide_data').hide();
+				var printcontent = $('.export_data').clone();
+				$('body').empty().html(printcontent);
+				window.print();
+				$('body').html(restorepage);
+				}
+				
+			
+			}
+		})	// $('#delete_report_id').val(report_id);
+	}
+</script>
+<script>
+	function single_print(report_id,report_filter_id){
+	// alert('report_id '+report_id)
+	// alert('report_filter_id '+report_filter_id)
+
+$.ajax({
+		type: "post",
+		url: "/export-individual-report",
+		data:{report_id:report_id,report_filter_id:report_filter_id},
+		success: function (data) {
+			// alert(data);
+			$('.export_data').html("");
+			$('.export_data').html(data);
+	
+			var restorepage = $('body').html();
+			// $('.hide_data').hide();
+			var printcontent = $('.export_data').clone();
+			$('body').empty().html(printcontent);
+			window.print();
+			$('body').html(restorepage);
+			
+			window.location.reload(true);
+
+		
+		}
+	})	// $('#delete_report_id').val(report_id);
+}
+</script>
+<script>
+	
+	// $('#freqWeekly').click(()=>
+	// {
+	// 	alert('freqWeekly')
+	// 	var favorite = [];
+    //         $.each($("input[name='weekly_checkbox']:checked"), function(){
+    //             favorite.push($(this).val());
+    //         });
+	
+	// alert(favorite)
+	// })
+	function schedule_report(i_value,report_filter_id){
+	// alert('report_id '+i_value)
+	// alert('report_filter_id '+report_filter_id)
+	var radioValue = $("input[name='freq']:checked").val();
+	var preferred_time = $("#preferred_time"+i_value ).val();
+	var end_date = $(".end-date"+i_value ).val();
+	var start_date = $(".start-date"+i_value ).val();
+	var report_name = $("#report_name"+i_value ).val();
+//alert(report_name)
+	if(radioValue===''||preferred_time===''||end_date===''||start_date==='')
+	{
+		$('.err_msg_all').html('<h3>Please fill  all the fields<h3>');
+			setTimeout(function() {
+    $('.err_msg_all').fadeOut('fast');
+    }, 5000);
+ return false;
+	}
+	
+	// alert('radioValue '+radioValue)
+	// alert('preferred_time '+preferred_time)
+	// alert('start_date '+start_date)
+	// alert('end_date '+end_date)
+	// alert('freqmonthly '+freqmonthly)
+
+if(radioValue==='Daily')
+{
+	// alert('dalil')
+	$.ajax({
+		type: "post",
+		url: "/sechdule-individual-report",
+		data:{report_filter_id:report_filter_id,start_date:start_date,end_date:end_date,report_name:report_name,
+			preferred_time:preferred_time,frequency:radioValue},
+		success: function (data) {
+			// alert(data);
+			if(data==='create')
+			{
+			$('.success').html('<h2>Your Entry successfully added !<h2>');
+				setTimeout(function() {
+				$('.success_message_div').fadeOut('fast');
+				}, 6000);
+			}
+			else
+			{
+				$('.success').html('<h2>Your Entry successfully updated !<h2>');
+				setTimeout(function() {
+				$('.success_message_div').fadeOut('fast');
+				}, 6000);
+			}
+				window.location.reload(true);
+
+		
+		}
+	})
+}
+else if(radioValue==='Weekly')
+{
+		// alert('weekly')
+
+	var weekly_list = $('input[name=weekly_checkbox]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+
+	// alert(weekly_list)
+	if(weekly_list=='')
+	{
+		window.location.reload(true);
+
+	}
+	$.ajax({
+		type: "post",
+		url: "/sechdule-individual-report",
+		data:{report_filter_id:report_filter_id,start_date:start_date,
+			end_date:end_date,
+			preferred_time:preferred_time,report_name:report_name,
+			weekly_list:JSON.stringify(weekly_list),frequency:radioValue},
+		success: function (data) {
+			// alert(data);
+			if(data==='create')
+			{
+			$('.success').html('<h2>Your Entry successfully added !<h2>');
+				setTimeout(function() {
+				$('.success_message_div').fadeOut('fast');
+				}, 6000);
+			}
+			else
+			{
+				$('.success').html('<h2>Your Entry successfully updated !<h2>');
+				setTimeout(function() {
+				$('.success_message_div').fadeOut('fast');
+				}, 6000);
+			}
+				window.location.reload(true);
+	
+		
+		}
+	})
+}else if(radioValue==='Monthly')
+{
+	var freqmonthly = $("#freqmonthly"+i_value ).val();
+	$.ajax({
+		type: "post",
+		url: "/sechdule-individual-report",
+		data:{report_filter_id:report_filter_id,start_date:start_date,end_date:end_date,report_name:report_name,
+			preferred_time:preferred_time,monthly_value:freqmonthly,frequency:radioValue},
+		success: function (data) {
+			// alert(data);
+			if(data==='create')
+			{
+			$('.success').html('<h2>Your Entry successfully added !<h2>');
+				setTimeout(function() {
+				$('.success_message_div').fadeOut('fast');
+				}, 6000);
+			}
+			else
+			{
+				$('.success').html('<h2>Your Entry successfully updated !<h2>');
+				setTimeout(function() {
+				$('.success_message_div').fadeOut('fast');
+				}, 6000);
+			}
+				window.location.reload(true);
+
+		
+		}
+	})
+} 
+else{
+	alert('plz choose any frequency')
+	return false;
+}  
+
+}
+</script>
+<script>
+
+	</script> 
+	<script>
+	  $('#save_validate').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        // $('#submit_signup').attr('disabled',true);
+        form.submit();
+      }
+     });
+		
+   </script>
+   <script>
+	   	function xl_data(){
+		
+	
+				
+				// alert('xls')
+
+				$("#myTable3").table2excel({
+					filename: "report-list.xls",
+					exclude:'.hide_data',
+				});
+
+	
+    }
+   </script>
+    <script>
+	   var option_val;
+	    $('.mp_select').click(function() {
+   
+  option_val = $(this).children("option:selected").val();
+  //alert(option_val)
+
+ });
+	   $('.check_option').click(()=>
+	   {
+		// alert('option_val')
+	   
+	  if(option_val==='empty')
+	   {
+		// alert(option_val)
+     
+		   $('.success_span').html('Please Select any report type');
+            setTimeout(function() {
+    $('.success_message_span').fadeOut('fast');
+	}, 3000);
+	return false;
+
+	   }
+	   else{
+		return true;
+
+	   }
+	   })
+   </script>
+   	<script type="text/javascript">
+		$('.export_check').click(()=>{
+           var check_doc=[];
+			var doc_list = $('input[type=checkbox]:checked').map(function(){
+                check_doc.push($(this).val());
+				return $(this).val();
+	}).get();
+    	
+
+	                 if(doc_list.length>1){
+								
+	                    }else{
+									
+                         $('#export-report'+doc_list).modal('show');      
+                              }
+
+
+	
+												
+		})
+
+		$('.delete_check').click(()=>{
+           var check_doc=[];
+			var doc_list = $('input[type=checkbox]:checked').map(function(){
+                check_doc.push($(this).val());
+				return $(this).val();
+	}).get();
+    alert(doc_list)
+    	
+
+	                 if(doc_list.length>1){
+									// $("#sb_id").addClass('dis-able-btn')
+									// $("#vd_id").addClass('dis-able-btn')
+									// $("#md_id").addClass('dis-able-btn')
+	                    }else{
+									// $("#sb_id").removeClass('dis-able-btn')
+									// $("#vd_id").removeClass('dis-able-btn')
+									// $("#md_id").removeClass('dis-able-btn')
+		// $('#export-report'+doc_list).modal('toggle');
+                         $('#deletePlan').modal('show');      
+                              }
+
+
+	
+												
+		})
+
+		$('.schedule_check').click(()=>{
+           var check_doc=[];
+			var doc_list = $('input[type=checkbox]:checked').map(function(){
+                check_doc.push($(this).val());
+				return $(this).val();
+	}).get();
+    alert(doc_list)
+    	
+
+	                 if(doc_list.length>1){
+									// $("#sb_id").addClass('dis-able-btn')
+									// $("#vd_id").addClass('dis-able-btn')
+									// $("#md_id").addClass('dis-able-btn')
+	                    }else{
+									// $("#sb_id").removeClass('dis-able-btn')
+									// $("#vd_id").removeClass('dis-able-btn')
+									// $("#md_id").removeClass('dis-able-btn')
+		// $('#export-report'+doc_list).modal('toggle');
+                         $('#schedule'+doc_list).modal('show');      
+                              }
+
+
+	
+												
+		})
+
+		$('.saveas_check').click(()=>{
+           var check_doc=[];
+			var doc_list = $('input[type=checkbox]:checked').map(function(){
+                check_doc.push($(this).val());
+				return $(this).val();
+	}).get();
+    // alert(doc_list)
+    	
+
+	                 if(doc_list.length>1){
+									// $("#sb_id").addClass('dis-able-btn')
+									// $("#vd_id").addClass('dis-able-btn')
+									// $("#md_id").addClass('dis-able-btn')
+	                    }else{
+									// $("#sb_id").removeClass('dis-able-btn')
+									// $("#vd_id").removeClass('dis-able-btn')
+									// $("#md_id").removeClass('dis-able-btn')
+		// $('#export-report'+doc_list).modal('toggle');
+                         $('#save-report'+doc_list).modal('show');      
+                              }
+
+
+	
+												
+		})
+		$('.export2_check').click(()=>{
+           var check_doc=[];
+			var doc_list = $('input[type=checkbox]:checked').map(function(){
+                check_doc.push($(this).val());
+				return $(this).val();
+	}).get();
+    // alert(doc_list)
+    	
+
+	                 if(doc_list.length>1){
+									// $("#sb_id").addClass('dis-able-btn')
+									// $("#vd_id").addClass('dis-able-btn')
+									// $("#md_id").addClass('dis-able-btn')
+	                    }else{
+									// $("#sb_id").removeClass('dis-able-btn')
+									// $("#vd_id").removeClass('dis-able-btn')
+									// $("#md_id").removeClass('dis-able-btn')
+		// $('#export-report'+doc_list).modal('toggle');
+                         $('#export-report'+doc_list).modal('show');      
+                              }
+
+
+	
+												
+		})
+	</script>

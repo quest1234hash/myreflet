@@ -1,0 +1,124 @@
+<div class="personal-info-box table-responsive another-table">
+    <table class="table" id="myTableData">
+      <%if(checked_array_con===0){%>
+
+        <thead>
+            <tr> 
+                <%if(checked_array.includes('request_code')){%>
+                  <th width="10%" scope="col">Request Code</th>
+                  <%}
+                     if(checked_array.includes('reflectid')){%> 
+                  <th width="10%" scope="col"> MyReflet Code</th>
+                  <%}
+                     if(checked_array.includes('client_info')){%> 
+                  <th width="10%" scope="col">Client</th>
+                  <%}
+                     if(checked_array.includes('parent_cat')){%> 
+                  <th width="10%" scope="col">Parent Category</th>
+                  <%}
+                     if(checked_array.includes('sub_cat')){%> 
+                  <th width="10%" scope="col">Sub-Category</th>
+                  <%}
+                     if(checked_array.includes('request_status')){%> 
+                  <th width="10%" scope="col">Status</th>
+                  <%}%>
+            </tr>
+          </thead>
+        <tbody>
+            <%if(ver_par_cat_data.length>0){
+            for(let request_data of ver_par_cat_data){    
+               if(request_data.client_sub!==1){
+            %>
+            <tr>
+                <%if(checked_array.includes('request_code')){%>
+                <td><%=request_data.request_code%></td>
+                <%}
+                     if(checked_array.includes('reflectid')){%> 
+                  <td><%=request_data.reflect_code%></td>
+                  <%}
+                     if(checked_array.includes('client_info')){%> 
+                <td><%=request_data.client_sub[0].rep_username%> - <%=request_data.client_sub[0].reflect_code%></td>
+                <%}
+                     if(checked_array.includes('parent_cat')){%> 
+                <td><%=request_data.category_name%></td>
+                <%}
+                     if(checked_array.includes('sub_cat')){%> 
+                <td><%=request_data.client_sub[0].category_name%></td>
+                <%}
+                     if(checked_array.includes('request_status')){%> 
+                        <td>
+                           <%if(request_data.request_status=="pending"){%>
+                           <div class="pending-status">
+                              Pending
+                           </div>
+                           <%}%>
+                           <%if(request_data.request_status=="reject"){%>
+                              <div class="cancel-status">
+                                 Reject
+                              </div>
+                           <%}%>
+                           <%if(request_data.request_status=="accept"){%>
+                                 <div class="approved-status">
+                                    Accept
+                                 </div>
+                           <%}%>
+
+                        </td>                <%}%>
+            </tr>  
+            <%}}}else{
+     %>
+                       <tr>
+            <td colspan="6"><center>No record found.</center> </td>
+             </tr>       <%}%>  
+        </tbody>
+        <%}else{%>
+         <thead>
+            <tr> 
+                 <th width="10%" scope="col">Request Code</th>
+                 <th width="10%" scope="col"> MyReflet Code</th>
+                 <th width="10%" scope="col">Client</th>
+                 <th width="10%" scope="col">Parent Category</th>
+                 <th width="10%" scope="col">Sub-Category</th>
+                 <th width="10%" scope="col">Status</th>
+            </tr>
+          </thead>
+        <tbody>
+                  <%if(ver_par_cat_data.length>0){
+                  for(let request_data of ver_par_cat_data){ 
+                     if(request_data.client_sub!==1){
+   
+                  %>
+            <tr>
+               <td><%=request_data.request_code%></td>
+                 <td><%=request_data.reflect_code%></td>
+               <td><%=request_data.client_sub[0].rep_username%> - <%=request_data.client_sub[0].reflect_code%></td>
+               <td><%=request_data.category_name%></td>
+               <td><%=request_data.client_sub[0].category_name%></td>
+               <td>
+                  <%if(request_data.request_status=="pending"){%>
+                  <div class="pending-status">
+                     Pending
+                  </div>
+                  <%}%>
+                  <%if(request_data.request_status=="reject"){%>
+                     <div class="cancel-status">
+                        Reject
+                     </div>
+                  <%}%>
+                  <%if(request_data.request_status=="accept"){%>
+                        <div class="approved-status">
+                           Accept
+                        </div>
+                  <%}%>
+
+               </td>                        </tr>  
+                  <%}}}else{
+     %>
+                       <tr>
+            <td colspan="6"><center>No record found.</center> </td>
+             </tr>       <%}%>  
+        </tbody>
+        <%}%>
+
+    </table>
+</div>

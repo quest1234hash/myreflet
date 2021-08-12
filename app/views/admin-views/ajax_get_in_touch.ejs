@@ -1,0 +1,217 @@
+<% if(contact_with_us_data.length>0)
+                    {
+                       var i=0;
+
+                       contact_with_us_data.forEach(function(each_data){
+                          %>
+                <tr>
+                   <td>
+                     <div>
+                       <p class="">CU-<%=each_data.contact_id%></p>
+                     </div>
+                   </td>
+                    <td>
+                     <div> 
+                       <p class="upper"><%=each_data.co_name%></p>
+                     </div>
+                   </td>
+
+                    <td>
+                     <div> 
+                       <p class="upper"><%=each_data.co_email%></p>
+                     </div>
+                   </td> 
+                  <td>
+                        <div style="white-space: pre-wrap;"> 
+                          <p class="upper"><%=each_data.co_msg%></p>
+                        </div>
+                    </td>
+                   <td class="">
+                               <%if( each_data.response_status==="pending"){%>
+
+                                     <span class="clr-green">Pending</span>
+                                     <%}else if( each_data.response_status==="responded"){%>
+                                         <span class="clr-purple">Responded</span>
+                                    
+                                     <%}%>
+               
+                   </td>
+                    <td>
+                     <p><%=moment(each_data.createdAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                  <td>
+                     <p><%=moment(each_data.updatedAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                   <td class="hide_link">
+                     <div class="dropdown-menu-new">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                       <%if(each_data.response_status==="pending"){%>
+                       <a class="dropdown-item" class="dropdown-item data_value" data-target="#Conatact<%=i%>" data-toggle="modal">
+                        <i class="mdi mdi-email "></i> Contact 
+                      </a>
+                    
+                        <%}else if(each_data.response_status==="responded"){%>
+                       <a class="dropdown-item" class="dropdown-item data_value" data-target="#View<%=i%>" data-toggle="modal">
+                        <i class="mdi mdi-eye "></i> View 
+                      </a>
+                     
+                       <%}%>
+                          <a href="/delete-any-contact?contact_id=<%=each_data.contact_id%>"class="dropdown-item" href="#"><i class="mdi mdi-delete "></i> Delete</a>
+                        </div>
+                     </div>
+                   </td>
+                </tr>
+                <%
+                i++;      
+            });
+              }else{
+     %>
+                       <tr>
+            <td colspan="8"><center>No record found.</center> </td>
+             </tr>       <%}%>
+
+
+             <% if(contact_with_us_data.length>0)
+{
+   var i=0;
+   contact_with_us_data.forEach(function(each_data){
+      %>
+      <div class="modal field-edit-modal show" id="Conatact<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <div class="create-wallet-box">
+      <div class="row align-item-center">
+        <div class="col-xl-2 col-lg-3 col-md-3">
+          <div>
+            <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+          </div>
+        </div>
+        <div class="col-xl-10 col-lg-9 col-md-9">
+          <h5 class="heading-purple">Contact</h5>
+        </div>
+      </div>
+      <div class="row m-top-30">
+        <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+          <div class="setup-inner-box for-protact pt-15">
+            <form action="/respond-to-any-contact" method="post" class="validate1">
+
+            <div class="create-rflet-id-form">
+             <!--    <div class="form-group">
+                    <div class="input-group">
+                      <input type="text" id=""name="label"value="<%=each_data.label %>"  class="form-control">
+                    </div>
+                </div>
+                <div class="form-group browse-file-section">
+                    <input type="file" name="edit_icon" class="file" style="visibility: hidden;position: absolute;" accept="image/x-png,image/jpeg">
+                    <div class="input-group col-xs-12">
+                        <span class="input-group-btn">
+                          <button class="browse btn btn-primary input-lg" type="button"> Choose a file</button>
+                        </span>
+                        <input type="text" class="form-control" readonly="" placeholder="">
+                    </div>
+                </div> -->
+                <div class="form-group">
+                    <div class="input-group">
+                      <textarea name="message" rows="5" class="form-control" value=""data-rule-required="true" data-msg-required="Please enter message."placeholder="Wrtie your message..."></textarea>
+                    </div>
+                </div>
+               <input type="hidden" name="contact_id"value="<%=each_data.contact_id%>">
+            </div>
+            <div>
+              <button class="btn btn-common bg-gradient-primary "id="submit_abou">Save</button>
+              <a class="btn-common-new" href="">Cancel</a>
+            </div>
+            </form>
+          </div>
+        </div>
+       </div>
+      </div>
+       </div>
+    </div>
+  </div>
+  
+</div>
+  <%
+                i++;      
+            });
+               }
+           %>
+
+
+<% if(contact_with_us_data.length>0)
+{
+   var i=0;
+   contact_with_us_data.forEach(function(each_data){
+      %>
+      <div class="modal field-edit-modal show" id="View<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <div class="create-wallet-box">
+      <div class="row align-item-center">
+        <div class="col-xl-2 col-lg-3 col-md-3">
+          <div>
+            <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+          </div>
+        </div>
+        <div class="col-xl-10 col-lg-9 col-md-9">
+          <h5 class="heading-purple">View Your Respond</h5>
+        </div>
+      </div>
+      <div class="row m-top-30">
+        <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+          <div class="setup-inner-box for-protact pt-15">
+            <form action="/respond-to-any-contact" method="post" class="validate_view">
+
+            <div class="create-rflet-id-form">
+             <!--    <div class="form-group">
+                    <div class="input-group">
+                      <input type="text" id=""name="label"value="<%=each_data.label %>"  class="form-control">
+                    </div>
+                </div>
+                <div class="form-group browse-file-section">
+                    <input type="file" name="edit_icon" class="file" style="visibility: hidden;position: absolute;" accept="image/x-png,image/jpeg">
+                    <div class="input-group col-xs-12">
+                        <span class="input-group-btn">
+                          <button class="browse btn btn-primary input-lg" type="button"> Choose a file</button>
+                        </span>
+                        <input type="text" class="form-control" readonly="" placeholder="">
+                    </div>
+                </div> -->
+                <div class="form-group">
+
+                    <div class="input-group">
+                      <textarea name="message" rows="5" class="form-control" value=""data-rule-required="true" data-msg-required="Please enter message."readonly><%=each_data.admin_message%></textarea>
+                    </div>
+                </div>
+               <input type="hidden" name="contact_id"value="<%=each_data.contact_id%>">
+            </div>
+            <div>
+<!--               <button class="btn btn-common bg-gradient-primary "id="update_abou">Save</button>
+ -->              <a class="btn-common-new" href="">Cancel</a>
+            </div>
+            </form>
+          </div>
+        </div>
+       </div>
+      </div>
+       </div>
+    </div>
+  </div>
+  
+</div>
+  <%
+                i++;      
+            });
+               }
+           %>

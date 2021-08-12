@@ -1,0 +1,1638 @@
+<%-include('../innerHeader')%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<%if(result){
+	if(user){%>
+
+		<img src="" id="example_img">
+<section class="id-code-box-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="white-box full-box view-id-heading-box">
+					<div class="id-code-represent-heading"> 
+						<img src="../assets/images/icons/home-assets/Representative.png">
+						<span>Representative</span>
+					</div>
+					<div>
+				     <div class="row">
+				     	<div class="col-xl-4 col-lg-6 col-md-6">
+				     		<div class="row inner-box-id-code">
+								<div class="col-md-6 p-0">
+									<div class="for-flex-align">
+										<img src="../assets/images/icons/home-assets/user.png">
+										<p>MyReflet ID</p>
+									</div>
+								</div>
+								<div class="col-md-6 dubble-dot-after p-0">
+									<p><%=result.reflect_code%></p>
+								</div>
+							</div>
+						 </div>
+						 <div class="col-xl-4 col-lg-6 col-md-6">
+							<div class="row inner-box-id-code">
+							   <div class="col-md-6 p-0">
+								   <div class="for-flex-align">
+									   <img src="../assets/images/icons/home-assets/user.png">
+									   <p>MyReflet Name</p>
+								   </div>
+							   </div>
+							   <div class="col-md-6 dubble-dot-after p-0">
+								   <p><%=result.wallet_name%></p>
+							   </div>
+						   </div>
+						</div>
+				     	<div class="col-xl-4 col-lg-6 col-md-6">
+				     		<div class="row inner-box-id-code">
+								<div class="col-md-6 p-0">
+									<div class="for-flex-align">
+										<img src="../assets/images/icons/home-assets/user.png">
+										<p>Name</p>
+									</div>
+								</div>
+								<div class="col-md-6 dubble-dot-after p-0">
+									<p><%=result.rep_firstname%> <%=result.rep_lastname%></p>
+								</div>
+							</div>
+				     	</div>
+				     	<div class="col-xl-4 col-lg-6 col-md-6">
+				     		<div class="row inner-box-id-code">
+								<div class="col-md-6 p-0">
+									<div class="for-flex-align">
+										<img src="../assets/images/icons/home-assets/verified-emailID.png">
+										<p>Email ID</p>
+									</div>
+								</div>
+								<div class="col-md-6 dubble-dot-after p-0">
+									<p><%=result.rep_emailid%></p>
+								</div>
+							</div>
+				     	</div>
+				    
+				     	<div class="col-xl-4 col-lg-6 col-md-6">
+				     		<div class="row inner-box-id-code">
+								<div class="col-md-6 p-0">
+									<div class="for-flex-align">
+										<img src="../assets/images/icons/home-assets/phone.png">
+										<p>Phone Number</p>
+									</div>
+								</div>
+								<div class="col-md-6 dubble-dot-after p-0">
+									<p><%=user.tbl_user_registration.dataValues.mobile_number%></p>
+								</div>
+							</div>
+				     	</div>
+				     	<div class="col-xl-4 col-lg-6 col-md-6">
+				     		<div class="row inner-box-id-code">
+								<div class="col-md-6 p-0">
+									<div class="for-flex-align">
+										<img src="../assets/images/icons/home-assets/ETHwallet.png">
+										<p>Wallet Address</p>
+									</div>
+								</div>
+								<div class="col-md-6 dubble-dot-after p-0">
+									<p><%=user.dataValues.wallet_address%></p>
+								</div>
+							</div>
+				     	</div>
+				     	<div class="col-xl-4 col-lg-6 col-md-6">
+				     			<div class="row inner-box-id-code">
+									<div class="col-md-6 p-0">
+										<div class="for-flex-align">
+											<img src="../assets/images/icons/home-assets/user.png">
+											<p>Digital ID</p>
+										</div>
+									</div>
+									<div class="col-md-6 dubble-dot-after p-0">
+										<p>
+											<a href=""><img src="../assets/images/icons/home-assets/drivinglicense.png"></a>
+											<a href=""><img src="../assets/images/icons/home-assets/passport.png"></a>
+											<a href=""><img src="../assets/images/icons/home-assets/photoID.png"></a>
+											<a href="" class="add-icon"><i class="fas fa-plus"></i></a>
+										</p>
+									</div>
+								</div>
+				     	</div>
+				     </div>	
+					</div>
+				</div>
+<div id="personalcontent">
+			    <div class="personal-info-heading">
+					<div class="row align-item-center">
+						<div class="col-md-8">
+							<h4 class="purple-heading">Personal Information</h4>
+						</div>
+						<div class="col-md-4">
+							<div class="text-right">
+								<a href="javascript:downloadPersonal()" class="nodata">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Export Data">
+											<img src="../assets/images/icons/dashboard-assets/export.png">
+									     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+										
+									</div>
+								</a>
+								<a class="nodata" id="" onclick="printdiv()">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Print Data">
+											<img src="../assets/images/icons/dashboard-assets/print.png">
+										    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="personal-info-box table-responsive" >
+					<table class="table" id="myTable">
+					  <thead>
+					    <tr>
+					      <th scope="col">Label</th>
+					      <th scope="col">Content</th>
+					      <th scope="col">Create Date</th>
+					      <th class="nodata" scope="col">Action</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <th scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/createidentity-assets/user.png">
+					      		First Name
+					      	</div>
+					      </th>
+					      <td><%=result.rep_firstname%></td>
+					      <td><%=moment(result.createdAt).format('MMM DD, YYYY')%></td>
+					      <td>
+					      	<div>
+					      		<a class="nodata" href="" data-toggle="modal" data-target="#first-name-Modal">
+					      			<img src="../assets/images/icons/dashboard-assets/edit.png">
+					      		</a>
+					      	</div>
+					      </td>
+					    </tr>
+					     <tr>
+					      <th scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/createidentity-assets/user.png">
+					      		Middle Name
+					      	</div>
+					      </th>
+					      <td>-</td>
+					      <td><%=moment(result.createdAt).format('MMM DD, YYYY')%></td>
+					      <td>
+					      	<div>
+					      		<a class="nodata" href="" data-toggle="modal" data-target="#middle-name-Modal">
+					      		  <img src="../assets/images/icons/dashboard-assets/edit.png">
+					      		</a>
+					      	</div>
+					      </td>
+					    </tr>
+					     <tr>
+					      <th scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/createidentity-assets/user.png">
+					      		Last Name
+					      	</div>
+					      </th>
+					      <td><%=result.rep_lastname%></td>
+					      <td><%=moment(result.createdAt).format('MMM DD, YYYY')%></td>
+					      <td>
+					      	<div>
+					      		<a class="nodata" href="" data-toggle="modal" data-target="#last-name-Modal">
+					      		  <img src="../assets/images/icons/dashboard-assets/edit.png">
+					      		</a>
+					      	</div>
+					      </td>
+					    </tr>
+					     <tr>
+					      <th scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/dashboard-assets/country.png">
+					      		Country
+					      	</div>
+						  </th>
+						 
+						  <td> <%if(!country){%>
+							  Not Available.
+							  <%}else{%>
+								<%=country%>
+								<%}%>
+							</td>
+						 
+							
+					      <td><%=moment(result.createdAt).format('MMM DD, YYYY')%></td>
+					      <td>
+					      	<div>
+					      		<a class="nodata" href="" data-toggle="modal" data-target="#country-name-Modal">
+					      		  <img src="../assets/images/icons/dashboard-assets/edit.png">
+					      		</a>
+					      	</div>
+					      </td>
+					    </tr>
+					     <tr>
+					      <th scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/dashboard-assets/verified-emailID.png">
+					      		Email ID
+					      	</div>
+					      </th>
+					      <td><%=user.tbl_user_registration.dataValues.email%></td>
+					      <td><%=moment(user.tbl_user_registration.dataValues.createdAt).format('MMM DD, YYYY')%></td>
+					      <td>
+					      	<div>
+					      		<a class="nodata" href="" data-toggle="modal" data-target="#email-id-Modal">
+					      		  <img src="../assets/images/icons/dashboard-assets/edit.png">
+					      		</a>
+					      		<span class="tooltip fade" data-title="Your email is verified.">
+					      			<img class="tooltip-inner-img" src="../assets/images/icons/dashboard-assets/verified.png" >
+					      			<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+					      		</span>
+					      		
+					      	</div>
+					      </td>
+					    </tr>
+					      <tr>
+					      <th scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/dashboard-assets/phone.png">
+					      		Phone Number
+					      	</div>
+					      </th>
+					      <td><%=user.tbl_user_registration.dataValues.mobile_number%></td>
+					      <td><%=moment(user.tbl_user_registration.dataValues.createdAt).format('MMM DD, YYYY')%></td>
+					       <td>
+					      	<div>
+					      		<a class="nodata" href="" data-toggle="modal" data-target="#phone-no-Modal">
+					      		  <img src="../assets/images/icons/dashboard-assets/edit.png">
+					      		</a>
+					      		<a href="" data-toggle="modal" data-target="#phone-not-verified-Modal">
+						      		<span class="tooltip fade" data-title="Your phone number is not verified. Click here to verify.">
+						      			<img class="tooltip-inner-img" src="../assets/images/icons/dashboard-assets/verificationpending.png" >
+						      			<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+						      		</span>
+					      		</a>
+					      		
+					      		
+					      	</div>
+					      </td>
+					    </tr>
+					  </tbody>
+					</table>
+				</div>
+</div>
+<div id="additionalcontent">
+				 <div class="personal-info-heading">
+					<div class="row align-item-center">
+						<div class="col-xl-7 col-lg-5 col-md-5">
+							<h4 class="purple-heading">Additional Information</h4>
+						</div>
+						<div class="col-xl-3 col-lg-4 col-md-4" data-html2canvas-ignore>
+							<div>
+								<a href="" data-toggle="modal" data-target="#add-info-Modal" class="btn-common-new btn-with-extra-padding nodata">add information</a>
+							</div>
+						</div>
+						<div class="col-xl-2 col-lg-3 col-md-3">
+							<div class="text-right">
+								<a href="javascript:downloadAdditional()" class="nodata">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Export Data">
+											<img src="../assets/images/icons/dashboard-assets/export.png">
+									     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+										
+									</div>
+								</a>
+								<a onclick="printadditional()" class="nodata">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Print Data">
+											<img src="../assets/images/icons/dashboard-assets/print.png">
+										    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="personal-info-box table-responsive">
+					<table class="table" id="myTable2">
+					  <thead>
+					    <tr>
+					      <th scope="col">Label</th>
+					      <th scope="col">Content</th>
+					      <th scope="col">Create Date</th>
+					      <th class="nodata" scope="col">Action</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <th scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/dashboard-assets/address.png">
+					      		Address 
+					      	</div>
+						  </th>
+						  <%if(result.entity_company_address!=null){%>
+						  <td><%=result.entity_company_address%></td>
+						  <%}else{%>
+							<td>Not Available</td>
+							<%}%>
+					      <td><%=moment(result.createdAt).format('MMM DD, YYYY')%></td>
+					      <td>
+					      	<div>
+					      		<a class="nodata" href="" data-toggle="modal" data-target="#address-Modal">
+					      		  <img src="../assets/images/icons/dashboard-assets/edit.png">
+					      		</a>
+					      	</div>
+					      </td>
+					    </tr>
+					     <tr>
+					      <th scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/dashboard-assets/BTCwalletaddress.png">
+					      		BTC Wallet Address
+					      	</div>
+					      </th>
+						  <%if(result.rep_btc_address!=null){%>
+							<td><%=result.rep_btc_address%></td>
+							<%}else{%>
+							  <td>Not Available</td>
+							  <%}%>
+					      <td><%=moment(result.createdAt).format('MMM DD, YYYY')%></td>
+					      <td>
+					      	<div>
+					      		<a class="nodata" href="" data-toggle="modal" data-target="#btc-wallet-address-Modal">
+					      		  <img src="../assets/images/icons/dashboard-assets/edit.png">
+					      		</a>
+					      	</div>
+					      </td>
+					    </tr>
+					     <tr>
+					      <th scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/dashboard-assets/company.png">
+					      		Company Name
+					      	</div>
+					      </th>
+					      <%if(result.rep_company_name!=null){%>
+							<td><%=result.rep_company_name%></td>
+							<%}else{%>
+							  <td>Not Available</td>
+							  <%}%>
+					      <td><%=moment(result.createdAt).format('MMM DD, YYYY')%></td>
+					      <td>
+					      	<div>
+					      		<a class="nodata" href="" data-toggle="modal" data-target="#company-name-Modal">
+					      		  <img src="../assets/images/icons/dashboard-assets/edit.png">
+					      		</a>
+					      	</div>
+					      </td>
+					    </tr>
+					     <tr>
+					      <th scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/dashboard-assets/DOB.png">
+					      		Date of Birth
+					      	</div>
+					      </th>
+					      <td><%=user.tbl_user_registration.dataValues.dob%></td>
+					      <td><%=moment(user.tbl_user_registration.dataValues.createdAt).format('MMM DD, YYYY')%></td>
+					      <td>
+					      	<div>
+					      		<a class="nodata" class="nodata" href="" data-toggle="modal" data-target="#dob-Modal">
+					      		  <img src="../assets/images/icons/dashboard-assets/edit.png">
+					      		</a>
+					      	</div>
+					      </td>
+					    </tr>
+					     <tr>
+					      <th scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/dashboard-assets/ETHwallet.png">
+					      		ETH Wallet Address
+					      	</div>
+					      </th>
+					      <td><%=user.dataValues.wallet_address%></td>
+					      <td><%=moment(user.dataValues.createdAt).format('MMM DD, YYYY')%></td>
+					      <td>
+					      	<div>
+					      		<a class="nodata" href="" data-toggle="modal" data-target="#eth-wallet-address-Modal">
+					      		  <img src="../assets/images/icons/dashboard-assets/edit.png">
+					      		</a>
+					      	</div>
+					      </td>
+					    </tr>
+					      <tr>
+					      <th scope="row">
+					      	<div class="for-flex-align">
+					      		<img src="../assets/images/icons/dashboard-assets/nationality.png">
+					      		Nationality
+					      	</div>
+					      </th>
+					      <%if(result.rep_nationality!=null){%>
+							<td><%=result.rep_nationality%></td>
+							<%}else{%>
+							  <td>Not Available</td>
+							  <%}%>
+					      <td><%=moment(result.createdAt).format('MMM DD, YYYY')%></td>
+					      <td>
+					      	<div>
+					      		<a class="nodata" href="" data-toggle="modal" data-target="#nationality-Modal">
+					      		  <img src="../assets/images/icons/dashboard-assets/edit.png">
+					      		</a>
+					      	</div>
+					      </td>
+						</tr>
+						
+						<%if(additional_info_array != "null" && additional_info_array!="" && additional_info_array!=undefined){
+							if(additional_info_array.length){
+							for( let info of additional_info_array){
+								if(info!=undefined || info!=null){
+							%>
+							<tr>
+						<th scope="row">
+									<div class="for-flex-align">
+										<img src="../assets/images/icons/dashboard-assets/nationality.png">
+										<%=info.label%>
+									</div>
+								</th>
+								  <td><%=info.content%></td>
+								<td><%=moment(result.createdAt).format('MMM DD, YYYY')%></td>
+								<td>
+									<div>
+										<a class="nodata" href="" data-toggle="modal" data-target="#">
+										  <img src="../assets/images/icons/dashboard-assets/edit.png">
+										</a>
+									</div>
+								</td>
+							  </tr>
+							  <%}}}}%>
+					  </tbody>
+					</table>
+				</div>
+</div>
+				 <div class="personal-info-heading">
+					<div class="row align-item-center">
+						<div class="col-xl-10 cl-lg-9 col-md-9">
+							<ul class="nav nav-tabs all-doc-tabs" id="myTab" role="tablist">
+							  <li class="nav-item">
+							    <a class="nav-link active" id="doc1" data-toggle="tab" href="#doc-tab1" role="tab" aria-controls="doc-tab1" aria-selected="true">All Documents</a>
+							  </li>
+							  <li class="nav-item">
+							    <a class="nav-link" id="doc2" data-toggle="tab" href="#doc-tab2" role="tab" aria-controls="doc-tab2" aria-selected="false">Certified Documents</a>
+							  </li>
+							  <li class="nav-item">
+							    <a class="nav-link" id="doc3" data-toggle="tab" href="#doc-tab3" role="tab" aria-controls="doc-tab3" aria-selected="false">Self Attested Documents</a>
+							  </li>
+							 
+							</ul>
+						</div>
+						<div class="col-xl-2 col-lg-3 col-md-3">
+							<div class="text-right">
+								<a onclick="downloaddoclist()">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Export Data">
+											<img src="../assets/images/icons/dashboard-assets/export.png">
+									     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+										
+									</div>
+								</a>
+								<a onclick="printtab()">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Print Data">
+											<img src="../assets/images/icons/dashboard-assets/print.png">
+										    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="tab-content" id="myTabContent">
+						<div class="tab-pane fade show active" id="doc-tab1" role="tabpanel" aria-labelledby="doc1">
+							<div class="btn-all-dwnload">
+							  <a class="nodata" href=""><img src="../assets/images/icons/dashboard-assets/upload-purple.png"> Upload</a>
+							  <a class="nodata" href="javascript:void(0)" onclick="downloaddoclist()"><img src="../assets/images/icons/dashboard-assets/download-purple.png"> Download</a>
+							  
+							  <a class="nodata" href="#set-all-checked-permission-Modal" id="verifier_for_check" onclick="verifier_for_checked()" data-toggle="modal"><img src="../assets/images/icons/dashboard-assets/set-docs-permission-purple.png"> Set Document Permission</a>
+
+							  <a class="nodata" href=""><img src="../assets/images/icons/dashboard-assets/selfattest-purple.png"> Self Attest</a>
+						  </div>
+							 <div class="personal-info-box table-responsive">
+							  <table class="table" id="myTable3">
+								<thead>
+								  <tr>
+									<th scope="col">Label</th>
+									<th scope="col">Content</th>
+									<th scope="col">ID Number</th>
+									<th scope="col">Expiry Date</th>
+									<th scope="col">Create Date</th>
+									<th scope="col">Action</th>
+								  </tr>
+								</thead>
+								<tbody>
+									<%if(documents!=null && documents!="" && documents!=undefined){
+										var i=0;
+										for(let document of documents){%>
+								  <tr>
+									<th scope="row">
+										<div class="for-flex-align">
+											 <div class="checkbox">
+											<label>
+											  <input type="checkbox" class="mycxk" name="all_doc_check" id="all_doc_check<%=i%>" value="<%=document.user_doc_id%>">
+											  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+											  <%=document.document_name%>
+											</label>
+										  </div>
+										  
+										</div>
+									</th>
+									<td>
+										<div class="doc-img">
+											<%
+											var k=0,l=0;
+											if(document!=null){%>
+												<%document.file_content.forEach(function(file){%>
+												
+											<a href="" data-toggle="modal" onclick="show_doc_img('<%=i%><%=k%>')" data-target="#doc-img-Modal">
+											<img id="img_tag<%=i%><%=k%>" src="https://ipfs.io/ipfs/<%=file%>">
+										</a>
+										<%k++; })%>
+										<%document.video_content.forEach(function(vid){%>
+			 									
+											<a href="" data-toggle="modal" onclick="show_doc_vid('<%=i%><%=l%>')" data-target="#doc-img-Modal">
+										    <video width="100" height="100" controls>
+												<source id="vid_tag<%=i%><%=l%>" src="https://ipfs.io/ipfs/<%=vid%>" type="video/mp4">
+											</video>
+										</a>
+										<%l++;})%>
+										<%}%>
+										</div>
+									</td>
+									<td><%=document.doc_unique_code%></td>
+									<td><%=moment(document.expire_date).format('MMM DD, YYYY')%></td>
+									<td><%=moment(document.createdAt).format('MMM DD, YYYY')%></td>
+									<td>
+										<!-- <div class="doc-img">
+											<img src="../assets/images/icons/dashboard-assets/menu.png">
+										</div> -->
+										<div class="dropdown-menu-new">
+										  <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+											<div class="doc-img">
+													<img src="../assets/images/icons/dashboard-assets/menu.png">
+												</div>
+										  </a>
+										  <div class="dropdown-menu" aria-labelledby="profileDropdown">
+											  <a class="dropdown-item" href="" data-toggle="modal" data-target="#upload-doc-Modal<%=i%>"><img src="../assets/images/icons/dashboard-assets/upload.png"> Upload</a>
+											  <a class="dropdown-item"  href="javascript:void(0)" onclick="downloaddoclist()"><img src="../assets/images/icons/dashboard-assets/download.png"> Download</a>
+											  <a class="dropdown-item" data-toggle="modal" href="#set-docs-permission-Modal<%=i%>" id="verifier_for_indi<%=i%>" onclick="verifier_for_indivi('<%=i%>')" ><img src="../assets/images/icons/dashboard-assets/set-docs-permission.png"> Set Document Permission</a>
+											  <a class="dropdown-item" href="" data-toggle="modal" data-target="#self-attested-Modal<%=i%>"><img src="../assets/images/icons/dashboard-assets/self-attest.png"> Self Attest</a>	
+										  </div>
+									   </div>
+									</td>
+								  </tr>
+								 <% i++; }}else{%>
+	                           <td>No record found.</td>
+								  <%}%>
+								</tbody>
+							  </table>
+						   </div>
+						   <div class="text-center btn-set-doc">
+							   <div class="row">
+								   <div class="col-xl-4 offset-xl-2 col-lg-6 col-md-6 col-sm-6">
+									   <a href="#set-all-permission-Modal" onclick="getVerifierList()" id="setpermissionbtn" class="btn-common-new" data-toggle="modal" >set documents permission</a>
+								   </div>
+								   <div class="col-xl-4  col-lg-6 col-md-6 col-sm-6">
+									   <a href="" data-toggle="modal" data-target="#add-new-doc-Modal" class="btn-common-new">add new document</a>
+								   </div>
+							   </div>
+							   
+							   
+						   </div>
+						</div>
+						<div class="tab-pane fade" id="doc-tab2" role="tabpanel" aria-labelledby="doc2">
+	  
+							<div class="btn-all-dwnload">
+							  <a class="nodata"  href="javascript:void(0)" onclick="downloaddoccertified()"><img src="../assets/images/icons/dashboard-assets/download-purple.png"> Download Certified Document</a>
+							  <a class="nodata" href=""><img src="../assets/images/icons/dashboard-assets/cancel-purple.png"> Cancel</a>
+						  </div>
+							<div class="personal-info-box table-responsive">
+							  <table class="table" id="myTable3">
+								<thead>
+								  <tr>
+									<th scope="col">Label</th>
+									<th scope="col">Verifier</th>
+									<th scope="col">Code</th>
+									<th scope="col">Transaction ID</th>
+									<th scope="col">Status</th>
+									<th scope="col">Action</th>
+								  </tr>
+								</thead>
+								<tbody>
+								<%if(documents!=null){
+									var i=0;
+								for(let document of documents){
+									if(document.certified_status=="yes"){%>
+								  <tr>
+									<th scope="row">
+										<div class="for-flex-align">
+											 <div class="checkbox">
+											<label>
+											  <input type="checkbox" name="certify_doc_check<%=i%>" value="">
+											  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+											  <%=document.document_name%>
+											</label>
+										  </div>
+										</div>
+									</th>
+									<td>
+										--
+									</td>
+									<td><%=document.doc_unique_code%></td>
+									<td width="20%">--</td>
+									<td>
+										<div class="pending-status">Pending</div>
+									</td>
+									<td>
+										<div class="dropdown-menu-new">
+										  <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+											<div class="doc-img">
+													<img src="../assets/images/icons/dashboard-assets/menu.png">
+												</div>
+										  </a>
+										  <div class="dropdown-menu" aria-labelledby="profileDropdown">
+											  <a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/view.png"> View Attested Document</a>
+											  <a class="dropdown-item" href="javascript:void(0)"><img src="../assets/images/icons/dashboard-assets/download.png"> Download Attested Document</a>
+											  <a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/cancel.png"> Cancel</a>
+										  </div>
+									   </div>
+									</td>
+								  </tr>
+								  <% i++; }else{%>
+								
+									<%}}}else{%>
+									<td>No record found.</td>
+									   <%}%>
+	  
+								  
+								</tbody>
+							  </table>
+						   </div>
+						</div>
+						
+						 <div class="tab-pane fade" id="doc-tab3" role="tabpanel" aria-labelledby="doc3">
+							<div class="btn-all-dwnload">
+							  <a class="nodata" href="javascript:void(0)" onclick="downloaddocattested()"><img src="../assets/images/icons/dashboard-assets/download-purple.png"> Download Attested Document</a>
+							  <a class="nodata" href=""><img src="../assets/images/icons/dashboard-assets/cancel-purple.png"> Cancel</a>
+							</div> 				 
+						  
+							<div class="personal-info-box table-responsive">
+							  <table class="table" id="myTable3">
+								<thead>
+								  <tr>
+									<th scope="col">Label</th>
+									<th scope="col">Content</th>
+									<th scope="col">ID Number</th>
+									<th scope="col">Expiry Date</th>
+									<th scope="col">Create Date</th>
+									<th scope="col">Transaction ID</th>
+									<th scope="col">Action</th>
+								  </tr>
+								</thead>
+								<tbody>
+										<%if(documents!=null){
+											var i=0;
+										for(let document of documents){
+											if(document.self_assested=="yes"){%>
+								  <tr>
+									<th scope="row">
+										<div class="for-flex-align">
+											 <div class="checkbox">
+											<label>
+											  <input type="checkbox" name="attested_doc_check<%=i%>" value="">
+											  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+											  <%=document.document_name%>
+											</label>
+										  </div>
+										</div>
+									</th>
+									<td>
+										<div class="doc-img">
+											<%
+											var k=0;
+											if(document!=null){%>
+												<%document.self_attested_content.forEach(function(file){%>
+												
+											<a href="" data-toggle="modal" onclick="show_attested_img('<%=i%><%=k%>')" data-target="#attested-doc-img-Modal">
+											<img id="attested_img<%=i%><%=k%>" src="<%=file%>">
+										</a>
+										<%k++; })%>
+										<!-- <%document.video_content.forEach(function(vid){%>
+												
+											
+										    <video width="100" height="100" controls>
+												<source src="https://ipfs.io/ipfs/<%=vid%>" type="video/mp4">
+											</video>
+									
+										<%})%> -->
+										<%}%>
+										</div>
+									</td>
+									<td><%=document.doc_unique_code%></td>
+									<td><%=moment(document.expire_date).format('MMM DD, YYYY')%></td>
+									<td><%=moment(document.createdAt).format('MMM DD, YYYY')%></td>
+									<td width="20%">--</td>
+									<td>
+										<!-- <div class="doc-img">
+											<img src="../assets/images/icons/dashboard-assets/menu.png">
+										</div> -->
+										<div class="dropdown-menu-new">
+										  <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+											<div class="doc-img">
+													<img src="../assets/images/icons/dashboard-assets/menu.png">
+												</div>
+										  </a>
+										  <div class="dropdown-menu" aria-labelledby="profileDropdown">
+											  <a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/view.png"> View Attested Document</a>
+											  <a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/download.png"> Download Attested Document</a>
+											  <a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/cancel.png"> Cancel</a>
+										  </div>
+									   </div>
+									</td>
+								  </tr>
+								  <% i++; }else{%>
+									<!-- <td>No record found.</td> -->
+									<%}}}else{%>
+									<td>No record found.</td>
+									   <%}%>
+								  
+								</tbody>
+							  </table>
+						   </div>
+						 </div>
+				</div>
+			</div>			
+		</div>
+	</div>
+</section>
+
+<%}}%>
+<%if(result){
+	if(user){%>
+<!-- Modal -->
+<!-- completed -->
+<div class="modal fade field-edit-modal" id="first-name-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/updateinfo.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Update Information</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<form method="POST" action="/update-representative" id="form_first_name">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+						    	<label>Label</label>
+						    	<div class="input-group">
+									
+								  <input type="text" class="form-control" readonly placeholder="First Name" >
+									
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/createidentity-assets/user.png">
+								    </span>
+								  </div>
+								</div>
+						    </div>
+						    <div class="form-group">
+								<div class="input-group">
+										<%if(result.rep_firstname){%>
+								  <input type="text" class="form-control" name="firstname" placeholder="Content" value="<%=result.rep_firstname%>" data-rule-required="true" data-msg-required="Please enter first name.">
+								  <%}else{%> 
+								  <input type="text" class="form-control" name="firstname" placeholder="Content" data-rule-required="true" data-msg-required="Please enter first name.">
+								  <%}%>
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/createidentity-assets/user.png">
+								    </span>
+								  </div>
+								</div> 
+							</div>
+						</div>
+						<div >
+								<input type="hidden" id="reflect_id" name="reflect_id" value="<%=result.reflect_id%>">
+							<button class="btn-common-new" id="form_first_name_btn" type="submit">Save</button>
+							<a class="btn-common-new"  data-dismiss="modal" href="">Cancel</a>
+						</div>
+					</div>
+					</form>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+
+<!-- completed -->
+<div class="modal fade field-edit-modal" id="middle-name-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/updateinfo.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Update Information</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+						<form method="POST" action="/update-representative" id="form_middle_name">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+						    	<label>Label</label>
+						    	<div class="input-group">
+								  <input type="text" class="form-control" readonly placeholder="Middile Name" value="Middile Name">
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/createidentity-assets/user.png">
+								    </span>
+								  </div>
+								</div>
+						    </div>
+						    <div class="form-group">
+								<div class="input-group">
+										<%if(result.rep_middlename){%>
+								  <input type="text" class="form-control" name="middlename" placeholder="Content" value="<%=result.rep_middlename%>" data-rule-required="true" data-msg-required="Please enter middle name.">
+								  <%}else{%> 
+								  <input type="text" class="form-control" name="middlename" placeholder="Content" data-rule-required="true" data-msg-required="Please enter middle name.">
+								  <%}%>
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/createidentity-assets/user.png">
+								    </span>
+								  </div>
+								</div>
+							</div>
+						</div>
+						<div >
+								<input type="hidden" name="reflect_id" value="<%=result.reflect_id%>">
+								<button class="btn-common-new" id="form_middle_name_btn" type="submit">Save</button>
+								<a class="btn-common-new"  data-dismiss="modal" href="">Cancel</a>
+						</div>
+					</div>
+					</form>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+
+<!-- completed -->
+<div class="modal fade field-edit-modal" id="last-name-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/updateinfo.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Update Information</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<form method="POST" action="/update-representative" id="form_last_name">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+						    	<label>Label</label>
+						    	<div class="input-group">
+								  <input type="text" class="form-control" readonly placeholder="Last Name" value="Last Name">
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/createidentity-assets/user.png">
+								    </span>
+								  </div>
+								</div>
+						    </div>
+						    <div class="form-group">
+								<div class="input-group">
+										<%if(result.rep_lastname){%>
+								  <input type="text" class="form-control" name="lastname" laceholder="Content" value="<%=result.rep_lastname%>" data-rule-required="true" data-msg-required="Please enter last name.">
+								  <%}else{%> 
+								  <input type="text" class="form-control" name="lastname" placeholder="Content" data-rule-required="true" data-msg-required="Please enter last name.">
+								  <%}%>
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/createidentity-assets/user.png">
+								    </span>
+								  </div>
+								</div>
+							</div>
+						</div>
+						<div >
+								<input type="hidden" name="reflect_id" value="<%=result.reflect_id%>">
+								<button class="btn-common-new" id="form_last_name_btn" type="submit">Save</button>
+								<a class="btn-common-new"  data-dismiss="modal" href="">Cancel</a>
+						</div>
+					</div>
+					</form>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+
+<!-- completed -->
+<div class="modal fade field-edit-modal" id="country-name-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-country-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Update Information</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+						<form method="POST" action="/update-representative" id="form_country_name">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+						    	<label>Label</label>
+						    	<div class="input-group">
+								  <input type="text" class="form-control" readonly placeholder="Country Name" value="Country Name">
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/country.png">
+								    </span>
+								  </div>
+								</div>
+						    </div>
+						    <div class="form-group">
+								<div class="input-group">
+									<select class="form-control" name="country_name">
+										<%for(let country of allCountries){%>
+									<option value="<%=country.country_id%>"><%=country.country_name%></option>
+									<%}%>
+									<!-- <option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option> -->
+									</select>
+										<!-- <%if(country!=""){%>
+								  <input type="text" class="form-control" name="country_name" value="<%=country%>">
+								  <%}else{%> 
+								  <input type="text" class="form-control" name="country_name" placeholder="Content">
+								  <%}%> -->
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/country.png">
+								    </span>
+								  </div>
+								</div>
+							</div>
+						</div>
+						<div >
+								<input type="hidden" name="reflect_id" value="<%=result.reflect_id%>">
+								<button class="btn-common-new" id="form_country_name_btn" type="submit">Save</button>
+								<a class="btn-common-new"  data-dismiss="modal" href="">Cancel</a>
+						</div>
+					</div>
+					</form>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="modal fade field-edit-modal" id="email-id-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-email-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Update Information</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+						    	<label>Label</label>
+						    	<div class="input-group">
+								  <input type="email" class="form-control" readonly placeholder="Email ID" value="Email ID">
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/verified-emailID.png">
+								    </span>
+								  </div>
+								</div>
+						    </div>
+						    <div class="form-group">
+								<div class="input-group">
+								  <input type="email" class="form-control" placeholder="Content">
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/verified-emailID.png">
+								    </span>
+								  </div>
+								</div>
+							</div>
+						</div>
+						<div >
+							<a class="btn-common-new" href="">Save</a>
+							<a class="btn-common-new" href="">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div> -->
+
+
+<!-- <div class="modal fade field-edit-modal" id="phone-no-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-mobile-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Update Information</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+						    	<label>Label</label>
+						    	<div class="input-group">
+								  <input type="text" class="form-control" readonly placeholder="Phone Number" value="Phone Number">
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/phone.png">
+								    </span>
+								  </div>
+								</div>
+						    </div>
+						    <div class="form-group">
+								<div class="input-group">
+								  <input type="text" class="form-control" placeholder="Content">
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/phone.png">
+								    </span>
+								  </div>
+								</div>
+							</div>
+						</div>
+						<div >
+							<a class="btn-common-new" href="">Save</a>
+							<a class="btn-common-new" href="">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- completed -->
+<div class="modal fade field-edit-modal" id="address-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-address-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Update Information</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+						<form method="POST" action="/update-representative" id="form_address">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+						    	<label>Label</label>
+						    	<div class="input-group">
+								  <input type="text" class="form-control" readonly placeholder="Address" value="Address">
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/address.png">
+								    </span>
+								  </div>
+								</div>
+						    </div>
+						    <div class="form-group">
+								<div class="input-group">
+									<%if(result.entity_company_address!=null){%>
+								  <input type="text" class="form-control" name="company_address" value="<%=result.entity_company_address%>" data-rule-required="true" data-msg-required="Please enter your address.">
+								  <%}else{%> 
+									<input type="text" class="form-control" name="company_address" placeholder="Content" data-rule-required="true" data-msg-required="Please enter your address.">
+									<%}%>
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/address.png">
+								    </span>
+								  </div>
+								</div>
+							</div>
+						</div>
+						<div >
+								<input type="hidden" name="reflect_id" value="<%=result.reflect_id%>">
+								<button class="btn-common-new" id="form_address" type="submit">Save</button>
+								<a class="btn-common-new"  data-dismiss="modal" href="">Cancel</a>
+						</div>
+					</div>
+					</form>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+
+<!-- completed -->
+<div class="modal fade field-edit-modal" id="btc-wallet-address-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-btc-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Update Information</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+						<form method="POST" action="/update-representative" id="form_btc_address">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+						    	<label>Label</label>
+						    	<div class="input-group">
+								  <input type="text" class="form-control" readonly placeholder="BTC Wallet Address" value="BTC Wallet Address">
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/BTCwalletaddress.png">
+								    </span>
+								  </div>
+								</div>
+						    </div>
+						    <div class="form-group">
+								<div class="input-group">
+										<%if(result.rep_btc_address!=null){%>
+								  <input type="text" class="form-control" name="btc_wallet_address" value="<%=result.rep_btc_address%>" data-rule-required="true" data-msg-required="Please enter your BTC wallet address.">
+								  <%}else{%> 
+								  <input type="text" class="form-control" name="btc_wallet_address" placeholder="Content" data-rule-required="true" data-msg-required="Please enter your BTC wallet address.">
+								  <%}%>
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/BTCwalletaddress.png">
+								    </span>
+								  </div>
+								</div>
+							</div>
+						</div>
+						<div >
+								<input type="hidden" name="reflect_id" value="<%=result.reflect_id%>">
+								<button class="btn-common-new" id="form_btc_address_btn" type="submit">Save</button>
+								<a class="btn-common-new"  data-dismiss="modal" href="">Cancel</a>
+						</div>
+					</div>
+					</form>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+
+<!-- completed -->
+<div class="modal fade field-edit-modal" id="company-name-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-company-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Update Information</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+						<form method="POST" action="/update-representative" id="form_company_name">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+						    	<label>Label</label>
+						    	<div class="input-group">
+								  <input type="text" class="form-control" readonly placeholder="Company Name" value="Company Name">
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/company.png">
+								    </span>
+								  </div>
+								</div>
+						    </div>
+						    <div class="form-group">
+								<div class="input-group">
+									<%if(result.rep_company_name!=null){%>
+								  <input type="text" class="form-control" name="company_name" value="<%=result.rep_company_name%>" data-rule-required="true" data-msg-required="Please enter your company name.">
+								  <%}else{%> 
+								  <input type="text" class="form-control" name="company_name" placeholder="Content" data-rule-required="true" data-msg-required="Please enter your company name.">
+								  <%}%>
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/company.png">
+								    </span>
+								  </div>
+								</div>
+							</div>
+						</div>
+						<div >
+								<input type="hidden" name="reflect_id" value="<%=result.reflect_id%>">
+								<button class="btn-common-new" id="form_company_name_btn" type="submit">Save</button>
+								<a class="btn-common-new"  data-dismiss="modal" href="">Cancel</a>
+						</div>
+					</div>
+					</form>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="modal fade field-edit-modal" id="dob-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-dob-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Update Information</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+						    	<label>Label</label>
+						    	<div class="input-group">
+								  <input type="text" class="form-control" readonly placeholder="Date Of Birth" value="Date Of Birth">
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/DOB.png">
+								    </span>
+								  </div>
+								</div>
+						    </div>
+						    <div class="form-group">
+								<div class="input-group">
+								  <input type="text" class="form-control" id="datepicker" placeholder="Content">
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/DOB.png">
+								    </span>
+								  </div>
+								</div>
+							</div>
+						</div>
+						<div >
+							<a class="btn-common-new" href="">Save</a>
+							<a class="btn-common-new" href="">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- completed -->
+<div class="modal fade field-edit-modal" id="eth-wallet-address-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-eth-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Update Information</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+						<form method="POST" action="/update-representative" id="form_ETH_address">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+						    	<label>Label</label>
+						    	<div class="input-group">
+								  <input type="text" class="form-control" readonly placeholder="ETH Wallet Address" value="ETH Wallet Address">
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/ETHwallet.png">
+								    </span>
+								  </div>
+								</div>
+						    </div>
+						    <div class="form-group">
+								<div class="input-group">
+										<%if(result.rep_eth_addess!=null){%>
+								  <input type="text" class="form-control" name="eth_wallet_address" value="<%=result.rep_eth_addess%>" data-rule-required="true" data-msg-required="Please enter your ETH wallet address.">
+								  <%}else{%> 
+								  <input type="text" class="form-control" name="eth_wallet_address" placeholder="Content" data-rule-required="true" data-msg-required="Please enter your ETH wallet address.">
+								  <%}%>
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/ETHwallet.png">
+								    </span>
+								  </div>
+								</div>
+							</div>
+						</div>
+						<div >
+								<input type="hidden" name="reflect_id" value="<%=result.reflect_id%>">
+								<button class="btn-common-new" id="form_ETH_address_btn" type="submit">Save</button>
+								<a class="btn-common-new"  data-dismiss="modal" href="">Cancel</a>
+						</div>
+					</div>
+					</form>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+
+<!-- completed -->
+<div class="modal fade field-edit-modal" id="nationality-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-nationality-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Update Information</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+						<form method="POST" action="/update-representative" id="form_nationality">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+						    	<label>Label</label>
+						    	<div class="input-group">
+								  <input type="text" class="form-control" readonly placeholder="Nationality" value="Nationality">
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/nationality.png">
+								    </span>
+								  </div>
+								</div>
+						    </div>
+						    <div class="form-group">
+								<div class="input-group">
+										<%if(result.rep_nationality!=null){%>
+								  <input type="text" class="form-control" name="nationality" value="<%=result.rep_nationality%>" data-rule-required="true" data-msg-required="Please enter nationality.">
+								  <%}else{%> 
+								  <input type="text" class="form-control" name="nationality" placeholder="Content" data-rule-required="true" data-msg-required="Please enter nationality.">
+								  <%}%>
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/nationality.png">
+								    </span>
+								  </div>
+								</div>
+							</div>
+						</div>
+						<div >
+								<input type="hidden" name="reflect_id" value="<%=result.reflect_id%>">
+								<button class="btn-common-new" id="form_nationality_btn" type="submit">Save</button>
+								<a class="btn-common-new"  data-dismiss="modal" href="">Cancel</a>
+						</div>
+					</div>
+					</form>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="modal fade field-edit-modal" id="phone-not-verified-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div class="for-icon-bg">
+						<img src="../assets/images/icons/createidentity-assets/popup-mobile-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-10 col-lg-10 col-md-10">
+					<h5 class="heading-purple">Phone Number Verification</h5>
+					<p>Verify your phone number by entering the OTP sent to your registered email address.</p>
+				</div>
+			</div>
+		   	<div class="login-form-main phone-otp">
+				 <div class="form-group">
+				    <label>OTP</label>
+                    <div class="otp-box digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+                        <input type="text" id="otp1" name="otp1" class="form-control text-center" placeholder="-" maxlength="1" data-next="otp2" value="" />
+                        <input type="text" id="otp2" name="otp2" class="form-control" placeholder="-" maxlength="1" data-next="otp3" data-previous="otp1">
+                        <input type="text" id="otp3" name="otp3" class="form-control" placeholder="-" maxlength="1" data-next="otp4" data-previous="otp2">
+                        <input type="text" id="otp4" name="otp4" class="form-control" placeholder="-" maxlength="1" data-previous="otp3">
+                    </div>
+				  </div>
+				  <div class="private-key-copy-box">
+				  	<button class="btn-common-new">Continue</button>
+                    <p class="extra-link">Don't got OTP?<a href="">Resend</a></p>
+				  </div>
+			</div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- completed -->
+<div class="modal fade field-edit-modal" id="add-info-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-add-info-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Add Information</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<form method="POST" action="/additional-info" id="form_additional_info">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+						    	<div class="input-group">
+								  <input type="text" class="form-control" name="label" placeholder="Label" data-rule-required="true" data-msg-required="Please enter content label.">
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/info-icon.png">
+								    </span>
+								  </div>
+								</div>
+						    </div>
+						    <div class="form-group">
+								<div class="input-group">
+								  <input type="text" class="form-control" name="content" placeholder="Content" data-rule-required="true" data-msg-required="Please enter content value.">
+								  <div class="input-group-append">
+								    <span class="input-group-t

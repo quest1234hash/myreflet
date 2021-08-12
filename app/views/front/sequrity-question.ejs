@@ -1,0 +1,159 @@
+<%- include('partials/header.ejs') %>  
+
+<form action="/submitQuestionAns" method="POST" id="validate"> 
+<section class="login-sec">
+	<div class="container-fluid p-0">
+		<div class="row m-0">
+			<div class="col-md-6 p-0">
+				<div class="left-side-login">
+					<div class="logo-box">
+						<a href="">
+							<img src="/assets/images/logo.png">
+						</a>
+					</div>
+					<div class="side-text">
+						<h2>
+							Select security questions.
+						</h2>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 p-0">
+				<div class="right-side-login forgot-pass">
+					<div class="inner-div">
+						<p class="first-line reset-link-line">Please verify your identity via selecting two diffrent security questions and provide answers.</p>
+						<div class="login-form-main">
+							 <div class="form-group">
+                    <label>Select security question 1<span style="color: red;">*</span></label>
+                     <select class="form-control" name="question" id="ques_1" onchange="checkQuestionNotSame()" data-rule-required="true" data-msg-required="Please select question">
+                      <option value="">Select</option>
+                      <%securityQuestions.forEach(data=>{%>
+
+                      <option value="<%=data.question_id%>"><%=data.question%></option>
+                      
+                      <%})%>
+                    </select>
+                    <!-- <span for="ques_1"  style="color: red;"></span> -->
+                    <span id="Ques_err1"  style="color: red;"></span>
+                  </div>
+                  <div class="form-group">
+                    <label>Answer<span style="color: red;">*</span></label>
+                    <input type="text" name="answer" id="ans1" class="form-control" placeholder="" data-rule-required="true" data-msg-required="Please enter Answer">
+                  </div>
+                  <div class="form-group">
+                    <label>Select security question 2<span style="color: red;">*</span></label>
+                    <select class="form-control" name="question" id="ques_2" onchange="checkQuestionNotSame()" data-rule-required="true" data-msg-required="Please select question">
+                        <option value="">Select</option>
+                        <%securityQuestions.forEach(data=>{%>
+  
+                        <option value="<%=data.question_id%>" ><%=data.question%></option>
+                        
+                        <%})%>
+                    </select>
+                    <span id="Ques_err2"  style="color: red;"></span>
+
+                  </div>
+                  <div class="form-group">
+                    <label>Answer<span style="color: red;">*</span></label>
+                    <input type="text" name="answer" id="ans2" class="form-control" placeholder="" data-rule-required="true" data-msg-required="Please enter Answer">
+                    <span id="ans_err2"  style="color: red;"></span>
+                  </div>
+                  <input type="hidden" id="userId" name="userId">
+							  <div>
+							  	<button class="purple-btn" type="submit">Submit</button>
+							  </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+</form>
+
+
+
+
+
+
+
+
+	<!-- JQuery -->
+        <script type="text/javascript" src="/assets/js/jquery-3.3.1.min.js"></script>
+        <!-- <script type="text/javascript" src="assets/js/jquery-1.11.3.min.js"></script> -->
+        <!-- Bootstrap Core JavaScript -->
+        <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+        <!-- dropdownhover effects JavaScript -->
+        <script type="text/javascript" src="/assets/js/bootstrap-dropdownhover.min.js"></script>
+        <!-- wow JavaScript -->
+        <script type="text/javascript" src="/assets/js/wow.min.js"></script>
+        <!-- video player JavaScript -->
+
+        <!-- Custom JavaScript -->
+        <script type="text/javascript" src="/assets/js/custom.js"></script>
+        <script type="text/javascript" src="/assets/js/jquery.validate.min.js"></script>
+
+
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script> -->
+
+        <script type="text/javascript">
+          $('#validate').validate({
+               onfocusout: function(element) {
+               this.element(element);
+               },
+               errorClass: 'error_validate',
+               errorElement:'span',
+               highlight: function(element, errorClass) {
+               $(element).removeClass(errorClass);
+               },
+               submitHandler:function(form)
+                  {
+                    $('#submit_signup').attr('disabled',true);
+                    $("#ques_1").val();
+                    $("#ans1").val();
+                    $("#ques_2").val();
+                    $("#ans2").val();
+                   if($("#ques_2").val()=="" || $("#ans2").val()==""){
+                    if($("#ques_2").val()==""){
+                                $("#Ques_err2").text("This filed required.")
+                           }
+                   if($("#ans2").val()==""){
+                               $("#ans_err2").text("This filed required.")
+                           }
+                          }else{
+                        form.submit();
+                          }
+                    
+
+                  }
+               });
+          </script>
+<script>
+$(function(){
+
+var url = new URL( window.location.href);
+var userId = url.searchParams.get("userid");
+// alert(userId)
+$("#userId").val(userId)
+
+})
+</script>
+
+    <script>
+    function checkQuestionNotSame(){
+    var  ques1=   $("#ques_1").val()
+     var ques2= $("#ques_2").val()
+if(ques1==ques2){
+  $("#Ques_err1").text("Both question could not be same.")
+  $("#Ques_err2").text("Both question could not be same.")
+}else{
+  $("#Ques_err1").text("")
+  $("#Ques_err2").text("")
+}
+    }
+    </script>   
+<%- include('partials/footer.ejs') %>    
+
+
+
+ 

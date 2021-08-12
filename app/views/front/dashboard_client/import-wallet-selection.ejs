@@ -1,0 +1,85 @@
+<%- include('../innerHeader') %>
+<style>
+	.market-place-inner-box img {
+    height: 60px;
+}
+.active-check.active .white-box {
+    background-color: #caedff;
+}
+</style>
+
+<section class="heading-sec mb-0">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-6 col-md-6 col-sm-6">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/home-assets/wallet.png">
+					<h4>Import Crypto Wallet</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+	<!-- message -->
+	<% if(err_msg!=undefined && err_msg !='' ){ %>
+		<div class="alert alert-danger text-center  flash_msg " id="error_msg">
+			<%= err_msg %>
+		   </div>
+		 
+		<% }%>
+		 <% if(success_msg!=undefined && success_msg !='' ){ %>
+		  <div class="alert alert-success text-center  flash_msg "id="success_message">
+		  <%= success_msg %>
+		 </div>
+		<% }%>
+<section>
+<h4 class="small-heading text-center">Select Category to continue creating new wallet</h4>
+	<div class="container" style=" padding-left: 325px;">
+		<div class="row">
+			<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 active-check ">
+				<div class="white-box">
+					<div class="market-place-inner-box">
+					    <div class="id-code-represent-heading"> 
+						  <!-- <img src="../assets/images/icons/7.png" style="margin: auto;"> -->
+                          <img src="../assets/images/icons/wallet/bitcoin.svg" style="margin: auto;">
+					    </div>
+						<h4 style="text-align: center;">BTC</h4>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 active-check">
+				<div class="white-box">
+					<div class="market-place-inner-box">
+					    <div class="id-code-represent-heading"> 
+						  <img src="../assets/images/icons/wallet/ethereum.svg" style="margin: auto;">
+
+					    </div>
+						<h4 style="text-align: center;">ETH</h4>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-6" style="margin-left: 135px !important;">
+				<div>
+				<a class="btn-common-new" href="create-wallets">Back</a>
+					<a class="btn-common-new" href="#">Continue</a>
+				</div>
+
+					  </div>
+		</div>
+	</div>
+</section>
+
+
+
+<%- include('../innerFooter')%>
+
+
+<script>
+	$(document).ready(function(){
+	  $('.active-check').click(function(){
+	    $('.active-check').removeClass("active");
+	    $(this).addClass("active");
+	});
+	});
+</script>
+ 

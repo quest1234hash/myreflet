@@ -1,0 +1,11 @@
+<% if(view_column_list.length>0)
+                    { 
+                       var i=0;
+                       view_column_list.forEach(function(each_data){
+                          %>
+								  <th width="25%" scope="col"><%=each_data.column_name%></th>
+								  <%
+							i++;			
+	         	});
+		   }
+	    %>

@@ -1,0 +1,1500 @@
+<%-include('../innerHeader')%>
+
+<section class="heading-sec mb-0">
+	<div class="container">
+		<ul class="breadcrumb custom-braed">
+			<li><a href="/market-place">Marketplace</a><span class="arrowBread">&gt;&gt;</span> </li>
+			<li class="upper"><%=label[0].label%></li>
+		</ul>
+		<div class="row align-item-center">
+			<div class="col-lg-9 col-md-6 col-sm-6">
+				<div class="main-heading-dash">
+					<img src="../addMPIcon/<%= label[0].icon %>">
+					<h4 class="upper"><%=label[0].label%></h4>
+				</div>
+			</div>
+		</div>
+	</div> 
+</section>
+
+<section class="setup-id-sec">
+	<div class="container">
+		<div class="row personal-info-heading">
+			<div class="col-md-12 custom-flex-row">
+				<div class="text-right">
+					<a href="">
+						<div class="icon-for-dwnload">
+							<div class="tooltip fade" data-title="Export Data" onclick="export_table();">
+								<img src="../assets/images/icons/dashboard-assets/export.png">
+						     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+							</div>
+						</div>
+					</a>
+					<a href="">
+						<div class="icon-for-dwnload">
+							<div class="tooltip fade" data-title="Print Data"onclick="print_table();">
+								<img src="../assets/images/icons/dashboard-assets/print.png">
+							    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- Button S-->
+		<!-- <div class="btn-all-dwnload">
+			<div>
+				<a href=""><img src="../assets/images/icons/dashboard-assets/icon_add_book.png"> Add to address book</a>
+				<a href=""><img src="../assets/images/icons/dashboard-assets/icon_send.png"> Send on-boarding documents</a>
+				<a href=""><img src="../assets/images/icons/dashboard-assets/icon_eye_pur.png"> View Document</a>
+				<a href=""><img src="../assets/images/icons/dashboard-assets/icon_message.png"> Manage messages</a>
+			</div> 
+		</div> -->
+		<!-- Button E -->
+		<% if(success_msg!=undefined && success_msg !='' ){ %>
+			<div class="alert alert-success text-center  flash_msg "id="success_message">
+			  <%= success_msg %>
+		   </div>
+		  <% }%>
+		  <% if(err_msg!=undefined && err_msg !='' ){ %>
+			<div class="alert alert-danger text-center  flash_msg " id="err_message">
+					<%= err_msg %>
+				 </div>
+		   
+			<% }%>
+		<div class="personal-info-box table-responsive">
+			<table class="table" id="myTable3">
+
+				<thead>
+			    	<tr>
+			    		<th width="5%" scope="col">No.</th>
+				      	<th width="20%" scope="col">Name/MyReflete ID</th>
+				      	<th width="15%" scope="col">Type</th>
+				      	<!-- <th width="15%" scope="col">Email ID</th> -->
+				      	<th width="15%" scope="col">Country</th>
+				      	<th width="10%" scope="col">Status</th>
+				      	<th width="25%" scope="col">Wallet Address</th>
+				      	<th width="5%"class="hide_link" scope="col">Action</th>
+			    	</tr>
+			  	</thead>
+				<tbody>
+					<%	if(market_list_result.data.length>0)
+		  	{
+			var i=0;
+			var j=0;
+			var k=1;
+				for(let each_data of market_list_result.data){
+				  %>
+				    <tr>
+				    	<td class="upper"><%=k%>.</td>
+				      	<th scope="row">
+					      	<div class="for-flex-align">
+					      		<div class="checkbox">
+						          	<label>
+							            <!-- <input class="hide_link" type="checkbox" value=""> -->
+<!-- 							            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+ -->					      		     	<div>
+					      		     		<span class="upper">
+					      		     			<%if(each_data.rep_firstname){%>
+					      		     			<%=each_data.rep_firstname%>
+					      		     				<%}else if(each_data.entity_company_name){%>
+
+                                         <%= each_data.entity_company_name %>
+                                         <%}else{%>
+										           <%= each_data.full_name %>
+										           <%}%>
+					      		     			</span><br>
+					      		     		<span><%=each_data.reflect_code%></span>
+					      		     	</div>
+						         	 </label>
+						        </div>
+							</div>
+						  </th>
+						  <td class="upper"><%=each_data.user_as%></td>
+
+					<!-- 	  <%if(each_data.rep_email)
+						  {%>
+							<td><%=each_data.rep_email%></td>
+
+							<%}else{%> 
+                         <td> <%=each_data.email%>
+							
+                      </td>
+								<%}%> -->
+
+					<%if(each_data.entity_company_country)
+					{%>
+						<td class="upper"><%=each_data.country_name%></td>
+
+						<%}else{%>
+							<td> <%=each_data.birthplace%></td>
+							<%}%> 
+							
+					    <td class="upper"><%=each_data.verifier_type%></td>
+					    <td><%=each_data.wallet_address%></td>
+					    <td class="hide_link" >
+					      	<div class="dropdown-menu-new">
+		                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+		                          <div class="doc-img">
+							      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+							      	</div>
+		                        </a>
+		                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+								
+
+		                       
+<% 
+									if(each_data.reg_user_id!==sesion_id){%>
+								     <a class="dropdown-item" href=""  data-toggle="modal" data-target="#addVerifier<%=i%>">
+		                            	<img src="../assets/images/icons/dashboard-assets/icon_add_book1.png"> Add to address book
+									</a>	
+									<%}%>
+
+							  <input type="hidden" value="<%=each_data.reflect_id%>"id="ref_id<%=j%>">
+							  <% 
+									if(each_data.reg_user_id!==sesion_id){%>
+									<a class="dropdown-item" href="#sendDocument<%=j%>"onclick="get_category('<%=j%>')" data-toggle="modal" data-target="#sendDocument<%=j%>">
+										<img src="../assets/images/icons/dashboard-assets/icon_send1.png"> Send on-boarding documents
+									</a>
+									<%}%>
+
+					<!-- 				<a class="dropdown-item" href="" data-toggle="modal" data-target="#set-docs-permission-Modal">
+										<img src="../assets/images/icons/dashboard-assets/view.png"> View Document
+									</a>
+									  -->
+									
+									<a class="dropdown-item" href="/message-market?reflect_id=<%=each_data.reflect_id%>&label=<%=each_data.label%>">
+										<img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage Messages
+									</a>	
+<!-- 									
+ -->
+		                        </div>
+		                    </div>
+				      	</td>
+				    </tr> 
+				   
+					<%
+					i++;k++;		j++;				
+				} 
+				   }else{
+	   %>
+                       <tr>
+						<td colspan="8"><center>No record found.</center> </td>
+					   </tr>			 <%}%>
+				</tbody>
+			</table>
+		
+			   </div>
+            <div class="pagination-list for-user">
+          
+            <% if (market_list_result.totalPages > 0) { %>
+             <ul class="pagination text-center">
+               <% if (market_list_result.currentPage == 1) { %>
+                 <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+               <% } else { %>
+                 <li class="page-item"><a class="page-link" href="/access-marketplace?page=1&market_place_id=<%=label[0].market_place_id %>">&lt;</a></li>
+               <% } %>
+          
+          
+          
+               <% var i = (Number(market_list_result.currentPage) > 5 ? Number(market_list_result.currentPage) - 4 : 1) %>
+               <% if (i !== 1) { %>
+                 <!-- <li class="disabled"><a>...</a></li> -->
+                 <li class="page-item disabled"><a class="page-link" >...</a></li>
+               <% } %>
+               <% for (; i <= (Number(market_list_result.currentPage) + 4) && i <= market_list_result.totalPages; i++) { %>
+                 <% if (i == market_list_result.currentPage) { %>
+                   <!-- <li class="active"><a><%= i %></a></li> -->
+                   <li class="page-item active">
+                   <a class="page-link" href="#"><%= i %><span class="sr-only">(market_list_result.currentPage)</span></a>
+                   </li>
+                 <% } else { %>
+                   <li class="page-item"><a class="page-link" href="/access-marketplace?page=1&market_place_id=<%=label[0].market_place_id %>"><%= i %></a></li>
+                 <% } %>
+                 <% if (i == Number(market_list_result.currentPage) + 4 && i < market_list_result.totalPages) { %>
+                   <!-- <li class="disabled"><a>...</a></li> -->
+                   <li class="page-item disabled"><a class="page-link" >...</a></li>
+                 <% } %>
+               <% } %>
+          
+          
+               <% if (market_list_result.currentPage == market_list_result.totalPages) { %>                       
+                 <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+               <% } else { %>
+                 <li><a class="page-link" href="/access-marketplace?page=1&market_place_id=<%=label[0].market_place_id %>">&gt;</a></li>
+               <% } %>
+          
+             </ul>
+          <% } %>
+          
+           </div>
+		</div>
+	</div>
+</section>
+
+<!-- Modal S -->
+
+<%
+
+if(market_list_result.data.length>0)
+{
+var i=0;
+  for(let each_data of market_list_result.data){
+	%>
+<div class="modal fade field-edit-modal" id="sendDocument<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Document Permission</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact pt-15">
+						<div class="create-rflet-id-form">
+							<div class="form-group select-verifier-box">
+						    	<div class="input-group">
+								 	<%if(each_data.rep_firstname){%>
+									<input type="text" class="form-control" readonly="" placeholder=""value="<%=each_data.rep_firstname%> - <%=each_data.reflect_code%>">
+									<%}else if(each_data.entity_company_name){%>
+									<input type="text" class="form-control upper" placeholder="Label"<input type="text" class="form-control" readonly="" placeholder=""value="<%=each_data.rep_username%> - <%=each_data.reflect_code%>">
+									<%}%>
+							<!-- 		<input type="text" class="form-control" readonly="" placeholder=""value="<%=each_data.rep_username%> - <%=each_data.reflect_code%>"> -->
+									<input type="hidden" class="form-control" id="verifier_ref_id<%=i%>"readonly="" placeholder=""value="<%=each_data.reflect_id%>">
+									<input type="hidden" class="form-control" id="verifier_id<%=i%>"readonly="" placeholder=""value="<%=each_data.reg_user_id%>">
+
+								</div>
+							</div>	
+						
+							<div id="ver_category_list<%=i%>" class="form-group">
+								
+							</div>
+							<div id="sub_category_list<%=i%>" class="form-group">
+								
+							</div>
+
+							<div id="category_docs<%=i%>" class="form-group">
+								
+							</div>
+						
+							
+						    </div> 
+
+						 		  </div>
+									</div>
+								  
+								</div>
+						   
+					        <div class="form-group select-verifier-box">
+						    	<div  class="dropdown d1">
+									  <button class="dropbtn dropbtn_1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									    Select Client Via Code
+									  </button>
+									
+									  <div class="dropdown-menu menu-for-id" aria-labelledby="dropdownMenuButton">
+										<%	if(client_reflect_code.length>0)
+										{
+											 
+										  for(let each_data of client_reflect_code){
+											
+											  %>
+										<a class="dropdown-item" href="#">
+									    	<div class="for-verify-box-inner for-pending">
+												<i class="fas fa-check"></i>
+											
+													<span class="user-img-verify">
+													<%if(each_data.profile_pic){
+                                                          %>
+                                                <img class=" " src="<%= each_data.profile_pic%>"width="30px"height="30px">
+                                                                            <%}else{%>
+                                                <img  class="" src="/admin-assets/images/user-icon.jpg"width="30px"height="30px">
+                                                         <%}%>
+													</span>
+													<span class="tooltip fade" data-title="On boarding Pending">
+														<%if(each_data.rep_firstname){%>
+
+														<%=each_data.rep_firstname%> - <%=each_data.reflect_code%>	
+
+														
+														<%}else if(each_data.entity_company_name){%>
+<%=each_data.entity_company_name%> - <%=each_data.reflect_code%>
+
+												
+														<%}%>	
+																	    			
+														<input type="hidden" class="getId1" id="t1" value="<%=each_data.reflect_id %>">
+                                                      
+													</span>
+													
+									    	</div>
+									
+										</a>
+									<%
+								} 
+									  }
+								  %>
+									    
+									  </div>
+				 					</div>
+								  
+								</div>
+								<div class="form-group for-select-existing-doc">
+									<div class="input-group">
+									  <div class="dropdown keep-inside-clicks-open">
+										  <button class="dropdwn-btn select_client_coc" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											Select from existing documents
+										  </button>
+										  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+											<div class="select_append_client">
+
+
+											</div>
+											
+										  </div>
+										</div>
+									  
+									</div>
+								</div>
+								<div class="personal-info-box for-download-view-table table-responsive">
+									<table class="table" id="myTable1">
+									  <thead>
+										<tr>
+										  <th scope="col">Label</th>
+										  <th scope="col">Download</th>
+										  <th scope="col">View</th>
+										  <th scope="col">Certify</th>
+										</tr>
+									  </thead>
+									  <tbody id="doc_data<%=i%>">
+										
+									  </tbody>
+									</table>
+									<span id="prm_error_span" class="error_validate"></span>
+								</div>
+							</div>
+							<div >
+								<input type="hidden" name="p_cat_id" id="p_cat_id<%=i%>">
+								<input type="hidden" name="sub_cat_id" id="sub_cat_id<%=i%>">
+								<input type="hidden" name="doc_reflect_id" id="doc_reflect_id<%=i%>">
+
+								<button class="btn-common-new" type="button" id="subPerm<%=i%>" onclick="submit_all_perm()">Save</button>
+									<a class="btn-common-new" href="">Cancel</a>
+
+								
+						</div>
+						<div >
+							<!-- <a class="btn-common-new" href="">Submit</a> -->
+							<!-- <a class="btn-common-new" href="">Cancel</a> -->
+						</div>
+					</div>
+				</div>
+			 </div>
+</div>
+       
+<%
+i++;											
+} 
+   }
+%>
+ <!--doc-permission-Modal  -->
+
+<%
+
+if(market_list_result.data.length>0)
+{
+var i=0;
+  for(let each_data of market_list_result.data){
+	%>
+<div class="modal field-edit-modal" id="doc-permission-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		  <div class="create-wallet-box">
+			  <div class="row align-item-center">
+				  <div class="col-xl-2 col-lg-3 col-md-3">
+					  <div class="for-icon-bg">
+						  <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+					  </div>
+				  </div>
+				  <div class="col-xl-10 col-lg-10 col-md-10">
+					  <h5 class="heading-purple">Document Permission</h5>
+					  
+				  </div>
+			  </div>
+			  <div class="setup-inner-box for-protact mt-30 p-0">
+				   <p>Are you sure you want to give document permission? click yes to continue.</p>
+						  <div>
+							  <a class="btn-common-new" href="" data-toggle="modal" data-target="#validate-pin-Modal<%=i%>" data-dismiss="modal">Yes</a>
+							  <a class="btn-common-new" href="">No</a>
+						  </div>
+					  </div>
+			 </div>
+		 </div>
+	  </div>
+	</div>
+  </div>
+  <%
+  i++;											
+} 
+   }
+   %>
+   <!--validate-pin-Modal  -->
+   <%
+if(market_list_result.data.length>0)
+{
+var i=0;
+  for(let each_data of market_list_result.data){
+	%>
+  <div class="modal field-edit-modal"id="validate-pin-Modal<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close hide_click" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		  <div class="create-wallet-box">
+			  <div class="row align-item-center">
+				  <div class="col-xl-2 col-lg-3 col-md-3">
+					  <div class="for-icon-bg">
+						  <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+					  </div>
+				  </div>
+				  <div class="col-xl-10 col-lg-10 col-md-10">
+					  <h5 class="heading-purple">Validate Pin</h5>
+					  <p>Enter Your PIN to Continue</p>
+				  </div>
+			  </div>
+				 <div class="login-form-main phone-otp mt-15">
+				   <div class="form-group mb-0">
+					  <label>PIN</label>
+					  <div class="otp-box digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+						  <input type="text" id="otp1" name="otp1" class="form-control text-center" placeholder="-" maxlength="1" data-next="otp2">
+						  <input type="text" id="otp2" name="otp2" class="form-control" placeholder="-" maxlength="1" data-next="otp3" data-previous="otp1">
+						  <input type="text" id="otp3" name="otp3" class="form-control" placeholder="-" maxlength="1" data-next="otp4" data-previous="otp2">
+						  <input type="text" id="otp4" name="otp4" class="form-control" placeholder="-" maxlength="1" data-previous="otp3">
+					  </div>
+					</div>
+			  </div>
+			  <span class="error_validate" id="req_err_prm"></span>
+			  <div class="setup-inner-box for-protact pt-15">
+				  <div>
+					  <a class="btn-common-new hide_click" href="javascript:void(0)" onclick="pin_for_prm()" id="pin_prm_btn">Confirm</a>
+					   <span class="loader"><img src="../assets/images/loader-3.gif"height="42" width="62"></span>
+					  <a class="btn-common-new hide_click" href="">Cancel</a>
+				  </div>
+			  </div>
+			 </div>
+		 </div>
+	  </div>
+	</div>
+  </div>
+  <%
+i++;											
+} 
+   }
+%>
+<div class="modal  field-edit-modal" id="dsuccess-doc-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		  <div class="create-wallet-box">
+			  <div class="row align-item-center">
+				  <div class="col-xl-2 col-lg-3 col-md-3">
+					  <div class="for-icon-bg">
+						  <img src="../assets/images/icons/createidentity-assets/popup-success-icon.png">
+					  </div>
+				  </div>
+				  <div class="col-xl-10 col-lg-10 col-md-10">
+					  <h5 class="heading-purple">Document Sent Successfully</h5>
+					  
+				  </div>
+			  </div>
+			  <div class="setup-inner-box for-protact mt-30 p-0">
+				   <p>Your Document has been successfully sent to the verifier. Your document will be verified shortly and you'll ve notified in regards that.</p>
+			  </div>
+			  <div class="setup-inner-box for-protact pt-15">
+				<div>
+					<a href="" class="btn-common-new">OK!</a>
+				</div>
+				</div>
+			 </div>
+		 </div>
+	  </div>
+	</div>
+  </div>
+
+<!-- Modal E -->
+<!-- Modal S -->
+<div class="modal fade field-edit-modal" id="send-boarding-request" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Document Permission</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact pt-15">
+						<div class="create-rflet-id-form">
+						    				    
+							 <div class="form-group select-verifier-box">
+						    	<div class="input-group">
+								  <div class="dropdown">
+									  <button class="dropbtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									    Select Verifiers Via Code
+									  </button>
+									  <div class="dropdown-menu menu-for-id" aria-labelledby="dropdownMenuButton">
+									    <a class="dropdown-item" href="#">
+									    	<div class="for-verify-box-inner for-pending">
+									    		<i class="fas fa-check"></i>
+									    		<span class="user-img-verify">
+									    			<img src="../assets/images/other/face1.jpg">
+									    		</span>
+									    		<span class="tooltip fade" data-title="On boarding Pending">
+									    			Natasha-251100
+									    			<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+									    		</span>
+									    	</div>
+									    </a>
+									    <a class="dropdown-item" href="#">
+									    	<div class="for-verify-box-inner for-approve">
+									    		<i class="fas fa-check"></i>
+									    		<span class="user-img-verify">
+									    			<img src="../assets/images/other/face1.jpg">
+									    		</span>
+									    		<span class="tooltip fade" data-title="On boarding Accepted">
+									    			Heena-215020
+									    			<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+									    		</span>
+									    	</div>
+									    </a>
+									    <a class="dropdown-item" href="#">
+									    	<div class="for-verify-box-inner for-cancel">
+									    		<i class="fas fa-check"></i>
+									    		<span class="user-img-verify">
+									    			<img src="../assets/images/other/face1.jpg">
+									    		</span>
+									    		<span class="tooltip fade" data-title="On boarding Rejected">
+									    			Akansha-354653
+									    			<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+									    		</span>
+									    	</div>
+									    </a>
+									     <a class="dropdown-item" href="#">
+									    	<div class="for-verify-box-inner for-not-requested">
+									    		<i class="fas fa-check"></i>
+									    		<span class="user-img-verify">
+									    			<img src="../assets/images/other/face1.jpg">
+									    		</span>
+									    		<span class="tooltip fade" data-title="On boarding Not Requested.">
+									    			Soniya-564756
+									    			<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+									    		</span>
+									    	</div>
+									    </a>
+									  </div>
+									</div>
+								  
+								</div>
+						    </div>
+
+
+						     <div class="form-group for-select-existing-doc m-top-40">
+						    	<div class="input-group">
+								  <div class="dropdown keep-inside-clicks-open">
+									  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									    Select from existing documents
+									  </button>
+									  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									     <div class="for-doc-select">
+									    	<div class="checkbox"> 	
+									          <label>
+									          	Dirving License
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									          </label>
+									        </div>	
+									     </div>
+									      <div class="for-doc-select">
+									    	<div class="checkbox"> 	
+									          <label>
+									          	Passport
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									          </label>
+									        </div>	
+									     </div>
+									      <div class="for-doc-select">
+									    	<div class="checkbox"> 	
+									          <label>
+									          	Form 3
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									          </label>
+									        </div>	
+									     </div>
+									      <div class="for-doc-select">
+									    	<div class="checkbox"> 	
+									          <label>
+									          	Utility bill
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									          </label>
+									        </div>	
+									     </div>
+									  </div>
+									</div>
+								  
+								</div>
+						    </div>
+
+						    <div class="or-text">
+						    	or
+						    </div>
+							
+							<div class="form-group browse-file-section">
+				                  <input type="file" name="staff_image" class="file" style="visibility: hidden;position: absolute;" accept="image/x-png,image/jpeg">
+				                  <div class="input-group col-xs-12">
+				                    <span class="input-group-btn">
+				                      <button class="browse btn btn-primary input-lg" type="button"> Choose a file</button>
+				                    </span>
+				                    <input type="text" class="form-control" readonly="" placeholder="">
+				                  </div>
+                              </div>
+
+							<div class="personal-info-box for-download-view-table table-responsive">
+								<table class="table">
+								  <thead>
+								    <tr>
+								      <th scope="col">Label</th>
+								      <th scope="col">Download</th>
+								      <th scope="col">View</th>
+								      <th scope="col">Certify</th>
+								    </tr>
+								  </thead>
+								  <tbody>
+								    <tr>
+								      <th scope="row">
+								      	<div class="for-flex-align">
+								      		 <img src="../assets/images/icons/dashboard-assets/drivinglicense.png">
+						      		     Driving License 
+								      	</div>
+								      </th>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								    </tr>
+								    <tr>
+								      <th scope="row">
+								      	<div class="for-flex-align">
+								      		 <img src="../assets/images/icons/dashboard-assets/utilitybill.png">
+						      		     Utility Bill
+								      	</div>
+								      </th>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								    </tr>
+								    <tr>
+								      <th scope="row">
+								      	<div class="for-flex-align">
+								      		 <img src="../assets/images/icons/dashboard-assets/passport.png">
+						      		     Passport
+								      	</div>
+								      </th>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								    </tr>
+								    <tr>
+								      <th scope="row">
+								      	<div class="for-flex-align">
+								      		 <img src="../assets/images/icons/dashboard-assets/photoID.png">
+						      		     Photo Identification
+								      	</div>
+								      </th>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								    </tr>
+								  </tbody>
+								</table>
+							</div>
+						</div>
+						<div >
+							<a class="btn-common-new" href="">Submit</a>
+							<a class="btn-common-new" href="">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+<!-- Modal E -->
+<!--Add Verifier Modal S -->
+
+<%
+
+if(market_list_result.data.length>0)
+{
+var i=0;
+  for(let each_data of market_list_result.data){
+	%>
+<div class="modal fade field-edit-modal" id="addVerifier<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-address-book-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Add Verifier</h5>
+				</div>
+			</div>
+			<form action="/post-address-book" method="post" class="validate">
+
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+						    	<div class="input-group">
+								  <input type="text" class="form-control upper" placeholder="Label"value="<%=label[0].label%>" readonly>
+								</div>
+						    </div>
+						    <div class="form-group">
+								<div class="input-group">
+								   <!-- <select class="form-control mp_select">
+									  <option>Select by Verifier reflect code </option>
+									 
+									  <%	if(reflect_code.length>0)
+									  {
+										   
+										for(let each_data of reflect_code){
+											%>
+											
+									  <option  class="getId2 upper" value="<%=each_data.reflect_id%>"> <%=each_data.rep_username %> - <%=each_data.reflect_code %> </option>
+									 
+									  <%
+									}
+					  
+									  }
+								  %>
+								 
+									</select> -->
+									<%if(each_data.rep_firstname){%>
+									<input type="text" class="form-control upper" placeholder="Label"value=" <%=each_data.rep_firstname %> - <%=each_data.reflect_code%>" readonly>
+									<%}else if(each_data.entity_company_name){%>
+									<input type="text" class="form-control upper" placeholder="Label"value=" <%=each_data.entity_company_name %> - <%=each_data.reflect_code%>" readonly>
+									<%}%>
+							
+								</div>
+							</div>
+							<input type="hidden"name="label"id="label_id"value="<%=label[0].label%>">
+							<input type="hidden"name="reflect_code"id="reflect_code"value="<%=each_data.reflect_code %>">
+							<input type="hidden"name="market_place_id"id="label_id"value="<%=label[0].market_place_id%>">
+						</div>
+						<div >
+							<button class="btn-common-new ">Save</button>
+							<a class="btn-common-new cancel" href="">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+			 </form>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+<%
+i++;											
+} 
+   } 
+%>
+<!--Add Verifier Modal E -->
+
+<%- include('../innerFooter')%>
+<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css"> -->
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script>
+	
+	$('.cancel').click(function()
+{
+	location.reload();
+
+})
+$(document).ready( function () {
+ 	        	$('.loader').hide();
+} );
+</script>
+<script>
+		function export_table(){
+	//   alert('hhh') 
+	// $('.hide_link').show();
+
+	  $("#myTable3").table2excel({
+		  filename: "access-market-list.xls",
+		  exclude:'.hide_link',
+	  });
+	//   $('.hide_link').show();
+	window.location.reload(true);
+
+	};
+	
+	function print_table(){
+		$('.hide_link').hide();
+     
+     // $("#user_div").print();
+     var restorepage = $('body').html();
+  // $('.nodata').hide();
+   var printcontent = $('#myTable3').clone();
+   $('body').empty().html(printcontent);
+   window.print();
+   $('body').html(restorepage);
+ 
+   window.location.reload(true);
+
+		}  
+		setTimeout(function() {
+        $('#success_message').fadeOut('fast');
+        }, 3000);
+		setTimeout(function() {
+        $('#err_message').fadeOut('fast');
+        }, 3000);
+</script>
+<script>
+
+// $('.get_category_1').click(function(){
+// 		// alert('ref_id')
+
+// 		var ref_id = $("#ref_id").val();
+// 		// alert(ref_id)
+// 	if(ref_id!=""){
+// 		$.ajax({
+// 			type: "post",
+// 			url: "/get-category-list",
+// 			data:{reflect_id:ref_id},
+// 			success: function (data) {
+// 				alert(data);  
+// 				$('#category_list_1').html(data);
+			
+//             }
+// 		});
+// 	}else{
+// 				$('#category_list_1').html("");
+// 	}
+// })
+</script>
+<script>
+	// var reflect_id
+
+
+// $(document).on('change', ".mp_select", function(){
+// 	reflect_id =   $(this).val()
+// });
+
+// $(document).on('change', ".mp_select", function(){
+// 	reflect_id =   $(this).val()
+// });
+$('.reflect_code_1').click(function()
+{
+	// alert('mp_id')
+
+	var label = $("#label_id").val();
+	var reflect_code = $("#reflect_code").val();
+
+// alert(label)
+// alert(reflect_code)
+
+
+
+
+
+	  
+
+	  $.ajax({
+  type: "post",
+  url: "/post-address-book",
+  data:{reflect_code:reflect_code,label:label},
+  success: function (data) {
+	  
+	  location.reload();
+
+  
+  }
+});
+})
+
+
+</script>
+
+<script>
+	var reflect_id_client,j_value,getVerifierID,verifier_id;
+
+
+	$('.d1').on('click', '.menu-for-id a', function() {
+	   $('.dropbtn_1').html($(this).html()); 
+	//   var lastID = $(this).html();
+	reflect_id_client = $(this).find(".getId1").attr("value");
+	// alert(reflect_id_client)
+		// console.log("text", lastID); 
+
+
+   });
+
+  function get_category(j){
+	// alert('cat_val');
+	var cat_val=$('#ref_id'+j).val();
+	// alert(cat_val);
+
+	if(cat_val!=""){
+		$.ajax({
+			type: "post",
+			url: "/get-category-list-mp",
+			data:{reflect_id:cat_val,j},
+			success: function (data) {
+				// alert(data)
+				// console.log(data);  
+				$('#ver_category_list'+j).html(data);
+            }
+		});
+	}else{
+				$('#ver_category_list'+j).html("");
+	}
+}
+
+function get_sub_category(sub_cat_val,j){
+	// alert(sub_cat_val);
+	// alert(j);
+
+	$("#p_cat_id"+j).val(sub_cat_val)
+// 
+	if(sub_cat_val!=""){
+		$.ajax({ 
+			type: "post",
+			url: "/get-sub-category-list-mp",
+			data:{category_id:sub_cat_val,j},
+			success: function (data) {
+				// alert('data');  
+
+			// alert(data);  
+				$('#sub_category_list'+j).html(data);
+            }
+		});
+	}else{
+				$('#sub_category_list'+j).html("");
+	}
+}
+
+function get_requested_doc(category_id,j){
+	$("#sub_cat_id"+j).val(category_id) 
+	j_value=j;
+	// alert(j);
+
+//    alert(category_id);
+   if(category_id!=""){
+		$.ajax({
+			type: "post",
+			url: "/get-requested-doc-mp",
+			data:{category_id:category_id},
+			success: function (data) {
+			// 	alert('category_id');
+
+			// 	alert(data);  
+				$('#category_docs'+j).html(data);
+            }
+		});
+	}else{
+				$('#category_docs'+j).html("");
+	}
+}
+$('.select_client_coc').click(function()
+   {
+	$("#doc_reflect_id"+j_value).val(reflect_id_client)
+
+	var k=0;
+
+	// $('.select_append_client').html("");
+	//    alert('select_client_coc')
+	if ($(".select_append_client").find('#doc_check'+k).length==0)
+    {
+	   if(reflect_id_client!=""){
+		$.ajax({
+			type: "post",
+			url: "/existing-doc-client",
+			data:{reflect_id:reflect_id_client},
+			success: function (data) {
+				if(data!=null && data!="" && data!=undefined){
+					var i=0;
+
+			for(let document of data){
+
+				$('.select_append_client').append(`<div class="for-doc-select">
+												 <div class="checkbox"> 	
+												 <label>
+													${document.document_name}<input type="checkbox" onclick="get_check_doc('${i}','${j_value}')" id="doc_check${i}" value="${document.user_doc_id}" name="doc_check">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+												 </label>
+												</div>	
+												</div>`)
+																
+												
+
+				i++; }}
+				// console.log(data);  
+				// $('#ver_category_list'+j).html(data);
+            }
+		});
+	      }else{
+				// $('#ver_category_list'+j).html("");
+	}
+	}
+	else{
+		// $(`.select_append_client`).remove();
+
+	}
+   })
+	
+
+</script>
+<script>
+	function get_check_doc(value,j){
+		// alert(value);
+		// alert(j);
+       var p=0;
+		var user_doc_id = $(`#doc_check${value}`).val();
+		var trow = $(`#docRow${value}`).text();
+
+		// alert(user_doc_id);
+		// alert(trow);
+
+		// console.log("user_doc_id",user_doc_id);
+		if(trow!=""){
+			$(`#docRow${value}`).remove();
+		}else{
+        $.ajax({
+			type: "post",
+			url: "/get-checked-doc",
+			data:{user_doc_id:user_doc_id},
+			success: function (data) {
+			// alert(data)
+				$('#doc_data'+j).append(`<tr id="docRow${value}">
+								      <th scope="row">
+								      	<div class="for-flex-align">
+								      		 <img src="../assets/images/icons/dashboard-assets/drivinglicense.png">
+											   ${data[0].document_name}
+											   <input type="hidden" id="docIdRow" value="${data[0].user_doc_id}">
+								      	</div>
+								      </th>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" name="downloadPerm" id="downloadPerm" value="${data[0].user_doc_id}">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" name="viewPerm" id="viewPerm" value="${data[0].user_doc_id}">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" name="certifyPerm" id="certifyPerm" value="${data[0].user_doc_id}">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								    </tr>`);
+			}
+		});
+	}
+	}
+
+</script>
+<script>
+	var rowCount;
+	var rowVal=[];
+	var download = [];
+	var view = [];
+	var certify = [];
+
+function submit_all_perm(){
+	// alert('hhhh')
+	// alert(($('table#myTable1 tr:last').index() + 1));
+
+	getVerifierID = $("#verifier_ref_id"+j_value).val();
+	verifier_id = $("#verifier_id"+j_value).val();
+
+
+	// alert('getVerifierID : '+getVerifierID)
+
+	if(getVerifierID!="" || getVerifierID!=undefined){
+	//  alert(getVerifierID);
+	 
+	rowCount = $('table#myTable1 tr:last').index() + 1;
+	//  alert(rowCount);
+
+	var reflect_id = $('#doc_reflect_id'+j_value).val();
+	// alert('reflect_id : '+reflect_id);
+
+
+	if(rowCount>0)
+	{
+        // alert('length '+$('#doc_data'+j_value).find('tr').length)
+		if($('input[name="doc_check"]:checked')){
+			
+			$('#doc_data'+j_value).find('tr').each(function(index) {
+				var hidden_val=$(this).find('input[type="hidden"]').val();
+
+                 rowVal.push(hidden_val);
+
+			//    alert(index)
+
+			   var down_val=$(this).find('input[name="downloadPerm"]:checked').val();
+			   var view_val = $(this).find('input[name="viewPerm"]:checked').val();
+			   var certify_val = $(this).find('input[name="certifyPerm"]:checked').val();
+			//    alert('hidden_val '+hidden_val)
+
+			//    alert('down_val '+down_val)
+			//    alert(view_val)
+			//    alert(certify_val)
+
+	   		if(down_val==undefined)
+	   		{
+	   			var dwn_per='no';
+	   		}
+	   		else
+	   		{
+	   		   var dwn_per='yes';	
+			}
+			if(view_val==undefined)
+	   		{
+	   			var vw_per='no';
+	   		}
+	   		else
+	   		{
+	   		   var vw_per='yes';	
+			}
+			   if(certify_val==undefined)
+	   		{
+	   			var crt_per='no';
+	   		}
+	   		else
+	   		{
+	   		   var crt_per='yes';	
+	   		}
+			   
+
+	   		download.push(dwn_per);
+			view.push(vw_per);
+			certify.push(crt_per)
+	   	});
+		   $('#subPerm'+j_value).attr('data-toggle', 'modal');
+			$('#subPerm'+j_value).attr('data-target', '#doc-permission-Modal'); 
+			$('#subPerm'+j_value).attr('data-dismiss', 'modal');
+	}else if(rowCount<=0){
+		$('#prm_error_span').html("Please select atleast one document.");
+	}
+}
+}else{
+	$('#prm_error_span').html("Please select verifier.");
+}
+	
+	
+		
+}
+
+
+
+function pin_for_prm(){
+	// alert("hellllllllllllll0000");
+var otp1=$('#otp1').val();
+var otp2=$('#otp2').val();
+var otp3=$('#otp3').val();
+var otp4=$('#otp4').val();
+var otp = otp1+""+otp2+""+otp3+""+otp4;
+// alert('otp : '+otp)
+if(otp1=="" || otp1=="" || otp1=="" || otp1==""){
+ $('#req_err_prm').html("Please enter valid Pin.");
+}else{
+// alert(otp);
+$('.hide_click').hide();
+ 	        	$('.loader').show();
+$('#req_err_prm').html("");
+	$.ajax({
+			type: "post",
+			url: "/request-check-pin",
+			data:{pin:otp},
+			success: function (data) {
+				// alert(data);
+				if(data.success_data){
+                    $('#req_err_prm').html('');
+					// alert(data);
+					submit_permission();
+				}else{
+                    $('#req_err_prm').html('Please enter valid Pin');
+				}
+			}
+	})
+}
+}
+
+function submit_permission(){
+
+	// alert("hiiii");
+var reflect_id = $('#doc_reflect_id'+j_value).val();
+// var vrfr = getVerifierID.split('-');
+	//  var vId = vrfr[0];
+	//  var vRefId = vrfr[1];
+	 var p_cat_id1= $("#p_cat_id"+j_value).val()
+	 var sub_cat_id1= $("#sub_cat_id"+j_value).val()
+
+	//  alert("reflect_id "+reflect_id);
+	//  alert("verifier_id "+verifier_id);
+
+	//  alert("sub_cat_id1 "+sub_cat_id1);
+	//  alert("p_cat_id1 "+p_cat_id1);
+
+	//  alert("download "+download);
+	//  alert("view "+view);
+	//  alert("certify "+certify);
+	//  alert("rowVal "+rowVal);
+	//  alert("rowCount "+rowCount);
+
+$.ajax({
+    type: "post",
+	url:"/request-doc",
+	data:{
+		 reflect_id:reflect_id,
+		download:JSON.stringify(download),
+		view:JSON.stringify(view),
+		certify:JSON.stringify(certify),
+		total_doc:JSON.stringify(rowVal),
+		verifier_id:verifier_id,
+		verifier_reflect_id:getVerifierID,
+		rowCount:rowCount,
+		p_cat_id:p_cat_id1,
+		sub_cat_id:sub_cat_id1
+    },
+  //       reflect_id:reflect_id,
+		// download:JSON.stringify(download),
+		// view:JSON.stringify(view),
+		// certify:JSON.stringify(certify),
+		// total_doc:JSON.stringify(rowVal),
+		// verifier_id:verifier_id,
+		// verifier_reflect_id:getVerifierID,
+		// rowCount:rowCount,
+		// p_cat_id:p_cat_id1,
+		// sub_cat_id:sub_cat_id1
+    success:function(datas) {
+        // alert("[[[[[[[[[[[[[[["+datas);
+		
+		$('#validate-pin-Modal'+j_value).modal('hide');
+		
+		$('#dsuccess-doc-Modal').modal('show');
+	}
+});
+
+}
+
+
+
+function submit_signature(sign_val)
+ {
+
+ 	var signature=$(`#signature${sign_val}`).get(0);
+ 	var signature_url=signature.toDataURL();
+    //  alert(signature);
+ 	if(signature_url)
+ 	{
+		 var can_val =isCanvasBlank(signature);
+		//  alert(can_val);
+		if(can_val!=true){
+		    $('#canvas_error').html("");
+			var blob_url=signature_url;
+			var user_doc_id = $('#attested_doc_id'+sign_val).val();
+			$.ajax({
+				type:"post",
+				url:"/self-attested",
+				data:{attested_doc_id:user_doc_id,blob_url:blob_url},
+				success:function(data) {
+					location.reload();
+					// $('#example_img').attr('src',`https://ipfs.io/ipfs/${data}`)
+					// console.log(data)
+				}
+			});
+
+ 	    }else{
+		    $('#canvas_error').html("Please sign first.");
+	    }
+
+	}
+
+ 	
+}
+function isCanvasBlank(canvas) {
+  return !canvas.getContext('2d')
+    .getImageData(0, 0, canvas.width, canvas.height).data
+    .some(channel => channel !== 0);
+}
+function dataURItoBlob(dataURI) {
+		// alert("in");
+		console.log("canvas",dataURI);
+ // convert base64 to raw binary data held in a string
+ // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+ var byteString = atob(dataURI.split(',')[1]);
+
+ // separate out the mime component
+ var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+
+ // write the bytes of the string to an ArrayBuffer
+ var ab = new ArrayBuffer(byteString.length);
+
+ // create a view into the buffer
+ var ia = new Uint8Array(ab);
+
+ // set the bytes of the buffer to the correct values
+ for (var i = 0; i < byteString.length; i++) {
+     ia[i] = byteString.charCodeAt(i);
+ }
+
+ // write the ArrayBuffer to a blob, and you're done
+ var blob = new Blob([ab], {type: mimeString});
+ return blob;
+
+}
+// }
+
+</script>

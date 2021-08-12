@@ -1,0 +1,286 @@
+<%- include('partials/header.ejs') %>  
+
+<!--keyboard css/js start-->
+<link rel="stylesheet" type="text/css" href="../assets/css/keyboard.css">
+<script type="text/javascript" src="../assets/js/keyboard.js"></script>
+<!--keyboard css/js end-->
+
+<form action="/submitSetPin" method="POST" id="validate"> 
+<section class="login-sec">
+	<div class="container-fluid p-0">
+		<div class="row m-0">
+			<div class="col-md-6 p-0">
+				<div class="left-side-login">
+					<div class="logo-box">
+						<a href="">
+							<img src="../assets/images/logo.png">
+						</a>
+					</div>
+					<div class="side-text">
+						<h2>
+							Set Up <br> a Pin
+						</h2>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 p-0">
+				<div class="right-side-login forgot-pass">
+					<div class="inner-div">
+						<p class="first-line">Please set up a 4-digit PIN to easily login in future.</p>
+						<div class="login-form-main">
+							 <div class="form-group">
+							    <label>Set PIN<span style="color: red;">*</span></label>
+                                <div class="otp-box digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+                                    <input type="password" id="otp1" name="otp1" class="form-control text-center use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp2" onkeypress="return isNumber(event)" tabindex="1" autocomplete="off"/>
+
+                                    <input type="password" id="otp2" name="otp2" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp3" data-previous="otp1" onkeypress="return isNumber(event)" tabindex="2"autocomplete="off"/>
+
+                                    <input type="password" id="otp3" name="otp3" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp4" data-previous="otp2" onkeypress="return isNumber(event)" tabindex="3"autocomplete="off">
+                                    <input type="password" id="otp4" name="otp4" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-previous="otp3" onkeypress="return isNumber(event)" tabindex="4"autocomplete="off">
+                                </div>
+                                <span id="otp_err"  style="color: red;"></span>
+							  </div>
+                              <div class="form-group">
+                                <label>Confirm PIN<span style="color: red;">*</span></label>
+                                <div class="otp-box digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+                                    <input type="password" id="otp6" name="otp5" class="form-control text-center use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp7" onkeypress="return isNumber(event)" tabindex="5"autocomplete="off">
+                                    <input type="password" id="otp7" name="otp6"  class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp8" data-previous="otp6" onkeypress="return isNumber(event)" tabindex="6"autocomplete="off" >
+                                    <input type="password" id="otp8" name="otp7"  class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp9" data-previous="otp7" onkeypress="return isNumber(event)" tabindex="7"autocomplete="off">
+                                    <input type="password" id="otp9" name="otp8" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-previous="otp8" onkeypress="return isNumber(event)" tabindex="8"autocomplete="off">
+                                </div>
+                                <span id="con_otp_err"  style="color: red;"></span>
+                                <!-- <span id="con_otp_err2"  style="color: red;"></span>
+                                <span id="con_otp_err3"  style="color: red;"></span>
+                                <span id="con_otp_err4"  style="color: red;"></span> -->
+                              </div>
+                              <input type="hidden" name="userid" id="userId" >
+							  <div>
+							  	<button class="purple-btn" type="submit">Submit</button>
+							  </div>
+                              <div>
+                                  <div class="checkbox checkbox-reflet">
+                                      <label>
+                                        <input type="checkbox" value="">
+                                        <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                        Remember me <span class="for-tooltip"><i class="fas fa-info-circle"></i>
+                                            <div class="tooltip-box">
+                                                Checking this box allows you to access your account at a later time without putting in your credentials
+                                            </div>
+                                        </span>
+                                      </label>
+                                    </div>
+                              </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+</form>
+
+
+
+
+
+
+
+
+	<!-- JQuery -->
+        <script type="text/javascript" src="/assets/js/jquery-3.3.1.min.js"></script>
+        <!-- <script type="text/javascript" src="assets/js/jquery-1.11.3.min.js"></script> -->
+        <!-- Bootstrap Core JavaScript -->
+        <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+        <!-- dropdownhover effects JavaScript -->
+        <script type="text/javascript" src="/assets/js/bootstrap-dropdownhover.min.js"></script>
+        <!-- wow JavaScript -->
+        <script type="text/javascript" src="/assets/js/wow.min.js"></script>
+        <!-- video player JavaScript -->
+
+        <!-- Custom JavaScript -->
+        <script type="text/javascript" src="/assets/js/custom.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+
+        <script type="text/javascript">
+          $(document).ready(function(){
+
+          $('#validate').validate({
+              
+               onfocusout: function(element) {
+               this.element(element);
+               },
+               errorClass: 'error_validate',
+               errorElement:'span',
+               highlight: function(element, errorClass) {
+               $(element).removeClass(errorClass);
+               },
+               submitHandler:function(form)
+                  {
+                    $('#submit_signup').attr('disabled',true);
+                 var otp1=   $("#otp1").val();
+                 var otp2= $("#otp2").val();
+                 var otp3=  $("#otp3").val();
+                 var otp4= $("#otp4").val();
+
+                 var otp6=   $("#otp6").val();
+                     var otp7= $("#otp7").val();
+                     var otp8=  $("#otp8").val();
+                     var otp9=  $("#otp9").val();
+
+                 var totalOtp1 = otp1+otp2+otp3+otp4
+                     var totalOtp2 = otp6+otp7+otp8+otp9
+                    if($("#otp1").val()==""||$("#otp2").val()==""||$("#otp3").val()==""||$("#otp4").val()==""){
+                    //    alert("dnsfjksd")
+                       $("#otp_err").text("All fields are required.")
+                     }else{
+                        $("#otp_err").text("")
+                     }
+
+                   
+                    if($("#otp6").val()==""||$("#otp7").val()==""||$("#otp8").val()==""||$("#otp9").val()==""){
+                    //    alert("dnsfjksd")
+                       $("#con_otp_err").text("All fields are required.")
+                     }else{
+                        // $("#con_otp_err").text("")
+                        if(totalOtp1!=totalOtp2){
+                            $("#con_otp_err").text("Set-pin and confirm pin should be same.")
+                        }else{
+                            $("#con_otp_err").text("")
+                            form.submit();
+                        }
+                    }
+                     
+                    //  alert(totalOtp1)
+                    //  alert(totalOtp2)
+
+                   // 
+                  }
+               });
+
+          $('.restrict_key').bind('keyup keydown keypress', function (evt) {
+            return false;
+       });
+
+
+  });
+  
+          </script>
+<script>
+    $(function(){
+    
+    var url = new URL( window.location.href);
+    var userId = url.searchParams.get("userid");
+    $("#userId").val(userId)
+    // alert( $("#userId").val())
+
+    })
+</script>
+
+
+
+
+
+         <script>
+    $('.digit-group').find('input').each(function() {
+    $(this).attr('maxlength', 1);
+    $(this).on('keyup', function(e) {
+        var parent = $($(this).parent());
+        
+        if(e.keyCode === 8 || e.keyCode === 37) {
+            var prev = parent.find('input#' + $(this).data('previous'));
+            
+            if(prev.length) {
+                $(prev).select();
+            }
+        } else if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
+            var next = parent.find('input#' + $(this).data('next'));
+            
+            if(next.length) {
+                $(next).select();
+            } else {
+                if(parent.data('autosubmit')) {
+                    parent.submit();
+                }
+            }
+        }
+    });
+});
+</script>
+      <script>
+            // WRITE THE VALIDATION SCRIPT.
+            function isNumber(evt) {
+                
+                var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+                if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+                    return false;
+        
+                return true;
+            }  
+            
+            
+// function isequl1(value){
+
+//                     $("#otp1").val();
+                   
+
+//                     $("#otp6").val();
+                    
+//                     if($("#otp1").val()!=$("#otp6").val()){
+//                                             $("#con_otp_err1").text("")
+//                                            $("#con_otp_err1").text("set-pin and confirme pin should be equal")
+//                     }else{
+//                         $("#con_otp_err1").text("")
+//                     }
+                   
+            
+//             }
+// function isequl2(value){
+
+//       $("#otp2").val();
+//       $("#otp7").val();
+
+
+//     if($("#otp2").val()!=$("#otp7").val()){
+//                                           $("#con_otp_err2").text("")
+//                                         $("#con_otp_err2").text("set-pin and confirme pin should be equal")
+//                                         }else{
+//                                             $("#con_otp_err2").text("")
+//                                         }
+
+// }  
+// function isequl3(value){
+
+//              $("#otp3").val();
+//              $("#otp8").val();
+
+
+// if($("#otp3").val()!=$("#otp8").val()){
+//                                     $("#con_otp_err3").text("")
+//                                   $("#con_otp_err3").text("set-pin and confirme pin should be equal")
+//                                   }else{
+//                                     $("#con_otp_err3").text("")
+//                                   }
+
+// }          
+// function isequl4(value){
+
+//                 $("#otp4").val();
+//                 $("#otp9").val();
+
+
+// if($("#otp4").val()!=$("#otp9").val()){
+//                        $("#con_otp_err4").text("")
+//                        $("#con_otp_err4").text("set-pin and confirme pin should be equal")
+//                      }else{
+//                         $("#con_otp_err4").text("")
+//                      }
+
+// }   
+
+        </script>
+<%- include('partials/footer.ejs') %>    
+
+
+
+ 

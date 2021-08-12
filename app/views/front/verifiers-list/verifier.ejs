@@ -1,0 +1,2093 @@
+<%-include('../innerHeader')%>
+<style>
+    
+    .dis-able-btn {
+		color: currentColor;
+		pointer-events: none;
+        cursor: default;
+        text-decoration: none;
+  /* color: black; */
+        opacity: 0.5;
+        text-decoration: none;
+        /* cursor: not-allowed;
+		background: #dddddd; */
+    }
+ 
+
+    .active {
+        text-decoration-color: yellow;
+    }
+
+    .resend-lint-count {
+        color: #ffb15a;
+        font-weight: 500;
+        margin-right: 6px;
+        text-decoration: none;
+        background-color: transparent;
+        border: none;
+    }
+
+    .count-no {
+        font-size: 20px;
+        margin: 0 20px;
+        color: #000;
+    }
+	.tab-wrapper .personal-info-box .dataTables_paginate.paging_simple_numbers {
+display: none !important;
+}
+    </style>
+<!-- <style>
+.personal-info-box.info-search .dataTables_length, 
+.personal-info-box.info-search .dataTables_filter, 
+.personal-info-box.info-search .dataTables_info, 
+.personal-info-box.info-search .dataTables_paginate.paging_simple_numbers{
+display: block;
+}
+</style> -->
+
+
+<section class="heading-sec">
+		<% if(err_msg!=undefined && err_msg !='' ){ %>
+			<div class="alert alert-danger text-center  flash_msg ">
+					<%= err_msg %>
+				 </div>
+		   
+			<% }%>
+		   <% if(success_msg!=undefined && success_msg !='' ){ %>
+			  <div class="alert alert-success text-center  flash_msg ">
+				<%= success_msg %>
+			 </div>
+			<% }%>
+			
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-6 col-md-6 col-sm-6">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/home-assets/verifiers.png">
+					<h4>Search Verifier</h4>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-6">
+				<div class="text-right">
+					<a class="btn-common-new " data-target="#Invitation" data-toggle="modal">
+                        <i class="mdi mdi-email "></i> Invite Verifier 
+					  </a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+<section class="setup-id-sec">
+	<div class="container">
+		<!-- Tabs with print icon S -->
+		<div class="personal-info-heading">
+			<div class="row align-item-center">
+				<div class="col-xl-6 cl-lg-6 col-md-6">
+					<ul class="nav nav-tabs all-doc-tabs" id="myTab" role="tablist">
+						<li class="nav-item">
+					    	<a class="nav-link " id="doc1" data-toggle="tab" href="#doc-tab1" role="tab" aria-controls="doc-tab1" aria-selected="true">Private</a>
+					  	</li>
+					  	<li class="nav-item">
+					    	<a class="nav-link active" id="doc2" data-toggle="tab" href="#doc-tab2" role="tab" aria-controls="doc-tab2" aria-selected="true">Public</a>
+					  	</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="alert alert-success text-center  flash_msg " id="success_div">
+			Verifier added successfully into address addToAddBook.
+		 </div>
+		<!-- Tabs with print icon E -->
+		<!-- Table Wrapper S -->
+		<div class="tab-content tab-wrapper" id="publicWrapper">
+			<div class="tab-pane fade " id="doc-tab1" role="tabpanel" aria-labelledby="doc1">
+
+				<div class="btn-all-dwnload custom-space-btw another-drop-down">
+					<form class="">
+                      <div class="input-group search-address-book">
+						  <input type="text" class="form-control autocomplete" placeholder="Search">
+						  <!-- <input type="text"id="myInput1" class="form-control" placeholder="Search1" aria-label="Recipient's username" aria-describedby="basic-addon2"> -->
+
+                          <div class="input-group-append">
+                              <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+                          </div>
+                      </div>
+                  	</form>
+                  </div>
+				<!-- Button S -->
+				<!-- <div class="btn-all-dwnload custom-space-btw">
+					<div class="custom-filter-tbl">
+						<div class="dataTables_length" id="myTable_length">
+							<label>Show 
+								<select name="myTable_length" aria-controls="myTable" class="">
+									<option value="10">10</option>
+									<option value="25">25</option>
+									<option value="50">50</option>
+									<option value="100">100</option>
+								</select>
+							</label>
+						</div>
+					</div>
+					<div class="col-xl-6 col-lg-6 col-md-6 custom-flex-row">
+						<form class="width-320 response-search"> 
+		                     <div class="input-group search-address-book">
+		                        <input type="text" class="form-control autocomplete" id="myInput" placeholder="Search verifier by name" onkeypress="autoSearch(this);">
+		                        <div class="input-group-append">
+		                            <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+		                        </div>
+		                    </div>
+	                  	</form>
+                  	</div>
+				</div> -->
+				<!-- Button E -->
+				<div class="personal-info-box table-responsive verifier-table">
+					  <table class="table" id="myTable">
+						<thead>
+					    	<tr>
+						      	<th scope="col">Full Name</th>
+						      	<th scope="col">Company Name</th>
+						      	<th scope="col">MyReflet ID</th>
+						      	<th scope="col">Document</th>
+						      	<th scope="col" class="text-center">Action</th>
+					    	</tr>
+					  	</thead>
+						<tbody>
+			<%verifierListData.data.forEach(privateVerifier=>{%>
+									<%if(privateVerifier.verifier_type=="private"){%>
+						    <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+												<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+												
+												<%
+												if(privateVerifier.profile_pic)
+												{
+													%>
+													<img class="profile-table" src="<%= privateVerifier.profile_pic %>">
+													<%
+												}
+												else
+												{
+													
+													%>
+													<img class="profile-table" id="user_profile_image_preview" src="../assets/images/other/face1.jpg" class="m-t-5" >
+													<%
+												}
+											%>
+												<%=decrypt(privateVerifier.full_name)%>
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+								  <%if(privateVerifier.reflectid_by=="entity"){%>
+									<td><%=privateVerifier.entity_company_name%></td>
+									<%}else{%>
+										<td><%=privateVerifier.rep_username%></td>
+	
+										<%}%>
+									<td><%=privateVerifier.reflect_code%></td>
+									<!-- <td>Driving License, Passport</td> -->
+								
+							    <td>Driving License, Passport</td>
+							    <td>
+							      	<div class="btn-all-dwnload">
+							      		<a href="#" data-toggle="modal" data-target="#send-boarding-request">Send On-Boarding Request</a>
+							      	</div>
+						      	</td>
+							</tr>
+							<%}%>
+							<%})%>	
+						 <!--    <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table" src="../assets/images/other/img_user1.png">
+							      		     	Heena Chawla
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td>Quest GLT</td>
+							    <td>WC-1021</td>
+							    <td>Driving License, Passport</td>
+							    <td>
+							      	<div class="btn-all-dwnload">
+							      		<a href="#">Send On-Boarding Request</a>
+							      	</div>
+						      	</td>
+						    </tr>
+						    <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table" src="../assets/images/other/img_user1.png">
+							      		     	Heena Chawla
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td>Quest GLT</td>
+							    <td>WC-1021</td>
+							    <td>Driving License, Passport</td>
+							    <td>
+							      	<div class="btn-all-dwnload">
+							      		<a href="#">Send On-Boarding Request</a>
+							      	</div>
+						      	</td>
+						    </tr>
+						    <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table" src="../assets/images/other/img_user1.png">
+							      		     	Heena Chawla
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td>Quest GLT</td>
+							    <td>WC-1021</td>
+							    <td>Driving License, Passport</td>
+							    <td>
+							      	<span class="accept-status">Accepted</span>
+						      	</td>
+						    </tr>
+						    <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table" src="../assets/images/other/img_user1.png">
+							      		     	Heena Chawla
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td>Quest GLT</td>
+							    <td>WC-1021</td>
+							    <td>Driving License, Passport</td>
+							    <td>
+							      	<div class="btn-all-dwnload">
+							      		<a href="#">Send On-Boarding Request</a>
+							      	</div>
+						      	</td>
+						    </tr>
+						    <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table" src="../assets/images/other/img_user1.png">
+							      		     	Heena Chawla
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td>Quest GLT</td>
+							    <td>WC-1021</td>
+							    <td>Driving License, Passport</td>
+							    <td class="text-center">
+							      	<span class="pending-status">Pending</span>
+						      	</td>
+						    </tr>
+						    <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table" src="../assets/images/other/img_user1.png">
+							      		     	Heena Chawla
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td>Quest GLT</td>
+							    <td>WC-1021</td>
+							    <td>Driving License, Passport</td>
+							    <td>
+							      	<div class="btn-all-dwnload">
+							      		<a href="#">Send On-Boarding Request</a>
+							      	</div>
+						      	</td>
+						    </tr>
+						    <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table" src="../assets/images/other/img_user1.png">
+							      		     	Heena Chawla
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td>Quest GLT</td>
+							    <td>WC-1021</td>
+							    <td>Driving License, Passport</td>
+							    <td>
+							      	<div class="btn-all-dwnload">
+							      		<a href="#">Send On-Boarding Request</a>
+							      	</div>
+						      	</td>
+						    </tr>
+						    <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table" src="../assets/images/other/img_user1.png">
+							      		     	Heena Chawla
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td>Quest GLT</td>
+							    <td>WC-1021</td>
+							    <td>Driving License, Passport</td>
+							    <td>
+							      	<div class="btn-all-dwnload">
+							      		<a href="#">Send On-Boarding Request</a>
+							      	</div>
+						      	</td>
+						    </tr>
+						    <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table" src="../assets/images/other/img_user1.png">
+							      		     	Heena Chawla
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td>Quest GLT</td>
+							    <td>WC-1021</td>
+							    <td>Driving License, Passport</td>
+							    <td>
+							      	<div class="btn-all-dwnload">
+							      		<a href="#">Send On-Boarding Request</a>
+							      	</div>
+						      	</td>
+						    </tr>
+						    <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table" src="../assets/images/other/img_user1.png">
+							      		     	Heena Chawla
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td>Quest GLT</td>
+							    <td>WC-1021</td>
+							    <td>Driving License, Passport</td>
+							    <td>
+							      	<div class="btn-all-dwnload">
+							      		<a href="#">Send On-Boarding Request</a>
+							      	</div>
+						      	</td>
+						    </tr>
+						    <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table" src="../assets/images/other/img_user1.png">
+							      		     	Heena Chawla
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td>Quest GLT</td>
+							    <td>WC-1021</td>
+							    <td>Driving License, Passport</td>
+							    <td>
+							      	<div class="btn-all-dwnload">
+							      		<a href="#">Send On-Boarding Request</a>
+							      	</div>
+						      	</td>
+						    </tr>
+						    <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table" src="../assets/images/other/img_user1.png">
+							      		     	Heena Chawla
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td>Quest GLT</td>
+							    <td>WC-1021</td>
+							    <td>Driving License, Passport</td>
+							    <td>
+							      	<div class="btn-all-dwnload">
+							      		<a href="#">Send On-Boarding Request</a>
+							      	</div>
+						      	</td>
+						    </tr> -->
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- section One -->
+			<div class="tab-pane fade show active" id="doc-tab2" role="tabpanel" aria-labelledby="doc2">
+				<div class="row personal-info-heading">
+					<div class="col-md-12">	
+                      <div class="custom-space-btw another-drop-down">
+					        <div class="for-select-existing-doc">
+								<div class="input-group">
+									<div class="dropdown keep-inside-clicks-open">
+										<h3 class="small-title">Verifier type</h3>
+										<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											All
+										</button>
+										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 20px, 0px);">
+											<div class="for-doc-select">
+												<div class="checkbox"> 	
+													<label>
+														  All
+														<input type="checkbox" onclick="verifierTypeFilter(value)" value="All" class="verifierTtype">
+														<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													  </label>
+												</div>	
+											</div>
+										
+		
+											<div class="for-doc-select">
+												<div class="checkbox"> 	
+													 <label>
+														Verifier/Certifier
+														<input type="checkbox" onclick='verifierTypeFilter(value)' value="'general'" class="verifierTtype">
+														<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													  </label>
+												</div>	
+											</div>
+											<div class="for-doc-select">
+												<div class="checkbox"> 	
+													 <label>
+														Regulated
+														<input type="checkbox" onclick="verifierTypeFilter(value)" value="'regular'" class="verifierTtype">
+														<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													  </label>
+												</div>	
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+				            <div class="text-right">
+								<a href="javascript:downloadVerifierList()">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Export Data">
+											<img src="../assets/images/icons/dashboard-assets/export.png">
+									     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+									</div>
+								</a>
+								<a href="">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Print Data"  onclick="printdiv()">
+											<img src="../assets/images/icons/dashboard-assets/print.png">
+										    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				
+
+				<!-- Button S-->
+				<div class="btn-all-dwnload custom-space-btw another-drop-down">
+					<form class="">
+                      <div class="input-group search-address-book">
+						  <!-- <input type="text" class="form-control autocomplete" placeholder="Search"> -->
+						  <input type="text"id="myInput" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+
+                          <div class="input-group-append">
+                              <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+                          </div>
+                      </div>
+                  	</form>
+					
+		
+					<div>
+						<a href="javascript:void(0)" onclick="addToAddBook()" ><img src="../assets/images/icons/dashboard-assets/icon_add_book.png"> Add to address book</a>
+						<a href="javascript:void(0)" onclick="get_reflet_id_by_check()" data-toggle="modal" id="sb_id"><img src="../assets/images/icons/dashboard-assets/icon_send.png"> Send to verifier </a>
+						<!-- <a href="javascript:void(0)" onclick="ViewDocument()" id="vd_id"><img src="../assets/images/icons/dashboard-assets/icon_eye_pur.png"> View Document</a> -->
+						<a href="javascript:void(0)" onclick="ManageMessages()" id="md_id"><img src="../assets/images/icons/dashboard-assets/icon_message.png"> Manage messages</a>
+					</div>
+				</div>
+				<!-- Button E -->
+				<div class="personal-info-box table-responsive" id="verifierListDiv">
+					<div class="div_data">
+
+					<table class="table" id="myTable3">
+						<thead>
+					    	<tr>
+						      	<th scope="col">Full Name</th>
+						      	<th scope="col">Company Name</th>
+						      	<th scope="col">MyReflet ID</th>
+						      	<th scope="col">Document</th>
+						      	<th scope="col" class="hide_link">Action</th>
+					    	</tr>
+					  	</thead>
+						<tbody>
+				<%var i=0; verifierListData.data.forEach(publieVerifier=>{%>
+					<%if(publieVerifier.verifier_type=="public"){%>
+						    <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" name="cilentId" onclick="checkForSelect()" value="<%=publieVerifier.reflect_id%>-<%=i%>">
+												<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+												<%
+								if(publieVerifier.profile_pic)
+								{
+									%>
+									<img class="profile-table" src="<%= publieVerifier.profile_pic %>">
+									<%
+								}
+								else
+								{
+									
+									%>
+									<img class="profile-table" id="user_profile_image_preview" src="../assets/images/other/face1.jpg" class="m-t-5" >
+									<%
+								}
+							%>
+												<!-- <img class="profile-table" src="../assets/images/other/img_user1.png"> -->
+												
+							      		     	<%=decrypt(publieVerifier.full_name)%>
+								         	 </label>
+								        </div>
+									</div>
+								  </th>
+								  <%if(publieVerifier.reflectid_by=="entity"){%>
+								<td><%=publieVerifier.entity_company_name%></td>
+								<%}else{%>
+									<td><%=publieVerifier.rep_username%></td>
+
+									<%}%>
+							    <td><%=publieVerifier.reflect_code%></td>
+							    <td>Driving License, Passport</td>
+							    <td class="hide_link">
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu"  onclick="addressbookadd('<%=publieVerifier.reflect_code%>,<%=publieVerifier.reg_user_id%>')" aria-labelledby="profileDropdown">
+				                            <!-- <a class="dropdown-item" >
+				                            	<img src="../assets/images/icons/dashboard-assets/icon_add_book1.png"> Add to address book
+											</a> -->
+											<input type="hidden" id="reflect_id_hidden<%=i%>" value="<%=publieVerifier.reflect_id%>">
+											<input type="hidden" id="verifier_id_hidden<%=i%>" value="<%=publieVerifier.reg_user_id%>">
+											<a class="dropdown-item" onclick="get_reflet_id('<%=i%>')" data-toggle="modal">
+												<img src="../assets/images/icons/dashboard-assets/icon_send1.png"> Send to verifier
+											</a>
+											<!-- <a class="dropdown-item"  href="/view-document-verifier?reflect_id=<%=publieVerifier.reflect_id%>" data-toggle="modal" data-target="#set-docs-permission-Modal">
+												<img src="../assets/images/icons/dashboard-assets/view.png"> View Document
+											</a> -->
+											<a class="dropdown-item"  target="_blank" href="/view-document-verifier?reflect_id=<%=publieVerifier.reflect_id%>&user_id=<%=publieVerifier.reg_user_id%>" >
+												<img src="../assets/images/icons/dashboard-assets/view.png"> View Document
+											</a>
+											<a class="dropdown-item" href="/create-message-request-by-reflectId?reflect_id=<%=publieVerifier.reflect_id%>">
+												<img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage Messages
+											</a>	
+				                        </div>
+				                    </div>
+						      	</td>
+							</tr>
+							<%}%>
+				<%i++; })%>			
+						    
+						</tbody>
+					</table>
+					<div class="pagination-list for-user">
+          
+						<% if (verifierListData.totalPages > 0) { %>
+						 <ul class="pagination text-center">
+						   <% if (verifierListData.currentPage == 1) { %>
+							 <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+						   <% } else { %>
+							 <li class="page-item"><a class="page-link" href="/verifier_list?page=1">&lt;</a></li>
+						   <% } %>
+					  
+					  
+					  
+						   <% var i = (Number(verifierListData.currentPage) > 5 ? Number(verifierListData.currentPage) - 4 : 1) %>
+						   <% if (i !== 1) { %>
+							 <!-- <li class="disabled"><a>...</a></li> -->
+							 <li class="page-item disabled"><a class="page-link" >...</a></li>
+						   <% } %>
+						   <% for (; i <= (Number(verifierListData.currentPage) + 4) && i <= verifierListData.totalPages; i++) { %>
+							 <% if (i == verifierListData.currentPage) { %>
+							   <!-- <li class="active"><a><%= i %></a></li> -->
+							   <li class="page-item active">
+							   <a class="page-link" href="#"><%= i %><span class="sr-only">(verifierListData.currentPage)</span></a>
+							   </li>
+							 <% } else { %>
+							   <li class="page-item"><a class="page-link" href="/verifier_list?page=<%= i %>"><%= i %></a></li>
+							 <% } %>
+							 <% if (i == Number(verifierListData.currentPage) + 4 && i < verifierListData.totalPages) { %>
+							   <!-- <li class="disabled"><a>...</a></li> -->
+							   <li class="page-item disabled"><a class="page-link" >...</a></li>
+							 <% } %>
+						   <% } %>
+					  
+					  
+						   <% if (verifierListData.currentPage == verifierListData.totalPages) { %>                       
+							 <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+						   <% } else { %>
+							 <li><a class="page-link" href="/verifier_list?page=<%= verifierListData.totalPages %>">&gt;</a></li>
+						   <% } %>
+					  
+						 </ul>
+					  <% } %>
+					  </div>
+				    </div>
+				</div>
+			</div>
+		</div>
+		<!-- Table wrapper E -->
+	</section>
+<!-- Modal S -->
+<%var i=0; verifierListData.data.forEach(publieVerifier=>{%>
+<div class="modal fade field-edit-modal" id="sendDocument<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Document Permission</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact pt-15">
+						<div class="create-rflet-id-form">
+						    					    
+							 
+
+						    <span id="all_data<%=i%>">
+
+							</span>
+							
+							<span id="doc_select<%=i%>">
+
+							</span>
+							<!-- <div class="personal-info-box for-download-view-table table-responsive">
+								<table class="table">
+								  <thead>
+								    <tr>
+								      <th scope="col">Label</th>
+								      <th scope="col">Download</th>
+								      <th scope="col">View</th>
+								      <th scope="col">Certify</th>
+								    </tr>
+								  </thead>
+								  <tbody>
+								    <tr>
+								      <th scope="row">
+								      	<div class="for-flex-align">
+								      		 <img src="../assets/images/icons/dashboard-assets/drivinglicense.png">
+						      		     Driving License 
+								      	</div>
+								      </th>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								    </tr>
+								    
+								    <tr>
+								      <th scope="row">
+								      	<div class="for-flex-align">
+								      		 <img src="../assets/images/icons/dashboard-assets/passport.png">
+						      		     Passport
+								      	</div>
+								      </th>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								    </tr>
+								  </tbody>
+								</table>
+							</div> -->
+							<span id="prm_error_span1<%=i%>" class="error_validate"></span>
+						</div>
+						<div >
+							<input type="hidden" name="p_cat_id" id="p_cat_id<%=i%>">
+								<input type="hidden" name="sub_cat_id" id="sub_cat_id<%=i%>">
+								<input type="hidden" name="doc_reflect_id" id="doc_reflect_id<%=i%>">
+								<button class="btn-common-new" type="button" id="subPerm<%=i%>" onclick="submit_all_perm('<%=i%>')">Save</button>
+								<a class="btn-common-new"  data-dismiss="modal" href="#">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+<%i++; })%>		
+<!-- Modal E -->
+<!-- Modal S -->
+<div class="modal fade field-edit-modal" id="send-boarding-request" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Document Permission</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact pt-15">
+						<div class="create-rflet-id-form">
+						    					    
+							 <div class="form-group select-verifier-box">
+						    	<div class="input-group">
+								  <div class="dropdown">
+									  <button class="dropbtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									    Select Verifiers Via Code
+									  </button>
+									  <div class="dropdown-menu menu-for-id" aria-labelledby="dropdownMenuButton">
+									    <a class="dropdown-item" href="#">
+									    	<div class="for-verify-box-inner for-pending">
+									    		<i class="fas fa-check"></i>
+									    		<span class="user-img-verify">
+									    			<img src="../assets/images/other/face1.jpg">
+									    		</span>
+									    		<span class="tooltip fade" data-title="On boarding Pending">
+									    			Natasha-251100
+									    			<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+									    		</span>
+									    	</div>
+									    </a>
+									    <a class="dropdown-item" href="#">
+									    	<div class="for-verify-box-inner for-approve">
+									    		<i class="fas fa-check"></i>
+									    		<span class="user-img-verify">
+									    			<img src="../assets/images/other/face1.jpg">
+									    		</span>
+									    		<span class="tooltip fade" data-title="On boarding Accepted">
+									    			Heena-215020
+									    			<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+									    		</span>
+									    	</div>
+									    </a>
+									    <a class="dropdown-item" href="#">
+									    	<div class="for-verify-box-inner for-cancel">
+									    		<i class="fas fa-check"></i>
+									    		<span class="user-img-verify">
+									    			<img src="../assets/images/other/face1.jpg">
+									    		</span>
+									    		<span class="tooltip fade" data-title="On boarding Rejected">
+									    			Akansha-354653
+									    			<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+									    		</span>
+									    	</div>
+									    </a>
+									     <a class="dropdown-item" href="#">
+									    	<div class="for-verify-box-inner for-not-requested">
+									    		<i class="fas fa-check"></i>
+									    		<span class="user-img-verify">
+									    			<img src="../assets/images/other/face1.jpg">
+									    		</span>
+									    		<span class="tooltip fade" data-title="On boarding Not Requested.">
+									    			Soniya-564756
+									    			<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+									    		</span>
+									    	</div>
+									    </a>
+									  </div>
+									</div>
+								  
+								</div>
+						    </div>
+
+
+						     <div class="form-group for-select-existing-doc m-top-40">
+						    	<div class="input-group">
+								  <div class="dropdown keep-inside-clicks-open">
+									  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									    Select from existing documents
+									  </button>
+									  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									     <div class="for-doc-select">
+									    	<div class="checkbox"> 	
+									          <label>
+									          	Dirving License
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									          </label>
+									        </div>	
+									     </div>
+									      <div class="for-doc-select">
+									    	<div class="checkbox"> 	
+									          <label>
+									          	Passport
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									          </label>
+									        </div>	
+									     </div>
+									      <div class="for-doc-select">
+									    	<div class="checkbox"> 	
+									          <label>
+									          	Form 3
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									          </label>
+									        </div>	
+									     </div>
+									      <div class="for-doc-select">
+									    	<div class="checkbox"> 	
+									          <label>
+									          	Utility bill
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									          </label>
+									        </div>	
+									     </div>
+									  </div>
+									</div>
+								  
+								</div>
+						    </div>
+
+						    <div class="or-text">
+						    	or
+						    </div>
+							
+							<div class="form-group browse-file-section">
+				                  <input type="file" name="staff_image" class="file" style="visibility: hidden;position: absolute;" accept="image/x-png,image/jpeg">
+				                  <div class="input-group col-xs-12">
+				                    <span class="input-group-btn">
+				                      <button class="browse btn btn-primary input-lg" type="button"> Choose a file</button>
+				                    </span>
+				                    <input type="text" class="form-control" readonly="" placeholder="">
+				                  </div>
+                              </div>
+
+							<div class="personal-info-box for-download-view-table table-responsive">
+								<table class="table">
+								  <thead>
+								    <tr>
+								      <th scope="col">Label</th>
+								      <th scope="col">Download</th>
+								      <th scope="col">View</th>
+								      <th scope="col">Certify</th>
+								    </tr>
+								  </thead>
+								  <tbody>
+								    <tr>
+								      <th scope="row">
+								      	<div class="for-flex-align">
+								      		 <img src="../assets/images/icons/dashboard-assets/drivinglicense.png">
+						      		     Driving License 
+								      	</div>
+								      </th>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								    </tr>
+								    <tr>
+								      <th scope="row">
+								      	<div class="for-flex-align">
+								      		 <img src="../assets/images/icons/dashboard-assets/utilitybill.png">
+						      		     Utility Bill
+								      	</div>
+								      </th>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								    </tr>
+								    <tr>
+								      <th scope="row">
+								      	<div class="for-flex-align">
+								      		 <img src="../assets/images/icons/dashboard-assets/passport.png">
+						      		     Passport
+								      	</div>
+								      </th>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								    </tr>
+								    <tr>
+								      <th scope="row">
+								      	<div class="for-flex-align">
+								      		 <img src="../assets/images/icons/dashboard-assets/photoID.png">
+						      		     Photo Identification
+								      	</div>
+								      </th>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" value="">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								    </tr>
+								  </tbody>
+								</table>
+							</div>
+						</div>
+						<div >
+							<a class="btn-common-new" href="">Submit</a>
+							<a class="btn-common-new" href="">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+<!-- Modal E -->
+<!--Add Verifier Modal S -->
+<div class="modal fade field-edit-modal" id="addVerifier" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<form action="/verifier_add_to_ad_book" method="POST" id="addressbookform">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-address-book-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Add Verifier</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+						    	<div class="input-group">
+								  <input type="text" name="v_lable" id="v_lable" class="form-control" placeholder="Label" data-rule-required="true"  data-msg-required="Please enter lable.">
+								</div>
+						    </div>
+						    <div class="form-group">
+								<label for="">Verifier Code</label>
+								<div class="input-group">
+								  <input type="text" name="v_code" id="v_code" class="form-control" placeholder="WC-1021" data-rule-required="true"  data-msg-required="Please enter code.">
+								</div>
+							</div>
+						</div>
+						<div >
+							<!-- <a class="btn-common-new" href="">Save</a> -->
+							<button class="btn-common-new" type="submit" id="sub_btn">Save</button>
+							<button type="button" class="btn-common-new" data-dismiss="modal" aria-label="Close">Cancel</button>
+							<!-- <a class="btn-common-new" href="">Cancel</a> -->
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</form>
+</div>
+<!--Add Verifier Modal E -->
+<%var i=0; verifierListData.data.forEach(publieVerifier=>{%>
+<div class="modal field-edit-modal" id="doc-permission-Modal<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		  <div class="create-wallet-box">
+			  <div class="row align-item-center">
+				  <div class="col-xl-2 col-lg-3 col-md-3">
+					  <div class="for-icon-bg">
+						  <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+					  </div>
+				  </div>
+				  <div class="col-xl-10 col-lg-10 col-md-10">
+					  <h5 class="heading-purple">Document Permission</h5>
+					  
+				  </div>
+			  </div>
+			  <div class="setup-inner-box for-protact mt-30 p-0">
+				   <p>Are you sure you want to give document permission? click yes to continue.</p>
+						  <div>
+							  <a class="btn-common-new" href="" data-toggle="modal" data-target="#validate-pin-Modal<%=i%>" data-dismiss="modal">Yes</a>
+							  <a class="btn-common-new" href="">No</a>
+						  </div>
+					  </div>
+			 </div>
+		 </div>
+	  </div>
+	</div>
+  </div>
+  <%i++; })%>	
+
+  <%var i=0; verifierListData.data.forEach(publieVerifier=>{%>
+	 <!--pin modal start-->
+	 <div class="modal field-edit-modal" id="validate-pin-Modal<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-body">
+			  <button type="button" class="close hide_click" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			  <div class="create-wallet-box">
+				  <div class="row align-item-center">
+					  <div class="col-xl-2 col-lg-3 col-md-3">
+						  <div class="for-icon-bg">
+							  <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+						  </div>
+					  </div>
+					  <div class="col-xl-10 col-lg-10 col-md-10">
+						  <h5 class="heading-purple">Validate Pin</h5>
+						  <p>Enter Your PIN to Continue</p>
+					  </div>
+				  </div>
+					 <div class="login-form-main phone-otp mt-15">
+					   <div class="form-group mb-0">
+						  <label>PIN</label>
+						  <div class="otp-box digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+							  <input type="text" id="otp1<%=i%>" name="otp1<%=i%>" class="form-control text-center" placeholder="-" maxlength="1" data-next="otp2<%=i%>">
+							  <input type="text" id="otp2<%=i%>" name="otp2<%=i%>" class="form-control" placeholder="-" maxlength="1" data-next="otp3<%=i%>" data-previous="otp1<%=i%>">
+							  <input type="text" id="otp3<%=i%>" name="otp3<%=i%>" class="form-control" placeholder="-" maxlength="1" data-next="otp4<%=i%>" data-previous="otp2<%=i%>">
+							  <input type="text" id="otp4<%=i%>" name="otp4<%=i%>" class="form-control" placeholder="-" maxlength="1" data-previous="otp3<%=i%>">
+						  </div>
+						</div>
+				  </div>
+				  <span class="error_validate" id="req_err_prm<%=i%>"></span>
+				  <div class="setup-inner-box for-protact pt-15">
+					  <div>
+						  <a class="btn-common-new hide_click" href="javascript:void(0)" onclick="pin_for_prm('<%=i%>')" id="pin_prm_btn">Confirm</a>
+						 <span class="loader"><img src="../assets/images/loader-3.gif"height="42" width="62"></span>
+
+						  <a class="btn-common-new hide_click" href="">Cancel</a>
+					  </div>
+				  </div>
+				 </div>
+			 </div>
+		  </div>
+		</div>
+	  </div>
+	  <!--pin modal end-->
+	<%i++; })%>
+
+	<div class="modal  field-edit-modal" id="dsuccess-doc-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-body">
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			  <div class="create-wallet-box">
+				  <div class="row align-item-center">
+					  <div class="col-xl-2 col-lg-3 col-md-3">
+						  <div class="for-icon-bg">
+							  <img src="../assets/images/icons/createidentity-assets/popup-success-icon.png">
+						  </div>
+					  </div>
+					  <div class="col-xl-10 col-lg-10 col-md-10">
+						  <h5 class="heading-purple">Document Sent Successfully</h5>
+						  
+					  </div>
+				  </div>
+				  <div class="setup-inner-box for-protact mt-30 p-0">
+					   <p>Your Document has been successfully sent to the verifier. Your document will be verified shortly and you'll ve notified in regards that.</p>
+				  </div>
+				  <div class="setup-inner-box for-protact pt-15">
+					<div>
+						<a href="" class="btn-common-new">OK!</a>
+					</div>
+					</div>
+				 </div>
+			 </div>
+		  </div>
+		</div>
+	  </div>
+	  <div class="modal field-edit-modal show" id="Invitation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-body">
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			  </button>
+			  <div class="create-wallet-box">
+			<div class="row align-item-center">
+			  <div class="col-xl-2 col-lg-3 col-md-3">
+				<div>
+				  <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+				</div>
+			  </div>
+			  <div class="col-xl-10 col-lg-9 col-md-9">
+				<h5 class="heading-purple">Invite Verifier</h5>
+			  </div>
+			</div>
+	  
+			<div class="row m-top-30">
+			  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+				<div class="setup-inner-box for-protact pt-15">
+				  <form action="/invite-client-by-refletid" method="post" >
+	  
+				  <div class="create-rflet-id-form">
+				  
+					 <span class="error_span"style="color:red"></span>
+					  <div class="form-group">
+						  <Label>Verifier Reflet-Code</Label>
+						<div class="input-group">
+							  <select class="form-control  client_reflet_select" name="receiver_reflect_id">
+								  <option value="empty">Select Verifier Reflet-Code</option>
+	
+								  <%if(verifiers){
+										  for(let reflet_data of verifiers){%>
+											<%if(reflet_data.rep_firstname){%>
+	
+												<option value="<%=reflet_data.reflect_id%>" ><%=reflet_data.rep_firstname%> - <%=reflet_data.reflect_code%>
+												</option>
+												
+												<%}else if(reflet_data.entity_company_name){%>
+	
+												<option value="<%=reflet_data.reflect_id%>" ><%=reflet_data.entity_company_name%> - <%=reflet_data.reflect_code%>
+												</option>
+	
+												<%}else{%>
+	
+												<option value="<%=reflet_data.reflect_id%>" ><%=reflet_data.full_name%> - <%=reflet_data.reflect_code%></option>
+												<%}%>
+	
+								  
+								  <%}}%>
+						  </select>
+						</div>
+				</div>  
+				<div class="form-group">
+					<Label>Your Reflet-Code</Label>
+					<div class="input-group">
+						  <select class="form-control  verifier_reflet_select" name="sender_reflect_id">
+							  <option value="empty">Select Your Reflet-Code</option>
+
+							  <%if(myClients){
+									  for(let reflet_data of myClients){%>
+										<%if(reflet_data.rep_firstname){%>
+
+											<option value="<%=reflet_data.reflect_id%>" ><%=reflet_data.rep_firstname%> - <%=reflet_data.reflect_code%>
+											</option>
+											
+											<%}else if(reflet_data.entity_company_name){%>
+
+											<option value="<%=reflet_data.reflect_id%>" ><%=reflet_data.entity_company_name%> - <%=reflet_data.reflect_code%>
+											</option>
+
+											<%}else{%>
+
+											<option value="<%=reflet_data.reflect_id%>" ><%=reflet_data.full_name%> - <%=reflet_data.reflect_code%></option>
+											<%}%>
+
+							  
+							  <%}}%>
+					  </select>
+					</div> 
+				  </div>
+				  <div class="form-group">
+					<Label>Message</Label>
+					<div class="input-group">
+					  <textarea name="message" id="message"rows="5" class="form-control" value=""data-rule-required="true" data-msg-required="Please enter message."placeholder="Wrtie your message..."></textarea>
+					</div>
+				</div>
+				  <div>
+					<button class="btn-common-new check_validations hide_btn">Save</button>
+					<a class="btn-common-new hide_btn" href="">Cancel</a>
+					<span class="loader"><img src="../assets/images/loader-3.gif"height="42" width="62"></span>
+				  </div>
+				  </form>
+				</div>
+			  </div>
+			 </div>
+			</div>
+			 </div>
+		  </div>
+		</div>
+	  </div>
+<%- include('../innerFooter')%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script>
+$(document).ready( function () {
+	$('.table').DataTable();
+	$("#success_div").hide()
+	$('.loader').hide();
+} );
+</script>
+ <script type="text/javascript">
+	$('#addressbookform').validate({
+		 onfocusout: function(element) {
+		 this.element(element);
+		 },
+		 errorClass: 'error_validate',
+		 errorElement:'span',
+		 highlight: function(element, errorClass) {
+		 $(element).removeClass(errorClass);
+		 },
+		 submitHandler:function(form)
+			{
+			  $('#sub_btn_edit').attr('disabled',true);
+			  form.submit();
+			}
+		 });
+	</script>
+<script>
+	 $(document).on('click', '.browse', function(){
+    var file = $(this).parent().parent().parent().find('.file');
+    file.trigger('click');
+  });
+  $(document).on('change', '.file', function(){
+    $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i,''));
+  }); 
+</script>
+<script>
+	$(document).on('click.bs.dropdown.data-api', '.dropdown.keep-inside-clicks-open', function (e) {
+	  e.stopPropagation();
+	});
+</script> 
+<script>
+function addressbookadd(code){
+
+	// alert("rid",rid)
+	// alert("code"+code);
+var data =code.split(',')
+var regid =data[1]
+var mycode=data[0]
+// alert(data[0]);
+
+// alert(data[1]);
+// $("#v_lable").val()
+$("#v_code").val(mycode)
+
+	// $("#addVerifier").modal()
+
+}
+
+var reflect_id = "VERIFIER LIST";
+function printdiv(){
+	
+  var restorepage = $('body').html();
+	$('.nodata').hide();
+   var printcontent = $('#verifierListDiv').clone();
+   $('body').empty().html(printcontent);
+   window.print();
+   $('body').html(restorepage);
+ 
+
+}
+
+function downloadVerifierList(){
+         	$("#myTable3").table2excel({
+												filename: "public_verifier_list",
+												exclude:'.hide_link',
+												exclude_img:true,
+												exclude_inputs:true,
+												fileext:".xls",
+
+										});
+			  }
+</script>
+<script>
+	function addToAddBook(){
+		var check_ver = [];
+		$.each($("input[name='cilentId']:checked"), function(){
+			   var test1 =$(this).val()
+			 var test2=  test1.split('-')
+			check_ver.push(test2[0]);
+			});
+			console.log(check_ver)
+			if( check_ver[0] == null){
+
+				alert("Please first select verifier's check box.")
+
+			}	else	{
+
+		
+			$.ajax({
+                      type : 'POST',
+                      url  : '/submit_ver_to_add_book',
+					  data: {
+						reflect_ids:JSON.stringify(check_ver),
+							
+					        },
+					  
+						success: function(data) {
+							// alert(data)
+                                $("#success_div").show()
+							// window.location.reload(true);
+							setTimeout(function(){
+								// window.href.location
+                                $("#success_div").hide()
+                            //    $('#allocate').modal('toggle');
+							},3000)
+							
+						}
+			  })
+
+		   }
+
+
+	}
+</script>
+
+<script>
+	function checkForSelect() {
+		
+			var verifier_list = [];
+			$.each($("input[name='cilentId']:checked"), function(){
+				var check_val = $(this).val();
+				var split_data = check_val.split('-');
+				verifier_list.push(split_data[0]);
+				});
+				// alert(value)
+				// console.log("request_ids",invite_client_id)
+				if(verifier_list.length>1){
+												$("#sb_id").addClass('dis-able-btn')
+												$("#vd_id").addClass('dis-able-btn')
+												$("#md_id").addClass('dis-able-btn')
+				}else{
+												$("#sb_id").removeClass('dis-able-btn')
+												$("#vd_id").removeClass('dis-able-btn')
+												$("#md_id").removeClass('dis-able-btn')
+	
+	// 								if(value!=undefined){
+	// 									                 if(value=="m_request"){
+	
+												
+	// 								}			
+	
+				}
+	
+	}
+	</script>
+	<script>
+		function  sendOnBoarding(){
+		                 	$('#sendDocument').modal('toggle');
+			
+		}
+		function ViewDocument() {}
+		function  ManageMessages(){
+			var verifier_list = [];
+			
+			$.each($("input[name='cilentId']:checked"), function(){
+				verifier_list.push($(this).val());
+				});
+
+				if( verifier_list[0] == null ){
+
+					alert("Please first select verifier's check box.")
+
+				}	else	{
+
+					var test =verifier_list[0].split('-')
+			        window.location =window.location.origin+"/create-message-request-by-reflectId?reflect_id="+test[0]
+
+				}
+				
+		}
+	</script>
+<script>
+	var sub_id;
+	function get_reflet_id(i){
+		sub_id=i;
+		// alert("sub_id"+sub_id);
+		var reflet_id = $('#reflect_id_hidden'+i).val();
+		
+		$.ajax({
+			type: "get",
+			url: "/get-refletid-request?reflet_id="+reflet_id+'&i='+i,
+			data:{},
+			success: function (data) {
+				// console.log(data);  
+
+				$('#all_data'+i).html(data);
+				$('#sendDocument'+i).modal('show');
+            }
+		});
+	}
+     var global_category_id;
+	function get_sub_category(total_sub_cat_val){
+		var split_sub = total_sub_cat_val.split('-');
+		var sub_cat_val = split_sub[0];
+		var no = split_sub[1];
+	// alert(sub_cat_val);
+	$("#p_cat_id"+no).val(sub_cat_val);
+   
+
+	if(sub_cat_val!=""){
+		$.ajax({
+			type: "post",
+			url: "/get-sub-category-list-no?no="+no,
+			data:{category_id:sub_cat_val},
+			success: function (data) {
+				// console.log(data);  
+				$('#sub_category_data'+no).html(data);
+            }
+		});
+	}else{
+				$('#sub_category_data'+no).html("");
+	}
+}
+
+function get_requested_doc(category_id){
+	$("#sub_cat_id"+sub_id).val(category_id);
+	// alert("sub_id"+sub_id);
+
+//    alert(category_id);
+   global_category_id = category_id;
+
+   if(category_id!=""){
+		$.ajax({
+			type: "post",
+			url: "/get-requested-doc",
+			data:{category_id:category_id,verifier_data:'yes'},
+			success: function (data) {
+				// console.log(data);  
+					$('.hide_sub').show();
+
+				$('#category_docs'+sub_id).html(data);
+            }
+		});
+	}else{
+				$('#category_docs'+sub_id).html("");
+	}
+}
+
+function get_doc_from_myreflet(total){
+	var t_val = total.split('-');
+	var reflect_id = t_val[0];
+	var ref_no = t_val[1];
+	$('#doc_reflect_id'+ref_no).val(reflect_id);
+   // alert("t_val"+ref_no);
+   if(reflect_id!=""){
+		$.ajax({
+			type: "post",
+			url: "/get-doc-from-myreflet",
+			data:{category_id:global_category_id,reflect_id:reflect_id,no:t_val[1]},
+			success: function (data) {
+   				// alert(data);
+				// console.log(data);  
+												$(`#doc_data${t_val[1]}`).html();
+
+				$('#doc_select'+t_val[1]).html(data);
+            }
+		});
+	}else{
+				$('#doc_select'+t_val[1]).html("");
+	}
+}
+var extra_val;
+	function get_check_doc(total_value){
+		// alert("total_value "+total_value);
+		var split_val = total_value.split('-');
+		var value = split_val[0];
+		var no = split_val[1];
+		var user_doc_id = $(`#doc_check${no}${value}`).val();
+		var trow = $(`#docRow${no}${value}`).text();
+		extra_val=value;
+		// alert("split_val "+split_val);
+
+		// alert("no "+no);
+		// alert("value "+value);
+		// alert(trow);
+		// console.log("user_doc_id",user_doc_id);
+		if(trow!=""){
+			$(`#docRow${no}${value}`).remove();
+		}else{
+        $.ajax({
+			type: "post",
+			url: "/get-checked-doc",
+			data:{user_doc_id:user_doc_id,value,no},
+			success: function (data) {
+			      
+			      console.log('data : ',data)
+				$(`#doc_data${no}`).append(data);
+			}
+		});
+	}
+	}
+    
+	var rowCount;
+	var rowVal=[];
+	var download = [];
+	var view = [];
+	var certify = [];
+     var self_certify = [];
+	var video_proof = [];
+	var sign = [];
+	var complete = [];
+function submit_all_perm(i){
+// alert(i);
+	//  alert(getVerifierID);
+	 
+	rowCount = $(`table#myTable_doc tr:last`).index() + 1;
+	//  alert("rowCount"+rowCount);
+	// alert("i "+i);
+		// alert("extra_val "+extra_val);
+	var reflect_id = $('#doc_reflect_id'+i).val();
+	var cat = $("#p_cat_id"+i).val();
+	var sub_cat = $("#sub_cat_id"+i).val();
+	var doc_reflet = $("#doc_reflect_id"+i).val();
+	// alert("reflect_id"+reflect_id);
+	if(cat){
+		if(sub_cat){
+if(doc_reflet){
+	if(rowCount>0)
+	{
+        //  alert($(`input[name="doc_check${i}${extra_val}"]:checked`).val());
+		if($(`input[name="doc_check${i}${extra_val}"]:checked`).val()){
+			// alert($(`input[name="doc_check${i}${extra_val}"]:checked`).val());
+
+	   	$(`#doc_data${i} tr`).each(function(index) {
+	   		var hidden_val=$(this).find('input[type="hidden"]').val();
+
+	   		rowVal.push(hidden_val);
+
+
+			   var down_val=$(this).find(`input[name="downloadPerm${i}"]:checked`).val();
+			   var view_val = $(this).find(`input[name="viewPerm${i}"]:checked`).val();
+			   var certify_val = $(this).find(`input[name="certifyPerm${i}"]:checked`).val();
+
+			    var self_certify_val = $(this).find('input[name="selfCertifyPerm"]:checked').val();
+			   var video_proof_val = $(this).find('input[name="videoPerm"]:checked').val();
+			   var sign_val = $(this).find('input[name="signPerm"]:checked').val();
+			   var complete_val = $(this).find('input[name="completePerm"]:checked').val();
+
+	   		if(down_val==undefined)
+	   		{
+	   			var dwn_per='no';
+	   		}
+	   		else
+	   		{
+	   		   var dwn_per='yes';	
+			}
+			if(view_val==undefined)
+	   		{
+	   			var vw_per='no';
+	   		}
+	   		else
+	   		{
+	   		   var vw_per='yes';	
+			}
+			   if(certify_val==undefined)
+	   		{
+	   			var crt_per='no';
+	   		}
+	   		else
+	   		{
+	   		   var crt_per='yes';	
+	   		}
+			   
+	if(self_certify_val==undefined)
+	   		{
+	   			var self_crt_per='no';
+	   		}
+	   		else
+	   		{
+	   		   var self_crt_per='yes';	
+	   		}
+
+	   		if(video_proof_val==undefined)
+	   		{
+	   			var vid_pr_val='no';
+	   		}
+	   		else
+	   		{
+	   		   var vid_pr_val='yes';	
+	   		}
+
+	   		if(complete_val==undefined)
+	   		{
+	   			var com_per='no';
+	   		}
+	   		else
+	   		{
+	   		   var com_per='yes';	
+	   		}
+	   		if(sign_val==undefined)
+	   		{
+	   			var sign_per='no';
+	   		}
+	   		else
+	   		{
+	   		   var sign_per='yes';	
+	   		}
+
+	   		download.push(dwn_per);
+			view.push(vw_per);
+			certify.push(crt_per)
+
+			self_certify.push(self_crt_per)
+			video_proof.push(vid_pr_val)
+			complete.push(com_per)
+			sign.push(sign_per)
+	   	});
+		   $('#subPerm'+i).attr('data-toggle', 'modal');
+			$('#subPerm'+i).attr('data-target', '#doc-permission-Modal'+i); 
+			$('#subPerm'+i).attr('data-dismiss', 'modal');
+	}else{
+		$('#prm_error_span1'+i).html("");
+		$('#prm_error_span1'+i).html("Please select atleast one document.");
+	}
+}
+
+	
+}else{
+	$('#prm_error_span1'+i).html("");
+	$('#prm_error_span1'+i).html("Please select your MyReflet code.");
+}
+}else{
+	$('#prm_error_span1'+i).html("");
+	$('#prm_error_span1'+i).html("Please select sub-category.");
+}
+}else{
+	$('#prm_error_span1'+i).html("");
+	$('#prm_error_span1'+i).html("Please select category.");
+}
+		
+}
+
+
+
+function pin_for_prm(i){
+	// alert("hellllllllllllll0000");
+var otp1=$('#otp1'+i).val();
+var otp2=$('#otp2'+i).val();
+var otp3=$('#otp3'+i).val();
+var otp4=$('#otp4'+i).val();
+var otp = otp1+""+otp2+""+otp3+""+otp4;
+if(otp1=="" || otp1=="" || otp1=="" || otp1==""){
+ $('#req_err_prm'+i).html("Please enter valid Pin.");
+}else{
+// alert(otp);
+$('.hide_click').hide();
+ 	        	$('.loader').show();
+$('#req_err_prm'+i).html("");
+	$.ajax({
+			type: "post",
+			url: "/request-check-pin",
+			data:{pin:otp},
+			success: function (data) {
+				// alert(data);
+				if(data.success_data){
+                    $('#req_err_prm'+i).html('');
+					// alert(i);
+					submit_permission(i);
+				}else{
+                    $('#req_err_prm'+i).html('Please enter valid Pin');
+				}
+			}
+	})
+}
+}
+
+function submit_permission(i){
+	// alert(i);
+
+	// alert("hiiii");
+var reflect_id =$('#doc_reflect_id'+i).val();
+// var vrfr  = 
+	 var vId = $('#verifier_id_hidden'+i).val();
+	 var vRefId = $('#reflect_id_hidden'+i).val();
+	 var p_cat_id1= $("#p_cat_id"+i).val()
+	 var sub_cat_id1= $("#sub_cat_id"+i).val()
+	//  alert("reflect_id "+reflect_id);
+	//  alert("p_cat_id1 "+p_cat_id1);
+	//  alert("sub_cat_id1 "+sub_cat_id1);
+	//  alert("vId "+vId);
+	//  alert("vRefId "+vRefId);
+$.ajax({
+    type: "post",
+	url:"/request-doc",
+	data:{reflect_id:reflect_id,
+		download:JSON.stringify(download),
+		view:JSON.stringify(view),
+		certify:JSON.stringify(certify),
+		total_doc:JSON.stringify(rowVal),
+		self_certify:JSON.stringify(self_certify),
+		video_proof:JSON.stringify(video_proof),
+		sign:JSON.stringify(sign),
+		complete:JSON.stringify(complete),
+		verifier_id:vId,
+		verifier_reflect_id:vRefId,
+		rowCount:rowCount,
+		p_cat_id:p_cat_id1,
+		sub_cat_id:sub_cat_id1
+    },
+    success:function(datas) {
+        // alert("[[[[[[[[[[[[[[["+datas);
+		
+		$('#validate-pin-Modal'+i).modal('hide');
+		
+		$('#dsuccess-doc-Modal').modal('show');
+	}
+});
+
+}
+
+function get_reflet_id_by_check(){
+	var check = $("input[name='cilentId']:checked").val();
+	console.log(check)
+		
+	if( check == undefined){
+
+		alert("Please first select verifier's check box.")
+
+	}	else	{
+
+		var split_i = check.split('-');
+	    var i = split_i[1];
+		get_reflet_id(i);
+
+	}
+	
+	
+}
+
+</script>
+
+<script>
+    $('.digit-group').find('input').each(function() {
+    $(this).attr('maxlength', 1);
+    $(this).on('keyup', function(e) {
+        var parent = $($(this).parent());
+        
+        if(e.keyCode === 8 || e.keyCode === 37) {
+            var prev = parent.find('input#' + $(this).data('previous'));
+            
+            if(prev.length) {
+                $(prev).select();
+            }
+        } else if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
+            var next = parent.find('input#' + $(this).data('next'));
+            
+            if(next.length) {
+                $(next).select();
+            } else {
+                if(parent.data('autosubmit')) {
+                    parent.submit();
+                }
+            }
+        }
+    });
+});
+</script>
+
+<script>
+
+	function verifierTypeFilter(valuedata){
+		// alert(valuedata)
+
+		var verifierType = [];
+		$.each($("input[class='verifierTtype']:checked"), function(){
+			verifierType.push($(this).val());
+			});
+			console.log(verifierType)
+		
+if(verifierType[0]=='All'){
+
+	window.location.reload()
+
+}
+
+
+if(verifierType[0]==null){
+
+window.location.reload()
+
+}
+			$.ajax({
+  				    type: "post",
+					url:"/verfier-type-filter",
+					data:{
+							verifierType:JSON.stringify(verifierType),
+						
+						},
+					success:function(datas) {
+					
+						
+						$('#verifierListDiv').html(" ");
+						
+						$('#verifierListDiv').html(datas);
+					}
+              });
+	}
+</script>
+<script>
+	    $(document).ready(function(){
+          $("#myInput").on("keyup", function() {
+			// alert('value')
+
+            var value = $(this).val().toLowerCase();
+            // alert(value)
+               if(value)
+            {
+                 
+            $.ajax({
+				type: "post",
+				url: "/search-verifier-for-user",
+				data:{query:value},
+				success: function (data) {
+				// alert(data);
+				
+					$('.div_data').html("");
+								$('.div_data').html(data);
+						
+				
+			
+				
+				}
+			})
+ }
+            else
+            {
+              location.reload(true);
+            }
+  })})
+</script>
+<script>
+	  var client_option_val;
+	    $('.client_reflet_select').click(function() {
+   
+  client_option_val = $(this).children("option:selected").val();
+  // alert(option_val)
+
+ });
+ var verifier_option_val;
+	    $('.verifier_reflet_select').click(function() {
+   
+  verifier_option_val = $(this).children("option:selected").val();
+  // alert(option_val)
+
+ });
+ $('.check_validations').click(function() {
+
+// alert(global_i)
+var message=$.trim($("#message").val());
+//   alert(message)
+//   alert(client_option_val)
+//   alert(verifier_option_val)
+
+  if(!message||!client_option_val||!verifier_option_val)
+   {
+  // alert(message)
+   
+	 $('.error_span').html('Please fill all the fields.');
+return false;
+
+   }
+   else{
+	$('.hide_btn').hide();
+
+    $('.loader').show();
+	 setTimeout(function() {
+			  $('.error_span').fadeOut('fast');
+			}, 100);
+  return true;
+
+   }
+})
+setTimeout(function() {
+						    $('.flash_msg').fadeOut('fast');
+							}, 3000);
+</script>

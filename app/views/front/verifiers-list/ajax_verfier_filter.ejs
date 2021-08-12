@@ -1,0 +1,86 @@
+<table class="table" id="myTable3">
+    <thead>
+        <tr>
+              <th scope="col">Full Name</th>
+              <th scope="col">Company Name</th>
+              <th scope="col">MyReflet ID</th>
+              <th scope="col">Document</th>
+              <th scope="col" class="hide_link">Action</th>
+        </tr>
+      </thead>
+    <tbody>
+        <%if(verifierListData.length>0){%>
+<%var i=0; verifierListData.forEach(publieVerifier=>{%>
+<%if(publieVerifier.verifier_type=="public"){%>
+        <tr>
+              <th scope="row">
+                  <div class="for-flex-align">
+                      <div class="checkbox">
+                          <label>
+                            <input type="checkbox" name="cilentId" onclick="checkForSelect()" value="<%=publieVerifier.reflect_id%>-<%=i%>">
+                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                            <%
+            if(publieVerifier.profile_pic)
+            {
+                %>
+                <img class="profile-table" src="<%= publieVerifier.profile_pic %>">
+                <%
+            }
+            else
+            {
+                
+                %>
+                <img class="profile-table" id="user_profile_image_preview" src="../assets/images/other/face1.jpg" class="m-t-5" >
+                <%
+            }
+        %>
+                            <!-- <img class="profile-table" src="../assets/images/other/img_user1.png"> -->
+                            
+                               <%=decrypt(publieVerifier.full_name)%>
+                          </label>
+                    </div>
+                </div>
+              </th>
+              <%if(publieVerifier.reflectid_by=="entity"){%>
+            <td><%=publieVerifier.entity_company_name%></td>
+            <%}else{%>
+                <td><%=publieVerifier.rep_username%></td>
+
+                <%}%>
+            <td><%=publieVerifier.reflect_code%></td>
+            <td>Driving License, Passport</td>
+            <td class="hide_link">
+                  <div class="dropdown-menu-new">
+                    <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                      <div class="doc-img">
+                              <img src="../assets/images/icons/dashboard-assets/menu.png">
+                          </div>
+                    </a>
+                    <div class="dropdown-menu"  onclick="addressbookadd('<%=publieVerifier.reflect_code%>,<%=publieVerifier.reg_user_id%>')" aria-labelledby="profileDropdown">
+                        <a class="dropdown-item" >
+                            <img src="../assets/images/icons/dashboard-assets/icon_add_book1.png"> Add to address book
+                        </a>
+                        <input type="hidden" id="reflect_id_hidden<%=i%>" value="<%=publieVerifier.reflect_id%>">
+                        <input type="hidden" id="verifier_id_hidden<%=i%>" value="<%=publieVerifier.reg_user_id%>">
+                        <a class="dropdown-item" onclick="get_reflet_id('<%=i%>')" data-toggle="modal">
+                            <img src="../assets/images/icons/dashboard-assets/icon_send1.png"> Send to verifier
+                        </a>
+                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#set-docs-permission-Modal">
+                            <img src="../assets/images/icons/dashboard-assets/view.png"> View Document
+                        </a>
+                        <a class="dropdown-item" href="/create-message-request-by-reflectId?reflect_id=<%=publieVerifier.reflect_id%>">
+                            <img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage Messages
+                        </a>	
+                    </div>
+                </div>
+              </td>
+        </tr>
+        <%}%>
+           
+<%i++; })%>	
+<%}else{%>
+    <tr ><td colspan="4"><center>NO Data Found.</center></td></tr>
+    <%}%>		
+        
+    </tbody>
+</table>

@@ -1,0 +1,239 @@
+<%- include('./../dashboard/template/header') %>
+<%- include('./../dashboard/template/sidebar') %>
+
+<style>
+.download-icons img{
+  height: 26px;
+  margin: 0 5px 10px;
+}
+</style>
+
+
+  <div class="content-wrapper right-side">
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                   <section class="content-header">
+                    <h3> All Users List </h3>
+                    <ol class="breadcrumb">
+                        <li><a href="/admin-dashboard">Dashboard</a></li>
+                        <li><a href="javascript:void(0);" class="active">All Users List</a></li>
+                    </ol>
+          </section>
+          
+                <div class="card-body">
+
+                    <div class="row align-item-center for-table-dwnload">
+                        
+                        <div class="col-md-6 offset-md-6">
+                           <div class="text-right download-icons mt-0">
+                               <a href="javascript:void(0);" onclick="export_table();"><img src="../assets/images/icons/Download@2x.png"></a>
+                               <a href="javascript:void(0);" onclick="print_table();"><img src="../assets/images/icons/print@2x.png"></a>
+                             </div>
+                        </div>
+                      </div>
+                  
+                   <!-- <div class="col-md-12" style="text-align: right;margin-bottom: 25px;">
+                  <a style="color:#fff;" href="/add-team" class="btn btn-primary btn-rounded btn-fw">Add Team</a>
+                </div> -->
+                  <% if(err_msg!=undefined){ %>
+                        <span class="error_validate flash_msg" ><%= err_msg %></span>
+                        <% }%>
+                       <% if(success_msg!=undefined){ %>
+                      <span class="succ_flash_msg" style="color: green;"><%= success_msg %></span>
+                     <% }%>
+                  <div class="table-responsive"  id="user_div">
+                   
+                    <table class="table table-striped" id="team_table">
+                    
+                      <thead>
+                        <tr>
+                          <th>S.no</th>
+                          <th>Name of Users</th>
+                          <th>Email</th>
+                          <th>User Type</th>
+                          <th>User Status</th>
+                          <th>Action</th> 
+                        </tr>
+                        </thead>
+                         <tbody>
+                        <% 
+                        if(userdata !=""){
+                        var n=1;
+                        var i=0;
+                   
+                        userdata.forEach(function (user) {
+                      
+                        %>
+                        <tr>
+                          <td><%-n%></td>
+                          <td><%-covertfun.covertuper(user.user_name)%></td>
+                          <td><%-user.user_email%></td>
+                          
+                          <% if(userdata[i].user_type.user_type_name=="Main Contractor" & user.reference_type_id != null ){%>
+                            <td><%=userdata[i].user_type.user_type_name%> ( <%=user.reference_type_id.name%>) </td>
+                            <% }else{%>
+                          <td><%=userdata[i].user_type.user_type_name%></td>
+                          <% } %>
+                          
+                          <td><%-covertfun.covertuper(user.user_status)%></td>
+                         <td>
+                          <% 
+                          if(user.user_status=="active"){ %>
+                            
+                            <button type="button" value="<%-user._id%>" id="inactivebut"  class="btn btn-danger mr-2  inacvtive-id">Inactive </button>
+                                
+                        <%  }else{ %>
+                            
+                          <button type="button" value="<%-user._id%>" id="activebut"  class="btn btn-success mr-2 acvtive-id" >Active</button>
+                
+                        <%  }
+                          %>
+                         </td>
+                       
+                        </tr>
+                        <% n++; i++ }) } %> 
+                    </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+ <%- include('./../dashboard/template/footer') %>
+
+ <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script type="text/javascript">   
+
+function export_table(){
+  
+  $("#team_table").table2excel({
+      filename: "user-list.xls",
+      exclude:'.nodata'
+  });
+}
+
+function print_table(){
+ 
+ // $("#team_table").prepend("<h1>helooo<h1>");
+ var divToPrint=document.getElementById("team_table");
+ //$('.dontprint').hide();
+ newWin= window.open("");
+ newWin.document.write(divToPrint.outerHTML);
+ newWin.print();
+ newWin.close();
+
+
+    }
+$(document).ready(function () {
+$('#team_table').DataTable({ "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Show All"]]});
+$('#team_table_filter input').addClass('form-control');
+$('#team_table_filter label').addClass('card-title');
+$('#team_table_length label').addClass('card-title');
+$('#team_table_paginate a').addClass('card-title');
+$('#team_table_info').addClass('card-title');
+});
+
+function confirm_deletion(){
+  if(confirm('Really you want to delete?')){
+
+  return true;
+
+  }else{
+
+  return false;
+  }
+}
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+var flash_msg=$('.flash_msg').html();
+if(flash_msg!="" && flash_msg!=undefined)
+{
+  setTimeout(function(){ $('.flash_msg').html('');},4000);
+}    
+});
+
+
+$(document).ready(function () {
+var succ_flash_msg=$('.succ_flash_msg').html();
+if(succ_flash_msg!="" && succ_flash_msg!=undefined)
+{
+setTimeout(function(){ $('.succ_flash_msg').html('');},4000);
+}    
+});  
+</script>
+<script type="text/javascript">
+  
+  // function activestatuschnage(){
+    // alert($(this).find("button").val("value"))
+    $(".acvtive-id").click(function(evnt){
+         
+         var id = $(this).attr("value");
+        //   alert(id)
+    // var id =$("#activebut").val()
+    // alert(id);
+     var checkstr =  confirm('Are You Sure You Want To Active?');
+       if(checkstr == true){
+            $.ajax({
+                       type : 'POST',
+                       url  : '/change-status-user',
+                       data: { userid: id,
+                         status:"active" },
+                       success:function(resp)
+                       {
+                        // alert(id);
+                       
+                         // $('#pro_img').hide();  
+                         // $('#inactivebut').hide(); 
+                         // $('#activebut').show(); 
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ 
+ 
+  
+  // function inactivestatuschnage(obj1){
+             // alert(obj1)
+             $(".inacvtive-id").click(function(evnt){
+         
+             var id = $(this).attr("value");
+          //   alert(id)
+             //  console.log($(".abc").find("button"))
+            // var preview_div=$(this).parent(".inabc").parent().attr('id');
+            //  var image_name = $(this).parent(".inabc").find('input').attr('value');
+    
+     
+     //var id =$("#inactivebut").val()
+          //alert("Are You Sure You Want To inctive");
+          var checkstr =  confirm('Are You Sure You Want To Inactive?');
+          if(checkstr == true){
+            $.ajax({
+                       type : 'POST',
+                       url  : '/change-status-user',
+                       data: { userid:id,
+                         status:"inactive" },
+                       success:function(resp)
+                       {
+                        //  alert(id);
+                         // alert(status);
+                         // $('#pro_img').hide(); 
+                         // $('#activebut').hide();  
+                         // $('#inactivebut').show(); 
+                        
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ </script>

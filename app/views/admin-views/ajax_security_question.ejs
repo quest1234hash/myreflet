@@ -1,0 +1,141 @@
+<table class="table tabel-virifier"id="myTable3">
+              <thead>
+                <tr>
+                  <th width="10%">Sr.No.</th>
+                  <th width="20%">Question</th>
+                  <th width="20%" class="">Status</th>
+                  <th width="20%">Created At</th>
+                  <th width="20%">Updated At</th>
+                  <th width="20%" class="hide_link">Action</th>
+
+                  <!-- <th width="5%">Updated At</th> -->
+                </tr>
+              </thead>
+              <tbody id="myTable">
+                    <% if(question_list.length>0)
+                    {
+                       var i=0;k=1;
+                       question_list.forEach(function(each_data){
+                          %>
+                <tr>
+                   <td>
+                     <div>
+                       <p class=""><%=k%>.</p>
+                     </div>
+                   </td>
+                   <td>
+                     <div> 
+                       <p class="upper"><%=each_data.question%></p>
+                     </div>
+                   </td>
+                   <td class="">
+                      <% 
+                      if(each_data.status=="active"){ %>
+                        
+                        <button type="button" value="<%-each_data.question_id%>" id="inactivebut"  class="btn  mr-2 btn-success_1 acvtive-id-1 ">Active </button>
+                            
+                    <%  }else{ %>
+                        
+                      <button type="button" value="<%-each_data.question_id%>" id="activebut"  class="btn  btn-danger mr-2 inacvtive-id-1" >Inactive</button>
+            
+                    <%  }
+                      %>
+                    
+                   </td>
+                    <td>
+                     <p><%=moment(each_data.createdAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                  <td>
+                     <p><%=moment(each_data.updatedAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                   <td class="hide_link">
+                     <div class="dropdown-menu-new">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                           <a href="#" class="dropdown-item data_value" data-target="#editQuestion<%=i%>" data-toggle="modal"><i class="mdi mdi-pencil"></i>
+
+
+                            Edit</a>
+                          <a href="/delete-question/:<%=each_data.question_id%>"class="dropdown-item" href="#"><i class="mdi mdi-delete "></i> Delete</a>
+                        </div>
+                     </div>
+                   </td>
+                </tr>
+                <%
+                i++;   k++;   
+            });
+               }  else{
+           %>
+               <tr>
+                  <td colspan="8"><center>No record found.</center> </td>
+               </tr>  
+             <%}%>
+              </tbody>
+          </table>
+
+          <script type="text/javascript">
+  
+  // function activestatuschnage(){
+    // alert($(this).find("button").val("value"))
+    $(".acvtive-id-1").click(function(evnt){
+         
+         var id = $(this).attr("value");
+    //       alert('active')
+    // // var id =$("#activebut").val()
+    // alert(id);
+     var checkstr =  confirm('Are You Sure You Want To Inactive?');
+       if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-question",
+                       data: { question_id: id,
+                         status:"inactive" },
+                       success:function(resp)
+                       {
+                        // alert('t')
+
+                        // alert(id);
+                       
+                         // $('#pro_img').hide();  
+                         // $('#inactivebut').hide(); 
+                         // $('#activebut').show(); 
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ 
+ 
+  
+  // function inactivestatuschnage(obj1){
+             // alert(obj1)
+             $(".inacvtive-id-1").click(function(evnt){
+         
+             var id = $(this).attr("value");
+            //  alert(id)
+          
+          var checkstr =  confirm('Are You Sure You Want To Active?');
+          if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-question",
+                       data: { question_id:id,
+                         status:"active" },
+                       success:function(resp)
+                       {
+                        
+                        
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ </script>

@@ -1,0 +1,191 @@
+<!-- <div class=" table-responsive mt-30 table-dash"> -->
+    <table class="table" id="myTable3">
+        <thead>
+            <tr>
+                  <th width="10%" scope="col">Type</th>
+                  <th width="10%" scope="col">Client</th>
+                  <th width="20%" scope="col">Email</th>
+                  <th width="15%" scope="col">MyReflet ID</th>
+                  <th width="10%" scope="col">Country</th>
+                  <th width="20%" scope="col">Verified Status</th>
+                  <th width="10%" scope="col">Status</th>
+                  <th width="5%" scope="col">Action</th>
+            </tr>
+          </thead>
+        <tbody id="table_id">
+            <%ClientVerificationModelData.data.forEach(modaldata=>{%>
+                
+                    <tr>
+                         
+                            <td scope="row">
+                                <div class="for-flex-align">
+                                    <div class="checkbox">
+                                        <label>
+                                          <input type="checkbox" name="requestcheckbox" value="<%=modaldata.ClientVerificationData.request_id%>">
+                                          <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                          <%
+                                         
+                                          if(modaldata.MyReflectIData.tbl_user_registration.dataValues.profile_pic)
+                                          {
+                                              %>
+                                              <img class="profile-table for-square-img" src="<%=modaldata.MyReflectIData.tbl_user_registration.dataValues.profile_pic %>">
+                                              <%
+                                          }
+                                          else
+                                          {
+                                              
+                                              %>
+                                              <img class="profile-table for-square-img" src="../assets/images/icons/repersentative.png">
+                                        <%  }
+                                      %>
+                                          
+                                        </label>
+                                  </div>
+                              </div>
+                            </td>
+                          
+                              <td>
+                              <div class="for-flex-align">
+                                  <div class="checkbox">
+                                      <label>
+                                           <p class="line-hgt">
+                                               <span class="font-w-600"><%=modaldata.MyReflectIData.rep_username%></span>
+                                                <br>
+                                                <%=modaldata.MyReflectIData.reflect_code%>
+                                           </p>
+                                      </label>
+                                </div>
+                            </div>
+                          </td>
+                        <td><%=modaldata.user.email%></td>
+                        
+                        <td>
+                            <span class="font-w-600"><%=modaldata.verifer_my_reflect_id_Data.rep_username%></span> <br> <%=modaldata.verifer_my_reflect_id_Data.reflect_code%>
+                        </td>
+
+                        <%
+                        var countrycode;
+                        if(modaldata.MyReflectIData.entity_company_country){
+                            countrycode=modaldata.MyReflectIData.entity_company_country
+                        }else{
+                            countrycode=modaldata.MyReflectIData.verifier_category_id
+                        }%>
+                        <%countryData.forEach(countryD=>{%>
+
+                            <%if(countryD.country_id==countrycode){ %>
+
+                                <td><%=countryD.country_name%></td>
+                            <%}%>
+
+                        <%})%>
+                        <%if(!countrycode){ %>
+
+                            <td>-</td>
+                        <%}%>
+                        <td>
+                            <div>
+                                
+                                <span>
+                                    <img src="../assets/images/icons/dashboard-assets/verified.png">
+                                    Email
+                                </span>
+                              
+                            </div>
+                        </td>
+                        <td>
+                            <%if(modaldata.ClientVerificationData.request_status=="pending"){%>
+                            <div class="pending-status">
+                                Pending
+                            </div>
+                            <%}%>
+                            <%if(modaldata.ClientVerificationData.request_status=="reject"){%>
+                                <div class="cancel-status">
+                                    Reject
+                                </div>
+                            <%}%>
+                            <%if(modaldata.ClientVerificationData.request_status=="accept"){%>
+                                    <div class="approved-status">
+                                        Accepte
+                                    </div>
+                            <%}%>
+
+                        </td>
+                       
+                        <td>
+                              <div class="dropdown-menu-new">
+                                <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                                  <div class="doc-img">
+                                          <img src="../assets/images/icons/dashboard-assets/menu.png">
+                                      </div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="profileDropdown">
+                                  
+                                    <a class="dropdown-item" href="" >
+                                        <img src="../assets/images/icons/dashboard-assets/view.png"> Manage Requests
+                                    </a>
+                                    <a class="dropdown-item" href="">
+                                        <img src="../assets/images/icons/verifier-home-assets/requestdoc-grey.png"> Request documents
+                                    </a>
+                                    <a class="dropdown-item" href="/request_status_type?status=accept&request_id=<%=modaldata.ClientVerificationData.request_id%>">
+                                        <img src="../assets/images/icons/verifier-home-assets/requestdoc-grey.png"> Accepte
+                                    </a>
+                                   
+                                    <a class="dropdown-item" href="/request_status_type?status=reject&request_id=<%=modaldata.ClientVerificationData.request_id%>">
+                                        <img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Reject
+                                    </a>
+                                   
+
+                                </div>
+                            </div>
+                          </td>
+                    </tr>
+                       
+                    <%})%>
+
+         
+        </tbody>
+    </table>
+    <div class="pagination-list for-user">
+
+        <% if (ClientVerificationModelData.totalPages > 0) { %>
+       <ul class="pagination text-center">
+           <% if (ClientVerificationModelData.currentPage == 1) { %>
+               <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+           <% } else { %>
+               <li class="page-item"><a class="page-link" href="/verifier_deshboard?page=1">&lt;</a></li>
+           <% } %>
+    
+    
+    
+           <% var i = (Number(ClientVerificationModelData.currentPage) > 5 ? Number(ClientVerificationModelData.currentPage) - 4 : 1) %>
+           <% if (i !== 1) { %>
+               <!-- <li class="disabled"><a>...</a></li> -->
+               <li class="page-item disabled"><a class="page-link" >...</a></li>
+           <% } %>
+           <% for (; i <= (Number(ClientVerificationModelData.currentPage) + 4) && i <= ClientVerificationModelData.totalPages; i++) { %>
+               <% if (i == ClientVerificationModelData.currentPage) { %>
+                   <!-- <li class="active"><a><%= i %></a></li> -->
+                   <li class="page-item active">
+                     <a class="page-link" href="#"><%= i %><span class="sr-only">(ClientVerificationModelData.currentPage)</span></a>
+                   </li>
+               <% } else { %>
+                   <li class="page-item"><a class="page-link" href="/verifier_deshboard?page=<%= i %>"><%= i %></a></li>
+               <% } %>
+               <% if (i == Number(ClientVerificationModelData.currentPage) + 4 && i < ClientVerificationModelData.totalPages) { %>
+                   <!-- <li class="disabled"><a>...</a></li> -->
+                   <li class="page-item disabled"><a class="page-link" >...</a></li>
+               <% } %>
+           <% } %>
+    
+    
+           <% if (ClientVerificationModelData.currentPage == ClientVerificationModelData.totalPages) { %>                       
+               <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+           <% } else { %>
+               <li><a class="page-link" href="/verifier_deshboard?page=<%= ClientVerificationModelData.totalPages %>">&gt;</a></li>
+           <% } %>
+    
+       </ul>
+    <% } %>
+    
+     </div>
+<!-- </div> -->

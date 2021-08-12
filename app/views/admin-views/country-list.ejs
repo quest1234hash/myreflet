@@ -1,0 +1,467 @@
+<%- include('header'); -%>
+
+<style>
+  .status {
+  margin-right: 50px;
+}
+</style>
+<div>
+  <!--  <div class="main-bredcrum-box">
+        <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            Country List
+          </li>
+        </ul>
+      </nav>
+    </div> -->
+	<div class="page-header">
+      <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+          <i class="mdi mdi-contacts"></i>
+        </span>Country List              
+    </h3>
+     <div class="">
+              <a href="javascript:void(0);" onclick="export_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-export"></i>
+                   </span> 
+                 </span>
+               </a>
+              <a href="javascript:void(0);" onclick="print_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-printer"></i>
+                   </span> 
+                 </span>
+              </a>
+          </div>
+            
+    </div>
+   
+    <div class="row align-bottom-flex">
+        <div class="col-md-2">           
+                <div class="form-group">
+                          <label for="exampleInputUsername1">Country Name</label>
+                          <select class="form-control form-control-sm select-new1" id="exampleFormControlSelect3"onchange="nameFilter(value)">
+                                  <option>All</option>
+
+                                  <% if(country_name_data.length>0)
+                                    {
+                                     var i=0;
+                                    country_name_data.forEach(function(each_data){
+                                        %>
+                                  <option value="<%=each_data.country_name%>"><%=each_data.country_name%></option>
+                                <%});}%>
+                          </select>
+               </div>
+          
+      </div>  
+       <div class="col-md-2"> 
+               <div class="form-group">
+                    <label for="exampleInputUsername1">Status</label>
+                    <select class="form-control form-control-sm select-new2" id="exampleFormControlSelect3" onchange="nameFilter(value)">
+                        <option>All</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                      </select>
+
+         </div>
+        </div>
+
+        
+     
+    <!-- 	<div class="col-md-2"> 
+    		<div>
+    			<div class="form-group">
+                    <label for="exampleInputUsername1">MyReflet ID</label>
+                    <select class="form-control form-control-sm" id="exampleFormControlSelect3">
+                        <option>All</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                  </div>
+    		</div>
+    	</div> -->
+      <div class="col-md-3 ml-auto">
+    			<div class="form-group">
+              
+                      <div class="input-group search-input">
+                        <input type="text" class="form-control"id="myInput" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                              <button class="btn btn-sm" type="button"><i class=" mdi mdi-magnify"></i></button>
+                            </div>
+                       </div>
+          </div>
+    </div>
+  </div>
+
+    <div class="row">
+    	<div class="col-md-12">
+    		<div class="table-responsive">
+          <div class="div_data">
+    			<table class="table tabel-virifier "id="myTable3">
+              <thead>
+                <tr>
+                  <th width="15%">Country Id</th>
+                  <th width="20%">Country Name</th>
+                 
+                  <th width="20%"class="">Status</th>
+
+                  <!-- <th width="20%">Status</th> -->
+                  <!-- <th width="20%">Created At</th> -->
+
+                  <!-- <th width="5%">Updated At</th> -->
+                </tr>
+              </thead>
+              <tbody id="myTable">
+                    <% if(country_list.data.length>0)
+                    { 
+                       var i=0;
+                       country_list.data.forEach(function(each_data){
+                          %>
+                <tr>
+                   <td>
+                     <div>
+                       <p class="">CI-<%=each_data.country_id%></p>
+                     </div>
+                   </td>
+                   <td>
+                     <div> 
+                       <p class="upper"><%=each_data.country_name%></p>
+                     </div>
+                    </td>
+                    
+                  
+                  
+                    <td class=""> 
+                        <% 
+                        if(each_data.status=="active"){ %>
+                          
+                          <button type="button" value="<%-each_data.country_id%>" id="inactivebut"  class="btn  mr-2 btn-success_1 inacvtive-id ">Active </button>
+                              
+                      <%  }else{ %>
+                          
+                        <button type="button" value="<%-each_data.country_id%>" id="activebut"  class="btn  btn-danger mr-2 active-id " >Inactive</button>
+              
+                      <%  }
+                        %>
+                      
+                    <!-- <td>
+                     <p><%=moment(each_data.createdAt).format('MMM DD, YYYY')%></p>
+                   </td> -->
+                  
+                 
+                </tr>
+                <%
+								i++;			
+            });
+               }else{
+     %>
+                       <tr>
+            <td colspan="6"><center>No record found.</center> </td>
+             </tr>       <%}%>
+             
+              </tbody>
+          </table>
+         
+  
+          <div class="pagination-list for-user">
+          
+            <% if (country_list.totalPages > 0) { %>
+             <ul class="pagination text-center">
+               <% if (country_list.currentPage == 1) { %>
+                 <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+               <% } else { %>
+                 <li class="page-item"><a class="page-link" href="/country-list?page=1">&lt;</a></li>
+               <% } %>
+          
+          
+          
+               <% var i = (Number(country_list.currentPage) > 5 ? Number(country_list.currentPage) - 4 : 1) %>
+               <% if (i !== 1) { %>
+                 <!-- <li class="disabled"><a>...</a></li> -->
+                 <li class="page-item disabled"><a class="page-link" >...</a></li>
+               <% } %>
+               <% for (; i <= (Number(country_list.currentPage) + 4) && i <= country_list.totalPages; i++) { %>
+                 <% if (i == country_list.currentPage) { %>
+                   <!-- <li class="active"><a><%= i %></a></li> -->
+                   <li class="page-item active">
+                   <a class="page-link" href="#"><%= i %><span class="sr-only">(country_list.currentPage)</span></a>
+                   </li>
+                 <% } else { %>
+                   <li class="page-item"><a class="page-link" href="/country-list?page=<%= i %>"><%= i %></a></li>
+                 <% } %>
+                 <% if (i == Number(country_list.currentPage) + 4 && i < country_list.totalPages) { %>
+                   <!-- <li class="disabled"><a>...</a></li> -->
+                   <li class="page-item disabled"><a class="page-link" >...</a></li>
+                 <% } %>
+               <% } %>
+          
+          
+               <% if (country_list.currentPage == country_list.totalPages) { %>                       
+                 <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+               <% } else { %>
+                 <li><a class="page-link" href="/country-list?page=<%= country_list.totalPages %>">&gt;</a></li>
+               <% } %>
+          
+             </ul>
+          <% } %>
+           </div>
+           </div>
+    		</div>
+    	</div>
+    </div>
+</div>
+
+
+
+
+<%- include('footer'); -%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+
+<script src="/assets/js/select2.full.min.js"></script>
+<script src="/assets/js/jquery.nice-select.min.js"></script>
+
+
+<script>
+  $(function () {
+  $(".select-new").select2();
+   $(".select-new1").select2();
+  $(".select-new2").select2();
+  $("#select-new3").select2();
+ 
+});
+</script>
+<script type="text/javascript">
+var plan_status;
+  // $('.d1').on('click', '.menu-for-id a', function() {
+
+	//    $('.d2').$(this).val(); 
+
+	// //   var lastID = $(this).html();
+	//    plan_status = $(this).find(".change_status").attr("value");
+	// 	// console.log("text", lastID); 
+
+
+  //  });
+ $('.active_change').click(()=>{
+  var plan_status= $('.change_status').val()
+  var plan_id= $('.plan_id_1').val()
+
+  alert(plan_status)
+  alert(plan_id)
+
+  $.ajax({
+			type: "post",
+			url: "/status-submit",
+			data:{plan_is:plan_id,plan_status:plan_status},
+			success: function (data) {
+				
+				location.reload();
+
+			
+			}
+		});
+ })
+
+  $('.validate').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#submit_signup').attr('disabled',true);
+        form.submit();
+      }
+     });
+     $('#validate1').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#submit_signup').attr('disabled',true);
+        form.submit();
+      }
+     });
+ 
+     setTimeout(function() {
+    $('#success_message').fadeOut('fast');
+    }, 3000);
+    
+    setTimeout(function() {
+    $('#error_msg').fadeOut('fast');
+    }, 3000);
+  </script>
+
+<script>
+
+
+function export_table(){
+	  // alert('hhh')
+	// $('.hide_link').show();
+
+	  $("#myTable3").table2excel({
+		  filename: "country-list.xls",
+		  exclude:'.hide_link',
+	  });
+	//   $('.hide_link').show();
+	window.location.reload(true);
+
+	}; 
+	
+	function print_table(){
+		 $('.hide_link').hide();
+     
+       // $("#user_div").print();
+       var restorepage = $('body').html();
+		// $('.nodata').hide();
+	   var printcontent = $('#myTable3').clone();
+	   $('body').empty().html(printcontent);
+	   window.print();
+	   $('body').html(restorepage);
+	 
+     window.location.reload(true);
+    
+
+		}   
+</script>
+<script type="text/javascript">
+  
+  
+    $(".active-id").click(function(evnt){
+         
+         var id = $(this).attr("value");
+    
+     var checkstr =  confirm('Are You Sure You Want To Active?');
+       if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-country",
+                       data: { country_id: id,
+                         status:"active" },
+                       success:function(resp)
+                       {
+
+                       location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ 
+ 
+  
+ 
+$(".inacvtive-id").click(function(evnt){
+
+             var id = $(this).attr("value");
+          var checkstr =  confirm('Are You Sure You Want To Inactive?');
+          if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-country",
+                       data: { country_id:id,
+                         status:"inactive" },
+                       success:function(resp)
+                       {
+                       
+                        
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+  
+ </script>
+ 
+ <script>
+        $(document).ready(function(){
+         $("#myInput").on("keyup", function() {
+
+            var value = $(this).val().toLowerCase();
+            // alert(value)
+          
+ if(value)
+            {
+                     $.ajax({
+                              type: "post",
+                              url: "/search-country",
+                              data:{query:value},
+                              success: function (data) {
+                                // alert(data);
+                                
+                                     $('.div_data').html("");
+                                              $('.div_data').html(data);
+                                      
+                                
+                            
+                              
+                              }
+                            })
+
+            }
+            else
+            {
+              location.reload(true);
+            }
+  })
+        });
+        </script>
+<script type="text/javascript">
+  
+   function nameFilter(value){
+   // alert(value)
+
+   if(value!='All'){
+                          
+
+            $.ajax({
+                          type: "post",
+                          url: "/search-country",
+                          data:{query:value},
+                          success: function (data) {
+                            // alert('data');
+                            
+                                 $('.div_data').html("");
+                                          $('.div_data').html(data);
+                                  
+      
+  
+    
+                           }
+            })
+      } else {
+
+        window.location.reload()
+
+       }
+ }
+</script>

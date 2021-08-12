@@ -1,0 +1,153 @@
+ <div class="personal-info-box table-responsive mt-30 table-dash">
+  <table class="table" id="acceptedTable">
+                        <thead>
+                            <tr>
+                                  <th width="25%" scope="col">Date | Time</th>
+                                  <th width="10%" scope="col">Request ID</th>
+
+                                <th width="10%" scope="col">Client</th>
+                                <th width="20%" scope="col">Email</th>
+                                <th width="15%" scope="col">MyReflet ID</th>
+                                <th width="20%" scope="col">Verified Status</th>
+                                <th width="5%" scope="col" class="hide_link" >Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <%if(RequsetOnBoardingPending.length>0){
+                        %>
+                                <%var b=0; RequsetOnBoardingPending.forEach(modaldata=>{%>
+                                    
+                                        <tr>
+                                              <td>
+                                                  <div class="for-flex-align">
+                                                      <div class="checkbox">
+                                                          <label>
+                                                            <input type="checkbox" name="check_data" onclick="checkSelect()" value="<%=b%>">
+                                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                
+
+
+                                                <%=moment(modaldata.request_createdAt).format('MMM DD, YYYY')%> | <%=moment(modaldata.request_createdAt).format('hh:mm A')%>
+                                                          </label>
+                                                    </div>
+                                                </div>
+                                              </td>
+                                              <td><%=modaldata.request_code%></td>
+                                                  <td>
+                                                  <div class="for-flex-align">
+                                                      <div class="checkbox">
+                                                          <label>
+                                                               <p class="line-hgt">
+                                                                <%console.log("modaldatahide.entity_company_name ::: ",modaldata.entity_company_name)%>
+                                                                   <%if(modaldata.reflectid_by=="entity"){ %>
+                                                
+                                                                <span class="font-w-600"><%=modaldata.entity_company_name%></span>
+                                                        
+                                                                  <%}else{%>
+                                                            
+                                                                    <%if(modaldata.reflectid_by=="representative"){ %>
+                                                                        <span class="font-w-600">
+                                                                        <%=modaldata.rep_username%>
+                                                                        </span>
+                                                          <%}else{%>
+                                                                        <span class="font-w-600">
+                                                                            <%=modaldata.wallet_name%>
+                                                                            </span>
+                                                            
+                                                                 <%}%>
+                                                                    <%}%> -
+                                                       
+                                                        <br>
+                                                        <%=modaldata.reflect_code%>
+                                                               </p>
+                                                          </label>
+                                                    </div>
+                                                </div>
+                                              </td>
+                                            <td><%=decrypt(modaldata.email)%></td>
+                                            
+                                            <td>
+                                                <% var verifier_name;%>
+                                                <%if(modaldata.v_reflectid_by=="entity"){ 
+                                               verifier_name=modaldata.v_entity_company_name;
+                                                %>
+                                                
+                                                                <span class="font-w-600"><%=modaldata.v_entity_company_name%></span>
+                                                        
+                                                                  <%}else{
+                                                                   verifier_name=modaldata.v_rep_username;
+                                                                  %>
+                                                            
+                                                                    <span class="font-w-600"><%=modaldata.v_rep_username%></span>
+                                                        
+                                                                    <%}%> -
+                                                       
+                                                        <br>
+                                            
+                                                        <%=modaldata.v_r_code%>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    
+                                                    <span>
+                                                        <img src="../assets/images/icons/dashboard-assets/verified.png">
+                                                        Email
+                                                    </span>
+                                                    <!-- <span>
+                                                        <img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+                                                        Phone
+                                                    </span> -->
+                                                </div>
+                                            </td>
+                                           
+                                            <td class="hide_link">
+                                                  <div class="dropdown-menu-new">
+                                                    <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                                                      <div class="doc-img">
+                                                              <img src="../assets/images/icons/dashboard-assets/menu.png">
+                                                          </div>
+                                                    </a>
+                                                    <div class="dropdown-menu" aria-labelledby="profileDropdown">
+                                                        <!-- <a class="dropdown-item click_eye" href="/pen_request_view_client_info?request_id=<%=modaldata.request_id%>&verifier_name=<%=verifier_name%>" >
+                                                            <img src="../assets/images/icons/dashboard-assets/view.png"> Manage Requests
+                                                        </a> -->
+                                                        <%if (!modaldata.allocated) {%>
+                                                            <a class="dropdown-item click_eye" href="/pen_request_view_client_info?request_id=<%=modaldata.request_id%>&verifier_name=<%=verifier_name%>" >
+                                                                <img src="../assets/images/icons/dashboard-assets/view.png"> Manage Requests
+                                                            </a>
+                                                            <%} else {%>
+                                                                <a class="dropdown-item click_eye" href="/pen_request_view_client_info?request_id=<%=modaldata.request_id%>&verifier_name=<%=verifier_name%>&sub_verifier_reflect_id=<%=modaldata.allocated.sub_ver_my_reflect_id%>" >
+                                                                    <img src="../assets/images/icons/dashboard-assets/view.png"> Manage Requests
+                                                                </a>
+                                                                <%}%>
+                                                        <input type="hidden" id="request_id_for_req<%=b%>" value="<%=modaldata.request_id%>">
+                                                        <a class="dropdown-item click_eye" href="/ver-req-doc?request_id=<%=modaldata.request_id%>">
+                                                            <img src="../assets/images/icons/verifier-home-assets/requestdoc-grey.png"> Request documents
+                                                        </a>
+                                                        <!-- <a class="dropdown-item" href="/message-market?reflect_id=<%=modaldata.reflect_id%>"><img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage messages
+                                                        </a> -->
+                                                        <a class="dropdown-item click_eye" href="/manage-message-list"><img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage messages
+                                                        </a>
+                                                        <!-- <a class="dropdown-item" href="">
+                                                            <img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Reject
+                                                        </a>
+                                                        <a class="dropdown-item" href="">
+                                                            <img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+                                                        </a> -->
+            
+                                                    </div>
+                                                </div>
+                                              </td>
+                                        </tr>
+                                           
+                                        <%b++; })%>
+                                        <%}else{%>
+                                               <tr>
+                                                <td colspan="6"><center>No record found.</center> </td>
+                                               </tr>
+                                          <%}%> 
+                                           
+                        </tbody>
+                    </table>
+                     
+                </div>

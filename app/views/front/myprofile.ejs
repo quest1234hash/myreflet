@@ -1,0 +1,437 @@
+<%- include('innerHeader')%>
+
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/profile/profile.png">
+					<h4>My Profile</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="setup-id-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="white-box">
+					<div class="row">
+						<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+							<div class="setup-inner-box for-protact">
+								<!--edit-profile form start-->
+								<div class="create-rflet-id-form">
+									<form name="edit-profile-form" id="edit-profile-form" method="post"
+										action="/edit-profile" enctype="multipart/form-data">
+										<% if(err_msg!=undefined && err_msg !='' ){ %>
+										<div class="alert alert-danger text-center  flash_msg " id="error_msg">
+											<%= err_msg %>
+										</div>
+
+										<% }%>
+										<% if(success_msg!=undefined && success_msg !='' ){ %>
+										<div class="alert alert-success text-center  flash_msg " id="success_message">
+											<%= success_msg %>													
+										</div>
+										<% }%>	
+										<div class="profile-img">
+											<div class="text-center">
+												<div class="uploader-img">
+
+													<%
+		                                  		if(user.profile_img_name)
+		                                  		{
+		                                  			%>
+													<!-- <img id="user_profile_image_preview" src="<%#= user.profile_pic %>" 
+														class="m-t-5"> -->
+														<img id="user_profile_image_preview" src=<%= "/getprofileimage1/"+user.profile_img_name %> class="m-t-5">
+													<%
+		                                  		}
+		                                  		else
+		                                  		{
+		                                  			
+		                                  			%>
+													<img id="user_profile_image_preview"
+														src="../assets/images/other/face1.jpg" class="m-t-5">
+													<%
+		                                  		}
+		                                  	%>
+
+
+
+													<div class="verification">
+														<input type="text" class="form-control" readonly=""
+															name="text_img_name" id="text_img_name"
+															data-rule-required="true"
+															data-msg-required="Please select your Id.">
+														<span class="btn common-btn btn-file1">
+															<img src="../assets/images/icons/profile/edit.png">
+															<input type="file" id="imgInp6" value="" name="image"
+																accept="image/*" onchange="readURL(this);" value="">
+															<input type="hidden" name="old_image">
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row profile-form-row">
+
+											<div class="col-md-4">
+												<div class="form-group">
+													<label>First Name</label>
+													<div class="input-group">
+														<input type="text" class="form-control upper" name="full_name"
+															placeholder="Enter Full Name"
+															value="<%=decrypt( user.full_name )%>" readonly>
+
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label>Last Name</label>
+													<div class="input-group">
+														<input type="text" class="form-control upper" name="last_name"
+															placeholder="Enter Last Name"
+															value="<%= decrypt(user.last_name) %>" readonly>
+
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label>Email ID</label>
+													<div class="input-group mb-15">
+														<input type="text" class="form-control" name="emailid" readonly
+															placeholder="Enter Email-Id"
+															value="<%=decrypt( user.email)%>">
+															<span >
+																<a href="/change-email">
+																	<img src="../assets/images/icons/edit.png">
+																</a>
+																
+															</span>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label>Mobile No.</label>
+													<div class="input-group" onclick="send_otp()" data-target="#validate-pin-Modal"
+													data-toggle="modal">
+														<input type="text" class="form-control" name="mobileno"
+															id="mobileno" placeholder="Enter Mobile No."
+															value="+<%= countryCode[0].phonecode%>-<%= decrypt(user.mobile_number)  %>"
+															>
+															<span >
+																<img src="../assets/images/icons/edit.png">
+															</span>
+													</div>
+												</div>
+											</div>
+
+
+
+											<div class="col-md-4">
+												<div class="form-group">
+													<label>Birth Place</label>
+													<div class="input-group">
+														<input type="text" class="form-control" name="birthplace"
+															placeholder="Enter Birth Place"
+															value="<%= decrypt(user.birthplace)  %>" readonly>
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-4">
+												<div class="form-group">
+													<label>Date Of Birth</label>
+													<div class="input-group">
+														<!-- <input type="text" class="form-control" name="dob" id="datepicker2" placeholder="Enter Date Of Birth" value="<%=decrypt( user.dob  )%>" readonly> -->
+														<input type="text" class="form-control" name="dob"
+															placeholder="Enter Date Of Birth"
+															value="<%=decrypt( user.dob  )%>" readonly>
+
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-12">
+												<div>
+													<button type="submit" name="submit"
+														class="btn-common-new">Update</button>
+													<%if(session.user_type=="client"){%>
+													<a class="btn-common-new" href="/cilent_deshboard">Cancel</a>
+													<%}else{%>
+													<a class="btn-common-new" href="/verifier_deshboard">Cancel</a>
+													<%}%>
+												
+											</div>
+											<a href="">
+												<div class="download-contact">
+												<img src="../assets/images/icons/profile/pdf.png">
+												MyReflet Contract
+											</div>
+											</a>
+										</div>
+									</div>
+								</form>
+							  </div>
+							  <!--edit-profile form end-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<div class="modal field-edit-modal" id="validate-pin-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		  <form action="/update_mobile_number" method="POST" id="update_mobile_number">
+		  <div class="create-wallet-box">
+			  <div class="row align-item-center">
+				  <div class="col-xl-2 col-lg-3 col-md-3">
+					  <div class="for-icon-bg">
+						  <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+					  </div>
+				  </div>
+						  
+				  <input type="hidden" id="hash_value" value="">
+				  <input type="hidden" id="doc_type" value="">
+				  <input type="hidden" id="request_id" value="">
+				  <div class="col-xl-10 col-lg-10 col-md-10">
+					  <h5 class="heading-purple">Update Mobile Number</h5>
+					  <p>Enter OTP sent to your registered email adderess.</p>
+				  </div>
+				</div>
+				<div class="row">
+					<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+						  <div class="setup-inner-box for-protact mobile-no-update">
+							  <div class="create-rflet-id-form">
+								  <div class="form-group">
+									<label>Mobile Number<span style="color: red;">*</span></label>
+									 <div class="input-group">
+										 <div class="input-group-prepend mobile-no-select ">
+										  <select class="form-control select2-country " name="country_code_select">
+										  <option value="<%= countryCode[0].phonecode%>">+<%= countryCode[0].phonecode%></option>
+											<%if(countryCode1.length>0){%>
+											<%countryCode1.forEach(codes=>{%>
+
+											<option value="<%=codes.country_code_id%>">+<%=codes.phonecode%> -
+												<%=codes.iso%></option>
+											<%})%>
+											<%}%>  
+										  </select>
+									  </div>
+									  <label for="">Phone Number</label>
+									  <input type="text" name="mobile" id="mobile" class="form-control test2" placeholder="" value="<%= decrypt(user.mobile_number)%>"
+										data-rule-required="true" maxlength="15" minlength="10"
+										data-msg-required="Please enter mobile number."
+										data-rule-digits="true">
+									</div>
+									<span id="errNm1" class="error_validate"></span>
+								</div>
+								<div class="form-group mb-0">
+									<label>PIN</label>
+									<div class="input-group pin-input-box">
+													<div class="otp-box digit-group" data-group-name="digits"
+														data-autosubmit="false" autocomplete="off">
+														<input type="text" id="otp1" name="otp1"
+															class="form-control inputs text-center" placeholder="-" maxlength="1"
+															data-next="otp2">
+														<input type="text" id="otp2" name="otp2" class="form-control inputs"
+															placeholder="-" maxlength="1" data-next="otp3"
+															data-previous="otp1">
+														<input type="text" id="otp3" name="otp3" class="form-control inputs"
+															placeholder="-" maxlength="1" data-next="otp4"
+															data-previous="otp2">
+														<input type="text" id="otp4" name="otp4" class="form-control inputs"
+															placeholder="-" maxlength="1" data-previous="otp3">
+													</div>
+												</div>
+								</div>
+								<span class="validation_error"style="color:red"></span>
+								<div class="setup-inner-box for-protact pt-15">
+									<div>
+
+										<a class="btn-common-new" href="#" onclick="check_otp()"
+											id="validate_pin">Confirm</a>
+
+										<a class="btn-common-new" href="">Cancel</a>
+
+									</div>
+								</div>
+							  </div>
+							  
+						  </div>
+					  </div>
+				</div>
+
+				  
+										
+										
+										
+								</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<%- include('innerFooter')%>
+
+				<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+				<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+				<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+				<script type="text/javascript" src="assets/js/custom.js"></script>
+				<link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" ></script>
+
+					<script>
+					$(".inputs").keyup(function () {
+					    if (this.value.length == this.maxLength) {
+					      var $next = $(this).next('.inputs');
+					      if ($next.length)
+					          $(this).next('.inputs').focus();
+					      else
+					          $(this).blur();
+					    }
+					});
+				</script>
+
+
+				<script>
+					
+					$(document).ready(function () {
+						$(".select2-country").select2();
+
+							$('#datepicker2').datepicker({
+								changeMonth: true,
+								changeYear: true,
+								showButtonPanel: true,
+								dateFormat: 'dd/mm/yy',
+								onClose: function (dateText, inst) {
+									var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+
+								}
+							});
+					})
+				</script>
+				<script type="text/javascript">
+					function readURL(input) {
+						if (input.files && input.files[0]) {
+
+							var reader = new FileReader();
+							reader.onload = function (e) {
+
+								// alert(e.target.result);
+
+								$('#text_img_name').val(e.target.result);
+
+								$('#user_profile_image_preview')
+									.attr('src', e.target.result)
+									.width(200)
+									.height(150);
+							};
+
+							reader.readAsDataURL(input.files[0]);
+
+
+
+
+
+						}
+						var src = $('#imgInp6').val(); // "static/images/banner/blue.jpg"
+						var tarr = src.split('/');      // ["static","images","banner","blue.jpg"]
+						var file = tarr[tarr.length - 1]; // "blue.jpg"
+						var data = file.split('.')[0];  // "blue"
+
+						//alert(data);
+						//$('#text_img_name').val(src);
+					}
+
+					setTimeout(function () {
+						$('#success_message').fadeOut('fast');
+					}, 3000);
+
+					setTimeout(function () {
+						$('#error_msg').fadeOut('fast');
+					}, 3000);
+
+				</script>
+
+				<script>
+					function check_otp() {
+						// alert("checkc otp")
+
+
+						let otp1 = $("#otp1").val()
+
+						let otp2 = $("#otp2").val()
+
+						let otp3 = $("#otp3").val()
+
+						let otp4 = $("#otp4").val()
+
+						let otp = otp1 + otp2 + otp3 + otp4
+
+						if (otp.length != 4) {
+							$('.validation_error').html("Please fill all the fields.");
+														return false
+						}
+						setTimeout(function() {
+								$('.validation_error').fadeOut('fast');
+								}, 100);
+						$.ajax({
+							type: "post",
+							url: "/check_otp_for_phone_number",
+							data: { otp },
+							success: function (data) {
+
+								if (data.type == "success") {
+									$("#update_mobile_number").submit()
+								} else {
+
+									alert("You entered wrong otp. Please fill correcte one.")
+
+								}
+							}
+						})
+					}
+				</script>
+
+				<script>
+					function send_otp() {
+
+						// alert("sendotp")
+						$.ajax({
+							type: "post",
+							url: "/send_otp_for_mobile_number_change",
+							data: {},
+							success: function (data) {
+
+								//  if ( data.type == "success" ) {
+								// $(this).attr('data-toggle','modal'); 										
+								//  $(this).attr('data-target','#validate-pin-Modal'); 	
+
+								//  $('#mobileno').attr('data-toggle','modal'); 										
+								//  $('#mobileno').attr('data-target','#validate-pin-Modal'); 	
+
+								//  } else {
+
+								// 	alert("Somthing went wrong try again.")
+
+								//  }
+							}
+						})
+					}
+				</script>

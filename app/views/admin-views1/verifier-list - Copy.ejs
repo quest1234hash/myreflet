@@ -1,0 +1,230 @@
+<%- include('header'); -%>
+
+<div>
+	<div class="page-header">
+      <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+          <i class="mdi mdi-contacts"></i>
+        </span> Verifier List </h3>
+      <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="row align-bottom-flex">
+    	<div class="col-md-2">
+    		<div>
+    			<div class="form-group">
+                    <label for="exampleInputUsername1">Status</label>
+                    <select class="form-control form-control-sm" id="exampleFormControlSelect3">
+                        <option>All</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                  </div>
+    		</div>
+    	</div>
+    	<div class="col-md-2">
+    		<div>
+    			<div class="form-group">
+                    <label for="exampleInputUsername1">MyReflet ID</label>
+                    <select class="form-control form-control-sm" id="exampleFormControlSelect3">
+                        <option>All</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                  </div>
+    		</div>
+    	</div>
+    	<div class="col-md-3 offset-md-5">
+    		<div>
+    			<div class="form-group">
+                      <div class="input-group search-input">
+                        <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                          <button class="btn btn-sm" type="button"><i class=" mdi mdi-magnify"></i></button>
+                        </div>
+                      </div>
+                    </div>
+    		</div>
+    	</div>
+    </div>
+    <div class="row">
+    	<div class="col-md-12">
+    		<div class="table-responsive">
+    			<table class="table tabel-virifier">
+              <thead>
+                <tr>
+                  <th width="10%">Type</th>
+                  <th width="15%">Verifier Name</th>
+                  <th width="15%">Email</th>
+                  <th width="15%">MyReflet ID</th>
+                  <th width="10%">Country</th>
+                  <th width="20%">Verified Status</th>
+                  <th width="10%">Status</th>
+                  <th width="5%">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                   <td>
+                     <div class="verifier-typ-img">
+                       <img src="assets/images/icons/entity.png">
+                     </div>
+                   </td>
+                   <td>
+                     <div>
+                       <h5>Jack Ma</h5>
+                     </div>
+                   </td>
+                   <td>
+                     <div>
+                       <p>jackma@gmail.com</p>
+                     </div>
+                   </td>
+                   <td>
+                     <div>
+                       <p>25102</p>
+                     </div>
+                   </td>
+                   <td>
+                     <p>China</p>
+                   </td>
+                    <td>
+                     <div class="verifier-typ-img for-verify-typ">
+                       <img src="assets/images/icons/email.png"><span>Email &nbsp;</span>
+                       <img src="assets/images/icons/phone.png"><span>Phone</span>
+                     </div>
+                   </td>
+                   <td>
+                     <div>
+                       <h6 class="pending">Pending</h6>
+                     </div>
+                   </td>
+                   <td>
+                     <div class="dropdown-menu-new">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                          <a class="dropdown-item" href="manage_request.php"><i class="fas fa-cogs"></i> Manage Requests</a>
+                          <a class="dropdown-item" href="#"><i class="mdi mdi-close-box"></i> Reject</a>
+                          <a class="dropdown-item" href="#"><i class="mdi mdi-delete"></i> Delete</a>
+                          <a class="dropdown-item" href="#"><i class="mdi mdi-delete-forever"></i> Block</a>
+                        </div>
+                     </div>
+                   </td>
+                </tr>
+                <tr>
+                   <td>
+                     <div class="verifier-typ-img">
+                       <img src="assets/images/icons/repersentative.png">
+                     </div>
+                   </td>
+                   <td>
+                     <div>
+                       <h5>Jack Ma</h5>
+                     </div>
+                   </td>
+                   <td>
+                     <div>
+                       <p>jackma@gmail.com</p>
+                     </div>
+                   </td>
+                   <td>
+                     <div>
+                       <p>25102</p>
+                     </div>
+                   </td>
+                   <td>
+                     <p>China</p>
+                   </td>
+                    <td>
+                     <div class="verifier-typ-img for-verify-typ">
+                       <img src="assets/images/icons/email.png"><span>Email &nbsp;</span>
+                       <img src="assets/images/icons/phone.png"><span>Phone</span>
+                     </div>
+                   </td>
+                   <td>
+                     <div>
+                       <h6 class="reject">Rejected</h6>
+                     </div>
+                   </td>
+                   <td>
+                     <div class="dropdown-menu-new">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                          <a class="dropdown-item" href="manage_request.php"><i class="fas fa-cogs"></i> Manage Requests</a>
+                          <a class="dropdown-item" href="#"><i class="mdi mdi-close-box"></i> Reject</a>
+                          <a class="dropdown-item" href="#"><i class="mdi mdi-delete"></i> Delete</a>
+                          <a class="dropdown-item" href="#"><i class="mdi mdi-delete-forever"></i> Block</a>
+                        </div>
+                     </div>
+                   </td>
+                </tr>
+                tr>
+                   <td>
+                     <div class="verifier-typ-img">
+                       <img src="assets/images/icons/entity.png">
+                     </div>
+                   </td>
+                   <td>
+                     <div>
+                       <h5>Jack Ma</h5>
+                     </div>
+                   </td>
+                   <td>
+                     <div>
+                       <p>jackma@gmail.com</p>
+                     </div>
+                   </td>
+                   <td>
+                     <div>
+                       <p>25102</p>
+                     </div>
+                   </td>
+                   <td>
+                     <p>China</p>
+                   </td>
+                    <td>
+                     <div class="verifier-typ-img for-verify-typ">
+                       <img src="assets/images/icons/email.png"><span>Email &nbsp;</span>
+                       <img src="assets/images/icons/phone.png"><span>Phone</span>
+                     </div>
+                   </td>
+                   <td>
+                     <div>
+                       <h6 class="approve">Approved</h6>
+                     </div>
+                   </td>
+                   <td>
+                     <div class="dropdown-menu-new">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                          <a class="dropdown-item" href="manage_request.php"><i class="fas fa-cogs"></i> Manage Requests</a>
+                          <a class="dropdown-item" href="#"><i class="mdi mdi-close-box"></i> Reject</a>
+                          <a class="dropdown-item" href="#"><i class="mdi mdi-delete"></i> Delete</a>
+                          <a class="dropdown-item" href="#"><i class="mdi mdi-delete-forever"></i> Block</a>
+                        </div>
+                     </div>
+                   </td>
+                </tr>
+              </tbody>
+          </table>
+    		</div>
+    	</div>
+    </div>
+</div>
+
+<%- include('footer'); -%>

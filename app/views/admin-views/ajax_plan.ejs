@@ -1,0 +1,198 @@
+  <table class="table tabel-virifier"id="myTable3">
+              <thead>
+                <tr>
+                  <th width="10%">Sr.No.</th>
+                  <th width="20%">Plan Name</th>
+                  <th width="20%">Plan price</th>
+                  <th width="20%"class="hide_link">Status</th>
+                  <th width="20%">Created At</th>
+                   <th width="20%">Updated At</th>
+                  <th width="20%"class="hide_link">Action</th>
+
+                  <!-- <th width="5%">Updated At</th> -->
+                </tr>
+              </thead>
+              <tbody id="myTable">
+                  <% if(plan_list.length>0)
+                    {
+                       var i=0;
+                        var j=1;
+                        plan_list.forEach(function(each_data){
+                          %>
+                <tr>
+                   <td>
+                     <div>
+                       <p class=""><%=j%>.</p>
+                     </div>
+                   </td>
+                   <td>
+                     <div> 
+                       <p class="plan_name upper"><%=each_data.plan_name%></p>
+                     </div>
+                   </td>
+                   <td>
+                     <div>
+                       <p class="plan_price"><%=each_data.plan_price%></p>
+                     </div>
+                   </td>
+                   <td class="hide_link">
+                      <% 
+                      if(each_data.status=="active"){ %>
+                        
+                        <button type="button" value="<%-each_data.plan_id%>" id="inactivebut"  class="btn  mr-2 btn-success_1 acvtive-id-1 ">Active </button>
+                            
+                    <%  }else{ %>
+                        
+                      <button type="button" value="<%-each_data.plan_id%>" id="activebut"  class="btn  btn-danger mr-2 inacvtive-id-1 " >Inactive</button>
+            
+                    <%  }
+                      %>
+                    <!-- <div class="switch-option">
+                       <div class="inner-div ">
+                          <label class="switch ">
+                            <input type="checkbox"class="switch_user"  onchange="switchUserType(value)"> 
+                           
+                            <span class="slider round"></span>
+                          </label> 
+                       </div> 
+                    </div> -->
+    
+                   <!-- <p class="change"><%=each_data.status%></p> -->
+                   </td>
+                    <td>
+                     <p><%=moment(each_data.createdAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                  <td>
+                     <p><%=moment(each_data.updatedAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                   <td class="hide_link">
+                     <div class="dropdown-menu-new">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                         <a href="#" class="dropdown-item data_value" data-target="#editPlan_<%=i%>" data-toggle="modal"><i class="mdi mdi-pencil"></i> Edit</a>
+                          <a href="/delete-plan/:<%=each_data.plan_id%>"class="dropdown-item" href="#"><i class="mdi mdi-delete "></i> Delete</a>
+                        </div>
+                     </div>
+                   </td>
+                </tr>
+                <%
+                i++;   j++;
+            });
+               }else{
+           %>
+                       <tr>
+                        <td colspan="8"><center>No record found.</center> </td>
+                      </tr>    
+           <%}%>
+             
+              </tbody>
+          </table>
+
+<% if(plan_list.length>0)
+{
+   var i=0;
+    plan_list.forEach(function(each_data){
+      %>
+<div class="modal fade" id="editPlan_<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+  
+          <div class="profile-form">
+                        
+                           
+                      <form action="/edit-plan" method="post" id="validate1">
+  
+                       <div class="form-group">
+                          <label>Plan Name</label>
+                          <input type="text" class="form-control"value="<%=each_data.plan_name %>" name="plan_name" id="plan_name"data-rule-required="true" data-msg-required="Please enter plan name.">
+                        </div>
+                        <div class="form-group">
+                          <label>Plan Price</label>
+                          <input type="text" class="form-control"value="<%=each_data.plan_price %>" name="plan_price" id="plan_price"data-rule-number=”true” data-rule-required="true" data-msg-required="Please enter price".>
+                        </div>
+                        
+                        <input type="hidden" class="form-control"value="<%=each_data.plan_id%>" name="plan_id" id="plan_price">
+
+       
+                     
+                          <div class="popup-btn text-center">
+                          <button class="btn btn-common bg-gradient-primary check ">Save</button>
+                         
+                          <a href="/plan-list" class="btn btn-common bg-gradient-primary ">Cancel</a>
+                        </div>
+                    
+                   </form> 
+                 </div>
+  
+  
+  
+   
+        </div>
+      </div>
+    </div>
+  </div>
+  <%
+                i++;      
+            });
+               }
+           %>
+<script type="text/javascript">
+  
+  
+    $(".acvtive-id-1").click(function(evnt){
+         
+         var id = $(this).attr("value");
+    
+     var checkstr =  confirm('Are You Sure You Want To Inactive?');
+       if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-plan",
+                       data: { plan_id: id,
+                         status:"inactive" },
+                       success:function(resp)
+                       {
+                       
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ 
+ 
+  
+  
+             $(".inacvtive-id-1").click(function(evnt){
+         
+             var id = $(this).attr("value");
+          
+          var checkstr =  confirm('Are You Sure You Want To Active?');
+          if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-plan",
+                       data: { plan_id:id,
+                         status:"active" },
+                       success:function(resp)
+                       {
+                       
+                        
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ </script>
+      

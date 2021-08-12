@@ -1,0 +1,18 @@
+<div class="form-group">
+    <label>Document List</label>
+    <div class="input-group">
+      <select class="form-control" onchange="get_doc_img(this.value)">
+        <option>Select Document</option>
+        <%if(refletIds.length){
+            for(let reflet of refletIds){%>
+
+            <option value="<%=reflet.user_doc_id%>"><%=reflet.document_name%></option>
+        <%}}%>
+      </select>
+      <div class="input-group-append">
+        <span class="input-group-text">
+            
+        </span>
+      </div>
+    </div>
+</div>

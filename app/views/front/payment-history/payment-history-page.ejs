@@ -1,0 +1,435 @@
+<%-include('../innerHeader')%>
+<style>
+    
+    .dis-able-btn {
+		color: currentColor;
+		pointer-events: none;
+        cursor: default;
+        text-decoration: none;
+  /* color: black; */
+        opacity: 0.5;
+        text-decoration: none;
+        /* cursor: not-allowed;
+		background: #dddddd; */
+    }
+    .active {
+        text-decoration-color: yellow;
+    }
+
+    .resend-lint-count {
+        color: #ffb15a;
+        font-weight: 500;
+        margin-right: 6px;
+        text-decoration: none;
+        background-color: transparent;
+        border: none;
+    }
+
+    .count-no {
+        font-size: 20px;
+        margin: 0 20px;
+        color: #000;
+    }
+    </style>
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12">
+				<div class="row personal-info-heading">
+					<div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+						<div class="main-heading-dash">
+							<img src="../assets/images/icons/createidentity-assets/backup.png">
+							<h4>Payment History</h4>
+						</div>
+					</div>
+					
+				</div>
+
+				<div class=" custom-space-btw for-flex-remove client-btn  another-drop-down m-top-30 align-items-end">
+					<div class="for-two-select-in-one">
+						
+					<div class="for-select-existing-doc">
+					    <div class="input-group">
+							<div class="dropdown keep-inside-clicks-open">
+								<h3 class="small-title">MyReflet ID</h3>
+								<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    All
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 20px, 0px);">
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								        	<label>
+								          		All
+								            	<input type="checkbox" class="check2" name="check" value="All">
+								            	<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+									</div>
+									<%pay_history.data.forEach(pay_history=>{%>
+
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								         	<label>
+												<%=pay_history.reflect_code%>
+									            <input type="checkbox" class="check2" name="check" value="<%=pay_history.reflect_id%>">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+									</div>
+									<%})%>
+								    <!-- <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								         	<label>
+									          	Quest Glt - 1235556
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+									</div> -->
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					</div>
+					<div class="btn-all-dwnload">				
+						<a href="javascript:void(0)" id="iv_id" onclick="invoice()"><img src="../assets/images/icons/dashboard-assets/icon_eye_pur.png"> View Invoice</a>
+						<a href=""><img src="../assets/images/icons/upload-purple.png"> Upgrade </a>
+						<a href=""><img src="../assets/images/icons/verifier-home-assets/reject.png"> Cancel</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12" id="divForFilter">
+				<div class="personal-info-box table-responsive another-table">
+					<table class="table" id="myTable3">
+						<thead>
+					    	<tr> 
+						      	<th width="24%" scope="col">MyReflet ID</th>
+						      	<th width="26%" scope="col">Date</th>
+						      	<th width="20%" scope="col">Amount</th>
+						      	<th width="25%" scope="col">Subscription Plan</th>
+						      	<th width="5%" scope="col">Action</th>
+					    	</tr>
+					  	</thead>
+						<tbody id="table_id">
+                        <%pay_history.data.forEach(pay_history=>{%>
+
+						    <tr>
+						    	<td>
+						    		<div class="for-flex-align">
+							      		<div class="checkbox">
+							      			<label>
+							      				 <input type="checkbox" name="paymentid" value="<%=pay_history.purchase_id%>" onclick="checkForSelect()">
+									             <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							      		     	<%=pay_history.reflect_code%>
+								         	 </label>
+								        </div>
+									</div>
+						    	</td>
+						      	<td><%=moment(pay_history.createdAt).format("DD , MMM , YYYY")%></td>
+							    <td>$<%=pay_history.plan_price%></td>
+							    <td><%=pay_history.plan_name%></td>
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="/pay_invoice?purchase_id=<%=pay_history.purchase_id%>">
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> View Invoice
+				                            </a>
+											<a class="dropdown-item" href="../my-reflet-id/choose-plan.php">
+				                            	<img src="../assets/images/icons/dashboard-assets/upload.png"> Upgrade
+				                            </a>
+											<a class="dropdown-item" href="#cancelPlan" data-toggle="modal">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Cancel
+											</a>
+				                        </div>
+				                    </div>
+						      	</td>
+							</tr>
+							
+						<%})%>
+						    <!-- <tr>
+						    	<td>
+						    		<div class="for-flex-align">
+							      		<div class="checkbox">
+							      			<label>
+							      				 <input type="checkbox" value="">
+									             <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							      		     	C-32568
+								         	 </label>
+								        </div>
+									</div>
+						    	</td>
+						      	<td>15 Aug, 2020</td>
+							    <td>$50</td>
+							    <td>Basic</td>
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="history-invoice.php">
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> View Invoice
+				                            </a>
+
+				                            <a class="dropdown-item" href="../my-reflet-id/choose-plan.php">
+				                            	<img src="../assets/images/icons/dashboard-assets/upload.png"> Upgrade
+				                            </a>
+							
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Cancel
+											</a>
+				                        </div>
+				                    </div>
+						      	</td>
+						    </tr>
+						    <tr>
+						    	<td>
+						    		<div class="for-flex-align">
+							      		<div class="checkbox">
+							      			<label>
+							      				 <input type="checkbox" value="">
+									             <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							      		     	C-32568
+								         	 </label>
+								        </div>
+									</div>
+						    	</td>
+						      	<td>15 Aug, 2020</td>
+							    <td>$50</td>
+							    <td>Basic</td>
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="history-invoice.php">
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> View Invoice
+				                            </a>
+
+				                            <a class="dropdown-item" href="../my-reflet-id/choose-plan.php">
+				                            	<img src="../assets/images/icons/dashboard-assets/upload.png"> Upgrade
+				                            </a>
+							
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Cancel
+											</a>
+				                        </div>
+				                    </div>
+						      	</td>
+						    </tr> -->
+						  
+						</tbody>
+					</table>
+				</div>
+				<div class="pagination-list for-user">
+          
+					<% if (pay_history.totalPages > 0) { %>
+				   <ul class="pagination text-center">
+					   <% if (pay_history.currentPage == 1) { %>
+						   <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+					   <% } else { %>
+						   <li class="page-item"><a class="page-link" href="/payment_history?page=1">&lt;</a></li>
+					   <% } %>
+				
+				
+				
+					   <% var i = (Number(pay_history.currentPage) > 5 ? Number(pay_history.currentPage) - 4 : 1) %>
+					   <% if (i !== 1) { %>
+						   <!-- <li class="disabled"><a>...</a></li> -->
+						   <li class="page-item disabled"><a class="page-link" >...</a></li>
+					   <% } %>
+					   <% for (; i <= (Number(pay_history.currentPage) + 4) && i <= pay_history.totalPages; i++) { %>
+						   <% if (i == pay_history.currentPage) { %>
+							   <!-- <li class="active"><a><%= i %></a></li> -->
+							   <li class="page-item active">
+								 <a class="page-link" href="#"><%= i %><span class="sr-only">(pay_history.currentPage)</span></a>
+							   </li>
+						   <% } else { %>
+							   <li class="page-item"><a class="page-link" href="/payment_history?page=<%= i %>"><%= i %></a></li>
+						   <% } %>
+						   <% if (i == Number(pay_history.currentPage) + 4 && i < pay_history.totalPages) { %>
+							   <!-- <li class="disabled"><a>...</a></li> -->
+							   <li class="page-item disabled"><a class="page-link" >...</a></li>
+						   <% } %>
+					   <% } %>
+				
+				
+					   <% if (pay_history.currentPage == pay_history.totalPages) { %>                       
+						   <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+					   <% } else { %>
+						   <li><a class="page-link" href="/payment_history?page=<%= pay_history.totalPages %>">&gt;</a></li>
+					   <% } %>
+				
+				   </ul>
+				<% } %>
+				
+				 </div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Modal S -->
+ 
+<div class="modal fade field-edit-modal" id="cancelPlan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/img_close.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Cancel Plan</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="offset-2 col-xl-7 col-lg-12 col-md-12">
+					<p>Are you sure you want to cancel the plan?</p>
+				</div>
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact pt-15">
+						<div>
+							<a class="btn-common-new" href="">Cancel</a>
+							<a class="btn-common-new" href="">Continue</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div> 
+<!-- Modal E -->
+
+<%- include('../innerFooter')%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script>
+$(document).ready( function () {
+	$('.table').DataTable();
+} );
+</script>
+<script>
+	$(document).on('click.bs.dropdown.data-api', '.dropdown.keep-inside-clicks-open', function (e) {
+	  e.stopPropagation();
+	});
+</script> 
+<script>
+	
+	// ************** Search by client verfier code **********************
+$('.check2').click(function() {
+		// var userid = `${ userid}`
+		// alert("hshbihbsduhbu") checkstatus
+		// $('#table_id').html(" ")
+
+    var reflect_code_list = $('input[name=check]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+	var status_list = $('input[name=checkstatus]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+	console.log("status list",status_list)
+	if(reflect_code_list[0]=='All')
+	{
+		window.location.reload(true);
+
+	}
+	// if(status_list[0]=='All')
+	// {
+	// 	window.location.reload(true);
+
+	// }
+	// console.log("check box select value : ",reflect_code_list) 
+	
+
+	$.ajax({
+                      type : 'POST',
+                      url  : '/pay_history_filter',
+					  data: {reflect_code_list:JSON.stringify(reflect_code_list),
+						
+						   },
+					  
+                        success: function(pay_his_data) {
+					
+						if(!pay_his_data)
+					    {
+                            $('#table_id').append(`<td>No record found</td>`);
+
+					     }
+					   else{
+						   
+				
+					$("#divForFilter").html("")
+					$("#divForFilter").html(pay_his_data)
+
+
+
+	} 
+	
+			}                                                    
+           
+})
+})
+	</script>
+
+<script>
+	function checkForSelect(value) {
+		
+			var pay_ids = [];
+			$.each($("input[name='paymentid']:checked"), function(){
+				pay_ids.push($(this).val());
+				});
+				// alert(value)
+				// console.log("request_ids",invite_client_id)
+				if(pay_ids.length>1){
+												$("#iv_id").addClass('dis-able-btn')
+				// 								$("#m_doc").addClass('dis-able-btn')
+				// 								$("#m_msg").addClass('dis-able-btn')
+				}else{
+												$("#iv_id").removeClass('dis-able-btn')
+												// $("#m_doc").removeClass('dis-able-btn')
+												// $("#m_msg").removeClass('dis-able-btn')
+	
+	
+				}
+	
+	}
+	</script>
+	<script>
+			function invoice(){
+
+			
+						var pay_ids = [];
+								$.each($("input[name='paymentid']:checked"), function(){
+																	pay_ids.push($(this).val());
+									});
+
+	var test =pay_ids[0].split('-')
+	var pay_id =test[0]
+	// var category_name =test[1]
+	// alert(test[0])
+	// alert(test[1])
+	window.location=window.location.origin+"/pay_invoice?purchase_id="+pay_id
+
+}
+	</script>

@@ -1,0 +1,727 @@
+<!-- <?php include('header.php');?> -->
+<%-include('../innerHeader')%>
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12">
+				<div class="custom-space-btw align-items-center">
+					<div class="main-heading-dash">
+						<img src="../assets/images/icons/home-assets/complaints.png">
+						<h4>Complaint List</h4>
+					</div>
+					<div>
+						<a href="#" class="btn-common-new text-center m-0" data-target="#newComplaint" data-toggle="modal">New Complaint</a>
+					</div>
+				</div>
+				<div class="custom-space-btw another-drop-down m-top-30 align-items-end">
+					<div class="for-select-existing-doc three-drop-custom">
+					    <div class="input-group">
+							<div class="dropdown keep-inside-clicks-open">
+								<h3 class="small-title">Status</h3>
+								<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    All
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 20px, 0px);">
+								    <div class="for-doc-select">
+								    	<div class="checkbox "> 	
+								        	<label>
+								          		All
+								            	<input type="checkbox" value="" class="all_check">
+								            	<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+									</div>
+									<div class="">
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								         	<label>
+												Pending <input type="checkbox" value="pending"class="checkbox1 ">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+								    </div>
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								         	<label>
+												Closed
+									            <input type="checkbox" value="closed"class="checkbox1">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+								    </div>
+									<div class="for-doc-select">
+								    	<div class="checkbox "> 	
+								        	<label>
+												Responded
+								            	<input type="checkbox" value="responded" class="checkbox1">
+								            	<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+								    </div>
+								</div>
+								    
+								</div>
+							</div>
+						</div>
+						<!-- one section -->
+						<div class="input-group">
+							<div class="dropdown keep-inside-clicks-open">
+								<h3 class="small-title">MyReflet ID</h3>
+								<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    All <%= user_type%>
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 20px, 0px);">
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								        	<label>
+								          		All 
+								            	<input type="checkbox" value="" class="all_check">
+								            	<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+								    </div>
+								<%	if(all_reflect_codes.length>0)
+									{
+									
+										for(var i=0;i< all_reflect_codes.length;i++ ){
+										  %>
+								    <div class="for-doc-select">
+									 <div class="checkbox" >
+										<label>
+										  <%	if(user_type=='client'){
+											 if(all_reflect_codes[i].user_as=='client')
+									 		 {
+										%>
+										<%= all_reflect_codes[i].rep_firstname %> - <%= all_reflect_codes[i].reflect_code %>				
+										<input type="checkbox" value="<%= all_reflect_codes[i].reflect_code %>"class="checkbox2"name="check">
+										  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+										  <% 
+										  }}
+										     {
+                                            if(all_reflect_codes[i].user_as=='verifier')
+											{
+											%>
+											    
+											<%= all_reflect_codes[i].rep_firstname %> - <%= all_reflect_codes[i].reflect_code %>				
+											<input type="checkbox" value="<%= all_reflect_codes[i].reflect_code%>"class="checkbox2"name="check">
+												<span class="cr"><i class="cr-icon fa fa-check"></i></span>	
+										<%}}%>
+										</label>
+									</div>	</div>
+									<%
+											
+							   }
+								  }
+							  %>
+								</div>
+							</div>
+						</div>
+
+						<!-- second section -->
+						<div class="input-group">
+							<div class="dropdown keep-inside-clicks-open">
+								<h3 class="small-title">Complaint ID</h3>
+								<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    All
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 20px, 0px);">
+								    <div class="for-doc-select">
+								    	<div class="checkbox "> 	
+								        	<label>
+								          		All
+								            	<input type="checkbox" value=""class="all_check">
+								            	<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+									</div>
+									<%	if(all_complaint.length>0)
+									{
+									
+										for(var i=0;i< all_complaint.length;i++ ){
+										  %>
+									<div class="for-doc-select">
+								    	<div class="checkbox "> 	
+								        	<label>
+												C -<%= all_complaint[i].complain_id %>
+											  <input type="checkbox" value="<%= all_complaint[i].complain_id %>"class="checkbox3">
+											  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+											</label>
+										</div>	
+									</div>
+										<%
+									
+								   }
+									  }%>
+								</div>
+							</div>
+						</div>	
+					</div>
+					<div>
+						<form class="response-search"> 
+		                     <div class="input-group search-address-book">
+		                        <input type="text" class="form-control autocomplete" id="myInput" placeholder="Search" onkeypress="autoSearch(this);">
+		                        <div class="input-group-append">
+		                            <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+		                        </div>
+		                    </div>
+	                  	</form>
+					</div>
+				</div>
+				<div class="personal-info-heading">
+					<div class="text-right">
+						<a href="javascript:void(0);" onclick="export_table();">							<div class="icon-for-dwnload">		
+							<div class="icon-for-dwnload">
+								<div class="tooltip fade" data-title="Export Data">
+									<img src="../assets/images/icons/dashboard-assets/export.png">
+							     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+								</div>
+							</div>
+						</a>
+						<a href="javascript:void(0);" onclick="print_table();">
+							<div class="icon-for-dwnload">
+								<div class="tooltip fade" data-title="Print Data">
+									<img src="../assets/images/icons/dashboard-assets/print.png">
+								    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class="personal-info-box table-responsive another-table">
+					<table class="table" id="myTable3">
+						<thead>
+					    	<tr> 
+						      	<th scope="col">Complaint ID</th>
+						      	<th scope="col">Date</th>
+						      	<th scope="col">Verifier</th>
+						      	<th scope="col">Message</th>
+						      	<th scope="col">MyReflet ID</th>
+						      	<th scope="col">Status</th>
+						      	<th scope="col" class="hide_link">Action</th>
+					    	</tr>
+					  	</thead>
+						<tbody class=" all_list">
+							<%
+							if(all_complaint.length>0)
+							{
+			
+								all_complaint.forEach(function(each_reflect){
+						   %>
+						    
+						    
+						    <tr class="content_search">
+						    	<td >C-<%= each_reflect.complain_id %></td>
+								<td class=""><%=moment(each_reflect.created_at).format('MMM DD, YYYY')%></td>
+							    <td class=""><span class="font-w-600"><%= each_reflect.rep_firstname%> </span> <br> <%= each_reflect.reflect_code %></td>
+								<td class=""><%= each_reflect.complain_message%></td>
+								<td class=""><span class="font-w-600"><%= each_reflect.full_name %></span> <br><%= each_reflect.client_reflect_code %> </td>
+							    <td class=""> <span class="clr-purple"><%= each_reflect.complaint_status %></span></td>
+							    <td>
+							      	<a href="/complaint-details/:<%= each_reflect.complain_id %>" class="view-img"><img class="hide_link" src="../assets/images/icons/dashboard-assets/icon_view.png" alt="eye"></a>
+								  </td>
+								  
+									
+						    </tr>
+							<%
+						});
+		  
+						  }
+					  %>
+						</tbody>
+						<tbody class="complaints_by_status_list"></tbody>
+						<tbody class="complaints_by_reflect_codes"></tbody>
+						<tbody class="complaints_by_complain_id"></tbody>
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Modal S -->
+ 
+ <div class="modal fade field-edit-modal close" id="newComplaint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">New Complaint</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact pt-15">
+						<div class="create-rflet-id-form">
+
+								<div class="form-group select-verifier-box  m-top-40">
+						    	<div class="input-group">
+								  <div class="dropdown d1">
+									  <button class="dropbtn dropbtn_1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									    Select Verifiers Via Code
+									  </button>
+									  <div class="dropdown-menu menu-for-id" aria-labelledby="dropdownMenuButton">
+										<%	if(verifier_user.length>0)
+										{
+											 
+											for(var i=0;i< verifier_user.length;i++ ){
+											  %>
+									    <a class="dropdown-item" href="#">
+									    	<div class="for-verify-box-inner for-pending">
+													
+												<%	if(verifier_user[i].user_as=='verifier'){%>
+									    		<i class="fas fa-check"></i>
+									    		<span class="user-img-verify">
+													<!-- <img src="../assets/images/other/face1.jpg"> -->
+													<img id="" src="<%= verifier_user[i].profile_pic %>" class="m-t-5" >
+
+									    		</span>
+									    		<%=verifier_user[i].rep_firstname %>
+												<input type="hidden" class="getId1" id="t1" value="<%=verifier_user[i].reflect_id %>">
+												<span class="">
+															<%=verifier_user[i].reflect_code %>
+
+											  </span>
+
+											<%
+									
+										}
+						  
+										  
+									  %>
+										
+									</div>
+								</a>
+								<%
+							}
+			  
+							  }
+						  %></div>
+									  
+									    
+									  </div>
+									  <div class="input-group-append">
+										<button class="btn address-book" type="button">Address Book</button>
+									  </div>
+									</div>
+
+								</div>
+						    </div>
+
+								
+							<div class="form-group select-verifier-box  m-top-40">
+						     	<div class="input-group">
+								  <div class="dropdown d2">
+									  <button class="dropbtn dropbtn_2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									     Select Client Via Code
+									  </button>
+									  <div class="dropdown-menu menu-for-id dropbtn2" aria-labelledby="dropdownMenuButton">
+
+										<%	if(all_reflect_codes.length>0)
+										{
+											 
+											for(var i=0;i< all_reflect_codes.length;i++ ){
+											  %>
+									    <a class="dropdown-item" href="#">
+									    	<div class="for-verify-box-inner for-pending"id="">
+												
+												<%	if(all_reflect_codes[i].user_as=='client'){%>
+									    		<i class="fas fa-check"></i>
+									    		<span class="user-img-verify">
+													<img id="" src="<%= all_reflect_codes[i].profile_pic %>" class="m-t-5" >
+
+												</span>
+												
+									    	<%=all_reflect_codes[i].rep_firstname %>
+											
+										   	<input type="hidden"class="getId2"value="<%=all_reflect_codes[i].reflect_code %>">
+											 <span class="">
+												<%=all_reflect_codes[i].reflect_code %>
+											</span>
+
+											<%
+									
+										}
+						  
+										  
+									  %>
+										
+									</div>
+								</a>
+								<%
+							}
+			     
+							  }
+						  %>
+									    
+							</div>  
+									</div>
+									</div>
+								</div>
+						    </div>
+
+
+						    <!-- soniya upper -->
+
+
+
+
+
+	
+							<div class="form-group for-verify-text m-top-40">
+								<label for="">Enter Your Message</label>
+								<textarea class="form-control" rows="7" placeholder="Message"id="comment"></textarea>
+							</span>
+							</div>
+						</div>
+						<div >
+							<a class="btn-common-new" id="reflect_code">Submit</a>
+							<a class="btn-common-new all_check" href="">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div> 
+<!-- Modal E -->
+
+<%- include('../innerFooter')%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script>
+$(document).ready( function () {
+	$('.table').DataTable();
+} );
+</script>
+<script>
+	$(document).on('click.bs.dropdown.data-api', '.dropdown.keep-inside-clicks-open', function (e) {
+	  e.stopPropagation();
+	});
+</script> 
+<script>
+	var getVerifierID,getClientID
+ 
+   $('.d1').on('click', '.menu-for-id a', function() {
+	   $('.dropbtn_1').html($(this).html()); 
+
+	//   var lastID = $(this).html();
+	   getVerifierID = $(this).find(".getId1").attr("value");
+		// console.log("text", lastID); 
+
+
+   });
+   $('.d2').on('click', '.menu-for-id a', function() {
+	   $('.dropbtn_2').html($(this).html()); 
+
+	//   var lastID = $(this).html();
+	getClientID = $(this).find(".getId2").attr("value");
+		// console.log("text", lastID); 
+
+   });
+ 
+   
+		
+    
+	
+
+	// }
+		// ##################### Add complaint #######################
+$('#reflect_code').click(function()
+	{
+		
+		$('.close').modal('hide');
+		var select_text= $("#text_code").val()
+        var verifier_reflect_id;
+		var client_reflect_id;
+		$("#dropbtn_text").text()
+
+		
+
+		var complain_message=$.trim($("#comment").val());
+        
+				
+
+				$.ajax({
+			type: "post",
+			url: "/complaint-submit",
+			data:{verifier_reflect_id:getVerifierID,client_reflect_id:getClientID,complain_message:complain_message},
+			success: function (data) {
+				
+				location.reload();
+
+			
+			}
+		});
+	})
+
+	// ##################### Search By Status #######################
+	$('.checkbox1').click(function() {
+		// var userid = `${ userid}`
+		$('.complaints_by_status_list').html(" ")
+    var status_list = $('input[type=checkbox]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+	// if(status_list=='')
+	// {
+	// 	window.location.reload(true);
+
+	// }
+    console.log("check box select value : ",status_list) 
+	$.ajax({
+                      type : 'POST',
+                      url  : '/show-complaints-by-status',
+					  data: {status_list:JSON.stringify(status_list)},
+					  
+                        success: function(data) {
+							console.log("out data : ",data)
+						   var complaints=data.result_code_array
+						   var moment=data.moment
+							// $("#all").hide();
+						if(!data)
+					    {
+                            $(".complaints_by_status_list").append(`<td>No record found</td>`);
+
+					     }
+					   else{
+						   
+
+						console.log("ajax success data : ",complaints)	
+						$(".all_list").hide();
+						$(".complaints_by_reflect_codes").hide();
+						$(".complaints_by_complain_id").hide();
+						$(".complaints_by_status_list").show();
+					
+					for(var i=0;i<complaints.length;i++)
+                   {            console.log("data lll : ",complaints[i].complain_id)
+					  
+					    
+						$(".complaints_by_status_list").append(`<tr class="content_search">
+						    	<td>C-${complaints[i].complain_id}</td>
+						      	<td>${complaints[i].created_at}</td>
+							    <td><span class="font-w-600">${complaints[i].full_name}</span> <br>${complaints[i].reflect_code}</td>
+							    <td>${complaints[i].complain_message}</td>
+							    <td><span class="font-w-600">${complaints[i].rep_firstname}</span> <br> ${complaints[i].client_reflect_code}</td>
+							    <td> <span class="clr-purple">${complaints[i].complaint_status}</span></td>
+							    <td>
+							      	<a href="complaint-details.php" class="view-img"><img class="hide_link" src="../assets/images/icons/dashboard-assets/icon_view.png" alt="eye"></a>
+						      	</td>
+						    </tr>`);
+
+					   }
+
+	} 
+			}                                                    
+           
+})
+})
+// ************** Search by reflect ID **********************
+$('.checkbox2').click(function() {
+		// var userid = `${ userid}`
+		$('.complaints_by_reflect_codes').html(" ")
+
+    var reflect_code_list = $('input[name=check]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+	if(reflect_code_list=='')
+	{
+		window.location.reload(true);
+
+	}
+    // console.log("check box select value : ",reflect_code_list) 
+	$.ajax({
+                      type : 'POST',
+                      url  : '/show-complaints-by-reflect-code',
+					  data: {reflect_code_list:JSON.stringify(reflect_code_list)},
+					  
+                        success: function(data) {
+							console.log(data)
+						   var complaints=data.result_code_array
+						   var moment=data.moment
+							// $("#all").hide();
+						if(!data)
+					    {
+                            $(".complaints_by_reflect_codes").append(`<td>No record found</td>`);
+
+					     }
+					   else{
+						   
+
+						console.log("ajax success data : ",complaints)	
+						$(".all_list").hide();
+					$(".complaints_by_status_list").hide();
+					$(".complaints_by_reflect_codes").show();
+					$(".complaints_by_complain_id").hide();
+
+					for(var i=0;i<complaints.length;i++)
+                   {            console.log("data lll : ",complaints[i].complain_id)
+					  
+					    
+						$(".complaints_by_reflect_codes").append(`<tr class="content_search">
+						    	<td>C-${complaints[i].complain_id}</td>
+						      	<td>${complaints[i].created_at}</td>
+							    <td><span class="font-w-600">${complaints[i].full_name}</span> <br>${complaints[i].reflect_code}</td>
+							    <td>${complaints[i].complain_message}</td>
+							    <td><span class="font-w-600">${complaints[i].rep_firstname}</span> <br> ${complaints[i].client_reflect_code}</td>
+							    <td> <span class="clr-purple">${complaints[i].complaint_status}</span></td>
+							    <td>
+							      	<a href="complaint-details.php" class="view-img"><img class="hide_link" src="../assets/images/icons/dashboard-assets/icon_view.png" alt="eye"></a>
+						      	</td>
+						    </tr>`);
+
+					   }
+
+
+	} 
+			}                                                    
+           
+})
+})
+                
+// ************** Search by reflect ID **********************
+$('.checkbox3').click(function() {
+		// var userid = `${ userid}`
+		$('.complaints_by_complain_id').html(" ")
+
+    var complain_list = $('input[type=checkbox]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+	// alert(complain_list)
+	if(complain_list=='')
+	{
+		window.location.reload(true);
+
+	}
+    console.log("check box select value : ",complain_list) 
+	$.ajax({
+                      type : 'POST',
+                      url  : '/show-complaints-by-complain-id',
+					  data: {complain_list:JSON.stringify(complain_list)},
+					  
+                        success: function(data) {
+							console.log(data)
+							$(".complaints_by_complain_id").show();
+
+						   var complaints=data.result_code_array
+						   var moment=data.moment
+							// $("#all").hide();
+						if(!data)
+					    {
+                            $(".complaints_by_complain_id").append(`<td>No record found</td>`);
+
+					     }
+					   else{
+						   
+
+						console.log("ajax success data : ",complaints)	
+						$(".all_list").hide();
+					$(".complaints_by_status_list").hide();
+					$(".complaints_by_reflect_codes").hide();
+
+
+					for(var i=0;i<complaints.length;i++)
+                   {            console.log("data lll : ",complaints[i].complain_id)
+					  
+					   
+						$(".complaints_by_complain_id").append(`<tr class="content_search">
+						    	<td>C-${complaints[i].complain_id}</td>
+						      	<td>${complaints[i].created_at}</td>
+							    <td><span class="font-w-600">${complaints[i].full_name}</span> <br>${complaints[i].reflect_code}</td>
+							    <td>${complaints[i].complain_message}</td>
+							    <td><span class="font-w-600">${complaints[i].rep_firstname}</span> <br> ${complaints[i].client_reflect_code}</td>
+							    <td> <span class="clr-purple">${complaints[i].complaint_status}</span></td>
+							    <td>
+							      	<a href="complaint-details.php" class="view-img"><img class="hide_link" src="../assets/images/icons/dashboard-assets/icon_view.png" alt="eye"></a>
+						      	</td>
+						    </tr>`);
+
+					   }
+
+
+	} 
+			}                                                    
+           
+})
+})
+                
+
+</script>
+
+<script>
+	$(document).ready( function () {
+		$('.all_check').click(function()
+		{
+			// alert('all')
+			window.location.reload(true);
+
+		})
+		$('.autocomplete').keyup(function(){
+	//  alert('search')
+	  // Search text
+	  var text = $(this).val();
+	  
+	  // Hide all content class element
+	  $('.content_search').hide();
+	//  alert(text)
+	  // Search and show
+	  $('.content_search:contains("'+text+'")').show();
+	  if($(this).text().toLowerCase().indexOf(""+text+"") != -1 ){
+   $(this).closest('.content').show();
+  }
+});
+	 });
+	 
+		$('#myTable1').hide();
+	
+		$('.table').DataTable();
+	
+	
+	function export_table(){
+	//   alert('hhh')
+	// $('.hide_link').show();
+
+	  $("#myTable3").table2excel({
+		  filename: "complaint-list.xls",
+		  exclude:'.hide_link',
+	  });
+	//   $('.hide_link').show();
+	window.location.reload(true);
+
+	};
+	
+	function print_table(){
+		$('.hide_link').hide();
+ 
+	 // $("#user_div").print();
+	 var divToPrint=document.getElementById("myTable3");
+	 newWin= window.open("");
+	 newWin.document.write(divToPrint.outerHTML);
+	 window.location.reload(true);
+
+	 newWin.print();
+	 newWin.close();
+
+		}   
+</script>
+<script>
+// $('switchUserType')
+
+</script>

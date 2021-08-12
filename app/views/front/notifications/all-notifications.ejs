@@ -1,0 +1,106 @@
+<%-include('../innerHeader')%>
+
+
+<section class="heading-sec mb-0">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-6 col-md-6 col-sm-6">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/bell-black.png">
+					<h4>Notifications</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="create-wallet-sec">
+	<div class="container">
+		<div class="row">
+			    <%
+					if(all_notifications.length>0)
+					{
+				%>
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<%
+					for(var i=0;i< all_notifications.length;i++)
+					{
+				%>
+				
+				<div class="white-box notification-box">
+					     
+
+					<div class="media">
+						 
+						<% if(all_notifications[i].profile_img_name!=''||all_notifications[i].profile_img_name!=null){
+                               %>
+                           <img class="align-self-center user" src=<%= "/getprofileimage1/"+session.profile_pic %>>
+
+                            <%}else{%>
+                               <img class="align-self-center user" src="/admin-assets/images/user-icon.jpg">
+
+                           <%} %>
+							  <div class="media-body align-self-center">
+							  	<% if(all_notifications[i].notification_type==1 && session.user_type=='verifier'){%>
+	 	                            <a href="/request_on_boarding">
+										    <h6><%- decrypt(all_notifications[i].notification_msg) %></h6>
+										    <p><%- all_notifications[i].notification_date %></p>
+								    </a>
+							  	<%}else if(all_notifications[i].notification_type==2 && session.user_type=='client'){%>
+ 	                              <a href="/myrequest">
+										    <h6><%- decrypt(all_notifications[i].notification_msg) %></h6>
+										    <p><%- all_notifications[i].notification_date %></p>
+								    </a>
+							   <%}else if(all_notifications[i].notification_type==3 && session.user_type=='client'){%>
+                                     <a href="/myrequest">
+										    <h6><%- decrypt(all_notifications[i].notification_msg) %></h6>
+										    <p><%- all_notifications[i].notification_date %></p>
+								    </a>
+							   <%}else if(all_notifications[i].notification_type==4){%>
+                                        <a href="/manage-message-list">
+										    <h6><%- decrypt(all_notifications[i].notification_msg) %></h6>
+										    <p><%- all_notifications[i].notification_date %></p>
+								        </a>
+							   <%}else if(all_notifications[i].notification_type==5){%>
+                                      <a href="/complaint-list">
+										    <h6><%- decrypt(all_notifications[i].notification_msg) %></h6>
+										    <p><%- all_notifications[i].notification_date %></p>
+								      </a>
+							  	<%}else if(all_notifications[i].notification_type==7  && session.user_type=='client'){%>
+                                    <a href="/document-list">
+										    <h6><%- decrypt(all_notifications[i].notification_msg) %></h6>
+										    <p><%- all_notifications[i].notification_date %></p>
+								    </a>
+                               <%}else{ %> 
+                                        <h6><%- decrypt(all_notifications[i].notification_msg) %></h6>
+										 <p><%- all_notifications[i].notification_date %></p>
+                                <%} %>
+							 
+							  </div>
+
+					  <div class="text-right align-self-center">
+						<a class="cross-icon" href="/delete-notification/<%= base64encode(all_notifications[i].notification_id) %>">
+							<img src="../assets/images/icons/cross.png">
+						</a>
+					 </div>
+					 
+					</div>
+					
+				</div>
+				<%
+					}
+				%>
+				
+				
+			</div>
+			<%
+					}
+			%>
+		</div>
+	</div>
+</section>
+<%- include('../innerFooter')%>
+
+
+
+ 

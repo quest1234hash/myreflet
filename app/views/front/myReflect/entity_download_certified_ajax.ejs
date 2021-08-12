@@ -1,0 +1,134 @@
+<!-- 
+<%if(doc_array.length>0){
+
+	var l =  0;
+	   
+   for(var i=0;i< doc_array.length;i++){
+	   
+	   %> -->
+<style>
+	.image_pdf {
+		width: 60px;
+		height: 70;
+		color: red
+	}
+	/* .img_pdf{
+		
+		
+
+	} */
+	/* img {
+		
+		} */
+</style>
+<div class="modal fade field-edit-modal" id="doc-img-Modal-download" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<button type="button" class="close reload-class" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<div>
+					<div class="outer-big-img">
+						<%for(var h=0;h< doc_array.length;h++){%>
+
+
+						<% if ( doc_array[h].type == "image" ) {%>
+						<div class="inner-box-img">
+							<div id="img_modal" class="modal-img-big">
+								<img id="download_image" width="300" height="400" src="<%=doc_array[h].body%>">
+							</div>
+
+
+
+							<div class="modal-img-big download-link" id="download_link">
+								<input type="hidden" id="src_val<%=h%>" value="<%=doc_array[h].body%>">
+								<a href="" class="download_class hide_click_<%=h%> " onclick="download_img_pdf('<%=h%>')"><i
+										class="fa fa-download" aria-hidden="true"></i></a>
+								<center><span class="loader" id="loader_id<%=h%>"><img
+											src="../assets/images/loader-3.gif" height="42" width="62"></span></center>
+							</div>
+						</div>
+						<% } %>
+						<% if (doc_array[h].type == "video") {%>
+								<div class="inner-box-img">
+									<div id="img_modal" class="modal-img-big">
+										<video id="vid_modal" width="400" height="400" controls>
+
+											<source src="https://ipfs.io/ipfs/<%=doc_array[h].body%>" type="video/mp4">
+										</video>
+									</div>
+								</div>
+						<%} if (doc_array[h].type == "pdf") {%>
+								<div class="inner-box-img">
+									<div id="img_modal" class="modal-img-big">
+										
+
+										<object id="" class="PDFdoc" width="450" height="400" type="application/pdf" data="https://ipfs.io/ipfs/<%=doc_array[h].body%>" ></object>
+									</div>
+								</div>
+						<%}%>
+		 
+		 
+		 <%}%>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+</div>
+<!-- <% l++; }}%> -->
+
+<div class="dvContainer">
+	
+
+</div>
+
+<script type="text/javascript">
+	
+	$('.reload-class').click(()=>{
+		window.location.reload(true)
+	})
+	$(document).ready(function () {
+		$('.loader').hide();
+		// alert("on redy12345")
+
+		// jQuery.noConflict();
+		// console.log("test model",jQuery('#doc-img-Modal-download'))
+		jQuery('#doc-img-Modal-download').modal();
+		// $('#doc-img-Modal-download').modal('show');
+
+	})
+
+	function download_img_pdf(h_val) {
+
+		// $('.hide_click_'+h_val).hide();
+		// 	$('#loader_id'+h_val).show();
+		// alert(h_val)
+
+
+
+		var data_uri = $('#src_val' + h_val).val();
+		var doc_name = `<%=doc_array[0].doc_name%>`;
+
+            // alert(doc_name)
+		// var url = success.replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
+
+	     $.ajax({
+		type: "post",
+		url: "/download-certified-pdf",
+		data:{data_uri,doc_name},
+		success: function (base64String) {
+
+			const anchorTag = document.createElement('a');
+			anchorTag.href = base64String;
+			anchorTag.download = `${document_name}-${doc_unique_code}.pdf`; 
+			anchorTag.click();
+
+		}
+	})	
+	}
+</script>

@@ -1,0 +1,173 @@
+     <table class="table" id="myTable3">
+                        <thead>
+                            <tr> 
+                                <th scope="col">Sr.No.</th>
+                                <th scope="col">Verifier Name</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Creation Date</th>
+                                <th scope="col">Updated On</th>
+                                <th scope="col"class="hide_link">View</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                    <% if(all_data.length>0)
+                       { 
+                       var i=0;k=1;
+                       all_data.forEach(function(each_data){
+                          %>
+                            <tr>
+                                <td><%=k%>.</td>
+                                 <td class="upper">
+                                            <%if(each_data.rep_firstname){%>
+                                                <span class="font-w-600"><%=each_data.rep_firstname%></span>
+                                                <br><%=each_data.reflect_code%>
+                                         <%}else if(each_data.entity_company_name){%>
+                                            <span class="font-w-600"> <%=each_data.entity_company_name%> </span>
+                                            <br><%=each_data.reflect_code%>
+                                         <%}%>
+                                </td>
+                               
+                                <td class="upper"><%=each_data.reflectid_by%></td>
+                                <td><%=moment(each_data.term_created_date).format('MMM DD, YYYY')%></td>
+                                <td><%=moment(each_data.term_updated_date).format('MMM DD, YYYY')%></td>
+                                <td class="hide_link">
+                                    <div class="dropdown-menu-new">
+                                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                                          <div class="doc-img">
+                                                <img src="../assets/images/icons/dashboard-assets/menu.png">
+                                            </div>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="profileDropdown" x-placement="bottom-start">
+                                            <a class="dropdown-item" href="#view-new-doc-Modal_<%=i%>"data-toggle="modal">
+                                                <img src="../assets/images/icons/dashboard-assets/view.png"> View
+                                            </a>
+                                           <!--  <a class="dropdown-item" href="#edit-new-doc-Modal">
+                                                <img src="../assets/images/icons/dashboard-assets/edit.png"> Edit
+                                            </a> -->
+
+                                           <a class="dropdown-item" href="#edit-new-doc-Modal_<%=i%>" data-toggle="modal">
+                                                <img src="../assets/images/icons/dashboard-assets/edit.png"> Edit
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                             </tr>
+                            <%
+                                                i++;    k++;        
+                            });
+                               }else{
+                           %>
+                       <tr>
+                        <td colspan="6"><center>No record found.</center> </td>
+                       </tr>             <%}%>
+                        </tbody>
+                    </table>
+
+ <% if(all_data.length>0)
+                       { 
+                       var i=0;k=1;
+                       all_data.forEach(function(each_data){
+                          %>
+<div class="modal fade field-edit-modal" id="edit-new-doc-Modal_<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+            <div class="row align-item-center">
+                <div class="col-xl-2 col-lg-3 col-md-3">
+                    <div>
+                        <img src="../assets/images/icons/createidentity-assets/popup-upload-icon.png">
+                    </div>
+                </div>
+                <div class="col-xl-7 col-lg-7 col-md-7">
+                    <h5 class="heading-purple">Edit New Terms & Conditions</h5>
+                </div>
+            </div>
+            <form action="/edit-submt-terms-and-condition" method="POST">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+                        <div class="setup-inner-box for-protact pt-15">
+                        <div class="create-rflet-id-form">
+                            
+                                 <div class="form-group">
+                                        <div class="input-group">
+                                          <textarea name="descriptions"rows="5" class="form-control"id="terms_data"name="terms_data"><%=each_data.terms_and_condition%></textarea>
+                                        </div>
+                                 </div>
+                            </div>
+                            <input type="hidden" name="term_id" value="<%=each_data.verifier_t_and_c_id%>">
+                            <div >
+                                <button type="submit" class="btn-common-new">Save</button>
+                                <a class="btn-common-new" href="">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+              </div>
+          </form>
+       </div>
+    </div>
+  </div>
+</div>
+
+<%  i++;    k++;     
+                             
+        });
+           }
+       %>
+<% if(all_data.length>0)
+                       { 
+                       var i=0;k=1;
+                       all_data.forEach(function(each_data){
+                          %>
+<div class="modal fade field-edit-modal" id="view-new-doc-Modal_<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+            <div class="row align-item-center">
+                <div class="col-xl-2 col-lg-3 col-md-3">
+                    <div>
+                        <img src="../assets/images/icons/createidentity-assets/popup-upload-icon.png">
+                    </div>
+                </div>
+                <div class="col-xl-7 col-lg-7 col-md-7">
+                    <h5 class="heading-purple">View</h5>
+                </div>
+            </div>
+         
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+                        <div class="setup-inner-box for-protact pt-15">
+                        <div class="create-rflet-id-form">
+                            
+                                 <div class="form-group">
+                                        <div class="input-group">
+                                          <textarea name="descriptions"rows="15" class="form-control"id="terms_data"readonly><%=each_data.terms_and_condition%></textarea>
+                                        </div>
+                                 </div>
+                            </div>
+                            <div >
+                                <a class="btn-common-new" href="">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+              </div>
+          <!-- </form> -->
+       </div>
+    </div>
+  </div>
+</div>
+
+<%  i++;    k++;     
+                             
+        });
+           }
+       %>

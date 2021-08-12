@@ -1,0 +1,296 @@
+var {UserModel,LogDetailsModel}=require('../../models/user');
+var {SecurityMasterModel,UserSecurityModel}=require('../../models/securityMaster');
+var {AdminModel,tbl_verifier_plan_master,PlanFeatures,PlanFeatureRel,MarketPlace,AllotMarketPlace}=require('../../models/admin');
+var {DocumentMasterModel,VerifierCategoryMasterModel,CountryModel}=require('../../models/master');
+var {DocumentReflectIdModel}=require('../../models/reflect');
+
+var moment = require('moment');
+const paginate   =  require("paginate-array");
+
+const nodemailer = require("nodemailer");
+const express = require('express');
+var app=express();
+const ejs = require('ejs');
+const bcrypt = require('bcryptjs')
+ 
+var db = require('../../services/database'); 
+var sequelize = require('sequelize'); 
+var dateTime = require('node-datetime')
+var crypto = require('crypto');
+var text_func=require('../../helpers/text');
+
+var mail_func=require('../../helpers/mail'); 
+const util = require('util');
+const { base64encode, base64decode } = require('nodejs-base64');
+
+var userData = require('../../helpers/profile')
+ 
+
+const ipfsAPI = require('ipfs-api');
+const fs = require('fs');
+const ipfs = ipfsAPI('ipfs.infura.io', '5001', {protocol: 'https'})
+
+// exports.index = (req,res, next) => {
+//     res.render('front/index');
+// };
+
+// *********** Logout ***************
+exports.log_out = (req,res,next )=> {
+  
+    req.session.destroy(function (err) { })
+
+res.redirect('/admin-login')
+
+}
+
+// *********** Sign in start ***************
+
+exports.signIn = (req,res,next )=> {
+    // console.log('admin')
+  var  success_msg = req.flash('success_msg');
+  var  err_msg = req.flash('error');
+    res.render('admin-views/admin-login',{
+        success_msg,
+        err_msg
+    });
+}
+
+
+exports.login_post =async (req,res,next )=> {
+    const username = req.body.username
+    const password = req.body.password
+
+    const admin =  await AdminModel.findOne({ email:username })
+    const isMatch = await bcrypt.compare(password, admin.password) 
+    console.log('IS match : ',isMatch)
+        if (!admin) {
+            req.flash('error', 'Please enter correct credentials.');
+                res.redirect('/admin-login')
+        }
+        if (!isMatch) {
+
+            req.flash('error', 'Please enter correct credentials.');
+            res.redirect('/admin-login')
+        }
+            req.session.islogin=true;
+            req.session.admin_id=admin.email;
+            req.session.profile_pic=admin.profile_pic;
+            req.session.first_name=admin.first_name;
+
+
+           console.log('true')
+           res.redirect('/admin-dashboard')
+        // res.redirect('/client-list')
+
+        //    res.render('admin-views/admin-dashboard',{
+        //     // success_msg,
+        //     // err_msg
+        // });
+        
+        
+      
+ }
+
+ //*********** SIGN in End ***************
+
+  //*********** Forgot password start***************
+
+
+ exports.forgot_password = (req,res,next )=> {
+     console.log('FORGOT')
+    var success_msg = req.flash('success');
+    var err_msg= req.flash('err_msg'); 
+
+    res.render('admin-views/admin-forgot-password',{
+        success_msg,
+        err_msg
+    });
+}
+
+
+exports.submitForgetPassword =async (req,res,next )=> {
+    console.log('FORGOT 1')
+
+    success_msg = req.flash('success_msg');
+    err_msg = req.flash('err_msg');
+
+    var email =req.body.emailid;
+
+ console.log(email)
+  await AdminModel.findOne({ where:{email:email} }).then(function(userDataResult) {
+
+         if(userDataResult==null)
+         {
+          req.flash('err_msg', 'This Email-Id is not registered.')
+          res.redirect("/admin-forgot-password");
+
+         }
+         else
+         {
+            var url_data='http://192.168.1.102:3001/admin-reset-password/?mail='+base64encode(email);
+
+            var mail_subject="MyReflect ResetPassword Link.";
+                var mail_content='Hello '+userDataResult.first_name+',<p>Please check your verificaton code and reset password link.<br/><br/><a href="'+url_data+'">Click here</a> to reset password.</p>';
+                var to_mail=email;
+                var mailresult=mail_func.sendMail(to_mail,mail_subject,mail_content);
+             
+             }
+             res.redirect("/continue");
+
+                }).catch(err=>console.log(err))
+     
+                /**update vericication code to reset passsword end**/
+
+
+             
+
+         
+            
+
+    
+}
+
+ exports.continue =(req,res,next )=> {
+    res.render('admin-views/continue',{
+        // success_msg,
+        // err_msg
+    });
+}
+exports.reset_password =(req,res,next )=> {
+    var id=req.query.mail
+    console.log(id)
+
+    var admin_id = base64decode(id);
+    console.log(admin_id)
+
+    res.render('admin-views/admin-reset-password',{
+        admin_id
+        // success_msg,
+        // err_msg
+    });
+}
+exports.reset_post =async (req,res,next )=> {
+
+    // console.log('myprofile post---- ')
+
+   
+
+    const new_pass = req.body.confirm_pass
+    const admin_id = req.body.admin_id
+
+    
+            console.log('your password 3 not match!',admin_id)
+            console.log('your password 3 not match!',new_pass)
+
+    // const admin =  await AdminModel.findOne({ email:admin_id })
+   
+  
+           const hashedPassword = await bcrypt.hash(new_pass,8)
+           var updateValues=
+           {
+               password:hashedPassword
+           }
+           AdminModel.update(updateValues, { where: { email: admin_id } }).then((result) => 
+           {
+
+                   req.flash('success_msg', 'Your password changed successfully !');
+                   res.redirect('/admin-login');
+                
+           })
+          
+
+           
+}
+
+//*********** Forgot password end***************
+
+exports.dashboard = (req,res,next )=> {
+    var profile_pic = req.session.profile_pic;
+    var first_name = req.session.first_name;
+
+    success_msg = req.flash('success_msg');
+    err_msg = req.flash('err_msg');
+    res.render('admin-views/admin-dashboard',{profile_pic,first_name
+        // success_msg,
+        // err_msg
+    });
+}
+exports.index=(req,res,next )=> {
+    var profile_pic = req.session.profile_pic;
+    var first_name = req.session.first_name;
+
+    success_msg = req.flash('success_msg');
+    err_msg = req.flash('err_msg');
+    res.render('admin-views/index',{
+        success_msg,
+        err_msg,profile_pic,first_name
+    }); 
+}
+
+//*********** profile start***************
+
+exports.my_profile =async (req,res,next )=> {
+    var profile_pic = req.session.profile_pic;
+    var first_name = req.session.first_name;
+
+    console.log('myprofile ---- ')
+    var admin_id = req.session.admin_id;
+
+    const admin =  await AdminModel.findOne({ email:admin_id })
+
+    success_msg = req.flash('success');
+    err_msg = req.flash('err_msg'); 
+    res.render('admin-views/my-profile',{layout: false,admin,
+        success_msg,
+        err_msg,profile_pic,first_name
+ });}
+
+exports.profile_post =(req,res,next )=> {
+    var profile_pic = req.session.profile_pic;
+    var first_name = req.session.first_name;
+
+    console.log('myprofile post---- ')
+    
+    var admin_id = req.session.admin_id;
+
+    const first_name_1 = req.body.first_name
+    const last_name = req.body.last_name
+    const email = req.body.email
+    var admin_pic=req.body.text_img_name;
+
+    var dt = dateTime.create();
+    var formatted = dt.format('Y-m-d H:M:S');
+
+
+    var updateValues={
+        first_name:first_name_1,
+        last_name:last_name,
+        email:email,
+        profile_pic:admin_pic,
+        updatedAt:formatted
+       }
+     AdminModel.update(updateValues, { where: { email: admin_id } }).then((result) => 
+        {
+            // res.render('admin-views/admin-dashboard',{
+            //     // success_msg,
+            //     // err_msg
+            // });
+            req.flash('success', 'Your profile updated successfully !');
+            res.redirect('/my-profile');
+        })
+
+
+
+}
+
+//*********** profile end***************
+
+//*********** change password start***************
+
+exports.change_password =(req,res,next )=> {
+    var profile_pic = req.session.profile_pic;
+    var first_name = req.session.first_name;
+
+    success_msg = req.flash('success');
+    err_msg = req.flash('error');
+    res.ren

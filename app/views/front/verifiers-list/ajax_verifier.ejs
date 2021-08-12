@@ -1,0 +1,235 @@
+<table class="table" id="myTable3">
+	<thead>
+		<tr>
+			  <th scope="col">Full Name</th>
+			  <th scope="col">Company Name</th>
+			  <th scope="col">MyReflet ID</th>
+			  <th scope="col">Document</th>
+			  <th scope="col" class="hide_link">Action</th>
+		</tr>
+	  </thead>
+	<tbody>
+<%var i=0; if(verifierListData.length){ verifierListData.forEach(publieVerifier=>{%>
+<%if(publieVerifier.verifier_type=="public"){%>
+		<tr>
+			  <th scope="row">
+				  <div class="for-flex-align">
+					  <div class="checkbox">
+						  <label>
+							<input type="checkbox" name="cilentId" onclick="checkForSelect()" value="<%=publieVerifier.reflect_id%>-<%=i%>">
+							<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							<%
+			if(publieVerifier.profile_pic)
+			{
+				%>
+				<img class="profile-table" src="<%= publieVerifier.profile_pic %>">
+				<%
+			}
+			else
+			{
+				
+				%>
+				<img class="profile-table" id="user_profile_image_preview" src="../assets/images/other/face1.jpg" class="m-t-5" >
+				<%
+			}
+		%>
+							<!-- <img class="profile-table" src="../assets/images/other/img_user1.png"> -->
+							
+							   <%=decrypt(publieVerifier.full_name)%>
+						  </label>
+					</div>
+				</div>
+			  </th>
+			  <%if(publieVerifier.reflectid_by=="entity"){%>
+			<td><%=publieVerifier.entity_company_name%></td>
+			<%}else{%>
+				<td><%=publieVerifier.rep_username%></td>
+
+				<%}%>
+			<td><%=publieVerifier.reflect_code%></td>
+			<td>Driving License, Passport</td>
+			<td class="hide_link">
+				  <div class="dropdown-menu-new">
+					<a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+					  <div class="doc-img">
+							  <img src="../assets/images/icons/dashboard-assets/menu.png">
+						  </div>
+					</a>
+					<div class="dropdown-menu"  onclick="addressbookadd('<%=publieVerifier.reflect_code%>,<%=publieVerifier.reg_user_id%>')" aria-labelledby="profileDropdown">
+						<a class="dropdown-item" >
+							<img src="../assets/images/icons/dashboard-assets/icon_add_book1.png"> Add to address book
+						</a>
+						<input type="hidden" id="reflect_id_hidden_<%=i%>" value="<%=publieVerifier.reflect_id%>">
+						<input type="hidden" id="verifier_id_hidden<%=i%>" value="<%=publieVerifier.reg_user_id%>">
+						<a class="dropdown-item" onclick="get_reflet_id('<%=i%>')" data-toggle="modal">
+							<img src="../assets/images/icons/dashboard-assets/icon_send1.png"> Send to verifier
+						</a>
+						<a class="dropdown-item" href="" data-toggle="modal" data-target="#set-docs-permission-Modal">
+							<img src="../assets/images/icons/dashboard-assets/view.png"> View Document
+						</a>
+						<a class="dropdown-item" href="/create-message-request-by-reflectId?reflect_id=<%=publieVerifier.reflect_id%>">
+							<img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage Messages
+						</a>	
+					</div>
+				</div>
+			  </td>
+		</tr>
+		<%}%>
+<%i++; })              }else{
+	%>
+					  <tr>
+		   <td colspan="6"><center>No record found.</center> </td>
+			</tr>       <%}%>
+		   
+		
+	</tbody>
+</table>
+<%var i=0; verifierListData.forEach(publieVerifier=>{%>
+	<div class="modal fade field-edit-modal" id="sendDocument_<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-body">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+			<div class="create-wallet-box">
+				<div class="row align-item-center">
+					<div class="col-xl-2 col-lg-3 col-md-3">
+						<div>
+							<img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+						</div>
+					</div>
+					<div class="col-xl-7 col-lg-7 col-md-7">
+						<h5 class="heading-purple">Document Permission</h5>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+						<div class="setup-inner-box for-protact pt-15">
+							<div class="create-rflet-id-form">
+														
+								 
+	
+								<span id="all_data_<%=i%>">
+	
+								</span>
+								
+								<span id="doc_select<%=i%>">
+	
+								</span>
+								<!-- <div class="personal-info-box for-download-view-table table-responsive">
+									<table class="table">
+									  <thead>
+										<tr>
+										  <th scope="col">Label</th>
+										  <th scope="col">Download</th>
+										  <th scope="col">View</th>
+										  <th scope="col">Certify</th>
+										</tr>
+									  </thead>
+									  <tbody>
+										<tr>
+										  <th scope="row">
+											  <div class="for-flex-align">
+												   <img src="../assets/images/icons/dashboard-assets/drivinglicense.png">
+											   Driving License 
+											  </div>
+										  </th>
+										  <td>
+											  <div class="checkbox">
+											  <label>
+												<input type="checkbox" value="">
+												<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+											  </label>
+											</div>
+										  </td>
+										  <td>
+											  <div class="checkbox">
+											  <label>
+												<input type="checkbox" value="">
+												<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+											  </label>
+											</div>
+										  </td>
+										  <td>
+											  <div class="checkbox">
+											  <label>
+												<input type="checkbox" value="">
+												<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+											  </label>
+											</div>
+										  </td>
+										</tr>
+										
+										<tr>
+										  <th scope="row">
+											  <div class="for-flex-align">
+												   <img src="../assets/images/icons/dashboard-assets/passport.png">
+											   Passport
+											  </div>
+										  </th>
+										  <td>
+											  <div class="checkbox">
+											  <label>
+												<input type="checkbox" value="">
+												<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+											  </label>
+											</div>
+										  </td>
+										  <td>
+											  <div class="checkbox">
+											  <label>
+												<input type="checkbox" value="">
+												<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+											  </label>
+											</div>
+										  </td>
+										  <td>
+											  <div class="checkbox">
+											  <label>
+												<input type="checkbox" value="">
+												<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+											  </label>
+											</div>
+										  </td>
+										</tr>
+									  </tbody>
+									</table>
+								</div> -->
+								<span id="prm_error_span1<%=i%>" class="error_validate"></span>
+							</div>
+							<div >
+								<input type="hidden" name="p_cat_id" id="p_cat_id<%=i%>">
+									<input type="hidden" name="sub_cat_id" id="sub_cat_id<%=i%>">
+									<input type="hidden" name="doc_reflect_id" id="doc_reflect_id<%=i%>">
+									<button class="btn-common-new" type="button" id="subPerm<%=i%>" onclick="submit_all_perm('<%=i%>')">Save</button>
+									<a class="btn-common-new"  data-dismiss="modal" href="#">Cancel</a>
+							</div>
+						</div>
+					</div>
+				 </div>
+			   </div>
+		   </div>
+		</div>
+	  </div>
+	</div>
+	<%i++; })%>	
+	<script>
+		var sub_id;
+		function get_reflet_id(i){
+			sub_id=i;
+			// alert("sub_id"+sub_id);
+			var reflet_id = $('#reflect_id_hidden_'+i).val();
+			
+			$.ajax({
+				type: "get",
+				url: "/get-refletid-request?reflet_id="+reflet_id+'&i='+i,
+				data:{},
+				success: function (data) {
+					// console.log(data);  
+					$('#all_data_'+i).html(data);
+					$('#sendDocument_'+i).modal('show');
+				}
+			});
+		}
+	</script>

@@ -1,0 +1,18 @@
+<%-include('innerHeader')%>
+
+<form action="/submt-terms-and-condition" method="POST">
+    <% if(err_msg!=undefined && err_msg !='' ){ %>
+        <div class="alert alert-danger text-center  flash_msg ">
+                <%= err_msg %>
+             </div>
+       
+        <% }%>
+       <% if(success_msg!=undefined && success_msg !='' ){ %>
+          <div class="alert alert-success text-center  flash_msg ">
+            <%= success_msg %>
+         </div>
+        <% }%>
+    <textarea name="termcon"><%- data[0] != null ? data[0].terms_and_condition : " " %></textarea><br>
+    <button type="submit">save</button>
+</form>
+<%- include('innerFooter')%>

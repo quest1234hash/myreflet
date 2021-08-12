@@ -1,0 +1,82 @@
+<%if(document.length>0){
+
+%>
+<tr id="docRow<%=value%>">
+								      <th scope="row">
+								      	<div class="for-flex-align">
+								      		 <img src="../assets/images/icons/dashboard-assets/drivinglicense.png">
+											   <%=document[0].document_name%>
+											   <input type="hidden" id="docIdRow" value="<%=document[0].user_doc_id%>">
+								      	</div>
+									  </th>
+									  <td>
+								      	<div class="checkbox">
+								          <label>
+								          	 <%if(document[0].self_assested=="yes"){%>
+								            <input type="checkbox" name="selfCertifyPerm" id="self_certity" value="<%=document[0].user_doc_id%>"   checked>
+								            <%}else{%>
+
+								              <input type="checkbox" name="self_certity" id="self_certity" value="" >
+
+								            <%}%>
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+
+								        </div>
+									  </td>
+									  <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" name="signPerm" id="sign" value="" >
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+									  </td>
+									  <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" name="certifyPerm" id="certifyPerm" value="<%=document[0].user_doc_id%>" disabled  checked>
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+									  <td>
+										
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" name="completePerm" id="complete_name" value="" disabled>
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+									  </td>
+									  <td>
+								      	<div class="checkbox">
+								          <label>
+								          	<%if(video_type=="yes"){%>
+								            <input type="checkbox" name="videoPerm" id="video_proof" value="<%=document[0].user_doc_id%>"  disabled checked>
+								            <%}else{%>
+                                             <input type="checkbox" name="videoPerm" id="video_proof" value="<%=document[0].user_doc_id%>"  disabled >
+								            <%}%>
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+									  </td>
+									  <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" name="downloadPerm" id="downloadPerm" value="<%=document[0].user_doc_id%>" checked>
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" name="viewPerm" id="viewPerm" value="<%=document[0].user_doc_id%>"   checked>
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								    
+								    </tr>
+								    <%}%>

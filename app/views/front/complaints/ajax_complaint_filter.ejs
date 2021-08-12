@@ -1,0 +1,108 @@
+<div class="col-lg-12" id="div_data">
+    <div class="personal-info-box table-responsive another-table">
+        <table class="table" id="myTable3">
+            <thead>
+                <tr> 
+                      <th scope="col">Complaint ID</th>
+                      <th scope="col">Date</th>
+                      <th scope="col"><% if(user_type=='client'){%>Verifier<%}else{%>Client<%} %></th>
+                      <th scope="col">Message</th>
+                      <th scope="col">MyReflet ID</th>
+                      <th scope="col">Status</th>
+                      <th scope="col" class="hide_link">Action</th>
+                </tr>
+              </thead>
+            <tbody class=" ">
+                <%
+                if(all_complaint.length>0)
+                {
+
+                    all_complaint.forEach(function(each_reflect){
+               %>
+                
+                
+                <tr class="content_search">
+                    <td class="upper" >c-<%= each_reflect.complain_id %></td>
+                    <td class=""><%=moment(each_reflect.created_at).format('MMM DD, YYYY')%></td>
+                    <td class="upper">
+                        <%
+                          if(user_type=='client')
+                          {
+                              %>
+
+                       <%if(each_reflect.rep_firstname){%>                
+
+                      <span class="font-w-600"><%= each_reflect.rep_firstname%> </span> <br> <%= each_reflect.reflect_code %>
+                    <%}else if(each_reflect.entity_company_name){%>
+                                               
+                      <span class="font-w-600"><%= each_reflect.entity_company_name%> </span> <br> <%= each_reflect.reflect_code %>
+                                                         <%}%>
+
+                          
+                              <%
+                          }
+                          else
+                          {
+                              %>
+                                  <span class="font-w-600">
+                            <%= each_reflect.client_reflect_name %>
+                            </span> <br><%= each_reflect.client_reflect_code %> 
+                              <%
+                          }
+                        %>
+                    </td>
+                    <td class=""><%= each_reflect.complain_message%></td>
+                    <td class="upper">
+
+                        <%
+                          if(user_type=='client')
+                          {
+                              %>
+
+                              <span class="font-w-600">
+                            <%= each_reflect.client_reflect_name %>
+                            </span> <br><%= each_reflect.client_reflect_code %> 
+                              <%
+                          }
+                          else
+                          {
+                              %>
+                            <%if(each_reflect.rep_firstname){%>               
+
+                      <span class="font-w-600"><%= each_reflect.rep_firstname%> </span> <br> <%= each_reflect.reflect_code %>
+                    <%}else if(each_reflect.entity_company_name){%>
+                                               
+                      <span class="font-w-600"><%= each_reflect.entity_company_name%> </span> <br> <%= each_reflect.reflect_code %>
+                                                         <%}%>
+                              <%
+                          }
+                        %>
+                        
+
+                    </td>
+                    <td class=""> <%if( each_reflect.complaint_status==="pending"){%>
+
+                                     <span class="clr-green">Pending</span>
+                                     <%}else if( each_reflect.complaint_status==="responded"){%>
+                                         <span class="clr-purple">Responded</span>
+                                     <%}%></td>
+                    <td>
+                          <a href="/complaint-details/:<%= each_reflect.complain_id %>" class="view-img"><img class="hide_link" src="../assets/images/icons/dashboard-assets/icon_view.png" alt="eye"></a>
+                      </td>
+                      
+                        
+                </tr>
+                <%
+            });
+        }
+            else{
+%>
+           <tr>
+            <td colspan="8"><center>No record found.</center> </td>
+           </tr>			 <%}%>
+            </tbody>
+      
+
+        </table>
+    </div>
+</div>

@@ -1,0 +1,1269 @@
+<%-include('../innerHeader')%>
+
+<style>
+	.personal-info-box .dataTables_filter {
+     display: block; 
+}
+.dataTables_filter input {
+    padding: 5px 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #000;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    background-color: transparent;
+}
+
+
+
+</style>
+
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12">
+				<div class="custom-space-btw align-items-center">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/home-assets/myrequests.png">
+					<h4>My Requests</h4>
+				</div>
+				<div>
+						<a href="#set-all-permission-Modal" onclick="getVerifierList()" id="setpermissionbtn" class="btn-common-new" data-toggle="modal" >Create New Request</a>
+					</div>
+				</div>
+				<div class="custom-space-btw another-drop-down m-top-30 align-items-end">
+
+					<div class="for-select-existing-doc three-drop-custom">
+					    <div class="input-group">
+							<div class="dropdown keep-inside-clicks-open">
+								<h3 class="small-title">MyReflet ID</h3>
+								<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    All
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 20px, 0px);">
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								        	<label>
+								          		All
+								            	<input type="checkbox" name="check" value="All" onclick="filterReflect()"  class="all_check">
+								            	<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+									</div>
+									
+									<%
+									
+
+
+									var filtered = ClientVerificationModelData.data.reduce((filtered, item) => {
+										if( !filtered.some(filteredItem => JSON.stringify(filteredItem.MyReflectIData.reflect_code) == JSON.stringify(item.MyReflectIData.reflect_code)) )
+										  filtered.push(item)
+										return filtered
+									  }, [])
+									  
+									 // console.log("ejs ejs",filtered)
+
+									%>
+					
+									
+					 
+					 <%filtered.forEach(modelData=>{%>
+
+
+
+										<%if(modelData.ClientVerificationData.client_id==session.user_id){%>
+											<div class="for-doc-select">
+
+											<div class="checkbox"> 	
+													<label>
+															<%if(modelData.MyReflectIData.reflectid_by=="entity"){ %>
+												
+																<%=modelData.MyReflectIData.entity_company_name%>
+														
+																  <%}else{%>
+															
+																	<%=modelData.MyReflectIData.rep_username%>
+														
+																	<%}%> - <%=modelData.MyReflectIData.reflect_code%>
+
+													   <input type="checkbox" value="<%=modelData.MyReflectIData.reflect_code%>" class="checkbox2" name="check" onclick="filterReflect()">
+													   <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													 </label>
+											   </div>	
+										   </div>
+										<%}%>
+								    
+									<%})%>
+
+								    <!-- <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								         	<label>
+									          	Quest Glt - 1235556
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+								    </div> -->
+								</div>
+							</div>
+						</div>
+					
+					    <div class="input-group">
+							<div class="dropdown keep-inside-clicks-open">
+								<h3 class="small-title">Verifier MyReflet ID</h3>
+								<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    All
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 20px, 0px);">
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								        	<label>
+								          		All
+								            	<input type="checkbox" onclick="filterVerifierId()" value="All" name="check3" class="all_check">
+								            	<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+									</div>
+									
+									<%
+									
+
+
+									var filtered = ClientVerificationModelData.data.reduce((filtered, item) => {
+										if( !filtered.some(filteredItem => JSON.stringify(filteredItem.verifer_my_reflect_id_Data.reflect_code) == JSON.stringify(item.verifer_my_reflect_id_Data.reflect_code)) )
+										  filtered.push(item)
+										return filtered
+									  }, [])
+									  
+									 // console.log("ejs ejs",filtered)
+
+									%>
+					
+									
+					 
+					 <%filtered.forEach(modelData=>{%>
+
+
+
+									
+											<div class="for-doc-select">
+
+											<div class="checkbox"> 	
+													<label>
+															<%if(modelData.verifer_my_reflect_id_Data.reflectid_by=="entity"){ %>
+												
+																<%=modelData.verifer_my_reflect_id_Data.entity_company_name%>
+														
+																  <%}else{%>
+															
+																	<%=modelData.verifer_my_reflect_id_Data.rep_username%>
+														
+																	<%}%> - <%=modelData.verifer_my_reflect_id_Data.reflect_code%>
+
+													   <input type="checkbox" value="<%=modelData.verifer_my_reflect_id_Data.reflect_code%>" class="checkbox3" onclick="filterVerifierId()" name="check3">
+													   <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													 </label>
+											   </div>	
+										   </div>
+										
+								    
+									<%})%>
+
+								    <!-- <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								         	<label>
+									          	Quest Glt - 1235556
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+								    </div> -->
+								</div>
+							</div>
+						</div>
+						
+					</div>
+
+              <!--    <div>
+					<form class="response-search"> 
+	                     <div class="input-group search-address-book">
+	                                <input type="text" class="form-control autocomplete" placeholder="Search">
+	                        <div class="input-group-append">
+	                            <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+	                        </div>
+	                    </div>
+                  	</form>
+				</div> -->
+					
+				</div>
+				<div class="personal-info-heading">
+					<div class="text-right">
+						<a href="javascript:void(0)" onclick="downloaddoclist()">
+							<div class="icon-for-dwnload">
+								<div class="tooltip fade" data-title="Export Data">
+									<img src="../assets/images/icons/dashboard-assets/export.png">
+							     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+								</div>
+							</div>
+						</a>
+						<a class="nodata" id="" onclick="printDocdiv()">
+							<div class="icon-for-dwnload">
+								<div class="tooltip fade" data-title="Print Data">
+									<img src="../assets/images/icons/dashboard-assets/print.png">
+								    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12" id="list_div">
+				<div  class="personal-info-box table-responsive">
+					<table class="table table1" id="myTable3">
+						<thead>
+					    	<tr> 
+                                <th  style="display: none;">S. No.</th>
+						      	<th scope="col" class="width-72">Request ID</th>
+						      	<th scope="col" class="width-188">Requested By/From Verifier</th>
+						      	<th scope="col" class="width-80">MyReflet ID</th>
+						      	<th scope="col">Type</th>
+						      	<th scope="col"class="width-95">Requested On</th>
+						      	<th scope="col">Due Date</th>
+						      	<th scope="col">Status</th>
+						      	<th scope="col" class="hide_link">Action</th>
+					    	</tr>
+					  	</thead>
+						<tbody id="tableIDofData">
+    <% 
+	   
+	  if(ClientVerificationModelData.data.length>0){
+		var i=1; ClientVerificationModelData.data.forEach(modelData=>{
+	%>
+
+		<tr>
+			<td style="display: none;">1</td>
+	    	<td><%= modelData.ClientVerificationData.request_code %></td>
+	      	<td>
+		      	<div class="for-flex-align">
+		      		<div class="checkbox">
+			          	<label>
+								<%
+								if( modelData.verifer_my_reflect_id_Data.tbl_user_registration.dataValues.profile_pic)
+								{
+									%>
+									<img class="profile-table" src="<%= modelData.verifer_my_reflect_id_Data.tbl_user_registration.dataValues.profile_pic %>">
+									<%
+								}
+								else
+								{
+									
+									%>
+									<img class="profile-table" id="user_profile_image_preview" src="../assets/images/other/face1.jpg" class="m-t-5" >
+									<%
+								}
+							%>
+						   
+				            <!-- <img class="profile-table" src="<%= modelData.verifer_my_reflect_id_Data.tbl_user_registration.dataValues.profile_pic %>"> -->
+		      		     	<p class="line-hgt">
+								<%if(modelData.verifer_my_reflect_id_Data.reflectid_by=="entity"){ %>
+									<span class="font-w-600"><%=modelData.verifer_my_reflect_id_Data.entity_company_name%></span>
+								   <%}else{%>
+									<span class="font-w-600"><%=modelData.verifer_my_reflect_id_Data.rep_username%></span>
+									<%}%>
+								   <br>
+		      		     		<%=modelData.verifer_my_reflect_id_Data.reflect_code%>
+		      		     	</p>
+			         	 </label>
+			        </div>
+				</div>
+	      	</td>
+							    <td>
+                                  <%if(modelData.MyReflectIData.reflectid_by=="entity"){ %>
+												<span class="font-w-600">
+												<%=modelData.MyReflectIData.entity_company_name%>
+										    	</span>
+									  <%}else{%>
+												<%if(modelData.MyReflectIData.reflectid_by=="representative"){ %>
+															<span class="font-w-600">
+															<%=modelData.MyReflectIData.rep_username%>
+															</span>
+												<%}else{%>
+															<span class="font-w-600">
+																<%=modelData.MyReflectIData.wallet_name%>
+																</span>
+													
+													<%}%>
+										<%}%>
+									 
+
+								 <br> <%=modelData.MyReflectIData.reflect_code%></td>
+
+								 <%if(modelData.verifier_requset==null){ %>
+									<!-- <td>Requested to me</td> -->
+									<td>Requested by me</td>
+								<%}else{%>
+									<!-- <td>Requested by me</td> -->
+									<td>Requested to me</td>
+									<%}%>
+								<td>
+									<%=moment(modelData.ClientVerificationData.createdAt).format('MMM DD, YYYY')%>
+								</td>
+								<%if(modelData.ClientVerificationData.due_date!=null){ %>
+									<td><%=moment(modelData.ClientVerificationData.due_date).format('MMM DD, YYYY')%></td>
+								<%}else{%>
+									<td>-</td>
+									<%}%>
+							    
+							    <td class="text-center">
+									<%if(modelData.ClientVerificationData.request_status=="reject"){%>
+										<span class="cancel-status">Rejected</span>
+										
+										<%}else if(modelData.ClientVerificationData.request_status=="accept"){%>
+										
+										<span class="approved-status">Accepted</span>
+										<%}else{%>
+									
+										<span class="pending-status">Pending</span>
+										<%}%>
+									
+									</td>
+							    <td class="hide_link">
+							      	<a href="/myrequest_view?clientId=<%=modelData.ClientVerificationData.client_id%>&request_id=<%=modelData.ClientVerificationData.request_id%>" class="view-link click_eye">View</a>
+						      	</td>
+							</tr>
+							<% i++;})}else{%>
+                         <td colspan="8"><center>No record found.</center></td>
+							<% }
+						%>
+
+						</tbody>
+					</table>
+					<div class="pagination-list for-user">
+          
+						<% if (ClientVerificationModelData.totalPages > 0) { %>
+					   <ul class="pagination text-center">
+						   <% if (ClientVerificationModelData.currentPage == 1) { %>
+							   <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+						   <% } else { %>
+							   <li class="page-item"><a class="page-link" href="/myrequest?page=1">&lt;</a></li>
+						   <% } %>
+					
+					
+					
+						   <% var i = (Number(ClientVerificationModelData.currentPage) > 5 ? Number(ClientVerificationModelData.currentPage) - 4 : 1) %>
+						   <% if (i !== 1) { %>
+							   <!-- <li class="disabled"><a>...</a></li> -->
+							   <li class="page-item disabled"><a class="page-link" >...</a></li>
+						   <% } %>
+						   <% for (; i <= (Number(ClientVerificationModelData.currentPage) + 4) && i <= ClientVerificationModelData.totalPages; i++) { %>
+							   <% if (i == ClientVerificationModelData.currentPage) { %>
+								   <!-- <li class="active"><a><%= i %></a></li> -->
+								   <li class="page-item active">
+									 <a class="page-link" href="#"><%= i %><span class="sr-only">(ClientVerificationModelData.currentPage)</span></a>
+								   </li>
+							   <% } else { %>
+								   <li class="page-item"><a class="page-link" href="/myrequest?page=<%= i %>"><%= i %></a></li>
+							   <% } %>
+							   <% if (i == Number(ClientVerificationModelData.currentPage) + 4 && i < ClientVerificationModelData.totalPages) { %>
+								   <!-- <li class="disabled"><a>...</a></li> -->
+								   <li class="page-item disabled"><a class="page-link" >...</a></li>
+							   <% } %>
+						   <% } %>
+					
+					
+						   <% if (ClientVerificationModelData.currentPage == ClientVerificationModelData.totalPages) { %>                       
+							   <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+						   <% } else { %>
+							   <li><a class="page-link" href="/myrequest?page=<%= ClientVerificationModelData.totalPages %>">&gt;</a></li>
+						   <% } %>
+					
+					   </ul>
+					<% } %>
+					
+					 </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<div class="modal  field-edit-modal" id="set-all-permission-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		  <div class="create-wallet-box">
+			  <div class="row align-item-center">
+				  <div class="col-xl-2 col-lg-3 col-md-3">
+					  <div>
+						  <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+					  </div>
+				  </div>
+				  <div class="col-xl-7 col-lg-7 col-md-7">
+					  <h5 class="heading-purple">Document Permission</h5>
+				  </div>
+			  </div>
+			  <div class="row">
+				  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					  <div class="setup-inner-box for-protact pt-15">
+						  <div class="create-rflet-id-form">
+													  
+							   <div class="form-group select-verifier-box">
+								  <div class="input-group">
+									<div class="dropdown">
+										<button class="dropbtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										  Select Verifiers Via Code
+										</button>
+										<div class="dropdown-menu menu-for-id" id="verifierDropdown" aria-labelledby="dropdownMenuButton">
+											
+										</div>
+									  </div>
+									
+								  </div>
+							  </div>
+							  <div class="info-line-blue">
+								  <img src="../assets/images/icons/dashboard-assets/info-icon.png"> On boarding request will be sent when you send this documents.
+							  </div>
+							  <div id="category_list" class="form-group">
+								  
+							  </div>
+							  <div id="sub_category_list" class="form-group">
+								  
+							  </div>
+  
+							  <div id="category_docs" class="form-group">
+								  
+							  </div>
+  
+  
+							 
+<!--   
+							   <div class="form-group for-select-existing-doc">
+								  <div class="input-group">
+									<div class="dropdown keep-inside-clicks-open">
+										<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										  Select from existing documents
+										</button>
+										
+									  </div>
+									
+								  </div>
+							  </div> -->
+  
+							  
+							  <span id="doc_select">
+
+							</span>
+							  <div class="personal-info-box for-download-view-table table-responsive">
+								  <table class="table" id="myTable">
+									<thead>
+									  <tr>
+										<th width="16%" scope="col">Label</th>
+										<th width="12%" scope="col">Self Certify</th>
+										<th width="12%" scope="col">Sign</th>
+										<th width="12%" scope="col">Certify</th>
+										<th width="12%" scope="col">Complete</th>
+										<th width="12%" scope="col">Video proof</th>
+										<th width="12%" scope="col">Download</th>
+										<th width="12%" scope="col">View</th>
+									  </tr>
+									</thead>
+									<tbody id="doc_data">
+									  
+									</tbody>
+								  </table>
+								  
+							  </div>
+							  <span id="prm_error_span1" class="error_validate"></span>
+						  </div>
+						  <div >
+								  <input type="hidden" name="p_cat_id" id="p_cat_id">
+								  <input type="hidden" name="sub_cat_id" id="sub_cat_id">
+								  <input type="hidden" name="doc_reflect_id" id="doc_reflect_id">
+								  <input type="hidden" name="doc_id_reflet" id="doc_id_reflet">
+								  <button class="btn-common-new" type="button" id="subPerm" onclick="submit_all_perm()">Save</button>
+								  <a class="btn-common-new"  data-dismiss="modal" href="#">Cancel</a>
+						  </div>
+					  </div>
+				  </div>
+			   </div>
+			 </div>
+		 </div>
+	  </div>
+	</div>
+  </div>
+
+  <div class="modal field-edit-modal" id="doc-permission-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		  <div class="create-wallet-box">
+			  <div class="row align-item-center">
+				  <div class="col-xl-2 col-lg-3 col-md-3">
+					  <div class="for-icon-bg">
+						  <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+					  </div>
+				  </div>
+				  <div class="col-xl-10 col-lg-10 col-md-10">
+					  <h5 class="heading-purple">Document Permission</h5>
+					  
+				  </div>
+			  </div>
+			  <div class="setup-inner-box for-protact mt-30 p-0">
+				   <p>Are you sure you want to give document permission? click yes to continue.</p>
+						  <div>
+							  <a class="btn-common-new" href="" data-toggle="modal" data-target="#validate-pin-Modal" data-dismiss="modal">Yes</a>
+							  <a class="btn-common-new" href="">No</a>
+						  </div>
+					  </div>
+			 </div>
+		 </div>
+	  </div>
+	</div>
+  </div>
+
+  <!--pin modal start-->
+  <div class="modal field-edit-modal" id="validate-pin-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close hide_click" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		  <div class="create-wallet-box">
+			  <div class="row align-item-center">
+				  <div class="col-xl-2 col-lg-3 col-md-3">
+					  <div class="for-icon-bg">
+						  <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+					  </div>
+				  </div>
+				  <div class="col-xl-10 col-lg-10 col-md-10">
+					  <h5 class="heading-purple">Validate Pin</h5>
+					  <p>Enter Your PIN to Continue</p>
+				  </div>
+			  </div>
+				 <div class="login-form-main phone-otp mt-15">
+				   <div class="form-group mb-0">
+					  <label>PIN</label>
+					  <div class="otp-box digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+						  <input type="text" id="otp1" name="otp1" class="form-control text-center" placeholder="-" maxlength="1" data-next="otp2">
+						  <input type="text" id="otp2" name="otp2" class="form-control" placeholder="-" maxlength="1" data-next="otp3" data-previous="otp1">
+						  <input type="text" id="otp3" name="otp3" class="form-control" placeholder="-" maxlength="1" data-next="otp4" data-previous="otp2">
+						  <input type="text" id="otp4" name="otp4" class="form-control" placeholder="-" maxlength="1" data-previous="otp3">
+					  </div>
+					</div>
+			  </div>
+			  <span class="error_validate" id="req_err_prm"></span>
+			  <div class="setup-inner-box for-protact pt-15">
+				  <div>
+					  <a class="btn-common-new hide_click" href="javascript:void(0)" onclick="pin_for_prm()" id="pin_prm_btn">Confirm</a>
+					   <span class="loader"><img src="../assets/images/loader-3.gif"height="42" width="62"></span>
+					  <a class="btn-common-new hide_click" href="">Cancel</a>
+				  </div>
+			  </div>
+			 </div>
+		 </div>
+	  </div>
+	</div>
+  </div>
+  <!--pin modal end-->
+  <div class="modal  field-edit-modal" id="dsuccess-doc-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		  <div class="create-wallet-box">
+			  <div class="row align-item-center">
+				  <div class="col-xl-2 col-lg-3 col-md-3">
+					  <div class="for-icon-bg">
+						  <img src="../assets/images/icons/createidentity-assets/popup-success-icon.png">
+					  </div>
+				  </div>
+				  <div class="col-xl-10 col-lg-10 col-md-10">
+					  <h5 class="heading-purple">Document Sent Successfully</h5>
+					  
+				  </div>
+			  </div>
+			  <div class="setup-inner-box for-protact mt-30 p-0">
+				   <p>Your Document has been successfully sent to the verifier. Your document will be verified shortly and you'll ve notified in regards that.</p>
+			  </div>
+			  <div class="setup-inner-box for-protact pt-15">
+				<div>
+					<a href="" class="btn-common-new">OK!</a>
+				</div>
+				</div>
+			 </div>
+		 </div>
+	  </div>
+	</div>
+  </div>
+<%- include('../innerFooter')%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script>
+$(document).ready( function () {
+						   $('.loader-box').hide();
+
+	// $('.all_check').click(function()
+	// 	{
+	// 		// alert('all')
+	// 		// window.location.reload(true);
+	// 		console.log("sdf;jgvbosfjk")
+
+	// 	})
+ 	        	$('.loader').hide();
+
+	$('.table1').DataTable( {
+        "aaSorting": [[ 1, "desc" ]]
+    });
+} );
+</script>
+<script>
+	$(document).on('click.bs.dropdown.data-api', '.dropdown.keep-inside-clicks-open', function (e) {
+	  e.stopPropagation();
+	});
+</script> 
+
+<script>
+	var reflect_id = "List";
+	function downloaddoclist(){
+		$("#myTable3").table2excel({
+						filename: "document_list",
+						exclude:'.hide_link',
+						exclude_img:true,
+						exclude_inputs:true,
+						fileext:".xls",
+
+	            });
+	  }
+	  function printDocdiv(){
+		
+		var restorepage = $('body').html();
+		  $('.nodata').hide();
+		 var printcontent = $('#list_div').clone();
+		 $('body').empty().html(printcontent);
+		 window.print();
+		 $('body').html(restorepage);
+	   
+	  
+	  }
+	</script>
+
+	<script>
+	
+	// ************** Search by client verfier code **********************
+// $('.checkbox').click(function() {
+
+function filterReflect(){
+	// alert("dgdfgdg")
+		// var userid = `${ userid}`
+		$('#tableIDofData').html(" ")
+
+    var reflect_code_list = $('input[name=check]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+
+	if(reflect_code_list[0]=='All')
+	{
+		// window.location.reload(true);
+	window.location=window.location.href
+		// console.log()
+
+	}else{
+	// if(reflect_code_list=='')
+	// {
+	// 	// window.location.reload(true);
+
+	// }
+	console.log("check box select value : ",reflect_code_list) 
+	
+
+	$.ajax({
+                      type : 'POST',
+                      url  : '/show-filter-my-request',
+					  data: {reflect_code_list:JSON.stringify(reflect_code_list)},
+					  
+                        success: function(data) {
+							
+						   var complaints=data
+						   var moment=data.moment
+							// $("#all").hide();
+						if(!data)
+					    {
+                            $('#tableIDofData').append(`<td>No record found</td>`);
+
+					     }
+					   else{
+						$('#tableIDofData').html(" ")
+						$('#tableIDofData').html(data)
+				
+// 					var i=1;
+// 					data.forEach(modelData=>{
+							  
+						
+// 	           console.log("check box select value : ",modelData.verifer_my_reflect_id_Data.tbl_user_registration.profile_pic.data);
+
+// 						var v_or_c_name;
+// 						var type;
+
+//                                   if(modelData.MyReflectIData.reflectid_by=="entity"){ 
+									
+// 									v_or_c_name = modelData.MyReflectIData.entity_company_name
+							
+// 									  }else{
+										
+// 										v_or_c_name = modelData.MyReflectIData.rep_username
+									
+// 										}
+									 
+
+// 								if(modelData.ClientVerificationData.verifier_id==modelData.session_user_id){ 
+// 									type='Requested to me'
+// 								}else{
+// 									type="Requested by me"
+
+// 									}
+					    
+// 					$('#tableIDofData').append(`<tr>
+// 	<td>${i}</td>
+// 	  <td>
+// 		  <div class="for-flex-align">
+// 			  <div class="checkbox">
+// 				  <label>
+// 						<img class="profile-table" src="${modelData.verifer_my_reflect_id_Data.tbl_user_registration.profile_pic.data}">
+// 					   <p class="line-hgt">
+// 						   <span class="font-w-600">${modelData.verifer_my_reflect_id_Data.rep_username}</span> <br>
+// 						   ${modelData.verifer_my_reflect_id_Data.reflect_code}
+// 					   </p>
+// 				  </label>
+// 			</div>
+// 		</div>
+// 	  </td>
+// 	  <td>${v_or_c_name}<br> ${modelData.MyReflectIData.reflect_code}</td>
+
+// 	 <td>${type}</td>
+
+// 		<td>
+	
+// 		${modelData.ClientVerificationData.createdAt}
+// 	</td>
+// 	<td>30 jan, 2020</td>
+// 	<td class="text-center"> <span class="pending-status">${modelData.ClientVerificationData.request_status}</span></td>
+// 	<td>
+// 		  <a href="/myrequest_view?clientId=${modelData.ClientVerificationData.client_id}" class="view-link">View</a>
+// 	  </td>
+// </tr>`);
+
+
+// 				i++	  
+// 			});
+
+
+	} 
+	
+			}                                                    
+           
+})
+}
+// })
+}
+	</script>
+		<script>
+	
+			// ************** Search by client verfier code **********************
+// $('.checkbox3').click(function() {
+	function filterVerifierId(){
+		// alert("filterVerifierId")
+				// var userid = `${ userid}`
+				$('#tableIDofData').html(" ")
+		
+			var reflect_code_list = $('input[name=check3]:checked').map(function(_, el) {
+				return $(el).val();
+			}).get();
+		
+			if(reflect_code_list[0]=='All')
+			{
+				window.location =window.location.href
+				// console.log("window.location")
+		
+			}else{
+			// if(reflect_code_list=='')
+			// {
+			// 	// window.location.reload(true);
+		
+			// }
+			console.log("check box select value : ",reflect_code_list) 
+			
+		
+			$.ajax({
+							  type : 'POST',
+							  url  : '/show-filter-my-request-verfier-id',
+							  data: {reflect_code_list:JSON.stringify(reflect_code_list)},
+							  
+								success: function(data) {
+									
+								   var complaints=data
+								   var moment=data.moment
+									// $("#all").hide();
+								if(!data)
+								{
+									$('#tableIDofData').append(`<td>No record found</td>`);
+		
+								 }
+							   else{
+								$('#tableIDofData').html(" ")
+								$('#tableIDofData').html(data)
+						
+
+		
+		
+			} 
+			
+					}                                                    
+				   
+		})
+	}
+	}
+		// })
+			</script>
+	
+
+	<!-- //*************new request start*************// -->
+<script>
+	var getVerifierID ;
+   $(document).on('click', '.menu-for-id a', function() {
+	   $(this).parent().parent().find("button").html($(this).html()); 
+	   getVerifierID = $(this).find(".getId").attr("value");
+   });
+	function capitalize(str) {
+ 		strVal = '';
+ 		str = str.split(' ');
+ 		for (var chr = 0; chr < str.length; chr++) {
+   			strVal += str[chr].substring(0, 1).toUpperCase() + str[chr].substring(1, str[chr].length) + ' '
+ 		}
+ 		return strVal
+	}
+function getVerifierList(){ 
+// alert("hello");
+   $.ajax({
+		   type: "get",
+		   url: "/get-verifier-list-request",
+		   data:{},
+		   success: function (data) {
+			//    alert(data)
+			//    console.log(data);  
+			   for(var i=0;i<data.length;i++){ 
+				   if($(`#anchor${i}`).text()!=""){
+
+				   }
+				   else{
+					   
+						if(data[i].reflectid_by == 'entity'){
+							var firstname = capitalize(data[i].entity_company_name);
+						}else{
+							var firstname = capitalize(data[i].rep_username);
+						}
+					   $('#verifierDropdown').append(`<a class="dropdown-item" id="anchor${i}" onclick="get_category(${data[i].reflect_id})" href="javascript:void(0)">
+										   <div class="for-verify-box-inner for-pending">
+												<i class="fas fa-check"></i>
+											   <span class="user-img-verify">
+													   <img src="admin-assets/images/faces/face1.jpg" alt="image">
+											   </span>
+											   <span class="tooltip fade" data-title="On boarding Pending">
+												   <input type="hidden" class="getId" id="verifier_id${i}" value="${data[i].reg_user_id}-${data[i].reflect_id}">
+												   ${firstname}-${data[i].reflect_code}
+												   <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+											   </span>
+										   </div>
+									   </a>`)
+					//    $('#set-all-permission-Modal').show();
+				   }					
+			   }
+		   }
+	   });
+}
+
+function get_category(cat_val){
+   // alert(cat_val);
+   if(cat_val!=""){
+	   $.ajax({
+		   type: "post",
+		   url: "/get-category-list",
+		   data:{reflect_id:cat_val},
+		   success: function (data) {
+			//    console.log(data);  
+			   $('#category_list').html(data);
+		   }
+	   });
+   }else{
+			   $('#category_list').html("");
+   }
+}
+
+function get_sub_category(sub_cat_val){
+   // alert(sub_cat_val);
+   $("#p_cat_id").val(sub_cat_val)
+
+   if(sub_cat_val!=""){
+	   $.ajax({
+		   type: "post",
+		   url: "/get-sub-category-list",
+		   data:{category_id:sub_cat_val},
+		   success: function (data) {
+			//    console.log(data);  
+			   $('#sub_category_list').html(data);
+		   }
+	   });
+   }else{
+			   $('#sub_category_list').html("");
+   }
+}
+
+function get_requested_doc(category_id){
+   $("#sub_cat_id").val(category_id)
+
+//    alert(category_id);
+  if(category_id!=""){
+	   $.ajax({
+		   type: "post",
+		   url: "/get-requested-doc-for-request",
+		   data:{category_id:category_id},
+		   success: function (data) {
+			//    console.log(data);  
+			   $('#category_docs').html(data);
+		   }
+	   });
+   }else{
+			   $('#category_docs').html("");
+   }
+}
+
+function get_doc_from_myreflet(reflect_id){
+	
+	// alert(reflect_id);
+	$('#doc_reflect_id').val(reflect_id);
+
+   if(reflect_id!=""){
+		$.ajax({
+			type: "post",
+			url: "/get-doc-from-myreflet-for-request",
+			data:{reflect_id:reflect_id},
+			success: function (data) {
+   				// alert(data);
+				// console.log(data);  
+				$('#doc_select').html(data);
+            }
+		});
+	}else{
+				$('#doc_select').html("");
+	}
+}
+
+function get_check_doc(value){
+        // alert(value);
+		var user_doc_id = $(`#doc_check${value}`).val();
+		var trow = $(`#docRow${value}`).text();
+		// alert(user_doc_id);
+		// console.log("user_doc_id",user_doc_id);
+		if(trow!=""){
+			$(`#docRow${value}`).remove();
+		}else{
+        $.ajax({
+			type: "post",
+			url: "/get-checked-doc",
+			data:{user_doc_id:user_doc_id},
+			success: function (data) {
+			
+			    $('#doc_data').append(`<tr id="docRow${value}">
+								      <th scope="row">
+								      	<div class="for-flex-align">
+								      		 <img src="../assets/images/icons/dashboard-assets/drivinglicense.png">
+											   ${data[0].document_name}
+											   <input type="hidden" id="docIdRow" value="${data[0].user_doc_id}">
+								      	</div>
+									  </th>
+									  <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" name="self_certity" id="self_certity" value="" disabled>
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+									  </td>
+									  <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" name="sign_doc" id="sign_doc" value="" disabled>
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+									  </td>
+									  <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" name="certifyPerm" id="certifyPerm" value="${data[0].user_doc_id}" disabled  checked>
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+									  <td>
+										
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" name="complete_name" id="complete_name" value="" disabled>
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+									  </td>
+									  <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" name="video_proof" id="video_proof" value="" disabled  >
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+									  </td>
+									  <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" name="downloadPerm" id="downloadPerm" value="${data[0].user_doc_id}" checked>
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" name="viewPerm" id="viewPerm" value="${data[0].user_doc_id}" disabled  checked>
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								    
+								    </tr>`);
+			}
+		});
+	}
+	}
+
+	var rowCount;
+	var rowVal=[];
+	var download = [];
+	var view = [];
+	var certify = [];
+
+function submit_all_perm(){
+
+	if(getVerifierID!="" && getVerifierID!=undefined){
+	//  alert("getVerifierID"+getVerifierID);
+	var cat = $("#p_cat_id").val();
+	var sub_cat = $("#sub_cat_id").val();
+	var doc_reflet = $("#doc_reflect_id").val();
+	rowCount = $('table#myTable tr:last').index() + 1;
+	//  alert("rowCount"+rowCount);
+
+	var reflect_id = $('#doc_reflect_id').val();
+	// alert("reflect_id"+reflect_id)
+    if(cat){
+		if(sub_cat){
+if(doc_reflet){
+	if(rowCount>0)
+	{
+		// alert("rowCount "+rowCount);
+		// alert($('input[name="doc_check"]:checked').val());
+		if($('input[name="doc_check"]:checked').val()){
+			// alert($('input[name="doc_check"]:checked').val());
+	   	$('#doc_data tr').each(function(index) {
+	   		var hidden_val=$(this).find('input[type="hidden"]').val();
+
+	   		rowVal.push(hidden_val);
+
+		
+
+			   var down_val=$(this).find('input[name="downloadPerm"]:checked').val();
+			   var view_val = $(this).find('input[name="viewPerm"]:checked').val();
+			   var certify_val = $(this).find('input[name="certifyPerm"]:checked').val();
+
+	   		if(down_val==undefined)
+	   		{
+	   			var dwn_per='no';
+	   		}
+	   		else
+	   		{
+	   		   var dwn_per='yes';	
+			}
+			if(view_val==undefined)
+	   		{
+	   			var vw_per='no';
+	   		}
+	   		else
+	   		{
+	   		   var vw_per='yes';	
+			}
+			   if(certify_val==undefined)
+	   		{
+	   			var crt_per='no';
+	   		}
+	   		else
+	   		{
+	   		   var crt_per='yes';	
+	   		}
+			   
+
+	   		download.push(dwn_per);
+			view.push(vw_per);
+			certify.push(crt_per)
+	   	});
+		   $('#subPerm').attr('data-toggle', 'modal');
+			$('#subPerm').attr('data-target', '#doc-permission-Modal'); 
+			$('#subPerm').attr('data-dismiss', 'modal');
+	}else {
+		$('#prm_error_span1').html("");
+		$('#prm_error_span1').html("Please select atleast one document.");
+	}
+}else{
+	$('#prm_error_span1').html("");
+	$('#prm_error_span1').html("Please select atleast one document.");
+}
+}else{
+	$('#prm_error_span1').html("");
+	$('#prm_error_span1').html("Please select your MyReflet code.");
+}
+}else{
+	$('#prm_error_span1').html("");
+	$('#prm_error_span1').html("Please select sub-category.");
+}
+}else{
+	$('#prm_error_span1').html("");
+	$('#prm_error_span1').html("Please select category.");
+}
+}else{
+	$('#prm_error_span1').html("");
+	$('#prm_error_span1').html("Please select verifier.");
+}
+	
+	
+		
+}
+
+
+
+function pin_for_prm(){
+	// alert("hellllllllllllll0000");
+var otp1=$('#otp1').val();
+var otp2=$('#otp2').val();
+var otp3=$('#otp3').val();
+var otp4=$('#otp4').val();
+var otp = otp1+""+otp2+""+otp3+""+otp4;
+if(otp1=="" || otp1=="" || otp1=="" || otp1==""){
+ $('#req_err_prm').html("Please enter valid Pin.");
+}else{
+// alert(otp);
+                $('.hide_click').hide();
+ 	        	$('.loader').show();
+$('#req_err_prm').html("");
+	$.ajax({
+			type: "post",
+			url: "/request-check-pin",
+			data:{pin:otp},
+			success: function (data) {
+				// alert(data);
+				if(data.success_data){
+                    $('#req_err_prm').html('');
+					// alert(data);
+					submit_permission();
+				}else{
+                    $('#req_err_prm').html('Please enter valid Pin');
+				}
+			}
+	})
+}
+}
+
+function submit_permission(){
+
+	// alert("hiiii");
+var reflect_id = $('#doc_reflect_id').val();
+var vrfr = getVerifierID.split('-');
+	 var vId = vrfr[0];
+	 var vRefId = vrfr[1];
+	 var p_cat_id1= $("#p_cat_id").val()
+	 var sub_cat_id1= $("#sub_cat_id").val()
+	//  alert("vrfr "+vrfr);
+	//  alert("vId "+vId);
+	//  alert("vRefId "+vRefId);
+$.ajax({
+    type: "post",
+	url:"/request-doc",
+	data:{reflect_id:reflect_id,
+		download:JSON.stringify(download),
+		view:JSON.stringify(view),
+		certify:JSON.stringify(certify),
+		total_doc:JSON.stringify(rowVal),
+		verifier_id:vId,
+		verifier_reflect_id:vRefId,
+		rowCount:rowCount,
+		p_cat_id:p_cat_id1,
+		sub_cat_id:sub_cat_id1
+    },
+    success:function(datas) {
+        // alert("[[[[[[[[[[[[[[["+datas);
+		
+		$('#validate-pin-Modal').modal('hide');
+		
+		$('#dsuccess-doc-Modal').modal('show');
+	}
+});
+
+}
+
+</script>
+
+<script>
+    $('.digit-group').find('input').each(function() {
+    $(this).attr('maxlength', 1);
+    $(this).on('keyup', function(e) {
+        var parent = $($(this).parent());
+        
+        if(e.keyCode === 8 || e.keyCode === 37) {
+            var prev = parent.find('input#' + $(this).data('previous'));
+            
+            if(prev.length) {
+                $(prev).select();
+            }
+        } else if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
+            var next = parent.find('input#' + $(this).data('next'));
+            
+            if(next.length) {
+                $(next).select();
+            } else {
+                if(parent.data('autosubmit')) {
+                    parent.submit();
+                }
+            }
+        }
+    });
+});
+</script>
+<script>
+	$('.click_eye').click(()=>{
+					   // $('.hide_btn').hide();
+
+					   $('.loader-box').show();
+
+   })
+</script>

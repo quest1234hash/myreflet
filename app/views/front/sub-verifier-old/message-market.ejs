@@ -1,0 +1,232 @@
+<%-include('../innerHeader')%>
+<section class="heading-sec">
+	<div class="container">
+		<ul class="breadcrumb custom-braed">
+			<li><a href="verifier.php">Verifiers</a><span class="arrowBread">>></span> </li>
+			<li>Messages</li>
+		</ul>
+		<div class="row align-item-center">
+			<div class="col-lg-9 col-md-6 col-sm-6">
+				<div class="main-heading-dash">
+					<h4>Messages</h4>
+				</div> 
+			</div>
+		</div>
+	</div>
+</section>
+<!-- <section>
+	<div class="container">
+		<div class="chat-details">
+            <div class="chat-details-inner">
+                <div class="wrapper-other-chat">
+                    <div class="custom-row chat-dtls-wrapper">
+                        <div class="chat-dtls-img">
+                            <img src="../assets/images/other/img_user1.png" alt="User">
+                        </div>
+                        <div class="chat-dtls">
+                            <h3 class="small-title">Alice Whitman</h3>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                            <p class="text-right"><span class="clr-gray">13 hours ago</span></p>
+                        </div>
+                    </div>
+                    <div class="custom-row chat-dtls-wrapper">
+                        <div class="chat-dtls-img">
+                            <img src="../assets/images/other/img_user1.png" alt="User">
+                        </div>
+                        <div class="chat-dtls">
+                            <h3 class="small-title">Alice Whitman</h3>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                            <p class="text-right"><span class="clr-gray">13 hours ago</span></p>
+                        </div>
+                    </div>
+                    <div class="custom-row chat-dtls-wrapper">
+                        <div class="chat-dtls-img">
+                            <img src="../assets/images/other/img_user1.png" alt="User">
+                        </div>
+                        <div class="chat-dtls">
+                            <h3 class="small-title">Alice Whitman</h3>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                            <p class="text-right"><span class="clr-gray">13 hours ago</span></p>
+                        </div>
+                    </div>
+                    <div class="custom-row chat-dtls-wrapper">
+                        <div class="chat-dtls-img">
+                            <img src="../assets/images/other/img_user1.png" alt="User">
+                        </div>
+                        <div class="chat-dtls">
+                            <h3 class="small-title">Alice Whitman</h3>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                            <p class="text-right"><span class="clr-gray">13 hours ago</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-box">
+                    <textarea name="" id="comment" cols="30" rows="3" placeholder="Write your reply here"></textarea>
+                    <span class="desc_error" style="font-size:17px;color:red;"></span>
+
+                    <p class="text-right setup-inner-box p-0 p-top-20"><a href="#" class="btn-common-new text-center m-0"id="send_comment">Send</a></p>
+                </div> 
+            </div>
+        </div>
+	</div>
+</section> -->
+
+<section>
+	<div class="container">
+		<div class="chat-details">
+            <div class="chat-details-inner">
+                <div class="wrapper-other-chat">
+                   <!-- <%= %> -->
+
+                   <%
+                   for(let each_comment of view_details)
+                   {
+                   
+                    %>
+                    
+                    <div class="custom-row chat-dtls-wrapper">
+                        <div class="chat-dtls-img">
+                            <input type="hidden"class="time_id"value="<%= each_comment.msg_date %>">
+                            <% if(each_comment.sender_id==user_id)
+                            {
+                               
+                               if(each_comment.profile_pic==null)
+                                    {%>
+                                        <img src="../assets/images/icons/9.png"height="40px" width="42px" >
+
+                                  <%  }else{
+                                    %>
+                                    <img src="<%= each_comment.profile_pic %>"height="40px" width="42px" >
+
+                                    <%}
+                           }
+                           else
+                           {
+                            if(each_comment.profile_pic==null)
+                            {%>
+                                <img src="../assets/images/icons/9.png"height="40px" width="42px" >
+
+                          <%  }else{
+                            %>
+                            <img src="<%= each_comment.profile_pic %>"height="40px" width="42px" >
+
+                            <%}
+                           }
+                           %>
+                        </div>
+                        <div class="chat-dtls">
+                            <h3 class="small-title">
+                                <% if(each_comment.sender_id==user_id)
+                                 {%>
+                                    
+                                you
+                                <%
+                                }
+                                else
+                                {
+                                    %>
+                                    <div class="upper"><%= each_comment.full_name %></div>
+                                    <%
+                                }
+                                %>
+                            </h3>
+                            <p><%= each_comment.message%></p>
+                            <p class="text-right"><span class="clr-gray ">
+                                <time class="timeago" datetime="<%= JSON.stringify(each_comment.msg_date) %>"> </time></span></p>
+                        </div>
+                    </div>
+                    <%
+                  
+                 
+
+                 %>
+               <!-- <div class="custom-row chat-dtls-wrapper">
+                <div class="chat-dtls-img">
+                    <img src="../assets/images/other/img_user1.png" alt="User">
+                </div>
+                <div class="chat-dtls">
+                    <h3 class="small-title"><%= each_comment.rep_firstname%></h3>
+                    <p><%= each_comment.comment%></p>
+                    <p class="text-right"><span class="clr-gray">13 hours ago</span></p>
+                </div>
+            </div> -->
+        <%
+         
+         }
+        %>
+                <div class="chat-box">
+                    <textarea name=""maxlength="150" id="message" cols="30" rows="3" placeholder="Write your reply here"></textarea>
+                    <span class="desc_error" style="font-size:17px;color:red;"></span>
+                    <input type="hidden"value="<%=reflect_id%>"class="receiver_id">
+                    <!-- <input type="hidden"value="<%=user_id%>"class="sender_id"> -->
+
+                    <p class="text-right setup-inner-box p-0 p-top-20"><a href="#" class="btn-common-new text-center m-0 send_comment">Send</a></p>
+                </div> 
+            </div>
+        </div>
+	</div>
+</section>
+<%- include('../innerFooter')%>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script src="/assets/js/timeago.min.js"></script>
+
+<script>
+    $('.send_comment').click(function() {
+       
+      //  var sender_id =$('.sender_id').val();
+        var receiver_id =$('.receiver_id').val();
+
+        // var complain_id = string.split("C-");
+        // alert(sender_id)
+        // alert(receiver_id)
+
+        var message=$.trim($("#message").val());
+        // alert(message)
+
+        if(message=='')
+        {
+            $(".desc_error").text('Please enter message');
+            $(".desc_error").setTimeout(function(){$(".desc_error").hide()  }, 3000);
+
+              return false;
+        }
+   
+	$.ajax({
+                      type : 'POST',
+                      url  : '/submit-market-msg',
+					  data: {msg:message,receiver_id:receiver_id},
+					  
+                      success: function(data) {
+                        //   alert(data)
+                            location.reload()            
+							// $(".complaints_by_complain_id").show();
+
+						//    var complaints=data.comment_data
+						//    var moment=data.moment
+							// $("#all").hide();
+						if(data=="true")
+					    {
+                            // alert('t')
+                            location.reload()                        
+
+					     }
+					   
+	} 
+			                                                
+           
+})
+})
+                
+
+</script>
+<script>
+    $(document).ready(function(){
+      $("time.timeago").timeago();
+    });
+
+</script>

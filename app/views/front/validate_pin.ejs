@@ -1,0 +1,135 @@
+<%- include('innerHeader')%>
+
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/home-assets/change-pass.png">
+					<h4>Validate Pin</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<form  action="/validate-pin" method="POST" id="form_validate_pin">
+<section class="setup-id-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="white-box">
+					<div class="row">
+						<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+							<div class="setup-inner-box for-protact">
+								<p>Please validate your pin to change the password.</p>
+								<div id="message">
+										<% if(err_msg!=undefined && err_msg !='' ){ %>
+											<div class="alert alert-danger text-center  flash_msg ">
+													<%= err_msg %>
+												 </div>
+										   
+											<% }%>
+										</div>
+								<div class="login-form-main inner-pin-box">
+									 <div class="form-group">
+									    <label>Pin</label>
+		                                <div class="otp-box digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+		                                    <input type="text" id="otp1" name="otp1" class="form-control text-center" placeholder="-" maxlength="1" data-next="otp2">
+		                                    <input type="text" id="otp2" name="otp2" class="form-control text-center" placeholder="-" maxlength="1" data-next="otp3" data-previous="otp1">
+		                                    <input type="text" id="otp3" name="otp3" class="form-control text-center" placeholder="-" maxlength="1" data-next="otp4" data-previous="otp2">
+		                                    <input type="text" id="otp4" name="otp4" class="form-control text-center" placeholder="-" maxlength="1" data-previous="otp3">
+										</div>
+										<span id="otp_err"  style="color: red;"></span>
+									  </div>
+									  <input type="hidden" name="password" value="<%=newmystr%>">
+									  <div class="text-center">
+											<button type="submit" class="btn-common-new" id="submit_pin">Continue</button>
+									</div>
+						      </div>
+						  </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+</form>
+<%- include('innerFooter')%>
+<script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script type="text/javascript">
+	$('#form_validate_pin').validate({
+		 onfocusout: function(element) {
+		 this.element(element);
+		 },
+		 errorClass: 'error_validate',
+		 errorElement:'span',
+		 highlight: function(element, errorClass) {
+		 $(element).removeClass(errorClass);
+		 },
+		 submitHandler:function(form)
+			{
+			  
+			     var otp1=   $("#otp1").val();
+                 var otp2= $("#otp2").val();
+                 var otp3=  $("#otp3").val();
+                 var otp4= $("#otp4").val();
+			
+					// alert("otp1",otp1);
+					// alert("otp2",otp2);
+					// alert("otp3",otp3);
+					// alert("otp4",otp4);
+                
+
+				 if(otp1==""||otp2==""||otp3==""||otp4==""){
+                    //    alert("dnsfjksd")
+                       $("#otp_err").text("All fields are required.")
+                }else{
+					$("#otp_err").text("");
+					// alert("success");
+					$('#submit_pin').attr('disabled',true);
+				    form.submit();
+                }
+			  
+			}
+		 });
+</script>
+
+<script>
+        setTimeout(function() {
+        $('#message').fadeOut('fast');
+        }, 3000);
+</script>
+
+
+
+
+    <script>
+    $('.digit-group').find('input').each(function() {
+    $(this).attr('maxlength', 1);
+    $(this).on('keyup', function(e) {
+        var parent = $($(this).parent());
+        
+        if(e.keyCode === 8 || e.keyCode === 37) {
+            var prev = parent.find('input#' + $(this).data('previous'));
+            
+            if(prev.length) {
+                $(prev).select();
+            }
+        } else if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
+            var next = parent.find('input#' + $(this).data('next'));
+            
+            if(next.length) {
+                $(next).select();
+            } else {
+                if(parent.data('autosubmit')) {
+                    parent.submit();
+                }
+            }
+        }
+    });
+});
+</script>
+ 

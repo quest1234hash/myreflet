@@ -1,0 +1,625 @@
+<%-include('../innerHeader')%>
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/verifier-home-assets/user-on-boarding-requests.png">
+					<h4>User On-Boarding Requests</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section>
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="personal-info-heading">
+					<div class="row align-item-center">
+						<div class="col-md-8">
+							<h4 class="purple-heading">Pending Requests</h4>
+						</div>
+						<div class="col-md-4">
+							<div class="text-right">
+								<a href="javascript:void(0)" onclick="downloadpenlist()">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Export Data">
+											<img src="../assets/images/icons/dashboard-assets/export.png">
+									     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+										
+									</div>
+								</a>
+								<a class="nodata" id="" onclick="printpendiv()">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Print Data">
+											<img src="../assets/images/icons/dashboard-assets/print.png">
+										    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+
+				<!-- Button S-->
+				<div class=" custom-space-btw for-flex-remove client-btn  another-drop-down m-top-30 align-items-end">
+					<div class="for-two-select-in-one">
+					<div class="for-select-existing-doc">
+					    <div class="input-group">
+							<div class="dropdown keep-inside-clicks-open">
+								<h3 class="small-title">MyReflet ID</h3>
+								<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    All
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" >
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								        	<label>
+								          		All
+								            	<input type="checkbox" value="">
+								            	<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+								    </div>
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								         	<label>
+									          	John Doe - 1235556
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+								    </div>
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								         	<label>
+									          	Quest Glt - 1235556
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+								    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+					</div>
+					<div class="btn-all-dwnload">
+						<a href=""><img src="../assets/images/icons/dashboard-assets/icon_eye_pur.png"> View</a>
+						<a href="javascript:checkedChangeStatus('accept')"><img src="../assets/images/icons/verifier-home-assets/requestdoc.png"> Accept</a>
+						<a href="javascript:checkedChangeStatus('reject')"><img src="../assets/images/icons/verifier-home-assets/reject.png"> Reject </a>
+					</div>
+				</div>
+				<!-- Button E -->
+				<div class="personal-info-box table-responsive mt-30 table-dash">
+					<table class="table" id="pendingTable">
+						<thead>
+					    	<tr>
+						      	<th width="25%" scope="col">Date | Time</th>
+						      	<th width="10%" scope="col">Client</th>
+						      	<th width="20%" scope="col">Email</th>
+						      	<th width="15%" scope="col">MyReflet ID</th>
+						      	<th width="20%" scope="col">Verified Status</th>
+						      	<th width="5%" scope="col">Action</th>
+					    	</tr>
+					  	</thead>
+						<tbody >
+							<%ClientVerificationModelData.forEach(modaldata=>{%>
+                        <%if(modaldata.ClientVerificationData.request_status=="pending"){%>
+						    <tr>
+						      	<td>
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" name="pen_Req_checkbox" value="<%=modaldata.ClientVerificationData.request_id%>">
+												<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+												<%
+												const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+												"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+											  ];
+											  //console.log("date1", modaldata.ClientVerificationData.createdAt)
+				   
+											   var today1 = new Date(modaldata.ClientVerificationData.createdAt); 
+											   
+					 
+										
+									
+									var date1  = moment(modaldata.ClientVerificationData.createdAt).format('MMM')+" "+moment(modaldata.ClientVerificationData.createdAt).format('DD')+', '+moment(modaldata.ClientVerificationData.createdAt).format('YYYY');
+
+
+								   // var time = today1.getHours() + ":" + today1.getMinutes();
+				   
+								   var d = today1;
+								   var hour = d.getHours(); 
+								   var minute = d.getMinutes();
+								   var fulltime = "";
+								   
+					   <!-- console.log(hour , minute ) -->
+								   const arrayHrs = [12,1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4,5,6,7,8,9,10,11];
+						   
+									  
+									   if( minute < 10 ) {
+										   minute = "0" + minute;
+									   }
+								   
+									   if( hour < 12 ) {
+										   
+										   fulltime = arrayHrs[hour] + ":" + minute + " AM"; 
+									   }else {
+										   
+										   fulltime = arrayHrs[hour] + ":" + minute + " PM";
+									   }
+												%>
+
+
+                                                <%=date1%> | <%=fulltime%>
+												
+							      		     	<!-- July 18, 2019 | 3:00 PM -->
+								         	 </label>
+								        </div>
+									</div>
+						      	</td>
+						      		<td>
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+							      		     	<p class="line-hgt">
+													   <span class="font-w-600"><%=modaldata.MyReflectIData.rep_username%></span>
+													    <br>
+														<%=modaldata.MyReflectIData.reflect_code%>
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</td>
+								<td><%=modaldata.user.email%></td>
+								
+							    <td>
+									<span class="font-w-600"><%=modaldata.verifer_my_reflect_id_Data.rep_username%></span> <br> <%=modaldata.verifer_my_reflect_id_Data.reflect_code%>
+								</td>
+							    <td>
+							    	<div>
+										
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verified.png">
+											Email
+										</span>
+										<!-- <span>
+											<img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+											Phone
+										</span> -->
+									</div>
+							    </td>
+							   
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="" >
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> View
+				                            </a>
+											<a class="dropdown-item" href="/request_status_change?status=accept&request_id=<%=modaldata.ClientVerificationData.request_id%>">
+												<img src="../assets/images/icons/verifier-home-assets/requestdoc-grey.png"> Accepte
+											</a>
+											<!-- <a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage messages
+											</a> -->
+											<a class="dropdown-item" href="/request_status_change?status=reject&request_id=<%=modaldata.ClientVerificationData.request_id%>">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Reject
+											</a>
+											<!-- <a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+											</a> -->
+
+				                        </div>
+				                    </div>
+						      	</td>
+							</tr>
+                        <%}%>        
+							<%})%>
+						  	 <!-- <tr>
+						      	<td>
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							      		     	July 18, 2019 | 3:00 PM
+								         	 </label>
+								        </div>
+									</div>
+						      	</td>
+						      		<td>
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600">Jack Ma</span> <br>
+							      		     		25102
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</td>
+							    <td>questglt@gmail.com</td>
+							    <td>6464646894</td>
+							    <td>
+							    	<div>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verified.png">
+											Email
+										</span>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+											Phone
+										</span>
+									</div>
+							    </td>
+							   
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="" >
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> Manage Requests
+				                            </a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/requestdoc-grey.png"> Request documents
+											</a>
+											<a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage messages
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Reject
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+											</a>
+
+				                        </div>
+				                    </div>
+						      	</td>
+						    </tr>					   -->
+						</tbody>
+					</table>
+				</div>
+
+
+
+				<div class="personal-info-heading mb-0">
+					<div class="row align-item-center">
+						<div class="col-md-8">
+							<h4 class="purple-heading">Accepted Requests</h4>
+						</div>
+						<div class="col-md-4">
+							<div class="text-right">
+								<a href="javascript:void(0)" onclick="downloadAcclist()">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Export Data">
+											<img src="../assets/images/icons/dashboard-assets/export.png">
+									     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+										
+									</div>
+								</a>
+								<a class="nodata" id="" onclick="printAccdiv()">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Print Data">
+											<img src="../assets/images/icons/dashboard-assets/print.png">
+										    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+
+				<!-- Button S-->
+				<div class=" custom-space-btw for-flex-remove client-btn  another-drop-down  align-items-end">
+					<div class="for-two-select-in-one">
+					
+					</div>
+					<div class="btn-all-dwnload">
+						<a href=""><img src="../assets/images/icons/dashboard-assets/icon_eye_pur.png"> Request documents</a>
+						<a href=""><img src="../assets/images/icons/verifier-home-assets/reject.png"> Remove </a>
+					</div>
+				</div>
+				<!-- Button E -->
+				<div class="personal-info-box table-responsive mt-30 table-dash">
+					<table class="table" id="acceptedTable">
+						<thead>
+					    	<tr>
+						      	<th width="25%" scope="col">Date | Time</th>
+						      	<th width="10%" scope="col">Client</th>
+						      	<th width="20%" scope="col">Email</th>
+						      	<th width="15%" scope="col">MyReflet ID</th>
+						      	<th width="20%" scope="col">Verified Status</th>
+						      	<th width="5%" scope="col">Action</th>
+					    	</tr>
+					  	</thead>
+						<tbody>
+						    	<%ClientVerificationModelData.forEach(modaldata=>{%>
+									<%if(modaldata.ClientVerificationData.request_status=="accept"){%>
+										<tr>
+											  <td>
+												  <div class="for-flex-align">
+													  <div class="checkbox">
+														  <label>
+															<input type="checkbox" value="">
+															<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+															<%
+												const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+												"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+											  ];
+											  //console.log("date1", modaldata.ClientVerificationData.createdAt)
+				   
+											   var today1 = new Date(modaldata.ClientVerificationData.createdAt); 
+											   
+					 
+										
+									
+									var date1  = moment(modaldata.ClientVerificationData.createdAt).format('MMM')+" "+moment(modaldata.ClientVerificationData.createdAt).format('DD')+', '+moment(modaldata.ClientVerificationData.createdAt).format('YYYY');
+
+
+								   // var time = today1.getHours() + ":" + today1.getMinutes();
+				   
+								   var d = today1;
+								   var hour = d.getHours(); 
+								   var minute = d.getMinutes();
+								   var fulltime = "";
+								   
+					   <!-- console.log(hour , minute ) -->
+								   const arrayHrs = [12,1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4,5,6,7,8,9,10,11];
+						   
+									  
+									   if( minute < 10 ) {
+										   minute = "0" + minute;
+									   }
+								   
+									   if( hour < 12 ) {
+										   
+										   fulltime = arrayHrs[hour] + ":" + minute + " AM"; 
+									   }else {
+										   
+										   fulltime = arrayHrs[hour] + ":" + minute + " PM";
+									   }
+												%>
+
+
+                                                <%=date1%> | <%=fulltime%>
+														  </label>
+													</div>
+												</div>
+											  </td>
+												  <td>
+												  <div class="for-flex-align">
+													  <div class="checkbox">
+														  <label>
+															   <p class="line-hgt">
+																   <span class="font-w-600"><%=modaldata.MyReflectIData.reflect_code%></span>
+																	<!-- <br>
+																   25102 -->
+															   </p>
+														  </label>
+													</div>
+												</div>
+											  </td>
+											<td><%=modaldata.user.email%></td>
+											
+											<td>
+												<span class="font-w-600"><%=modaldata.verifer_my_reflect_id_Data.rep_username%></span> <br> <%=modaldata.verifer_my_reflect_id_Data.reflect_code%>
+											</td>
+											<td>
+												<div>
+													
+													<span>
+														<img src="../assets/images/icons/dashboard-assets/verified.png">
+														Email
+													</span>
+													<!-- <span>
+														<img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+														Phone
+													</span> -->
+												</div>
+											</td>
+										   
+											<td>
+												  <div class="dropdown-menu-new">
+													<a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+													  <div class="doc-img">
+															  <img src="../assets/images/icons/dashboard-assets/menu.png">
+														  </div>
+													</a>
+													<div class="dropdown-menu" aria-labelledby="profileDropdown">
+														<a class="dropdown-item" href="" >
+															<img src="../assets/images/icons/dashboard-assets/view.png"> Manage Requests
+														</a>
+														<a class="dropdown-item" href="">
+															<img src="../assets/images/icons/verifier-home-assets/requestdoc-grey.png"> Request documents
+														</a>
+														<a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage messages
+														</a>
+														<a class="dropdown-item" href="">
+															<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Reject
+														</a>
+														<a class="dropdown-item" href="">
+															<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+														</a>
+			
+													</div>
+												</div>
+											  </td>
+										</tr>
+									<%}%>        
+										<%})%>
+						  	<!-- <tr>
+						      	<td>
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							      		     	July 18, 2019 | 3:00 PM
+								         	 </label>
+								        </div>
+									</div>
+						      	</td>
+						      		<td>
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600">Jack Ma</span> <br>
+							      		     		25102
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</td>
+							    <td>questglt@gmail.com</td>
+							    <td>6464646894</td>
+							    <td>
+							    	<div>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verified.png">
+											Email
+										</span>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+											Phone
+										</span>
+									</div>
+							    </td>
+							   
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="" >
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> Manage Requests
+				                            </a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/requestdoc-grey.png"> Request documents
+											</a>
+											<a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage messages
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Reject
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+											</a>
+
+				                        </div>
+				                    </div>
+						      	</td>
+						    </tr>					  -->
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<%- include('../innerFooter')%>
+
+
+
+ <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script>
+$(document).ready( function () {
+	$('.table').DataTable();
+} );
+</script>
+
+<script>
+	var reflect_id = "List";
+	function downloadpenlist(){
+		html2canvas(document.getElementById('pendingTable')).then(function(canvas) {
+		var img = canvas.toDataURL("image/png");
+		var doc = new jsPDF();
+		doc.text(2,5, reflect_id);
+		doc.addImage(img,'JPEG',-10,10);
+		doc.save('boarding_pending_list.pdf');
+		});
+	  }
+	  function printpendiv(){
+		
+		var restorepage = $('body').html();
+		  $('.nodata').hide();
+		 var printcontent = $('#pendingTable').clone();
+		 $('body').empty().html(printcontent);
+		 window.print();
+		 $('body').html(restorepage);
+	   
+	  
+	  }
+	  function printAccdiv(){
+		
+		var restorepage = $('body').html();
+		  $('.nodata').hide();
+		 var printcontent = $('#acceptedTable').clone();
+		 $('body').empty().html(printcontent);
+		 window.print();
+		 $('body').html(restorepage);
+	   
+	  
+	  }
+	  function downloadAcclist(){
+		html2canvas(document.getElementById('acceptedTable')).then(function(canvas) {
+		var img = canvas.toDataURL("image/png");
+		var doc = new jsPDF();
+		doc.text(2,5, reflect_id);
+		doc.addImage(img,'JPEG',-10,10);
+		doc.save('boarding_pending_list.pdf');
+		});
+	  }
+	</script>
+
+	<script>
+	function checkedChangeStatus(value){
+		var request_ids = [];
+		$.each($("input[name='pen_Req_checkbox']:checked"), function(){
+			request_ids.push($(this).val());
+			});
+			console.log("request_ids",request_ids)
+			alert(value)
+			
+			
+
+			$.ajax({
+                      type : 'POST',
+                      url  : '/accep_reject_request_check',
+					  data: {
+						     request_ids:JSON.stringify(request_ids),
+							 status     :value
+					        },
+					  
+						success: function(data) {
+							
+						}
+			})
+        
+
+	}
+	</script>

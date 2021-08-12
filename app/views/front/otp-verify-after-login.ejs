@@ -1,0 +1,291 @@
+<%- include('partials/header.ejs') %>  
+
+<style>
+    
+    .dis-able-btn {
+        cursor: not-allowed;
+    }
+ 
+
+    .active {
+        text-decoration-color: yellow;
+    }
+
+    .resend-lint-count {
+        color: #ffb15a;
+        font-weight: 500;
+        margin-right: 6px;
+        text-decoration: none;
+        background-color: transparent;
+        border: none;
+    }
+
+    .count-no {
+        font-size: 20px;
+        margin: 0 20px;
+        color: #000;
+    }
+    </style>
+
+    
+<!--keyboard css/js start-->
+<link rel="stylesheet" type="text/css" href="../assets/css/keyboard.css">
+<script type="text/javascript" src="../assets/js/keyboard.js"></script>
+<!--keyboard css/js end-->
+
+<section class="login-sec">
+	<div class="container-fluid p-0">
+		<div class="row m-0">
+			<div class="col-md-6 p-0">
+				<div class="left-side-login">
+					<div class="logo-box">
+						<a href="">
+							<img src="assets/images/logo.png">
+						</a>
+					</div>
+					<div class="side-text">
+						<h2>
+							Email ID Verification
+						</h2>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 p-0">
+				<div class="right-side-login forgot-pass">
+					<div class="inner-div">
+                            <form action="/submit-otp-of-login" method="POST" id="validate">
+
+						<p class="first-line  entert-pin-line">Please verify your identity via verification code sent to your email address.</p>
+						<div class="login-form-main">
+                                <% if(err_msg!=undefined && err_msg !='' ){ %>
+                                    <div class="alert alert-danger text-center  flash_msg ">
+                                            <%= err_msg %>
+                                         </div>
+                                   
+                                    <% }%>
+                                   <% if(success_msg!=undefined && success_msg !='' ){ %>
+                                      <div class="alert alert-success text-center  flash_msg ">
+                                        <%= success_msg %>
+                                     </div>
+                                    <% }%>
+							 <div class="form-group">
+							    <label>OTP</label>
+                                <div class="otp-box digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+                                    <input type="text" id="otp1" name="otp1" class="form-control text-center use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp2" onkeypress="return isNumber(event)" autocomplete="off">
+                                    <input type="text" id="otp2" name="otp2" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp3" data-previous="otp1" onkeypress="return isNumber(event)" autocomplete="off">
+                                    <input type="text" id="otp3" name="otp3" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp4" data-previous="otp2" onkeypress="return isNumber(event)" autocomplete="off">
+                                    <input type="text" id="otp4" name="otp4" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-previous="otp3" onkeypress="return isNumber(event)" autocomplete="off">
+                                </div>
+                                <span id="otp_err"  style="color: red;"></span>
+                       <input type="hidden"  name="user_id" id="userId">
+                      
+							  </div>
+							  <div>
+							  	<button class="purple-btn">Submit</button>
+                                <!-- <p class="extra-link"><a href="">Resend OTP</a></p> -->
+                                <div  class="text-center">
+                                        <button type="button" class="dis-able-btn purple-btn extra-link" id="btn1"
+                                            onclick="resendotp()">Resend</button>
+                                        
+                                <span class="count-no" id="some_div"></span>
+							  
+                        </div>
+                    </form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+
+
+
+
+
+
+	<!-- JQuery -->
+        <script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- <script type="text/javascript" src="assets/js/jquery-1.11.3.min.js"></script> -->
+        <!-- Bootstrap Core JavaScript -->
+        <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+        <!-- dropdownhover effects JavaScript -->
+        <script type="text/javascript" src="assets/js/bootstrap-dropdownhover.min.js"></script>
+        <!-- wow JavaScript -->
+        <script type="text/javascript" src="assets/js/wow.min.js"></script>
+        <!-- video player JavaScript -->
+
+        <!-- Custom JavaScript -->
+        <script type="text/javascript" src="assets/js/custom.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+>
+<script>
+   $(function(){
+    $('.restrict_key').bind('keyup keydown keypress', function (evt) {
+            return false;
+       });
+   })
+</script>
+        <script type="text/javascript">
+            window.onload = () => {
+ const otp1 = document.getElementById('otp1');
+ const otp2 = document.getElementById('otp2');
+ const otp3 = document.getElementById('otp3');
+ const otp4 = document.getElementById('otp4');
+
+ otp1.onpaste = e => e.preventDefault();
+ otp2.onpaste = e => e.preventDefault();
+ otp3.onpaste = e => e.preventDefault();
+ otp4.onpaste = e => e.preventDefault();
+
+}
+			$('#validate').validate({
+				 onfocusout: function(element) {
+				 this.element(element);
+				 },
+				 errorClass: 'error_validate',
+				 errorElement:'span',
+				 highlight: function(element, errorClass) {
+				 $(element).removeClass(errorClass);
+				 },
+				 submitHandler:function(form)
+					{
+                      $('#submit_signup').attr('disabled',true);
+                      
+                      var otp1=   $("#otp1").val();
+                 var otp2= $("#otp2").val();
+                 var otp3=  $("#otp3").val();
+                 var otp4= $("#otp4").val();
+
+                 var totalOtp1 = otp1+otp2+otp3+otp4
+                  
+                    if($("#otp1").val()==""||$("#otp2").val()==""||$("#otp3").val()==""||$("#otp4").val()==""){
+                    
+                       $("#otp_err").text("All fields required.")
+                     }else{
+                        $("#otp_err").text("")
+                        form.submit();
+                     }
+
+					  
+					}
+				 });
+			</script>
+
+<script>
+    $(function(){
+    
+    var url = new URL( window.location.href);
+    var userId = url.searchParams.get("userid");
+    $("#userId").val(userId)
+    // alert( $("#userId").val())
+
+    })
+    </script>
+         <script>
+    $('.digit-group').find('input').each(function() {
+    $(this).attr('maxlength', 1);
+    $(this).on('keyup', function(e) {
+        var parent = $($(this).parent());
+        // alert('kkk')
+
+        if(e.keyCode === 8 || e.keyCode === 37) {
+            var prev = parent.find('input#' + $(this).data('previous'));
+            
+            if(prev.length) {
+                $(prev).select();
+            }
+        } else if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
+            var next = parent.find('input#' + $(this).data('next'));
+            // alert(next)
+            
+            if(next.length) {
+                $(next).select();
+            } else {
+                if(parent.data('autosubmit')) {
+                    parent.submit();
+                }
+            }
+        }
+    });
+});
+</script>
+
+<script>
+  function isNumber(evt) {
+                
+                var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+                if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+                    return false;
+        
+                return true;
+            }  
+</script>
+<script>
+    $(function(){
+       
+        var countdown = 5 * 60 * 1000;
+        var timerId = setInterval(function(){
+                        countdown -= 1000;
+                        var min = Math.floor(countdown / (60 * 1000));
+                      //var sec = Math.floor(countdown - (min * 60 * 1000));  // wrong
+                       var sec = Math.floor((countdown - (min * 60 * 1000)) / 1000);  //correct
+
+  if (countdown <= 0) {
+                $("#some_div").html("00" + " : " + "00");
+                clearInterval(timerId);
+                alert("Your OTP has been expired. For new OTP click on the Resend buttun.")
+                $("#btn1").removeClass('dis-able-btn')
+  } else {
+     $("#some_div").html(min + " : " + sec);
+  }
+
+}, 1000); 
+    })
+        function resendotp() {
+            // $("#btn1").addClass('dis-able-btn');
+            // $("#phonSpam").text($("#phoneInput").val());
+    
+              var user_id = $("#userId").val()
+            $.ajax({
+                type: "post",
+                url: "/resend_otp",
+                data: {user_id},
+                success: function (data) {
+                    //  console.log("datadat", data.phone)
+                    alert("New OTP has been sent to your email. Please check.")
+                    $("#btn1").addClass('dis-able-btn')
+
+                    var countdown = 5 * 60 * 1000;
+        var timerId = setInterval(function(){
+                        countdown -= 1000;
+                        var min = Math.floor(countdown / (60 * 1000));
+                        //var sec = Math.floor(countdown - (min * 60 * 1000));  // wrong
+                        var sec = Math.floor((countdown - (min * 60 * 1000)) / 1000);  //correct
+
+  if (countdown <= 0) {
+                $("#some_div").html("00" + " : " + "00");
+                clearInterval(timerId);
+                alert("Your OTP has been expired. For new OTP click on the Resend buttun.")
+                $("#btn1").removeClass('dis-able-btn')
+  } else {
+     $("#some_div").html(min + " : " + sec);
+  }
+
+}, 1000); 
+                    // $('#login-modal').modal('hide');
+                }
+            });
+           
+        }
+    </script>
+
+<%- include('partials/footer.ejs') %>    
+
+
+
+ 

@@ -1,0 +1,10 @@
+
+	<select class="form-control"  name="digital_reflect_id" data-rule-required="true" data-msg-required="Please select document type.">
+
+                                     <option value="">Select document</option>
+                                    
+                                         <%walletdetails.forEach(each_data=>{%>       
+                                    <option value="<%=each_data.reflect_id%>"><%=each_data.reflect_code%>-<%=each_data.wallet_name%></option>
+                                    <%})%>
+
+ </select>

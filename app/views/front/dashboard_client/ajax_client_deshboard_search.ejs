@@ -1,0 +1,174 @@
+
+    <%
+var i=1;
+if(walletdetails.length>0)
+{
+
+
+%>
+<% walletdetails.forEach(function(each_wallet) { %>
+<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+<div class="white-box full-box wallet-box">
+<div class="row align-item-center">
+<div class="col-xl-6 col-lg-12 col-md-12">
+     <div class="id-code-represent-heading"> 
+    <% if(each_wallet.reflectid_by=='representative')
+    {%>
+    <img src="../assets/images/icons/home-assets/Representative.png">
+    <%}else
+    {%>
+        <img src="../assets/images/icons/home-assets/entity.png">
+
+    <%}%>
+      <span><%= each_wallet.reflectid_by %></span>
+   </div> 
+</div>
+<div class="col-xl-6 col-lg-12 col-md-12">
+    <h5 class="mb-0 balance-value">Balance :<%= each_wallet.wal_balan %>ETH</h5>
+</div>
+
+</div>
+<div>
+<div class="row inner-box-id-code">
+    <div class="col-md-4 p-0">
+        <div class="for-flex-align">
+            <img src="../assets/images/icons/home-assets/user.png">
+            <p>MyReflet ID </p>
+        </div>
+    </div>
+    <div class="col-md-6 dubble-dot-after p-0">
+        <%if(session.user_type!="client"){%>
+            
+                <a href="/myreflect-verifier-view?id=<%=each_wallet.reflect_code%>"><p><%= each_wallet.reflect_code %></p></a>
+            
+            
+        <%}else{%>
+            <%if(each_wallet.reflectid_by=="entity"){%>
+                <a href="/entity?reflect_id=<%=each_wallet.reflect_id%>"><p><%= each_wallet.reflect_code %></p></a>
+            <%}else{%>
+            <a href="/view-reflect-id?id=<%=each_wallet.reflect_code%>"><p><%= each_wallet.reflect_code %></p></a>
+            <%}%>
+        <%}%>
+
+        
+    </div>
+</div>
+<div class="row inner-box-id-code">
+    <div class="col-md-4 p-0">
+        <div class="for-flex-align">
+            <img src="../assets/images/icons/home-assets/user.png">
+            <p>Wallet Name </p>
+        </div>
+    </div>
+    <div class="col-md-6 dubble-dot-after p-0">
+        <%if(each_wallet.wallet_name){%>
+<a href="/view-reflect-id?id=<%=each_wallet.reflect_code%>"><p>
+       <%= each_wallet.wallet_name %></p></a>
+        <%}else{%>
+         <p>NA</p>  
+        <%}%>
+        
+    </div>
+    
+</div>
+<div class="private-key-copy-box mt-15">
+    <div class="form-group">
+        <label>Your Wallet Address</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control"  value="<%- each_wallet.wallet_address %>" id="wallet_addr<%=i %>" readonly>
+          <div class="input-group-append">
+    <!-- 	  <a class="btn-copy" href="javascript:void(0);" onclick="copy_address('<%=i %>')"><img src="../assets/images/icons/createidentity-assets/copy.png"></a> -->
+
+    <span class="tooltip">
+                          <a class="btn-copy " href="javascript:void(0);" onclick="myFunction1('<%=i %>')" onmouseout="outFunc('<%=i %>')"><img src="../assets/images/icons/createidentity-assets/copy.png">
+                          <span class="tooltiptext" id="myTooltip<%=i%>">Copy to clipboard</span>
+                           </a>
+                    </span>
+          </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div id="qrcode<%= i %>" class="qrcode" ></div>
+        
+    </div>
+    <div class="col-md-9">
+        <h4 class="purple-heading">Just scan the wallet address</h4>
+        <p>You can share this QR code with friends to receive ether or tokens in your wallet.</p>
+        <div class="row mt-15">
+            <div class="col-xl-6 col-lg-12 col-md-12">
+                <a class="btn-common-new single-color-btn" href="/send-ether?ied=<%= base64encode(each_wallet.wallet_id) %>"><img src="../assets/images/icons/wallet/send.png">Send</a>
+            </div>
+            <div class="col-xl-6 col-lg-12 col-md-12">
+                <a class="btn-common-new border-btn" href="javascript:void(0);" onclick="show_share_modal('<%= each_wallet.wallet_address %>','<%= i %>')" ><img src="../assets/images/icons/wallet/share.png"> Share</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<% 
+
+i++;
+
+}); 
+}else{
+%>
+<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+    <div class="white-box full-box wallet-box">
+          <div class="row align-item-center">
+           <!-- <div class="col-xl-6 col-lg-12 col-md-12"> -->
+                  No record found.
+            <!-- </div> -->
+           </div>
+          </div>
+        </div>
+<%}%>
+
+<script>
+        $(function(){
+
+var i=1;
+$('.qrcode').each(function(){
+
+
+    var wallet_add=$('#wallet_addr'+i).val();
+        
+
+    // var wallet_div=$('#qrcode'+i).val();
+
+    create_qrcode('qrcode'+i,wallet_add,110,110);
+
+    // var qr_src=$('#qrcode'+i).html();
+
+     //console.log("qr src",qr_src);
+    i++;
+});
+
+
+
+})
+
+var qrdiv,qrtext;
+function create_qrcode(qrdiv,qrtext,qrwidth,qrheight)
+{
+
+    var qrcode = new QRCode(qrdiv, {
+        text:qrtext,
+        width:qrwidth,
+        height:qrheight,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+   });
+
+
+
+   
+   
+        
+}
+
+</script>

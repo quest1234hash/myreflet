@@ -1,0 +1,154 @@
+  <table class="table tabel-virifier"id="myTable3">
+              <thead>
+                <tr>
+                  <th width="10%">Sr.No.</th>
+                  <th scope="col">Reflet Code</th>
+                  <th width="20%">Document Template</th>
+                  <th width="20%">Document Name</th>
+                  <th scope="col">Descriptions</th>
+                  <th width="20%"class="">Status</th>
+                  <th width="20%">Created At</th>
+                  <th width="20%"class="hide_link">Action</th>
+
+                  <!-- <th width="5%">Updated At</th> -->
+                </tr>
+              </thead>
+              <tbody id="myTable"class="div_data">
+                    <% if(document_list.length>0)
+                    {
+                       var i=0,k=0;p=1;
+                       document_list.forEach(function(each_data){
+                          %>
+      <tr>
+                   <td>
+                     <div>
+                       <p class=""><%=p%>.</p>
+                     </div>
+                   </td>
+                     
+                       <td><%if(each_data.rep_firstname){%>
+                                            <%=each_data.rep_firstname%> 
+
+                                      <%}else if(each_data.entity_company_name){%>
+                                         <%=each_data.entity_company_name%> 
+
+                                  <%}else{%>
+                                         <%=each_data.full_name%> 
+
+                                                    <%}%> <br><%=each_data.reflect_code%>
+                </td>
+                 <td>  <%
+                    if(each_data.file_template)
+                    {
+                        %>
+                       <div class="verifier-typ-img upper">
+                                      <a href="" data-toggle="modal" data-target="#doc-img-Modal_<%=k%>">
+                        <img  src="../documents/<%= each_data.file_template %>"width="100px"height="100px">
+                                       </a>
+                        
+                      </div>
+                        <%
+                    }
+                    else
+                    {
+                        
+                        %>
+                       ----------
+                        <%
+                    }
+                %></td>
+                   <td>
+
+                     <div> 
+                       <p class="upper"><%=each_data.document_name%></p>
+                     </div>
+                   </td>
+                      <td>
+                        <div style="white-space: pre-wrap;"> 
+                          <p class="upper"><%=each_data.descriptions%></p>
+                        </div>
+                    </td>
+                   <td class="">
+                               <%if( each_data.request_status==="pending"){%>
+
+                                     <span class="clr-green">Pending</span>
+                                     <%}else if( each_data.request_status==="accept"){%>
+                                         <span class="clr-purple">Accept</span>
+                                     <%}else if( each_data.request_status==="reject"){%>
+                                         <span class="clr-red">Reject</span>
+                                     <%}%>
+                    <!-- <div class="switch-option">
+                       <div class="inner-div ">
+                          <label class="switch ">
+                            <input type="checkbox"class="switch_user"  onchange="switchUserType(value)"> 
+                           
+                            <span class="slider round"></span>
+                          </label> 
+                       </div> 
+                    </div> -->
+    
+                   <!-- <p class="change"><%=each_data.status%></p> -->
+                   </td>
+                    <td>
+                     <p><%=moment(each_data.createdAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                  
+                   <td class="hide_link">
+                     <div class="dropdown-menu-new">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                       <%if(each_data.request_status==="pending"){%>
+                         <a class="dropdown-item" href="/document-request-action?admin_request_id=<%=each_data.admin_request_id%>&request_status=accept&user_id=<%=each_data.reg_user_id%>&document_name=<%=each_data.document_name%>">
+                        <img src="../assets/images/icons/verifier-home-assets/requestdoc-grey.png"> Accept
+                      </a>
+                      <!-- <a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage messages
+                      </a> -->
+                      <a class="dropdown-item " href="/document-request-action?admin_request_id=<%=each_data.admin_request_id%>&request_status=reject&user_id=<%=each_data.reg_user_id%>&document_name=<%=each_data.document_name%>">
+                        <img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Reject
+                      </a>
+                     <%}else{%>
+                    
+                       <%}%>
+                          <a href="/delete-document-request?admin_request_id=<%=each_data.admin_request_id%>"class="dropdown-item" href="#"><i class="mdi mdi-delete "></i> Delete</a>
+                        </div>
+                     </div>
+                   </td>
+                </tr>
+               
+                <%
+                i++,k++;  p++;    
+            });
+              }else{
+     %>
+                       <tr>
+            <td colspan="8"><center>No record found.</center> </td>
+             </tr>       <%}%>
+             
+              </tbody>
+          </table>
+<% if(document_list.length>0)
+{
+   var k=0;
+   document_list.forEach(function(each_data){
+      %>
+<div class="modal fade field-edit-modal" id="doc-img-Modal_<%=k%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="modal-img-big">
+          <img src="../documents/<%= each_data.file_template %>"class="img-fluid">
+                                  
+        </div>
+       </div>
+      </div>
+    </div>
+    </div>
+     <%      
+           k++; });
+               }
+           %>

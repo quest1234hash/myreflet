@@ -1,0 +1,750 @@
+<%- include('header'); -%>
+
+<style>
+  .upper.edit-list{
+    padding-left: 0;
+    margin-bottom: 0;
+
+  }
+  .upper.edit-list li {
+    list-style: circle;
+}
+  .upper.edit-list li .for-flex-align{
+    width: 100%;
+  }
+  .upper.edit-list li .for-flex-align label {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.upper.edit-list li .for-flex-align label span {
+    width: 65%;
+    white-space: pre-wrap;
+    line-height: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    margin: 7px 0;
+}
+.upper.edit-list li .for-flex-align label a{
+  width: 35%;
+}
+.setup-inner-box.for-protact .form-group .form-control{
+
+}
+</style>
+
+<div>
+   <div class="main-bredcrum-box">
+        <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+          Features
+          </li> 
+        </ul>
+      </nav>
+    </div> 
+	<div class="page-header">
+      <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+          <i class="mdi mdi-contacts"></i>
+        </span>            Features </h3>
+            <div>
+                <!-- <a href="#" class="btn btn-common bg-gradient-primary text-center m-0" data-target="#newMarketPlace" data-toggle="modal">New Document</a> -->
+               <!-- <a href="#" class="btn btn-common bg-gradient-primary text-center m-0" data-target="#newFeaturesAllot" data-toggle="modal">Allot Features</a> -->
+
+            </div>
+    </div>
+   
+    <div class="row align-bottom-flex">
+    	<div class="col-md-2">
+        <div>
+          <div class="form-group">
+              <a href="javascript:void(0);" onclick="export_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-export"></i>
+                   </span> 
+                 </span>
+               </a>
+              <a href="javascript:void(0);" onclick="print_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-printer"></i>
+                   </span> 
+                 </span>
+              </a>
+          </div> 
+        </div> 
+        
+      </div>
+   
+    	<div class="col-md-2"> 
+    		<div>
+          <% if(err_msg!=undefined && err_msg !='' ){ %>
+            <div class="alert alert-danger text-center  flash_msg " id="error_msg">
+                <%= err_msg %>
+               </div>
+             
+            <% }%>
+           
+    			<!-- <div class="form-group">
+                    <label for="exampleInputUsername1">MyReflet ID</label>
+                    <select class="form-control form-control-sm" id="exampleFormControlSelect3">
+                        <option>All</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                  </div> -->
+    		</div>
+    	</div>
+    	<div class="col-md-3 offset-md-5">
+          
+    		<div>
+    			<div class="form-group">
+              
+                      <div class="input-group search-input">
+                       <!--  <input type="text"id="myInput" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2"> -->
+                        <div class="input-group-append">
+                         <!--  <button class="btn btn-sm" type="button"><i class=" mdi mdi-magnify"></i></button> -->
+                        </div>
+                      </div>
+                    </div>
+    		</div>
+    	</div>
+    </div>
+    <div class="row">
+    	<div class="col-md-12">
+    		<div class="table-responsive">
+          <% if(success_msg!=undefined && success_msg !='' ){ %>
+            <div class="alert alert-success text-center  flash_msg "id="success_message">
+            <%= success_msg %>
+           </div>
+          <% }%>
+          <div class="div_data table-responsive">
+    			<table class="table tabel-virifier" id="myTable3" style="min-width: 1300px;">
+              <thead>
+                <tr>
+                  <th width="10%">Features Id</th>
+                  <th width="10%" scope="col">Label</th>
+                  <th width="30%" scope="col">Descriptions</th>
+                  <th width="30%" scope="col">Features</th>
+
+                  <th width="5%"class="hide_link">Icon</th>
+                  <th width="5%">Created At</th>
+                    <th width="5%">Updated At</th>
+
+                  <th width="5%"class="hide_link">Action</th>
+
+                  <!-- <th width="5%">Updated At</th> -->
+                </tr>
+              </thead>
+              <tbody id="myTable"class="div_data">
+                    <% if(feature_data.length>0)
+                    {
+                       var i=0;
+                       feature_data.forEach(function(each_data){
+                          %>
+                <tr>
+                   <td>
+                     <div>
+                       <p class="">F-<%=each_data.feature_id%></p>
+                     </div>
+                   </td>
+                     
+                </td>
+                 <td>
+                     <div style="white-space: pre-wrap;"> 
+                       <p class="upper"><%=each_data.feature_label%></p>
+                     </div>
+                  </td>
+                    <td>
+                        <div style="white-space: pre-wrap;"> 
+                          <p class="upper"><%=each_data.feature_descriptions%></p>
+                        </div>
+                    </td>
+                  <td>
+                    
+                        <!-- <%console.log(each_data.features_relations_data)%> -->
+                        <%if(each_data.features_relations_data=='undefined'){%>
+
+                                                     <p class="upper"style="color: red"> feature not add yet! </p>
+                                         <%}else{%> 
+                                            <%if(length_data>0){
+                                              var k = 0;
+                                         for(let relations_data of each_data.features_relations_data){    
+                                            %>
+                                             
+                                            <ul class="upper edit-list"> <li>
+                                                      <div class="for-flex-align">
+                                                        
+                                                            <label>
+                                                              
+                                                             <span><%=relations_data.feature%> </span>
+                                                              <a href="#" class="dropdown-item data_value" data-target="#editFeature<%=i%><%=k%>" data-toggle="modal"><i class="mdi mdi-pencil"></i> Edit</a>
+
+                                                            </label>
+                                                       
+                                                      </div>
+                                                    </li></ul>
+                                               
+                          <%k++;}}}%>
+                      
+                      
+                  </td>
+                 <td class="hide_link">  
+                  <%
+                    if(each_data.icon)
+                    {
+                        %>
+                       <div class="verifier-typ-img upper outer-bg">
+                                     
+                        <img id="user_profile_image_preview" src="../addMPIcon/<%- each_data.icon %>" class="m-t-5" style="background: #274794">
+                                               
+                         
+                      </div>
+                        <%
+                    }
+                    else
+                    {
+                        
+                        %>
+                       ----------
+                        <%
+                    }
+                %></td>
+               
+                  
+                    <td>
+                     <p><%=moment(each_data.createdAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                   <td>
+                     <p><%=moment(each_data.updatedAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                   <td class="hide_link">
+                     <a href="#" class="dropdown-item data_value" data-target="#editDocument<%=i%>" data-toggle="modal"><i class="mdi mdi-pencil"></i> Edit</a>
+                   </td>
+                </tr>
+                <%
+								i++;			
+            });
+              }else{
+     %>
+                       <tr>
+            <td colspan="8"><center>No record found.</center> </td>
+             </tr>       <%}%>
+             
+              </tbody>
+          </table>
+        </div>
+          
+       
+    		</div>
+    	</div>
+    </div>
+</div>
+
+
+<div class="modal field-edit-modal show" id="newFeatures" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <div class="create-wallet-box">
+      <div class="row align-item-center">
+        <div class="col-xl-2 col-lg-3 col-md-3">
+          <div>
+            <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+          </div>
+        </div>
+        <div class="col-xl-10 col-lg-9 col-md-9">
+          <h5 class="heading-purple">Add Market Place</h5>
+        </div>
+      </div>
+      <div class="row m-top-30">
+        <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+          <div class="setup-inner-box for-protact pt-15">
+            <form action="/add-front-feature" method="post" class="validate1"enctype="multipart/form-data">
+
+            <div class="create-rflet-id-form">
+                <div class="form-group">
+                    <div class="input-group">
+                      <input type="text" id=""name="label" class="form-control" placeholder="Label"data-rule-required="true" data-msg-required="Please enter label.">
+                    </div>
+                </div>
+               
+                <div class="form-group">
+                    <div class="input-group">
+                      <textarea name="descriptions" id="" cols="30" rows="6" class="form-control" placeholder="Description"data-rule-required="true" data-msg-required="Please enter descriptions."></textarea>  
+                    </div>
+                </div>
+            </div>
+            <div>
+              <button class="btn btn-common bg-gradient-primary ">Save</button>
+              <a class="btn-common-new" href="">Cancel</a>
+            </div>
+            </form>
+          </div>
+        </div>
+       </div>
+      </div>
+       </div>
+    </div>
+  </div>
+</div>
+<!--EDIT Modal -->
+<% if(feature_data.length>0)
+{
+   var i=0;
+   feature_data.forEach(function(each_data){
+      %>
+
+<div class="modal field-edit-modal show" id="editDocument<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <div class="create-wallet-box">
+      <div class="row align-item-center">
+        <div class="col-xl-2 col-lg-3 col-md-3">
+          <div>
+            <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+          </div>
+        </div>
+        <div class="col-xl-10 col-lg-9 col-md-9">
+          <h5 class="heading-purple">Edit </h5>
+        </div>
+      </div>
+      <div class="row m-top-30">
+        <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+          <div class="setup-inner-box for-protact pt-15">
+            <div class="create-rflet-id-form">
+              <form action="/edit-front-feature" method="post" class="validate_edit<%=i%>"enctype="multipart/form-data">
+
+            <div class="create-rflet-id-form">
+                <div class="form-group">
+                    <div class="input-group">
+                      <input type="text" id=""name="label" class="form-control" placeholder="Label"data-rule-required="true" data-msg-required="Please enter label."value="<%=each_data.feature_label%>">
+                    </div>
+                </div>
+               
+                <div class="form-group browse-file-section">
+                    <input type="file" name="feature_icon" class="file" style="visibility: hidden;position: absolute;" accept="image/x-png,image/jpeg">
+                    <div class="input-group col-xs-12">
+                        <span class="input-group-btn">
+                          <button class="browse btn btn-primary input-lg" type="button"> Choose a file</button>
+                        </span>
+                        <input type="text" class="form-control" readonly="" placeholder="">
+                    </div>
+                </div>
+                
+              <!-- <%if(length_data>0){
+                for(let relations_data of each_data.features_relations_data){    
+                   %>
+                    
+                   <div class="form-group">
+                    <div class="input-group">
+                      <input name="" id="" class="form-control" placeholder=""data-rule-required="true" data-msg-required="Please enter feature."value="<%=relations_data.feature%>">  
+                    </div>
+                </div>          
+                      
+ <%}}%> -->
+                <div class="form-group">
+                    <div class="input-group">
+                      <textarea name="descriptions" id="" cols="30" rows="6" class="form-control" placeholder="Description"data-rule-required="true" data-msg-required="Please enter descriptions."><%=each_data.feature_descriptions%></textarea>  
+                    </div>
+                </div>
+            </div>
+            </div>
+            
+            <div>
+              <input type="hidden" name="feature_id"value="<%=each_data.feature_id%>">
+              <button class="btn btn-common bg-gradient-primary "id="submit_edit<%=i%>">Save</button>
+              <a class="btn-common-new" href="">Cancel</a>
+            </div>
+            </form>
+          </div>
+        </div>
+       </div>
+      </div>
+       </div>
+    </div>
+  </div>
+</div>
+  <%
+								i++;			
+            });
+               }
+           %>
+           <% if(feature_data.length>0)
+           {
+              var i=0;
+              feature_data.forEach(function(each_data){
+                var k =0;
+                for(let relations_data of each_data.features_relations_data){    
+
+                 %>
+           
+           <div class="modal field-edit-modal show" id="editFeature<%=i%><%=k%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+             <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                 <div class="modal-body">
+                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">×</span>
+                   </button>
+                   <div class="create-wallet-box">
+                 <div class="row align-item-center">
+                   <div class="col-xl-2 col-lg-3 col-md-3">
+                     <div>
+                       <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+                     </div>
+                   </div>
+                   <div class="col-xl-10 col-lg-9 col-md-9">
+                     <h5 class="heading-purple">Edit </h5>
+                   </div>
+                 </div>
+                 <div class="row m-top-30">
+                   <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+                     <div class="setup-inner-box for-protact pt-15">
+                        <div class="create-rflet-id-form">
+                          <form action="/edit-allot-front-feature" method="post" class="validate_edi<%=i%>">
+           
+                           
+                               
+                              <div class="form-group">
+                               <div class="input-group">
+                                 <input name="feature" id="" class="form-control" placeholder=""data-rule-required="true" data-msg-required="Please enter feature."value="<%=relations_data.feature%>">  
+                               </div>
+                           </div>          
+                                 
+                          
+                       </div>
+                       <div>
+                         <input type="hidden" name="feature_rel_id"value="<%=relations_data.feature_rel_id%>">
+                         <button class="btn-common-new"id="submit_edi<%=i%>">Save</button>
+                         <a class="btn-common-new" href="">Cancel</a>
+                       </div>
+                       </form>
+                        </div>
+                     </div>
+                   </div>
+                  </div>
+                 </div>
+                  </div>
+               </div>
+             </div>
+           </div>
+             
+             <%k++;}
+             i++;			
+                       });
+                          }
+                      %>
+<div class="modal fade field-edit-modal" id="newFeaturesAllot" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="create-wallet-box">
+              <div class="row align-item-center">
+                  <div class="col-xl-2 col-lg-3 col-md-3">
+                      <div>
+                          <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+                      </div>
+                  </div>
+                  <div class="col-xl-7 col-lg-7 col-md-7">
+                      <h5 class="heading-purple">Allot Features</h5>
+                  </div>
+                  <div class="success_message_div"id="success"style="color:green"></div>
+              </div>
+               <form action="/allot-front-feature" method="post" class="validate_allot">
+              <div class="row">
+                  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+                      <div class="setup-inner-box for-protact pt-15">
+                          <div class="create-rflet-id-form">
+  
+                                  <span class="err_msg_all"style="color:red"></span>
+               
+                                <div class="form-group">
+                                    <div class="input-group">
+                                      <label for=""> Features</label>
+                                      <input type="text" id=""name="feature" class="form-control" placeholder="feature"data-rule-required="true" data-msg-required="Please enter feature."value="">
+                                    </div>
+                                </div>
+
+                                
+                                <div class="form-group">
+                                    <div class="input-group">
+                                       <select class="form-control mp_select"name="feature_id"data-rule-required="true" data-msg-required="Please select label.">
+                                          <option value="">Select Features Label</option>
+                                          <%  if(feature_data.length>0)
+                                          {
+                                               
+                                            for(let each_data of feature_data){
+                                                %>
+                                          <option  class="getId2" value="<%=each_data.feature_id%>"><%=each_data.feature_label%></option>
+                                         
+                                          <%
+                                        }
+                          
+                                          }
+                                      %>
+                                        </select>
+                                    </div>
+                                </div>
+                              </div>
+  
+                            
+  
+                              <!-- soniya upper -->
+                            </div>
+                                              <div class="text-center">
+                                  <button class="btn btn-common bg-gradient-primary "id="validate_allo_btn">Save</button>
+                                  <a class="btn-common-new" href="">Cancel</a>
+                          </div>
+                          </div>
+                      </div>
+                  </div>
+               </div>
+             </form>
+             </div>
+         </div>
+      </div>
+           <!-- End Doc modal -->
+<%- include('footer'); -%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script>
+
+
+    function export_table(){
+        // alert('hhh')
+      // $('.hide_link').show();
+    
+        $("#myTable3").table2excel({
+          filename: "Document-list.xls",
+          exclude:'.hide_link',
+        });
+      //   $('.hide_link').show();
+      window.location.reload(true);
+    
+      };
+      
+      function print_table(){
+       $('.hide_link').hide();
+     
+       // $("#user_div").print();
+       var restorepage = $('body').html();
+    // $('.nodata').hide();
+     var printcontent = $('#myTable3').clone();
+     $('body').empty().html(printcontent);
+     window.print();
+     $('body').html(restorepage);
+   
+     window.location.reload(true);
+    
+    
+        }   
+   </script>
+<script type="text/javascript">
+var plan_status;
+  // $('.d1').on('click', '.menu-for-id a', function() {
+
+	//    $('.d2').$(this).val(); 
+
+	// //   var lastID = $(this).html();
+	//    plan_status = $(this).find(".change_status").attr("value");
+	// 	// console.log("text", lastID); 
+
+
+  //  });
+ $('.active_change').click(()=>{
+  var plan_status= $('.change_status').val()
+  var plan_id= $('.plan_id_1').val()
+
+  alert(plan_status)
+  alert(plan_id)
+
+  $.ajax({
+			type: "post",
+			url: "/status-submit",
+			data:{plan_is:plan_id,plan_status:plan_status},
+			success: function (data) {
+				
+				location.reload();
+
+			
+			}
+		});
+ })
+
+  $('.validate_allot').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#validate_allo_btn').attr('disabled',true);
+        form.submit();
+      }
+     });
+
+
+
+     $('.validate_edit0').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#submit_edit0').attr('disabled',true);
+        form.submit();
+      }
+     });
+     $('.validate_edit1').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#submit_edit2').attr('disabled',true);
+        form.submit();
+      }
+     });  
+       $('.validate_edit').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#submit_edit2').attr('disabled',true);
+        form.submit();
+      }
+     });
+
+     setTimeout(function() {
+    $('#success_message').fadeOut('fast');
+    }, 3000);
+    
+    setTimeout(function() {
+    $('#error_msg').fadeOut('fast');
+    }, 3000);
+  </script>
+
+
+
+
+<script type="text/javascript">
+//   var mp_id
+//  $('.mp_select').click(function() {
+
+//      mp_id = $(this).children("option:selected").val();
+//      alert(mp_id)
+     
+//  });
+// function check_value() {
+
+
+//      if(!mp_id)
+//      {
+//     alert(mp_id)
+     
+//        $('.success_span').html('Please select a.');
+//   return false;
+
+//      }
+//      else{
+//        setTimeout(function() {
+//                 $('.success_message_span').fadeOut('fast');
+//               }, 100);
+//     return true;
+
+//      }
+//  }
+ </script>
+ 
+ <script>
+        $(document).ready(function(){
+          $("#myInput").on("keyup", function() {
+
+            var value = $(this).val().toLowerCase();
+            // alert(value)
+               if(value)
+            {
+                 
+            $.ajax({
+    type: "post",
+    url: "/search-request-document",
+    data:{query:value},
+    success: function (data) {
+      // alert(data);
+      
+           $('.div_data').html("");
+                    $('.div_data').html(data);
+            
+      
+  
+    
+    }
+  })
+ }
+            else
+            {
+              location.reload(true);
+            }
+  })
+
+          $("#myInput1").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+        });
+        </script>
+
+     <script>
+            $(document).on('click', '.browse', function(){
+           var file = $(this).parent().parent().parent().find('.file');
+           file.trigger('click');
+         });
+         $(document).on('change', '.file', function(){
+           $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i,''));
+         }); 
+        </script>
+<!-- <script>

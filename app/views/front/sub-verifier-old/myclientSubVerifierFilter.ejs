@@ -1,0 +1,199 @@
+<table class="table" id="myTable3">
+						<thead>
+					    	<tr>
+						      	<th width="10%" scope="col">Type</th>
+						      	<th width="10%" scope="col">Client</th>
+						      	<th width="20%" scope="col">Email</th>
+						      	<th width="15%" scope="col">MyReflet ID</th>
+						      	<th width="10%" scope="col">Country</th>
+						      	<th width="10%" scope="col">Status</th>
+						      	<th width="5%" scope="col">Action</th>
+					    	</tr>
+					  	</thead>
+						<tbody>
+							<%if(clients.data.length>0){%>
+								<%clients.data.forEach(client=>{%>
+
+						    <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" name="cilentId" value="<%=client.request_id%>">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table for-square-img" src="../assets/images/icons/repersentative.png">
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+						      		<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600"><%=client.full_name%></span> <br>
+							      		     		<%=client.reflect_code%>
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td><%=client.email%></td>
+							    <td><%=client.v_r_code%></td>
+							    <td>China</td>
+							   
+							    <td>
+									<%if(client.request_status=="reject"){%>
+										<div class="cancel-status">
+											Reject
+										</div>
+									<%}if(client.request_status=="accept"){%>
+										<div class="pending-status">
+											Accept
+										</div>
+									<%}if(client.request_status=="pending"){%>
+										<div class="pending-status">
+											Pending
+										</div>
+									<%}%>
+							    	
+									
+							    </td>
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="clients-manage-request.php" >
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> Manage Requests
+				                            </a>
+											<a class="dropdown-item" href="request-document.php">
+												<img src="../assets/images/icons/verifier-home-assets/requestdoc-grey.png"> Request documents
+											</a>
+											<a class="dropdown-item" href="manage-masseges.php"><img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage messages
+											</a>
+											<a class="dropdown-item" href="/delete_indi_sub_veri_client?status=reject&invite_client_id=<%=client.request_id%>">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Reject
+											</a>
+											<!-- <a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+											</a>	 -->
+
+											<a class="dropdown-item" href="/delete_indi_sub_veri_client?status=delete&invite_client_id=<%=client.request_id%>">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Delete
+											</a>
+
+				                        </div>
+				                    </div>
+						      	</td>
+							</tr>
+							
+							<%})%>
+							<%}%>
+						    <!-- <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table for-square-img" src="../assets/images/icons/entity.png">
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+						      		<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600">Jack Ma</span> <br>
+							      		     		25102
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td>questglt@gmail.com</td>
+							    <td>6464646894</td>
+							    <td>China</td>
+							   
+							    <td>
+							    	<div class="cancel-status">
+							    		Reject
+							    	</div>
+							    </td>
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="clients-manage-request.php" >
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> Manage Requests
+				                            </a>
+											<a class="dropdown-item" href="request-document.php">
+												<img src="../assets/images/icons/verifier-home-assets/requestdoc-grey.png"> Request documents
+											</a>
+											<a class="dropdown-item" href="manage-masseges.php"><img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage messages
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Reject
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+											</a>	
+				                        </div>
+				                    </div>
+						      	</td>
+						    </tr> -->
+						 
+						</tbody>
+					</table>
+					<div class="pagination-list for-user">
+          
+						<% if (clients.totalPages > 0) { %>
+					   <ul class="pagination text-center">
+						   <% if (clients.currentPage == 1) { %>
+							   <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+						   <% } else { %>
+							   <li class="page-item"><a class="page-link" href="/sub_verfier_my_client?page=1">&lt;</a></li>
+						   <% } %>
+					
+					
+					
+						   <% var i = (Number(clients.currentPage) > 5 ? Number(clients.currentPage) - 4 : 1) %>
+						   <% if (i !== 1) { %>
+							   <!-- <li class="disabled"><a>...</a></li> -->
+							   <li class="page-item disabled"><a class="page-link" >...</a></li>
+						   <% } %>
+						   <% for (; i <= (Number(clients.currentPage) + 4) && i <= clients.totalPages; i++) { %>
+							   <% if (i == clients.currentPage) { %>
+								   <!-- <li class="active"><a><%= i %></a></li> -->
+								   <li class="page-item active">
+									 <a class="page-link" href="#"><%= i %><span class="sr-only">(clients.currentPage)</span></a>
+								   </li>
+							   <% } else { %>
+								   <li class="page-item"><a class="page-link" href="/sub_verfier_my_client?page=<%= i %>"><%= i %></a></li>
+							   <% } %>
+							   <% if (i == Number(clients.currentPage) + 4 && i < clients.totalPages) { %>
+								   <!-- <li class="disabled"><a>...</a></li> -->
+								   <li class="page-item disabled"><a class="page-link" >...</a></li>
+							   <% } %>
+						   <% } %>
+					
+					
+						   <% if (clients.currentPage == clients.totalPages) { %>                       
+							   <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+						   <% } else { %>
+							   <li><a class="page-link" href="/sub_verfier_my_client?page=<%= clients.totalPages %>">&gt;</a></li>
+						   <% } %>
+					
+					   </ul>
+					<% } %>
+					

@@ -1,0 +1,666 @@
+<%-include('../innerHeader')%>
+<style>
+	.for-protact.explorer-box {
+    padding-top: 10px;
+   }
+	.for-protact.explorer-box h5 {
+    color: #274794;
+    font-weight: 600;
+    text-transform: inherit;
+    font-size: 16px;
+}
+	.for-protact.explorer-box p {
+    font-size: 12px;
+    word-break: break-word;
+}
+.for-protact.explorer-box p img{
+	height: 90px;
+}
+.explorer-container{
+	max-width: 1200px;
+}
+.for-protact.explorer-box .create-rflet-id-form {
+    text-align: left;
+    max-width: 100%;
+}
+.exploror-sec{ 
+	margin: 95px 0 0;
+}
+.inner-box {
+    border: 1px solid #ddd;
+    padding: 20px 10px 5px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    min-height: 145px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 140px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -75px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+
+
+
+
+<section class="heading-sec">
+	<div class="container explorer-container">
+		<div class="row align-item-center">
+			<div class="col-lg-6 col-md-6 col-sm-6">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/home-assets/3d.png">
+					<h4>Blockchain Explorer</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<section class="exploror-sec mt-0">
+	<div class="container explorer-container">
+		<div class="row align-item-center">
+			<div class="col-lg-12">
+				<div class="white-box light-blue-box search-first">
+					<div class="custom-space-btw another-drop-down for-search-document align-items-end">
+						<div class="custom-flex-row">
+							<form method="POST" action="/search-personal" class=" response-search"> 
+			                     <div class="input-group search-address-book">
+			                        <input type="text" class="form-control autocomplete" id="myInput" name="value" placeholder="Search By Transation ID, Block ID ,Client and Verifier Reflet ID ">
+			                        <div class="input-group-append">
+			                            <button class="btn btn-search" type="submit"><img src="../assets/images/icons/search-black.png"></button>
+			                        </div>
+			                    </div>
+		                  	</form>
+	                  	</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-2">
+						<div class="light-blue-box upper-boxes-explorer">
+							<div class="inner-box-explo">
+								<img src="../assets/images/icons/home-assets/marketplace.png">
+								<span>Total Supply</span>
+							</div>
+							<h5>45000000</h5>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="light-blue-box upper-boxes-explorer">
+							<div class="inner-box-explo">
+								<img src="../assets/images/icons/home-assets/marketplace.png">
+								<span>Total Supply</span>
+							</div>
+							<h5>45000000</h5>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="light-blue-box upper-boxes-explorer">
+							<div class="inner-box-explo">
+								<img src="../assets/images/icons/home-assets/marketplace.png">
+								<span>Total Supply</span>
+							</div>
+							<h5>45000000</h5>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="light-blue-box upper-boxes-explorer">
+							<div class="inner-box-explo">
+								<img src="../assets/images/icons/home-assets/marketplace.png">
+								<span>Total Supply</span>
+							</div>
+							<h5>45000000</h5>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="light-blue-box upper-boxes-explorer">
+							<div class="inner-box-explo">
+								<img src="../assets/images/icons/home-assets/marketplace.png">
+								<span>Total Supply</span>
+							</div>
+							<h5>45000000</h5>
+						</div>
+					</div>
+					<div class="col-md-2">
+                    <a href="/expoler-child-wallet?query=<%- typeof query == 'undefined' ? ''  : query%>">
+						<div class="light-blue-box upper-boxes-explorer">
+							<div class="inner-box-explo">
+								<img src="../assets/images/icons/home-assets/marketplace.png">
+								<span>Total Child Wallets</span>
+							</div>
+
+							<h5><%- typeof childWalletData == 'undefined' ? '0'  :  childWalletData.length%></h5>
+							
+						</div>
+					</div>
+				</a>
+				</div>
+
+
+				
+				<div id="explorer_content">
+				<div class="personal-info-box table-responsive exploror-table-new another-table">
+					<table class="table" id="myTable3">
+						<thead>
+					    	<tr> 
+						      	<th width="30%" scope="col">Transation ID</th>
+						      	<th width="15%" scope="col">Block ID</th>
+						      	<th width="15%" scope="col">Client MyReflet Code</th>
+						      	<th width="15%" scope="col">Verifier MyReflet Code</th>
+						      	<th width="15%" scope="col">Date</th>
+						      	<th width="10%" scope="col">Action</th>
+					    	</tr>
+					  	</thead>
+						<tbody id="myTable">
+							<% if(receipt_array != "" && receipt_array != null){
+							if(receipt_array.data){
+							if(receipt_array.data.length>0){
+								var i=0;
+								receipt_array.data.forEach(receipt =>{
+								%>
+						    <tr>	
+							    <td><%=receipt.receipt.hash%></td>
+							    <td><%=receipt.receipt.blockNumber%></td>
+							    <td><%=receipt.client_myReflect_code%></td>
+							    <td><%=receipt.verifier_myReflect_code%></td>
+							    <td><%=moment(receipt.created_at).format('YYYY/MM/DD hh:mm:ss')%></td>
+							    <td>
+							      	<a href="#add-new-doc-Modal<%=i%>" data-toggle="modal" data-target="#add-new-doc-Modal<%=i%>"  class="view-link"><i class="cr-icon fa fa-eye" aria-hidden="true"></i></a>
+						      	</td>
+							 </tr>
+							 
+							 <% i++; }) 
+							}}else{%>
+                               <td colspan="6"><center>No record found.</center></td>
+								<%}}else{%>
+									<td colspan="6"><center>No record found.</center></td>
+									 <%}%>%>
+
+						</tbody>
+					</table>
+					<table class="paginate_table">
+						<div class="pagination-list for-user">
+					  <% if (receipt_array.totalPages> 0) { %>
+						
+						<ul class="pagination text-center">
+						  <% if (receipt_array.currentPage == 1) { %>
+							<li class="disabled page-item"><a><</a></li>
+						  <% } else { %>
+							<li class="page-item"><a class="page-link" href="/personal-explorer?page=1"><</a></li>
+						  <% } %>
+						  <% var i = (Number(receipt_array.currentPage) > 5 ? Number(receipt_array.currentPage) - 4 : 1) %>
+						  <% if (i !== 1) { %>
+							<li class="page-item disabled"><a>...</a></li>
+						  <% } %>
+						  <% for (; i <= (Number(receipt_array.currentPage) + 4) && i < receipt_array.totalPages; i++) { %>
+							<% if (i == receipt_array.currentPage) { %>
+							  
+							  <li class="active page-item"><a><%= i %> &nbsp;</a></li>
+							<% } else { %>
+							  <li class="page-item"><a class="page-link" href="/personal-explorer?page=<%= i %>"><%= i %> &nbsp;</a></li>
+							<% } %>
+							<% if (i == Number(receipt_array.currentPage) + 4 && i <= receipt_array.totalPages) { %>
+							  <li class="disabled page-item"><a>...</a></li>
+							<% } %>
+						  <% } %>
+						  <% if (receipt_array.currentPage ==receipt_array.totalPages) { %>
+							<li class="disabled page-item"><a>></a></li>
+						  <% } else { %>
+							<li class="page-item"><a class="page-link" href="/personal-explorer?page=<%= receipt_array.totalPages %>">></a></li>
+						  <% } %>
+						</ul>
+					  <% } %>
+						</div>
+					</table>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<%if(receipt_array != "" && receipt_array != null){
+if(receipt_array.data){
+if(receipt_array.data.length>0){
+	var j=0;
+	receipt_array.data.forEach(receipt =>{
+	%>
+<div class="modal fade field-edit-modal" id="add-new-doc-Modal<%=j%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content explorer-content-box">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact explorer-box">
+						<div class="create-rflet-id-form ">
+							<div class="row">
+								<div class="col-md-12">
+									<div>
+			                        <h4 class="latest-box">Transaction</h4>
+			                          <div class="input-group transaction-id-copy">
+			                           <!--  <input class="form-control" type="text" value="0x99c0adfb3f8e4458a369f26ec70f51189e0728099b37f3ce07dd4feea580eb88" id="myInput">
+			                            <div class="input-group-append">
+			                              <button onclick="myFunction()" class="btn"><i class="fas fa-copy"></i></button>
+			                            </div> -->
+
+			                            <input type="text" class="form-control" id="receiver_address" name="private_key" value="0x99c0adfb3f8e4458a369f26ec70f51189e0728099b37f3ce07dd4feea580eb88" readonly="readonly">
+										  
+										  <div class="input-group-append">
+										  	<span class="tooltip">
+										  		<a class="btn-copy " href="javascript:void(0);" onclick="myFunction1()" onmouseout="outFunc()"><i class="fas fa-copy"></i>
+										  		<span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+										  	</a>
+											</span>
+			                          </div>
+			                      </div>
+									<div class="white-box explorer-detail-table">
+										<table>
+											<tbody>
+												<tr>
+													<th width="40%">Document:</th>
+												     <td width="60%">
+												     	<div class="main-hover-img">
+															 <%receipt.document.forEach(docdata=>{
+																
+																%>
+																<% if (docdata.type == "image") {
+																	
+																	%>
+																		<div class="new-inner-check">
+																			<p><img src="<%=docdata.body%>"></p>
+																		<div class="on-hover-big-img">
+																			<img src="<%=docdata.body%>">
+																		</div>
+																		</div>
+																<%} else if (docdata.type == "pdf") {
+																	
+																	%>
+																		<div  class="new-inner-check" onmouseover="ShowPdfModal('<%=j%>')">
+																				<p>
+																					<!-- <video width="22" height="20" controls>
+																					   
+																					</video> -->
+																					
+
+																					 <object id="" class="PDFdoc" width="50" height="50" type="application/pdf" data="https://ipfs.io/ipfs/<%=docdata.body%>" ></object>
+																				</p>
+
+																				
+																			
+																			</div>
+																	<%} else {%>
+																			<div  class="new-inner-check" onmouseover="ShowVideoModal('<%=j%>')">
+																				<p>
+																					<!-- <video width="22" height="20" controls>
+																					   
+																					</video> -->
+																					<video  width="400" height="400" controls>
+										
+																						<source src='https://ipfs.io/ipfs/<%=docdata.body%>'type="video/mp4">
+																						</video>
+																				</p>
+
+																				
+																			
+																			</div>
+																		<%}%>
+												     		  
+															<%})%>
+												     	</div>
+												     </td>
+												</tr>
+												<tr>
+													<th>Transaction Hash:</th>
+												     <td><p><%=receipt.receipt.hash%></p></td>
+												</tr>
+												<tr>
+													<th>Sender Address:</th>
+												     <td><p><%=receipt.receipt.from%></p></td>
+												</tr>
+												<tr>
+													<th>Reciever Address:</th>
+												     <td><p><%=receipt.receipt.to%></p></td>
+												</tr>
+												<tr>
+													<th>Document Name:</th>
+												     <td><p><%=receipt.doc_name%></p></td>
+												</tr>
+												<tr>
+													<th>Client e-mail:</th>
+												     <td><p><%=receipt.client_mail%></p></td>
+												</tr>
+												<tr>
+													<th>Verifier e-mail:</th>
+												     <td><p><%=receipt.verifier_mail%></p></td>
+												</tr>
+												<tr>
+													<th>Client MyReflet Code:</th>
+												     <td><p><%=receipt.client_myReflect_code%></p></td>
+												</tr>
+												<tr>
+													<th>Verifier MyReflet Code:</th>
+												     <td><p><%=receipt.verifier_myReflect_code%></p></td>
+												</tr>
+												<tr>
+													<th>Document Status:</th>
+												     <td><p><%if(receipt.doc_status=='accepted'){%>
+														Accepted
+														<%}else{%>
+															Rejected
+														<%}%>
+													</p></td>
+												</tr>
+												<tr>
+													<th>Reason:</th>
+												     <td><p><%=receipt.reason%></p></td>
+												</tr>
+												<tr>
+													<th>Gas Used:</th>
+												     <td><p><%=receipt.receipt.gasUsed%></p></td>
+												</tr>
+												<tr>
+													<th>Transaction Status:</th>
+												     <td>  <p><%if(receipt.receipt.status){%>
+														Success
+														<%}else{%>
+															Failed
+														<%}%>
+														</p></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<!-- <div class="row">
+								<div class="col-md-4">
+									<div class="inner-box">
+										<h5>Document</h5>
+								        <p><img src="<%=receipt.document%>"></p>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="inner-box">
+										<h5>Transaction Hash</h5>
+						        		<p><%=receipt.receipt.transactionHash%></p>
+						        	</div>
+								</div>
+								<div class="col-md-4">
+									<div class="inner-box">
+
+								<h5>Sender Address</h5>
+								<p><%=receipt.receipt.from%></p>
+							</div>
+								</div>
+							</div> -->
+							<!-- <div class="row">
+								<div class="col-md-4">
+									<div class="inner-box">
+									<h5 >Reciever Address</h5>
+							     	<p><%=receipt.receipt.to%></p>
+							     </div>
+								</div>
+								<div class="col-md-4">
+									<div class="inner-box">
+									<h5 >Document Name</h5>
+							     	<p><%=receipt.doc_name%></p>
+							     </div>
+								</div>
+								<div class="col-md-4">
+									<div class="inner-box">
+									<h5 >Client e-mail</h5>
+							    	<p><%=receipt.client_mail%></p>
+							    </div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="inner-box">
+									<h5 >Verifier e-mail</h5>
+								    <p><%=receipt.verifier_mail%></p>
+								</div>
+								</div>
+								<div class="col-md-4">
+									<div class="inner-box">
+									<h5 >Client MyReflet Code</h5>
+								    <p><%=receipt.client_myReflect_code%></p>
+								</div>
+								</div>
+								<div class="col-md-4">
+									<div class="inner-box">
+									<h5 >Verifier MyReflet Code</h5>
+								    <p><%=receipt.verifier_myReflect_code%></p>
+								</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="inner-box">
+									<h5 >Document Status</h5>
+								    <p><%if(receipt.doc_status=='accepted'){%>
+									Accepted
+									<%}else{%>
+										Rejected
+									<%}%>
+								</p>
+							</div>
+								</div>
+								<div class="col-md-4">
+									<div class="inner-box">
+									<h5 >Reason</h5>
+								<p><%=receipt.reason%></p>
+							</div>
+								</div>
+								<div class="col-md-4">
+									<div class="inner-box">
+									<h5 >Gas Used</h5>
+								<p><%=receipt.receipt.gasUsed%></p>
+							</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="inner-box">
+									<h5 >Transaction Status</h5>
+								     <p><%if(receipt.receipt.status){%>
+									Success
+									<%}else{%>
+										Failed
+									<%}%>
+								    </p>
+								</div>
+								</div>
+							</div> -->
+						</div>
+						
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+</div>
+<% j++; }) 
+}}}%>
+
+<%if(receipt_array != "" && receipt_array != null){
+	if(receipt_array.data){
+	if(receipt_array.data.length>0){
+		var j=0;
+		receipt_array.data.forEach(receipt =>{
+		%>
+<div class="modal fade field-edit-modal" id="doc-video-Modal<%=j%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		 
+		  <div id="" class="modal-img-big">
+			<%receipt.document.forEach(docdata=>{%>
+				<% if (docdata.type == "video") {%>
+					<video id="vid_modal" width="400" height="400" controls>
+									
+						<source src="https://ipfs.io/ipfs/<%=docdata.body%>" type="video/mp4">
+					</video>
+
+					<%}%>
+		
+			<%})%>
+
+			
+			  
+		  </div>
+		 
+			
+			
+		 </div>
+	  </div>
+	</div>
+  </div>
+  <% j++; }) 
+}}}%>
+<%if(receipt_array != "" && receipt_array != null){
+	if(receipt_array.data){
+	if(receipt_array.data.length>0){
+		var j=0;
+		receipt_array.data.forEach(receipt =>{
+		%>
+<div class="modal fade field-edit-modal" id="doc-pdf-Modal<%=j%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		 
+		  <div id="" class="modal-img-big">
+			<%receipt.document.forEach(docdata=>{%>
+				<% if (docdata.type == "pdf") {%>
+				
+                   	 <object id="attested_pdf_modal" class="PDFdoc" width="100%" height="500px" type="application/pdf" data="https://ipfs.io/ipfs/<%=docdata.body%>" ></object>
+
+					<%}%>
+		
+			<%})%>
+
+			
+			  
+		  </div>
+		 
+			
+			
+		 </div>
+	  </div>
+	</div>
+  </div>
+  <% j++; }) 
+}}}%>
+
+<%- include('../innerFooter')%>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+
+        <script>
+function myFunction() {
+  var copyText = document.getElementById("myInput");
+  copyText.select();
+  copyText.setSelectionRange(0, 99999)
+  document.execCommand("copy");
+  alert("Copied the text: " + copyText.value);
+}
+</script>
+
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+<!-- <script>
+$(document).ready( function () {
+	$('.table').DataTable();
+} );
+</script> -->
+
+<!-- <script>
+	$(document).ready(function(){
+	  ('.show_link').hide()
+	  $("#myInput").on("keyup", function() {
+		  alert("onkeyup");
+		var value = $(this).val().toLowerCase();
+		$("#myTable tr").filter(function() {
+		  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		});
+	  });
+	});
+	</script> -->
+
+
+
+<script>
+function myFunction1() {
+  var copyText = document.getElementById("receiver_address");
+  copyText.select();
+  copyText.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  
+  var tooltip = document.getElementById("myTooltip");
+  tooltip.innerHTML = "Copied";
+    // tooltip.innerHTML = "Copied: " + copyText.value;
+
+}
+
+function outFunc() {
+  var tooltip = document.getElementById("myTooltip");
+  tooltip.innerHTML = "Copy to clipboard";
+}
+</script>
+
+
+<script>
+	function ShowVideoModal(j) {
+		$("#doc-video-Modal"+j).modal('show')
+	}
+		function ShowPdfModal(j) {
+		$("#doc-pdf-Modal"+j).modal('show')
+	}
+</script>

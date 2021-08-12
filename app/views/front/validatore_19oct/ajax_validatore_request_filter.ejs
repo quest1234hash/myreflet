@@ -1,0 +1,80 @@
+              <%if ( validatoreRequestData.length>0 ){%>
+    <% 
+       var i=1;
+       validatoreRequestData.forEach(modelData=>{
+  %>
+
+    <tr>
+        <td><%= modelData.request_code %></td>
+          <td>
+            <div class="for-flex-align">
+              <div class="checkbox">
+                  <label>
+                <%
+                if( 0)
+                {
+                  %>
+                  <img class="profile-table" src="<%= modelData.verifer_my_reflect_id_Data.tbl_user_registration.dataValues.profile_pic %>">
+                  <%
+                }
+                else
+                {
+                  
+                  %>
+                  <img class="profile-table" id="user_profile_image_preview" src="../assets/images/other/face1.jpg" class="m-t-5" >
+                  <%
+                }
+              %>
+               
+                    
+                    <p class="line-hgt">
+                <%if(modelData.reflectid_by=="entity"){ %>
+                  <span class="font-w-600"><%=modelData.entity_company_name%></span>
+                   <%}else{%>
+                  <span class="font-w-600"><%=modelData.rep_username%></span>
+                  <%}%>
+                   <br>
+                      <%=modelData.reflect_code%>
+                    </p>
+                 </label>
+              </div>
+        </div>
+          </td>
+                  <!-- <td>
+                                  <%if(modelData.reflectid_by=="entity"){ %>
+                  <span class="font-w-600"></span>
+                  <%=modelData.entity_company_name%>
+                </span>
+                    <%}else{%>
+                    <span class="font-w-600"></span>
+                    <%=modelData.rep_username%>
+                  </span>
+                    <%}%>
+                   
+
+                 <br> <%=modelData.reflect_code%></td> -->
+
+
+                  <td><%=modelData.document_name%></td>
+                
+                <td>
+                  <%=moment(modelData.createdAt).format('MMM DD, YYYY')%>
+                </td>
+                <%if(modelData.due_date!=null){ %>
+                  <td><%=moment(modelData.due_date).format('MMM DD, YYYY')%></td>
+                <%}else{%>
+                  <td>----</td>
+                  <%}%>
+                  
+                  <td class="text-center"> <span class="pending-status"><%=modelData.request_status%></span></td>
+                  <td class="hide_data">
+                      <a href="/request_info?val_id=<%=modelData.validatore_id%>" class="view-link">View</a>
+                    </td>
+              </tr>
+              <% i++;})
+            %>
+          <%}else{%>
+            <tr>
+            <td colspan="8"><center>No record found.</center> </td>
+              </tr>
+            <%}%>

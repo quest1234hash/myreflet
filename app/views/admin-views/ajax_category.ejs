@@ -1,0 +1,117 @@
+ <% if(category_list.length>0)
+                    {
+                       var i=0;
+                       category_list.forEach(function(each_data){
+                          %>
+                <tr>
+                   <td>
+                     <div>
+                       <p class="">P-<%=each_data.category_id%></p>
+                     </div>
+                   </td>
+                   <td>
+                     <div> 
+                       <p class="upper">6<%=each_data.category_name%></p>
+                     </div>
+                    </td>
+                   <td class="">
+                      <% 
+                      if(each_data.status=="active"){ %>
+                        
+                        <button type="button" value="<%-each_data.category_id%>" id="inactivebut"  class="btn  mr-2 btn-success_1 acvtive-id ">Active </button>
+                            
+                    <%  }else{ %>
+                        
+                      <button type="button" value="<%-each_data.category_id%>" id="activebut"  class="btn  btn-danger mr-2 inacvtive-id " >Inactive</button>
+            
+                    <%  }
+                      %>
+                    <!-- <div class="switch-option">
+                       <div class="inner-div ">
+                          <label class="switch ">
+                            <input type="checkbox"class="switch_user"  onchange="switchUserType(value)"> 
+                           
+                            <span class="slider round"></span>
+                          </label> 
+                       </div> 
+                    </div> -->
+    
+                   <!-- <p class="change"><%=each_data.status%></p> -->
+                   </td>
+                    <td>
+                     <p><%=moment(each_data.createdAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                  
+                   <td class="hide_link"> 
+                     <div class="dropdown-menu-new">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                           <a href="#" class="dropdown-item data_value" data-target="#editCategory_<%=i%>" data-toggle="modal"><i class="mdi mdi-pencil"></i> Edit</a>
+                          <a href="/delete-category/:<%=each_data.category_id%>"class="dropdown-item" href="#"><i class="mdi mdi-delete "></i> Delete</a>
+                        </div>
+                     </div>
+                   </td>
+                </tr>
+                <%
+                i++;      
+            });}
+              else{
+     %>
+                       <tr>
+            <td colspan="8"><center>No record found.</center> </td>
+             </tr>       <%}%>
+
+<% if(category_list.length>0)
+{
+   var i=0;
+   category_list.forEach(function(each_data){
+      %>
+<div class="modal fade" id="editCategory_<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+  
+          <div class="profile-form">
+                        
+                           
+                      <form action="/edit-category" method="post" id="validate1">
+  
+                       <div class="form-group">
+                          <label class="upper">Category Name</label>
+                          <input type="text" class="form-control"value="<%=each_data.category_name %>" name="category_name" id=""data-rule-required="true" data-msg-required="Please enter category name.">
+                        </div>
+                        <!-- <div class="form-group">
+                          <label>Plan Price</label>
+                          <input type="text" class="form-control"value="<%=each_data.plan_price %>" name="plan_price" id=""data-rule-number=”true” data-rule-required="true" data-msg-required="Please enter price".>
+                        </div> -->
+                        
+                        <input type="hidden" class="form-control"value="<%=each_data.category_id%>" name="category_id" id="">
+
+       
+                     
+                          <div class="popup-btn text-center">
+                          <button class="btn btn-common bg-gradient-primary check ">Save</button>
+                         
+                          <a href="/verifier-category-list" class="btn btn-common bg-gradient-primary ">Cancel</a>
+                        </div>
+                    
+                   </form> 
+                 </div>
+  
+  
+  
+   
+        </div>
+      </div>
+    </div>
+  </div>
+  <%
+                i++;      
+            });
+               }
+           %>

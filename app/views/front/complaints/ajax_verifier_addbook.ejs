@@ -1,0 +1,30 @@
+
+ <div class="input-group">
+    <select onchange="get_reflect_id(this.value)" class="form-control valid" name="my_reflet_for_req" data-rule-required="true" data-msg-required="Please select sub-category." aria-invalid="false">
+    
+        <option>Select Verifiers<span class="red_span">*</span></option>
+        <% if(verifier_user.length>0){
+            for(var i=0;i<verifier_user.length;i++){
+                %>
+        <option value="<%=verifier_user[i].reflect_id %>">    
+          <%	if(verifier_user[i].user_as=='verifier'){%>    
+          <%if(verifier_user[i].rep_firstname){%>               
+                         <span class="upper"><%=verifier_user[i].rep_firstname %>-   <%=verifier_user[i].reflect_code %>
+                          </span>
+                         <%}else{%>
+                      <span class="upper"><%=verifier_user[i].entity_company_name %>-   <%=verifier_user[i].reflect_code %>
+    </span>                     <%}%>
+                                                      	
+    
+    <%
+                                        
+                                      }
+                        
+                                        
+                                    %>
+       </option>
+    
+        <%}}%>
+    
+    </select>
+</div>

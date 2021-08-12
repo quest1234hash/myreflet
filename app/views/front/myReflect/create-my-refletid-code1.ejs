@@ -1,0 +1,151 @@
+<%-include('../innerHeader')%>
+
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/createidentity-assets/create-myreflet.png">
+					<h4>Create MyReflet ID Code</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<form action="/submit-myreflect-code" method="POST" id="form_reflect_id">
+<section class="setup-id-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="white-box">
+					<div class="row">
+						<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+							<div class="setup-inner-box for-protact">
+								<div class="create-rflet-id-form">
+									<div class="input-group for-radio-check-id-as">
+									  <input type="text" class="form-control" readonly placeholder="You are Creating ID as an">
+									  <div class="input-group-append">
+									    <span class="input-group-text">
+									    	 <div class="radio">
+									          <label>
+									            <input type="radio" name="o1" value="entity">
+									            <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+									            Entity
+									          </label>
+									        </div>
+									         <div class="radio">
+									          <label>
+									            <input type="radio" name="o1" value="representative">
+									            <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+									            Representative
+									          </label>
+									        </div>
+									    </span>
+									  </div>
+									</div>
+								  <!-- <div class="for-entity">  -->
+								    <!-- <div class="input-group">
+									  <input type="text" class="form-control" readonly="readonly" name="reflectcode" placeholder="MyReflet Code">
+									  <div class="input-group-append">
+									    <span class="input-group-text">
+									    	<img src="../assets/images/icons/createidentity-assets/create-myreflet.png">
+									    </span>
+									  </div>
+									</div> -->
+									<!-- <div class="input-group">
+									  <input type="text" class="form-control" name="company_name" placeholder="Company Name">
+									  <div class="input-group-append">
+									    <span class="input-group-text">
+									    	<img src="../assets/images/icons/createidentity-assets/user.png">
+									    </span>
+									  </div>
+									</div> -->
+									<!-- <div class="input-group">
+									  <input type="email" class="form-control" name="company_mail" placeholder="Company Email ID">
+									  <div class="input-group-append">
+									    <span class="input-group-text">
+									    	<img src="../assets/images/icons/createidentity-assets/email.png">
+									    </span>
+									  </div>
+									</div> -->
+								 <!-- </div>	 -->
+								  <div class="for-representative"> 
+								    <div class="input-group">
+									  <input type="text" class="form-control" name="reflect_username" placeholder="MyReflet Username">
+									  <div class="input-group-append">
+									    <span class="input-group-text">
+									    	<img src="../assets/images/icons/createidentity-assets/create-myreflet.png">
+									    </span>
+									  </div>
+									</div>
+									<div class="input-group">
+									  <input type="text" class="form-control" name="firstname" placeholder="First Name">
+									  <div class="input-group-append">
+									    <span class="input-group-text">
+									    	<img src="../assets/images/icons/createidentity-assets/user.png">
+									    </span>
+									  </div>
+									</div>
+									<div class="input-group">
+									  <input type="text" class="form-control" name="lastname" placeholder="Last Name">
+									  <div class="input-group-append">
+									    <span class="input-group-text">
+									    	<img src="../assets/images/icons/createidentity-assets/user.png">
+									    </span>
+									  </div>
+									</div>
+									<div class="input-group">
+									  <input type="email" class="form-control" name="mail_id" value="<%=email%>" readonly="readonly">
+									  <div class="input-group-append">
+									    <span class="input-group-text">
+									    	<img src="../assets/images/icons/createidentity-assets/email.png">
+									    </span>
+									  </div>
+									</div>
+								 </div>
+								</div>
+                                <input type="hidden" name="wallet_id" value="<%=wallet_id%>">
+                                <input type="hidden" name="reflect_code" value="<%=reflect_code%>">
+								<div class="private-key-copy-box">
+									<button type="submit" id="submit_reflect_id" class="btn-common-new">Create myreflet id code</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+</form>
+
+
+<%- include('../innerFooter')%>
+
+<script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script type="text/javascript">
+	$('#form_reflect_id').validate({
+		 onfocusout: function(element) {
+		 this.element(element);
+		 },
+		 errorClass: 'error_validate',
+		 errorElement:'span',
+		 highlight: function(element, errorClass) {
+		 $(element).removeClass(errorClass);
+		 },
+		 submitHandler:function(form)
+			{
+			  $('#submit_reflect_id').attr('disabled',true);
+			  form.submit();
+			}
+		 });
+</script>
+<script>
+        setTimeout(function() {
+        $('#message').fadeOut('fast');
+        }, 3000);
+        </script>
+
+ 

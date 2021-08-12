@@ -1,0 +1,165 @@
+  <table class="table tabel-virifier "id="myTable3">
+              <thead>
+                <tr>
+                  <th width="15%">Sr.No</th>
+                  <th width="20%">Plan Feature</th>
+                  <th width="20%">Created At</th>
+                  <th width="20%"class="hide_link">Action</th>
+
+                  <th width="20%">Updated At</th>
+                </tr>
+              </thead>
+              <tbody id="myTable">
+                    <% if(features_list.length>0)
+                    { 
+                       var i=0;
+                       var j=1;
+                       features_list.forEach(function(each_data){
+                          %>
+                <tr>
+                   <td>
+                     <div>
+                       <p class=""><%=j%>.</p>
+                     </div>
+                   </td>
+                   <td>
+                     <div> 
+                       <p class="upper"><%=each_data.feature_name%></p>
+                     </div>
+                    </td>
+                  
+                    <td>
+                     <p><%=moment(each_data.createdAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                  <td>
+                     <p><%=moment(each_data.updatedAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                   <td class="hide_link"> 
+                     <div class="dropdown-menu-new">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                          <a href="#" class="dropdown-item data_value" data-target="#editFeature_<%=i%>" data-toggle="modal"><i class="mdi mdi-pencil"></i> Edit</a>
+
+                          <a href="/delete-plan-feature/:<%=each_data.plan_feature_id%>"class="dropdown-item" href="#"><i class="mdi mdi-delete "></i> Delete</a>
+                        </div>
+                     </div>
+                   </td>
+                </tr>
+                <%
+                i++;  j++;    
+            });
+             }else{
+     %>
+                       <tr>
+            <td colspan="8"><center>No record found.</center> </td>
+             </tr>       <%}%>
+             
+              </tbody>
+          </table>
+
+<% if(features_list.length>0)
+{
+   var i=0;
+   features_list.forEach(function(each_data){
+      %>
+<div class="modal fade" id="editFeature_<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+  
+          <div class="profile-form">
+                        
+                           
+                      <form action="/edit-plan-feature" method="post" id="validate1">
+  
+                       <div class="form-group">
+                          <label class="upper">Feature Name</label>
+                          <input type="text" class="form-control"value="<%=each_data.feature_name %>" name="feature_name" id=""data-rule-required="true" data-msg-required="Please enter feature name.">
+                        </div>
+                        <!-- <div class="form-group">plan_feature_id
+                          <label>Plan Price</label>
+                          <input type="text" class="form-control"value="<%=each_data.plan_price %>" name="plan_price" id=""data-rule-number=”true” data-rule-required="true" data-msg-required="Please enter price".>
+                        </div> -->
+                        
+                        <input type="hidden" class="form-control"value="<%=each_data.plan_feature_id%>" name="plan_feature_id" id="">
+
+       
+                     
+                          <div class="popup-btn text-center">
+                          <button class="btn btn-common bg-gradient-primary check ">Save</button>
+                         
+                          <a href="/plan-features-list" class="btn btn-common bg-gradient-primary ">Cancel</a>
+                        </div>
+                    
+                   </form> 
+                 </div>
+  
+  
+  
+   
+        </div>
+      </div>
+    </div>
+  </div>
+  <%
+                i++;      
+            });
+               }
+           %>
+<!-- <script type="text/javascript">
+
+    $(".acvtive-id-1").click(function(evnt){
+         
+         var id = $(this).attr("value");
+ 
+     var checkstr =  confirm('Are You Sure You Want To Inactive?');
+       if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-plan-feature",
+                       data: { plan_feature_id: id,
+                         status:"inactive" },
+                       success:function(resp)
+                       {
+                       
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ 
+ 
+
+             $(".inacvtive-id-1").click(function(evnt){
+                alert(id)
+
+             var id = $(this).attr("value");
+     
+          var checkstr =  confirm('Are You Sure You Want To Active?');
+          if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-plan-feature",
+                       data: { plan_feature_id:id,
+                         status:"active" },
+                       success:function(resp)
+                       {
+                        
+                        
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ </script> -->

@@ -1,0 +1,213 @@
+<%- include('partials/header.ejs') %>  
+<section class="login-sec">
+	<div class="container-fluid p-0">
+		<div class="row m-0">
+			<div class="col-md-6 p-0">
+				<div class="left-side-login">
+					<div class="logo-box">
+						<a href="">
+							<img src="assets/images/logo.png">
+						</a>
+					</div>
+					<div class="side-text">
+						<h2>
+							Start your journey today.
+						</h2>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 p-0">
+				<div class="right-side-login">
+					<p class="first-line">Please signup with your email ID to enjoy benefits.</p>
+					<!-- <div class="social-btns text-center"> 
+						<a class="fb" href="">
+							<span>
+							<i class="fab fa-facebook-f"></i> &nbsp;  Login with Facebook
+						    </span>
+						</a>
+						<a class="tw" href="">
+							<span>
+							<i class="fab fa-twitter"></i> &nbsp;  Login with Twitter
+						    </span>
+						</a>
+						<a class="gp" href="">
+							<span>
+							<i class="fab fa-google-plus-g"></i> &nbsp;  Login with Google
+						    </span>
+						</a>
+					</div>
+					<div class="or-line">
+						<h4>Or</h4>
+					</div> -->
+					<% if(err_msg!=undefined && err_msg !='' ){ %>
+						<div class="alert alert-danger text-center  flash_msg ">
+								<%= err_msg %>
+							 </div>
+					   
+						<% }%>
+					   <% if(success_msg!=undefined && success_msg !='' ){ %>
+						  <div class="alert alert-success text-center  flash_msg ">
+							<%= success_msg %>
+						 </div>
+						<% }%>
+					<form action="/submit_register" method="POST" id="validate">
+					<div class="login-form-main">
+						 <div class="form-group">
+						    <label>Full Name<span style="color: red;">*</span></label>
+						    <input type="text" name="full_name" class="form-control" placeholder="" data-rule-required="true" data-msg-required="Please enter full Name.">
+						  </div>
+						 <div class="form-group for-warning">
+						    <label>Email ID<span style="color: red;">*</span></label>
+						    <input type="email" name="email" class="form-control"  placeholder="" data-rule-required="true" data-msg-required="Please enter email." data-rule-email=”true” onchange="checkUserSteps(value)">
+						    <div class="info-icon" data-toggle="tooltip" data-placement="top" title="Invalid Email ID">
+						    	<img src="assets/images/icons/warning.png" >
+						    </div>
+						  </div>
+                          <div class="form-group">
+                          	<label>Date of Birth</label>
+						    <div class="input-group">
+							  <input type="text" name="dob" id="datepicker" class="form-control" placeholder="" >
+							  <div class="input-group-append">
+							    <span class="input-group-text" id="basic-addon2"><i class="far fa-calendar-alt"></i></span>
+							  </div>
+							</div>
+						</div>
+						 
+						  <div class="form-group">
+						    <label>Place of Birth</label>
+						     <select class="form-control" name="place_of_birth">
+						      <option>Place 1</option>
+						      <option>Place 2</option>
+						      <option>Place 3</option>
+						      <option>Place 4</option>
+						    </select>
+						  </div>
+						  <div class="form-group">
+						    <label>Mobile Number<span style="color: red;">*</span></label>
+							<input type="text" name="mobile" class="form-control" placeholder=""
+							data-rule-required="true" data-msg-required="Please mobile number." data-rule-digits=”true”>
+						  </div>
+						  <div class="form-group">
+						    <label>Password<span style="color: red;">*</span></label>
+							<!-- <input type="password" id="password" name="password" class="form-control" placeholder="" data-rule-required="true" data-msg-required="Please enter password." data-rule-minlength=”8” data-rule-maxlength=”15” data-msg-minlength="Please enter at least six characters" data-msg-maxlength="Please enter at most fifteen characters"> -->
+							
+							<input type="password" id="password" name="password" class="form-control" maxlength="15" minlength="8" placeholder="" data-rule-required="true" data-msg-required="Please enter password." >
+						  </div>
+						  <div class="form-group">
+						    <label>Confirm Password<span style="color: red;">*</span></label>
+						    <input type="password" name="confirm_password" class="form-control" placeholder="" data-rule-equalto="#password" data-rule-required="true" data-msg-required="Please enter confirm password.">
+						  </div>
+						  <div class="captcha-box">
+						  	<img src="assets/images/other/captcha.png">
+						  </div>
+						  <div>
+						  	<button type="submit" class="purple-btn">Sign Up</button>
+						  	<p class="extra-link">Already have an acount? <a href="/login">Login</a></p>
+						  </div>
+					</div>
+				</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+
+	<!-- JQuery -->
+        <script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- <script type="text/javascript" src="assets/js/jquery-1.11.3.min.js"></script> -->
+        <!-- Bootstrap Core JavaScript -->
+        <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+        <!-- dropdownhover effects JavaScript -->
+        <script type="text/javascript" src="assets/js/bootstrap-dropdownhover.min.js"></script>
+        <!-- wow JavaScript -->
+        <script type="text/javascript" src="assets/js/wow.min.js"></script>
+        <!-- video player JavaScript -->
+
+        <script type="text/javascript" src="assets/js/jquery-ui.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+
+
+        <!-- Custom JavaScript -->
+        <script type="text/javascript" src="assets/js/custom.js"></script>
+
+		<script type="text/javascript">
+			$('#validate').validate({
+				 onfocusout: function(element) {
+				 this.element(element);
+				 },
+				 errorClass: 'error_validate',
+				 errorElement:'span',
+				 highlight: function(element, errorClass) {
+				 $(element).removeClass(errorClass);
+				 },
+				 submitHandler:function(form)
+					{
+					  $('#submit_signup').attr('disabled',true);
+					  form.submit();
+					}
+				 });
+			</script>
+            <script>
+			  $( function() {
+				$( "#datepicker" ).datepicker();
+				// var date = new Date();
+//   var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+//   var end = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+//   var year_20_ago = date.setFullYear(date.getFullYear() - 20);
+//   var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+// alert(date.setFullYear(date.getFullYear() - 20))
+
+//   $("#datepicker").datepicker({ 
+//         format: "mm/dd/yyyy",
+//         todayHighlight: true,
+//         startDate: today,
+// 		// minDate:today,
+// 		// yearRange: '1945:' + "2002",
+// 		minYear: 1901,
+//     maxYear:2002,
+//         autoclose: true,
+//   }).datepicker('update',date);
+
+// $("#datepicker").datepicker({
+//       changeMonth: true,
+//       changeYear: true,
+//       showButtonPanel: true,
+//       dateFormat: 'dd/mm/yy',
+//       yearRange: '1945:' + (new Date).getFullYear(),
+//       onClose: function (dateText, inst) {
+//         $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+//       }
+//     });
+  });
+			//   } );
+			 
+</script>
+<script>
+	function checkUserSteps(value){
+		alert(value)
+		$.ajax({
+            type: "post",
+            url: "/check_user_steps",
+            data: { email:value },
+            success: function(data){
+    if(data=="noAnyStep"){
+                           alert("noAnyStep")
+					   }
+	else{
+		 alert("useris their")
+		}
+
+            }
+    });
+	}
+
+</script>
+<%- include('partials/footer.ejs') %>    
+
+
+
+ 

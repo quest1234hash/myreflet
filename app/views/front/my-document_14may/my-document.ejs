@@ -1,0 +1,625 @@
+<style>
+	.upper {
+  text-transform: capitalize;
+}
+</style>
+<%-include('../innerHeader')%>
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-6 col-md-6 col-sm-6">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/home-assets/mydocuments.png">
+					<h4>My Documents</h4>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-6">
+				<div class="text-right">
+					<a class="btn-common-new" href="" data-toggle="modal" data-target="#add-new-doc-Modal">Add New Document</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<section>
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12">
+				<div class="custom-space-btw another-drop-down for-search-document align-items-end">
+					<div class="for-select-existing-doc">
+					    <div class="input-group">
+							<div class="dropdown keep-inside-clicks-open">
+								<h3 class="small-title">MyReflet ID</h3>
+								<button class="dropdwn-btn checkboxdata" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    All
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start">
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								        	<label>
+								          		All
+								            	<input type="checkbox" value=""id="user_check"name="userid">
+								            	<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+											  </label>
+										</div>
+										<%
+										if(unique_reflect_code.length>0)
+										{
+										
+                                            for(var i=0;i< unique_reflect_code.length;i++ ){
+												if(unique_reflect_code[i].user_as=='client')
+												{
+											  %>
+										<div class="checkbox" >
+											<label>
+											 <div class="upper"><%= unique_reflect_code[i].rep_firstname %> - <%= unique_reflect_code[i].reflect_code %></div>
+											  <input type="checkbox" value="<%= unique_reflect_code[i].reflect_code %>"class="checkbox2">
+
+											  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+											</label>
+                                       
+										</div>	
+										<%
+									}}
+					  
+									  }
+								  %>
+
+								    </div>
+								    
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="custom-flex-row">
+						<form class=" response-search"> 
+		                     <div class="input-group search-address-book">
+		                        <input type="text" class="form-control autocomplete" id="myInput" placeholder="Search" >
+		                        <div class="input-group-append">
+		                            <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+		                        </div>
+		                    </div>
+	                  	</form>
+                  	</div>
+				</div>
+				<div class="personal-info-heading">
+					<div class="text-right">
+						<a href="javascript:void(0);" onclick="export_table();">							<div class="icon-for-dwnload">		
+							
+								<div class="tooltip fade" data-title="Export Data">
+									<img src="../assets/images/icons/dashboard-assets/export.png">
+							     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+								</div>
+							</div>
+						</a>
+						<a href="javascript:void(0);" onclick="print_table();">
+							<div class="icon-for-dwnload">
+								<div class="tooltip fade" data-title="Print Data">
+									<img src="../assets/images/icons/dashboard-assets/print.png">
+								    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="personal-info-box table-responsive another-table">
+					<table class="table div_data " id="myTable3">
+						<thead>
+					    	<tr> 
+								
+
+						      	<th scope="col">Name/Type</th>
+						      	<th scope="col">Send To</th>
+						      	<th scope="col">Expiry Date</th>
+						      	<th scope="col">Certified</th>
+						      	<th scope="col">Self Certified</th>
+						      	<th scope="col">Creation Date</th>
+						      	<th scope="col" class="hide_link">Action</th>
+					    	</tr>
+					  	</thead>
+						<tbody id="">
+						   
+								<%
+				if(all_document_Data.length>0)
+				{
+                    
+					all_document_Data.forEach(function(each_data){
+					  %>
+					  <input type="hidden" id="userid" name="userid" value="<%= each_data.reg_user_id %>">
+					   <tr class="content_search">
+						    	<td><%= each_data.document_name %>
+								</td>
+						      	<td>
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+											  <%if(each_data.profile_pic){
+                                                          %>
+														  <img id="" src="<%= each_data.profile_pic %>" class="m-t-5" >
+                                                                            <%}else{%>
+                                                <img  class="profile-table"src="/admin-assets/images/user-icon.jpg">
+
+                                                    <%}%>
+
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600 upper"><%= each_data.rep_firstname %></span> <br>
+													   <%= each_data.reflect_code %>
+
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</td>
+							    <td><%=moment(each_data.expire_date).format('MMM DD, YYYY')%>
+								</td>
+							    <td class="upper"><%= each_data.certified_status %>
+								</td>
+							    <td class="upper"><%= each_data.self_assested %>
+								</td>
+							    <td><%=moment(each_data.created_doc).format('MMM DD, YYYY')%>
+								</td>
+							    <td >
+							      	<a href="/my-doc-license?id=<%= each_data.doc_id%>" class="view-link hide_link">View</a>
+						      	</td>
+						     </tr>
+						     <%
+			  });
+
+				}else
+				{
+			%>
+		           	<tr>
+		 				<td colspan="7"><center>No record found.</center> </td>
+					   </tr>
+
+              <%}%>
+						</tbody>
+						<tbody id="ditv_data">
+						   
+							
+						</tbody>
+					</table>
+				
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- ADD Document Modal -->
+<div class="modal fade field-edit-modal" id="add-new-doc-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		  <div class="create-wallet-box">
+			  <div class="row align-item-center">
+				  <div class="col-xl-2 col-lg-3 col-md-3">
+					  <div>
+						  <img src="../assets/images/icons/createidentity-assets/popup-upload-icon.png">
+					  </div>
+				  </div>
+				  <div class="col-xl-7 col-lg-7 col-md-7">
+					  <h5 class="heading-purple">Add New Document</h5>
+				  </div>
+			  </div>
+			  <div class="row">
+				  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					  <form method="POST" action="/add-new-document" enctype="multipart/form-data" id="form_add_doc">
+					  <div class="setup-inner-box for-protact">
+						  <div class="create-rflet-id-form">
+							  <div class="form-group browse-file-section">
+									<input type="file" name="document" class="file" style="visibility: hidden;position: absolute;" accept="image/x-png,image/jpeg">
+									<div class="input-group col-xs-12">
+									  <span class="input-group-btn">
+										<button class="browse btn btn-primary input-lg" type="button"> Choose a file</button>
+									  </span>
+									  <input type="text" class="form-control" readonly="" placeholder="" data-rule-required="true" data-msg-required="Please select document file.">
+									</div>
+								</div>
+								<div class="form-group">
+								  <div class="input-group">
+										<select class="form-control" name="document_id" data-rule-required="true" data-msg-required="Please select document type.">
+											<%if(allDocs){
+													for(let docu of allDocs){%>
+											<option value="<%=docu.doc_id%>"><%=docu.document_name%></option>
+											<%}}%>
+											</select>
+								  </div>
+							  </div>  
+							  <div class="form-group">
+								  <div class="input-group">
+									<input type="text" id="datepicker2" class="form-control" name="expiry_date" placeholder="Expiry Date" data-rule-required="true" data-msg-required="Please select expiry date."autocomplete="off">
+								  </div>
+                              </div>
+                              <div class="form-group select-verifier-box  m-top-40">
+                                <div class="input-group">
+                                 <div class="dropdown d1">
+                                     <button class="dropbtn dropbtn_1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Select Client Via Code
+                                     </button>
+                                     <div class="dropdown-menu menu-for-id dropbtn2" aria-labelledby="dropdownMenuButton">
+
+                                       <%	if(all_reflect_codes.length>0)
+                                       {
+                                            
+                                           for(var i=0;i< all_reflect_codes.length;i++ ){
+                                             %>
+                                       <a class="dropdown-item" href="#">
+                                           <div class="for-verify-box-inner for-pending"id="">
+                                               
+                                               <%	if(all_reflect_codes[i].user_as=='client'){%>
+                                               <i class="fas fa-check"></i>
+                                               <span class="user-img-verify">
+                                                 
+												   <%if(all_reflect_codes[i].profile_pic){
+                                                          %>
+														  <img id="" src="<%= all_reflect_codes[i].profile_pic %>" class="m-t-5" >
+                                                                            <%}else{%>
+                                                <img  class="profile-table"src="/admin-assets/images/user-icon.jpg">
+
+                                                    <%}%>
+                                               </span>
+                                          
+                                               <span class="upper"><%=all_reflect_codes[i].rep_firstname %>-<%=all_reflect_codes[i].reflect_code %></span>
+                                              <!-- <input type="hidden"class="get_name"value="<%=all_reflect_codes[i].rep_firstname %>"> -->
+
+                                              <input type="hidden"name="reflect_id"class="getId2"value="<%=all_reflect_codes[i].reflect_id %>">
+                                             <span class="">
+                                              
+                                           </span>
+
+                                           <%
+                                   
+                                       }
+                         
+                                         
+                                     %>
+                                       
+                                   </div>
+                               </a>
+                               <%
+                           }
+                
+                             }
+                         %>
+                                       
+                           </div>  
+                                   </div>
+                                   </div>
+                               </div>
+                           </div>
+							  <div class="form-group">
+								  <div class="input-group">
+									<input type="text" class="form-control" name="id_number" placeholder="ID Number" data-rule-required="true" data-msg-required="Please enter ID number.">
+								  </div>
+							  </div>
+						  </div>
+						  <div>
+								<button class="btn-common-new" id="form_add_doc_btn" type="submit">Save</button>
+								<a class="btn-common-new"  data-dismiss="modal" href="">Cancel</a>
+						  </div>
+					  </div>
+					</form>
+				  </div>
+			   </div>
+			 </div>
+		 </div>
+	  </div>
+	</div>
+<%- include('../innerFooter')%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+// <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+// <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script>
+$(document).ready( function () {
+	$('.table').DataTable();
+} );
+</script>
+<script>
+	$(document).on('click.bs.dropdown.data-api', '.dropdown.keep-inside-clicks-open', function (e) {
+	  e.stopPropagation();
+	});
+</script> 
+
+ <script>
+    $("#datepicker2").datepicker();
+ </script>
+ <script>
+	 $(document).on('click', '.browse', function(){
+    var file = $(this).parent().parent().parent().find('.file');
+    file.trigger('click');
+  });
+  $(document).on('change', '.file', function(){
+    $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i,''));
+  }); 
+</script>
+
+<script>
+	$('.submit-document').click(function() {
+		// var userid = `${ userid}`
+		$('.complaints_by_status_list').html(" ")
+    var status_list = $('input[type=checkbox]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+	// alert(status_list)
+    console.log("check box select value : ",status_list) 
+	$.ajax({
+                      type : 'POST',
+                      url  : '/show-complaints-by-status',
+					  data: {status_list:JSON.stringify(status_list)},
+					  
+                        success: function(data) {
+							console.log("out data : ",data)
+						   var complaints=data.result_code_array
+						   var moment=data.moment
+							// $("#all").hide();
+						if(!data)
+					    {
+						   
+					     }
+					   else{
+						   
+
+						console.log("ajax success data : ",complaints)	
+						$(".all_list").hide();
+						$(".complaints_by_reflect_codes").hide();
+						$(".complaints_by_complain_id").hide();
+						$(".complaints_by_status_list").show();
+					
+					for(var i=0;i<complaints.length;i++)
+                   {            console.log("data lll : ",complaints[i].complain_id)
+					  
+					    
+						$(".complaints_by_status_list").append(`<tr class="content_search">
+						    	<td>C-${complaints[i].complain_id}</td>
+						      	<td>${complaints[i].created_at}</td>
+							    <td><span class="font-w-600">${complaints[i].full_name}</span> <br>${complaints[i].reflect_code}</td>
+							    <td>${complaints[i].complain_message}</td>
+							    <td><span class="font-w-600">${complaints[i].rep_firstname}</span> <br> ${complaints[i].client_reflect_code}</td>
+							    <td> <span class="clr-purple">${complaints[i].complaint_status}</span></td>
+							    <td>
+							      	<a href="complaint-details.php" class="view-img"><img class="hide_link" src="../assets/images/icons/dashboard-assets/icon_view.png" alt="eye"></a>
+						      	</td>
+						    </tr>`);
+
+					   }
+
+	} 
+			}                                                    
+           
+})
+})
+
+function autoSearch(value)
+{
+	alert('')
+    $.ajax({
+       type: "GET",
+       url: "sample.php",
+       data: {'search_keyword' : value},
+       dataType: "text",
+       success: function(msg){
+                   //Receiving the result of search here
+       }
+    });
+}
+	
+			
+//     $('.checkbox1').click(function() {
+// 		var userid = $("#userid").val();
+         
+//     var reflect_list = $('input[type=checkbox]:checked').map(function(_, el) {
+//         return $(el).val();
+// 	}).get();
+// 	alert(reflect_list)
+//     console.log("check box select value : ",reflect_list)
+// 	$.ajax({
+//                       type : 'POST',
+//                       url  : '/show-reflect-code-data',
+// 					  data: {reflect_list:JSON.stringify(reflect_list),userid:userid},
+//                         success: function(detail) {
+// 							// $("#all").hide();
+
+// 							var moment = detail.moment;
+// 					   var data = detail.result_code_array;
+// 							console.log("ajax success data : ",data)	
+// 	 	if(!detail){
+//                  }else{
+// 					$("#myTable3").hide();
+// 					$("#myTable1").show();
+				
+// 					for(var i=0;i<detail.length;i++)
+//                    {            console.log("data lll : ",data[i].document_name)
+					  
+					   
+// 						$("#myTable").append(` <tr><td>${data[i].document_name }
+// 								</td>
+// 						      	<td>
+// 							      	<div class="for-flex-align">
+// 							      		<div class="checkbox">
+// 								          	<label>
+// 												<img class="profile-table" src="../assets/images/other/img_user1.png">
+
+// 							      		     	<p class="line-hgt">
+// 							      		     		<span class="font-w-600">Jack Ma</span> <br>
+// 							      		     		${data[i].reflect_code }
+// 							      		     	</p>
+// 								         	 </label>
+// 								        </div>
+// 									</div>
+// 						      	</td>
+// 							    <td >${moment(data[i].expire_date).format('MMM DD, YYYY') }
+// 								</td>
+// 							    <td >${  data[i].certified_status }
+// 								</td>
+// 							    <td >${ data[i].self_assested}
+// 								</td>
+// 							    <td >${ moment(data[i].createdAt).format('MMM DD, YYYY') }
+// 								</td>
+// 							    <td >
+// 							      	<a href="/my-doc-license" class="view-link hide_link">View</a>
+// 						      	</td>
+// 						     </tr>`);
+// 			// 			$("#document_name").append(`${ data.document_name }`);
+// 			// $("#code").append(`${ data.reflect_code }`);
+// 			// $("#expire_date").append(`${moment(data.expire_date).format('MMM DD, YYYY')}`);
+// 			// $("#certified_status").append(`${ data.certified_status }`);
+// 			// $("#self_assested").append(`${ data.self_assested }`);
+// 			// $("#createdAt").append(`${ moment(data.createdAt).format('MMM DD, YYYY') }`);
+//       }
+			
+		           		
+			
+
+// 			 // $('#test2').append(newOption);
+//              // $('#test2').trigger('change');
+			 
+			
+// 			}
+			 
+// 			}                                                    
+           
+// })
+// })
+// **************** Search Data by Reflect Id ************************
+$('.checkbox2').click(function() {
+		// var userid = `${ userid}`
+		$('.complaints_by_reflect_codes').html(" ")
+
+    var reflect_code_list = $('input[type=checkbox]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+	// alert(reflect_code_list)
+
+	if(reflect_code_list=='')
+	{
+		window.location.reload(true);
+
+	}
+    console.log("check box select value : ",reflect_code_list) 
+	$.ajax({
+                      type : 'POST',
+                      url  : '/show-reflect-code-data',
+					  data: {reflect_code_list:JSON.stringify(reflect_code_list)},
+					  
+                        success: function(data) {
+							console.log(data)
+							// $("#all_div_data").hide();
+
+						//    var reflect_data=data.result_code_array
+						//    var moment=data.moment
+							$('.div_data').html("");
+			            	$('.div_data').html(data);
+	// 					if(!data)
+	// 				    {
+						   
+	// 				     }
+	// 				   else{
+						   
+
+	// 					// $(".all_list").hide();
+	// 				$(".content_search").hide();
+	// 				$(".complaints_by_reflect_codes").show();
+	// 				// $(".complaints_by_complain_id").hide();
+
+	// 				for(var i=0;i<reflect_data.length;i++)
+    //                {
+	// 				            //    console.log("data lll : ",reflect_data[i].complain_id)
+					  
+					    
+	// 					$(".complaints_by_reflect_codes").append(`<tr><td>${reflect_data[i].document_name }
+	// 							</td>
+	// 					      	<td>
+	// 						      	<div class="for-flex-align">
+	// 						      		<div class="checkbox">
+	// 							          	<label>
+	// 											<img class="hide_link profile-table" src="${reflect_data[i].profile_pic }">
+
+	// 						      		     	<p class="line-hgt">
+	// 						      		     		<span class="font-w-600">Jack Ma</span> <br>
+	// 						      		     		${reflect_data[i].reflect_code }
+	// 						      		     	</p>
+	// 							         	 </label>
+	// 							        </div>
+	// 								</div>
+	// 					      	</td>
+	// 						    <td >${reflect_data[i].expire_date}
+	// 							</td>
+	// 						    <td >${reflect_data[i].certified_status }
+	// 							</td>
+	// 						    <td >${reflect_data[i].self_assested}
+	// 							</td>
+	// 						    <td >${reflect_data[i].created_at }
+	// 							</td>
+	// 						    <td >
+	// 						      	<a href="/my-doc-license" class="view-link hide_link">View</a>
+	// 					      	</td>
+	// 					     </tr>`);
+
+	// 				   }
+
+
+	// } 
+			}                                                    
+           
+})
+})
+                
+                
+
+</script>
+<script>
+$(document).ready( function () {
+	$('.autocomplete').keyup(function(){
+//  alert('search')
+  // Search text
+  var text = $(this).val();
+  
+  // Hide all content class element
+  $('.content_search').hide();
+
+  // Search and show
+  $('.content_search:contains("'+text+'")').show();
+  
+ 
+ });
+ 
+	$('#myTable1').hide();
+
+	$('.table').DataTable();
+} );
+
+function export_table(){
+//   alert('hhh')
+
+  $("#myTable3").table2excel({
+      filename: "document-list.xls",
+	  exclude:'.hide_link',
+  });
+  
+}
+
+function print_table(){
+		$('.hide_link').hide();
+ 
+	 // $("#user_div").print();
+	 var divToPrint=document.getElementById("myTable3");
+	 newWin= window.open("");
+	 newWin.document.write(divToPrint.outerHTML);
+	 window.location.reload(true);
+
+	 newWin.print();
+	 newWin.close();
+
+		}   
+</script>

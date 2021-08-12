@@ -1,0 +1,312 @@
+<%- include('../innerHeader') %>
+
+
+	<style>
+		.received-doc-link {
+			color: #362c84;
+			background-color: #fff;
+			text-decoration: none !important;
+			margin: 24px 0;
+			font-family: 'Work Sans', sans-serif;
+			font-size: 13px;
+			border: 1px solid #362c84;
+			padding: 5px 11px;
+			border-radius: 7px;
+		}
+
+		.received-doc-link i {
+			margin-right: 5px;
+		}
+	</style>
+
+	<section class="heading-sec">
+		<div class="container">
+			<div class="row align-item-center">
+				<div class="col-lg-6 col-md-6 col-sm-6">
+					<div class="main-heading-dash">
+						<img src="../assets/images/icons/home-assets/myrefletID.png">
+						<h4>Manage MyReflet ID Code</h4>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-6">
+					<div class="text-right">
+						<a class="btn-common-new" href="/creat-new-wallet">Add New Myreflet ID</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="id-code-box-sec">
+		<div class="container">
+			<div class="row">
+
+
+				<% if(all_reflect_id.length>0)
+					{
+
+					all_reflect_id.forEach(function(each_reflect){
+					%>
+
+					<!--my reflect code start-->
+					<div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+						<div class="white-box full-box">
+							<div class="id-code-represent-heading">
+								<% if(each_reflect.type=='representative' ) {%>
+									<img src="../assets/images/icons/home-assets/Representative.png">
+									<%}else {%>
+										<img src="../assets/images/icons/home-assets/entity.png">
+
+										<%}%>
+
+							</div>
+							<div>
+								<div class="row inner-box-id-code">
+									<div class="col-md-6 p-0">
+										<div class="for-flex-align">
+											<img src="../assets/images/icons/home-assets/user.png">
+											<p>MyReflet ID</p>
+										</div>
+									</div>
+									<div class="col-md-6 dubble-dot-after p-0">
+										<p>
+											<%=each_reflect.myreflectid %>
+										</p>
+									</div>
+								</div>
+								<div class="row inner-box-id-code">
+									<div class="col-md-6 p-0">
+										<div class="for-flex-align">
+											<img src="../assets/images/icons/home-assets/user.png">
+											<p>Name</p>
+										</div>
+									</div>
+									<div class="col-md-6 dubble-dot-after p-0">
+
+										<%if(each_reflect.type=="entity"){ %>
+
+											<p>
+												<%=each_reflect.entity_company_name%>
+											</p>
+
+
+											<%}else{%>
+												<%if(each_reflect.type=="representative"){ %>
+													<span class="font-w-600">
+														<%=each_reflect.walletname%>
+													</span>
+													<%}else{%>
+														<span class="font-w-600">
+															<%=each_reflect.entity_name%>
+														</span>
+
+														<%}%>
+
+
+															<%}%>
+
+									</div>
+								</div>
+							
+								<div class="row inner-box-id-code">
+									<div class="col-md-6 p-0">
+										<div class="for-flex-align">
+											<img src="../assets/images/icons/home-assets/phone.png">
+											<p>Phone Number</p>
+										</div>
+									</div>
+									<div class="col-md-6 dubble-dot-after p-0">
+										<p>
+											<%=each_reflect.mobile %>
+										</p>
+									</div>
+								</div>
+								<div class="row inner-box-id-code">
+									<div class="col-md-6 p-0">
+										<div class="for-flex-align">
+											<img src="../assets/images/icons/home-assets/ETHwallet.png">
+											<p>Wallet Address</p>
+										</div>
+									</div>
+									<div class="col-md-6 dubble-dot-after p-0">
+										<p>
+											<%=each_reflect.walletAddress %>
+										</p>
+									</div>
+								</div>
+								<div class="row inner-box-id-code">
+									<div class="col-md-6 p-0">
+										<div class="for-flex-align">
+											<img src="../assets/images/icons/home-assets/phone.png">
+											<p>Level</p>
+										</div>
+									</div>
+									<div class="col-md-6 dubble-dot-after p-0">
+
+
+
+										<%if(each_reflect.level_name==''){%>
+											<p class="upper" style="color: red"> *Default Level </p>
+											<%}else{%>
+
+												<p class="upper" style="color: blue">
+													<%= each_reflect.level_name%>
+												</p>
+												<%}%>
+
+
+									</div>
+								</div>
+
+								<div class="col-md-12 dubble-dot-after p-0">
+									<%if(session.user_type!="client"){%>
+
+										<%}else{%>
+											<%if(each_reflect.reflectid_by=="entity"){%>
+												<a class="received-doc-link"
+													href="/myreflect-client-all-doc?reflect_id=<%=each_reflect.reflect_id %>"><i
+														class="fas fa-eye"></i>Received Documents</a>
+
+												<%}else{%>
+													<a class="received-doc-link"
+														href="/myreflect-client-all-doc?reflect_id=<%=each_reflect.reflect_id %>"><i
+															class="fas fa-eye"></i>Received Documents</a>
+
+													<%}%>
+														<%}%>
+
+								</div>
+							<!-- </div> -->
+							<div class="view-icon">
+								<%if(session.user_type!="client"){%>
+									<a href="/myreflect-verifier-view?id=<%=each_reflect.reflect_code %>"><i
+											class="fas fa-eye click_eye"></i></a>
+
+
+									<%}else{%>
+										<%if(each_reflect.reflectid_by=="entity"){%>
+											<a href="/entity?reflect_id=<%=each_reflect.reflect_id%>"><i
+													class="fas fa-eye click_eye"></i></a>
+											<%}else{%>
+												<a href="/view-reflect-id?id=<%=each_reflect.reflect_code%>"><i
+														class="fas fa-eye click_eye"></i></a>
+												<%}%>
+													<%}%>
+
+							</div>
+
+						</div>
+					</div>
+			</div>
+			<% }); }else{ %>
+				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+					<div class="white-box create-wallet-box">
+						<div class="row align-item-center">
+
+							<div class="col-xl-12 col-lg-12 col-md-12">
+								<!-- <h5 class="heading-purple">Create a New Wallet</h5> -->
+								<p>
+									<center>Currently, No MyReflet code available.</center>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<%}%>
+					<!--my reflect code end-->
+		</div>
+		</div>
+	</section>
+
+	<div class="modal fade field-edit-modal" id="add-digital-Id" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="close hide_click" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<div class="create-wallet-box">
+						<div class="row align-item-center">
+							<div class="col-xl-2 col-lg-3 col-md-3">
+								<div>
+									<img src="../assets/images/icons/createidentity-assets/popup-upload-icon.png">
+								</div>
+							</div>
+							<div class="col-xl-7 col-lg-7 col-md-7">
+								<h5 class="heading-purple">Add New Wallet</h5>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+
+								<form action="/add-digitalId-with-wallet" method="POST">
+									<div class="setup-inner-box for-protact">
+										<div class="create-rflet-id-form">
+
+											<div class="form-group">
+												<div class="input-group" id="add-wallet-list">
+
+												</div>
+											</div>
+
+
+
+
+										</div>
+										<input type="hidden" name="reflect_id" id="reflect_id">
+										<div>
+
+											<button class="btn-common-new hide_click" id="form_add_wallet_btn"
+												type="submit">Save
+											</button>
+
+											<a class="btn-common-new hide_click" data-dismiss="modal" href="">Cancel</a>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<%- include('../innerFooter')%>
+
+
+
+		<script>
+			$(document).ready(function () {
+				$('.loader-box').hide();
+			})
+			function getDigitalWalletList(id) {
+				// alert(id)
+				$("#reflect_id").val(id)
+				$.ajax({
+
+					type: "post",
+					url: "/get-add-digital-wallet-list",
+					data: { reflect_id: id },
+					success: function (data) {
+
+						$("#add-wallet-list").html(data)
+						$("#add-digital-Id").modal("toggle")
+						// data-toggle="modal" data-target="
+
+					}
+				})
+			}
+		</script>
+		<script type="text/javascript">
+			$('.click_eye').click(() => {
+				// $('.hide_btn').hide();
+
+				$('.loader-box').show();
+
+			})
+	//  setTimeout(function() {
+	// 					    $('.flash_msg').fadeOut('fast');
+	// 						}, 3000);
+		</script>

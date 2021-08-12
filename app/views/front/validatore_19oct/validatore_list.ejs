@@ -1,0 +1,705 @@
+<%- include('../../admin-views/header'); -%>
+<style>
+    
+  .dis-able-btn {
+  color: currentColor;
+  pointer-events: none;
+      cursor: default;
+      text-decoration: none;
+/* color: black; */
+      opacity: 0.5;
+      text-decoration: none;
+      /* cursor: not-allowed;
+  background: #dddddd; */
+  }
+
+
+  </style>
+<div>
+   <div class="main-bredcrum-box">
+        <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            Reflet List
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="page-header">
+      <h3 class="page-title">
+        <!-- <span class="page-title-icon bg-gradient-primary text-white mr-2">
+          <i class="mdi mdi-contacts"></i> -->
+        <!-- </span>Validator List </h3> -->
+            <!-- <div>
+                <a href="#" class="btn btn-common bg-gradient-primary text-center m-0" data-target="#allocate" data-toggle="modal">Allot Accreditation Level</a>
+            </div> -->
+            <div>
+
+              <a href="/validatore_signup" class="btn btn-common bg-gradient-primary text-center m-0" >Register Validater</a>
+          </div>
+    </div>
+	<div class="page-header">
+      <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+          <i class="mdi mdi-contacts"></i>
+        </span>Validator List </h3>
+            <div>
+                <a href="#" id="ab_id" class="btn btn-common bg-gradient-primary text-center m-0" data-target="#allocate" data-toggle="modal">Documents</a>
+            </div>
+            <!-- <div>
+              <a href="#" class="btn btn-common bg-gradient-primary text-center m-0" data-target="#allocate" data-toggle="modal">Allot Accreditation Level</a>
+          </div> -->
+    </div>
+    
+   
+    <div class="row align-bottom-flex">
+    <div class="col-md-2">
+        <div>
+          <div class="form-group">
+              <a href="javascript:void(0);" onclick="export_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-export"></i>
+                   </span> 
+                 </span>
+               </a>
+              <a href="javascript:void(0);" onclick="print_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-printer"></i>
+                   </span> 
+                 </span>
+              </a>
+          </div>
+        </div>
+        
+      </div>
+    	
+    	<div class="col-md-2"> 
+    		<div>
+    			<!-- <div class="form-group">
+                    <label for="exampleInputUsername1">MyReflet ID</label>
+                    <select class="form-control form-control-sm" id="exampleFormControlSelect3">
+                        <option>All</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                  </div> -->
+    		</div>
+    	</div>
+    	<div class="col-md-3 offset-md-5">
+          <% if(err_msg!=undefined && err_msg !='' ){ %>
+            <div class="alert alert-danger text-center  flash_msg " id="error_msg">
+                <%= err_msg %>
+               </div>
+             
+            <% }%>
+          
+    		<div>
+    			<div class="form-group">
+              
+                      <div class="input-group search-input">
+                        <input type="text" class="form-control"id="myInput" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                          <button class="btn btn-sm" type="button"><i class=" mdi mdi-magnify"></i></button>
+                        </div>
+                      </div>
+                    </div>
+    		</div>
+    	</div>
+    </div>
+    <div class="row">
+    	<div class="col-md-12">
+    		<div class="table-responsive">
+          <% if(success_msg!=undefined && success_msg !='' ){ %>
+            <div class="alert alert-success text-center  flash_msg "id="success_message">
+            <%= success_msg %>
+           </div>
+          <% }%>
+    			<table class="table tabel-virifier"id="myTable3">
+              <thead>
+                <tr> 
+                  <!-- <th width="24%" scope="col">Id</th> -->
+                  <th width="20%" scope="col">Name</th>
+                  <th width="26%" scope="col">Email</th>
+                  <!-- <th width="26%" scope="col">MyReflet Type</th> -->
+                  <th width="26%" scope="col">Email Verification</th>
+                  <th width="20%" scope="col">Status</th>
+                  <th width="20%" scope="col">Created On</th>
+                  <th width="5%" scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody id="myTable">
+         
+              <%
+             console.log("ejs ",validatore_list)
+              if(validatore_list.data.length>0){
+               
+                  validatore_list.data.forEach(function(validatore_data){ 
+                %>
+                <tr>
+                  <th scope="row">
+                    <div class="for-flex-align">
+                      <div class="checkbox" >
+                          <label>
+                            <input type="checkbox" name="reg_user_id" value="<%=validatore_data.reg_user_id%>" onclick="checkForSelect()">
+                            <span class="cr"><i class="cr-icon fa fa-check" ></i></span>
+                            <span class="font-w-600 upper"><%=decrypt(validatore_data.full_name)%> <%=decrypt(validatore_data.last_name)%></span> 
+                            <!-- <img class="profile-table for-square-img" src="../assets/images/icons/repersentative.png"> -->
+                          </label>
+                      </div>
+                </div>
+                  </th>
+                  <td><span class="font-w-600 upper"><%=decrypt(validatore_data.email)%></span> </td>
+                  <td><%=validatore_data.email_verification_status%></td>
+                  <td><%=validatore_data.status%></td>
+                  <!-- <td>
+                    <div class="for-flex-align">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" value="">
+                              <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                        <%=validatore_data.email%>                        </label>
+                        </div>
+                  </div>
+                  </td> -->
+                
+                  
+                  
+                <td class=""><%=moment(validatore_data.created_at).format('MMM DD, YYYY')%></td>
+   <td class="hide_link">
+                     <div class="dropdown-menu-new">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                         <!-- <a href="#" class="dropdown-item data_value" data-target="#editPlan<%=i%>" data-toggle="modal"><i class="mdi mdi-pencil"></i> Edit</a> -->
+                         <a href="/validatore_doc_view/?reg_user_id=<%=validatore_data.reg_user_id%>" class="dropdown-item"><i class="mdi mdi-eye "></i> View</a>
+                           <!-- <a href="/validatore-wallet/?reg_user_id=<%=validatore_data.reg_user_id%>" class="dropdown-item"><i class="mdi mdi-wallet"></i> View-Wallet</a> -->
+                          <a href=""class="dropdown-item" href="#"><i class="mdi mdi-delete "></i> Delete</a>
+                        </div>
+                     </div>
+                   </td>
+                </tr>
+              <%})}else{
+                            %>
+                       <tr>
+            <td colspan="5"><center>No record found.</center> </td>
+             </tr>       <%}%>
+             
+              </tbody>
+          </table>
+          <table class="paginate_table">
+              <div class="pagination-list for-ava">
+            <% if (validatore_list.totalPages> 0) { %>
+              
+              <ul class="pagination text-center">
+                <% if (validatore_list.currentPage == 1) { %>
+                  <li class="disabled"><a>First &nbsp;</a></li>
+                <% } else { %>
+                  <li><a href="/validatores?page=1">First</a></li>
+                <% } %>
+                <% var i = (Number(validatore_list.currentPage) > 5 ? Number(validatore_list.currentPage) - 4 : 1) %>
+                <% if (i !== 1) { %>
+                  <li class="disabled"><a>...</a></li>
+                <% } %>
+                <% for (; i <= (Number(validatore_list.currentPage) + 4) && i < validatore_list.totalPages; i++) { %>
+                  <% if (i == validatore_list.currentPage) { %>
+                    
+                    <li class="active"><a><%= i %> &nbsp;</a></li>
+                  <% } else { %>
+                    <li><a href="/validatores?page=<%= i %>"><%= i %> &nbsp;</a></li>
+                  <% } %>
+                  <% if (i == Number(validatore_list.currentPage) + 4 && i <= validatore_list.totalPages) { %>
+                    <li class="disabled"><a>...</a></li>
+                  <% } %>
+                <% } %>
+                <% if (validatore_list.currentPage ==validatore_list.totalPages) { %>
+                  <li class="disabled"><a>Next</a></li>
+                <% } else { %>
+                  <li><a href="/validatores?page=<%= validatore_list.totalPages %>"> &gt;Next</a></li>
+                <% } %>
+              </ul>
+            <% } %>
+              </div>
+
+      </table>
+    		</div>
+    	</div>
+    </div>
+</div>
+
+
+<!--ADD Modal -->
+<div class="modal fade" id="newPlan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+        <div class="profile-form">
+                      
+                         
+                    <form action="/add-plan" method="post" class="validate">
+
+                     <div class="form-group">
+                        <label>Plan Name</label>
+                        <input type="text" class="form-control" name="plan_name" id="plan_name"data-rule-required="true" data-msg-required="Please enter plan name.">
+                      </div>
+                      <div class="form-group">
+                        <label>Plan Price</label>
+                        <input type="text" class="form-control" name="plan_price" id="plan_price"data-rule-required="true" data-rule-number=”true” data-msg-required="Please enter price".>
+                      </div>
+                      
+                     
+     
+                   
+                      <div class="popup-btn text-center">
+                        <button class="btn btn-common bg-gradient-primary ">Save</button>
+                       
+                        <a href="/plan-list" class="btn btn-common bg-gradient-primary ">Cancel</a>
+                      </div>
+                  
+                 </form> 
+               </div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+<!--EDIT Modal -->
+
+<!--Allocate Modal S-->
+<div class="modal field-edit-modal" id="allocate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="alert alert-success text-center  flash_msg " id="success_div">
+				Documents are allocated successfully.
+       </div>
+       <!-- <div class="alert alert-success text-center  flash_msg " id="success_div">
+				Documents are allocated successfully.
+			 </div> -->
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-10 col-lg-9 col-md-9">
+					<h5 class="heading-purple">Documents</h5>
+				</div>
+			</div>
+			<div class="row m-top-30">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact pt-15">
+						<div class="create-rflet-id-form">
+						    <div class="form-group for-select-existing-doc">
+						    	<div class="input-group">
+								  <div class="dropdown keep-inside-clicks-open">
+									  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									    Select Accreditaion Levels
+									  </button>
+									  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+										  <%if(doc_list.length>0){%>
+										  <%doc_list.forEach(doc=>{%>
+
+									
+									     <div class="for-doc-select">
+									    	<div class="checkbox"> 	
+									          <label>
+												<%=doc.document_name%>
+									            <input type="checkbox" value="<%=doc.doc_id%>" name="doc_id">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									          </label>
+									        </div>	
+										 </div>
+										 <% })%>
+										 <%}%>
+									      <!-- <div class="for-doc-select">
+									    	<div class="checkbox"> 	
+									          <label>
+									          	Jess Bezo's - 258963
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									          </label>
+									        </div>	
+									     </div> -->
+									  </div>
+									</div>
+								  
+								</div>
+						    </div>
+						</div>
+						<div >
+							<button type="button" class="btn-common-new" onclick='alllotClient()'>Submit</button>
+							<!-- <a class="btn-common-new" href="javascript:">Submit</a> -->
+							<a class="btn-common-new" href="" data-dismiss="modal">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+<!--Allocate Modal E-->
+
+
+<%- include('../../admin-views/footer'); -%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+<script>
+  $(document).ready( function () {
+	// $('.table').DataTable();
+	$("#success_div").hide()
+
+} );
+</script>
+
+<script>
+
+
+    function export_table(){
+        // alert('hhh')
+      // $('.hide_link').show();
+    
+        $("#myTable3").table2excel({
+          filename: "Plan-list.xls",
+          exclude:'.hide_link',
+        });
+      //   $('.hide_link').show();
+      window.location.reload(true);
+    
+      };
+      
+      function print_table(){
+        $('.hide_link').hide();
+     
+       // $("#user_div").print();
+       var divToPrint=document.getElementById("myTable3");
+       newWin= window.open("");
+       newWin.document.write(divToPrint.outerHTML);
+       window.location.reload(true);
+    
+       newWin.print();
+       newWin.close();
+    
+        }   
+   </script>
+<script type="text/javascript">
+var plan_status;
+  // $('.d1').on('click', '.menu-for-id a', function() {
+
+	//    $('.d2').$(this).val(); 
+
+	// //   var lastID = $(this).html();
+	//    plan_status = $(this).find(".change_status").attr("value");
+	// 	// console.log("text", lastID); 
+
+
+  //  });
+ $('.active_change').click(()=>{
+  var plan_status= $('.change_status').val()
+  var plan_id= $('.plan_id_1').val()
+
+  alert(plan_status)
+  alert(plan_id)
+
+  $.ajax({
+			type: "post",
+			url: "/status-submit",
+			data:{plan_is:plan_id,plan_status:plan_status},
+			success: function (data) {
+				
+				location.reload();
+
+			
+			}
+		});
+ })
+
+  $('.validate').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#submit_signup').attr('disabled',true);
+        form.submit();
+      }
+     });
+     $('#validate1').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#submit_signup').attr('disabled',true);
+        form.submit();
+      }
+     });
+ 
+     setTimeout(function() {
+    $('#success_message').fadeOut('fast');
+    }, 3000);
+    
+    setTimeout(function() {
+    $('#error_msg').fadeOut('fast');
+    }, 3000);
+  </script>
+
+<!-- <script>
+function switchUserType(value){
+
+var value1 = $(".switch_user").val();
+alert(value1)
+var plan_status;
+  // alert($("#switch_user").val())
+if(value1=="on"){
+  plan_status='active';
+  $(".switch_user").val("off");
+  $(".change").text("active");
+
+
+}
+if(value1=="off"){
+  plan_status='inactive';
+
+  $(".switch_user").val("on");
+  $(".change").text("inactive");
+
+}
+alert(plan_status)
+$.ajax({
+            type: "post",
+            url: "/change-plan-status",
+            data: { plan_status : plan_status},
+            success: function(data){
+            alert('ver')
+
+            //   $('#div_sidebar').html("");
+            // $('#div_sidebar').html(``);
+            location.reload()
+            }
+    });
+}
+
+
+
+</script> -->
+<script type="text/javascript">
+  
+  // function activestatuschnage(){
+    // alert($(this).find("button").val("value"))
+    $(".acvtive-id").click(function(evnt){
+         
+         var id = $(this).attr("value");
+    //       alert('active')
+    // // var id =$("#activebut").val()
+    // alert(id);
+     var checkstr =  confirm('Are You Sure You Want To Inactive?');
+       if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-plan",
+                       data: { plan_id: id,
+                         status:"inactive" },
+                       success:function(resp)
+                       {
+                        // alert('t')
+
+                        // alert(id);
+                       
+                         // $('#pro_img').hide();  
+                         // $('#inactivebut').hide(); 
+                         // $('#activebut').show(); 
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ 
+ 
+  
+  // function inactivestatuschnage(obj1){
+             // alert(obj1)
+             $(".inacvtive-id").click(function(evnt){
+         
+             var id = $(this).attr("value");
+            //  alert(id)
+            //  alert('inactive')
+             //  console.log($(".abc").find("button"))
+            // var preview_div=$(this).parent(".inabc").parent().attr('id');
+            //  var image_name = $(this).parent(".inabc").find('input').attr('value');
+    
+     
+     //var id =$("#inactivebut").val()
+          //alert("Are You Sure You Want To inctive");
+          var checkstr =  confirm('Are You Sure You Want To Active?');
+          if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-plan",
+                       data: { plan_id:id,
+                         status:"active" },
+                       success:function(resp)
+                       {
+                        //  alert(id);
+                         // alert(status);
+                         // $('#pro_img').hide(); 
+                         // $('#activebut').hide();  
+                         // $('#inactivebut').show(); 
+                        
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ </script>
+  <script>
+      $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $("#myTable tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        });
+      });
+      </script>
+<!-- <script>
+$('.check').click(function() {
+
+  var plan_id= $(".plan_id").html()
+  var plan_name= $('.plan_name').html()
+  var plan_price= $(".plan_price").html()
+
+	// if(plan_name==''&& plan_price=='')
+	// {
+	// 	window.location.reload(true);
+  //   false;
+	// }
+
+  alert(plan_name)
+  alert(plan_price)
+  alert(plan_id)
+
+	       
+})
+                
+
+</script> -->
+
+<script>
+	function alllotClient(){
+		var reg_user_id = [];
+		$.each($("input[name='reg_user_id']:checked"), function(){
+			reg_user_id.push($(this).val());
+			});
+		var doc_id = [];
+		$.each($("input[name='doc_id']:checked"), function(){
+			doc_id.push($(this).val());
+			});
+
+			console.log("acc_ids",reg_user_id)
+      console.log("doc_id",doc_id)
+      if(reg_user_id[0]==null){
+
+         alert("Please select first validator.")
+      }else{
+
+
+        $.ajax({
+                      type : 'POST',
+                      url  : '/submit_doc_to_validatore',
+					  data: {
+              reg_user_id:JSON.stringify(reg_user_id),
+							doc_id:JSON.stringify(doc_id),
+					        },
+					  
+						success: function(data) {
+							// alert(data)
+                                $("#success_div").show()
+							// window.location.reload(true);
+							setTimeout(function(){
+								// window.location=window.location
+                                $("#success_div").hide()
+                              //  $('#allocate').modal('toggle');
+                              window.location.reload(true);
+							},3000)
+							
+						}
+			})
+        
+
+
+      }
+
+		
+	}
+</script>
+
+<script>
+	function checkForSelect() {
+		
+    var reg_user_id = [];
+		$.each($("input[name='reg_user_id']:checked"), function(){
+			reg_user_id.push($(this).val());
+			});
+				// alert(reg_user_id.length)
+				// console.log("request_ids",reg_user_id)
+				if(reg_user_id.length>1){
+          // alert("if")
+												$("#ab_id").addClass('dis-able-btn')
+												// $("#vd_id").addClass('dis-able-btn')
+												// $("#md_id").addClass('dis-able-btn')
+				}else{
+          // alert("else")
+												$("#ab_id").removeClass('dis-able-btn')
+												// $("#vd_id").removeClass('dis-able-btn')
+												// $("#md_id").removeClass('dis-able-btn')
+	
+	// 								if(value!=undefined){
+	// 									                 if(value=="m_request"){
+	
+												
+	// 								}			
+	
+				}
+	
+	}
+	</script>

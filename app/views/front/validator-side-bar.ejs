@@ -1,0 +1,42 @@
+<ul class="aside-wrapper">
+  <!-- <li><a href="/validatore_dashboard">
+    <img src="/assets/images/icons/home-assets/dashboard.png" class="white-img" alt="Wallet">
+    <img src="/assets/images/icons/home-assets/dashbord-grey.png" class="black-icon" alt="Wallet">
+   Dashboard
+ </a>
+</li> -->
+  <li><a href="/validator_request">
+    <img src="../assets/images/icons/home-assets/myrequests.png" class="white-img" alt="Wallet">
+    <img src="../assets/images/icons/home-assets/myrequests-purple.png" class="black-icon" alt="Wallet">
+   Validator Request
+ </a>
+</li>
+  <li>   
+   <a href="/validator-wallet-list" class="wallet_click">
+       <img src="../assets/images/icons/home-assets/wallet-purple.png" class="white-img" alt="Wallet">
+       <img src="../assets/images/icons/home-assets/wallet.png" class="black-icon" alt="Wallet">
+       Validator Wallet
+     </a>
+</li>
+</ul>
+
+
+<div class="loader-box">
+  <img src="../assets/images/loader-3.gif">
+ </div>
+ <script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+ 
+<script>
+ $( document ).ready(function() {
+  //  alert('hey');
+ 
+     $('.loader-box').hide();
+      $('.loader_update').hide();
+        $('.loader_save').hide();
+ 
+ });
+ $('.wallet_click').click(function()
+ {
+  $('.loader-box').show();
+ })
+ </script>

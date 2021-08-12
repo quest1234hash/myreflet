@@ -1,0 +1,284 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video/Audio</title>
+
+    <link rel="stylesheet" href="../../videoplayerjs/video-js.min.css">
+    <link rel="stylesheet" href="../../node_modules/video.js/dist/video-js.min.css">
+    <link rel="stylesheet" href="../../node_modules/videojs-record/dist/css/videojs.record.css">
+    <link rel="stylesheet" href="../../videojs/videojs.record.css">
+
+    <style>
+        #myvideo{
+            background-color: #9ab87a;
+        }
+    </style>
+
+</head>
+<body>
+    
+    <video id="myvideo" class="video-js vjs-default-skin"></video>
+
+    <script src="../../videoplayerjs/video.min.js"></script>
+
+    <script src="../../record-rtc/RecordRTC.js"></script>
+    <script src="../../record-rtc/adapter.js"></script>
+
+    <script src="../../videojs/videojs.record.js"></script>
+
+    <script>
+
+        var videomax = 120;
+
+        var player = videojs("myvideo",{
+            controls: true,
+            width: 720,
+            height: 480,
+            fluid: false,
+            plugins: {
+                record: {
+                    audio: true,
+                    video: true,
+                    maxLength: videomax,
+                    debug: true                }
+            }
+        }, function(){
+            videojs.log(
+                'Using video.js', videojs.VERSION,
+                'with videojs-record', videojs.getPluginVersion('record'),
+                'and recordrtc', RecordRTC.version
+            );
+        });
+
+        player.on('deviceError', function() {
+            console.log('device error:', player.deviceErrorCode);
+        });
+
+        player.on('error', function(element, error) {
+            console.error(error);
+        });
+
+        player.on('startRecord', function() {
+            console.log('started recording!');
+        });
+
+        player.on('finishRecord', function() {
+            // the blob object contains the recorded data that
+            // can be downloaded by the user, stored on server etc.
+            console.log('finished recording: ', player.recordedData);
+        });
+
+    </script>
+
+    
+    invokeSaveAsDialog(recorder.getBlob(), 'video.webm');
+    console.log(recorder.save(file));
+
+</body>
+</html> -->
+<%-include('../front/innerHeader')%>
+
+
+<title>Parking Software</title>
+
+<br>
+
+<button id="btn-start-recording">1Start Recording</button>
+<button id="btn-stop-recording" disabled>Stop Recording</button>
+
+<hr>
+<video controls autoplay playsinline></video>
+
+<form action="/entry" method="POST" encType="multipart/form-data">
+    <!-- <input type="file" name="file" id="file"> -->
+    <input name="photo" id="photo">
+    <input name="blob" id="blob">
+    <!-- <input name="buffer2" id="buffer2">
+    <input name="buffer3" id="buffer3"> -->
+    <!-- <textarea name="buffer" id="buffer" cols="30" rows="10" value="987456321"></textarea> -->
+    <!-- <input name="buffer4" id="buffer4">
+    <input name="buffer5" id="buffer5"> -->
+    <!-- <input type="button" id="button" name="button" onclick="check()"> -->
+    <input type="submit" value="Check">
+</form>
+
+<script src="/RecordRTC.js"></script>
+<script>
+var video = document.querySelector('video');
+
+function captureCamera(callback) {
+    navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(function(camera) {
+        callback(camera);
+    }).catch(function(error) {
+        alert('Unable to capture your camera. Please check console logs.');
+        console.error(error);
+    });
+}
+
+function stopRecordingCallback() {
+    video.src = video.srcObject = null;
+    video.muted = false;
+    video.volume = 1;
+    video.src = URL.createObjectURL(recorder.getBlob());
+
+    console.log(video.src)
+    let blob = recorder.getBlob();
+    console.log(blob);
+    console.log('6^^^',typeof blob);
+    console.log('---..........',JSON.stringify(blob));
+    let stringblob = JSON.stringify(blob);
+
+    // document.getElementById('buffer5').value = stringblob;
+    document.getElementById('photo').value = video.src;
+    document.getElementById('blob').value = recorder.getBlob();
+    
+    let fileReader = new FileReader();
+
+    fileReader.readAsArrayBuffer(blob);
+
+    let arrayBuffer,stringarray;
+    fileReader.onload = function(event) {
+      arrayBuffer = fileReader.result;
+      console.log('--------2---------',arrayBuffer);
+    //   stringarray = JSON.stringify(arrayBuffer);
+        // console.log('-----////-----',stringarray);
+        // console.log('-----////-----',typeof stringarray);
+
+        function uintToString(uintArray) {
+        var encodedString = String.fromCharCode.apply(null, uintArray),
+        decodedString = decodeURIComponent(escape(atob(encodedString)));
+        return decodedString;
+        }
+
+        console.log('-------------------------------', uintToString(arrayBuffer));
+
+        // document.getElementById('buffer3').value = stringarray;
+        // document.getElementById('buffer4').value = arrayBuffer;
+    };
+
+    console.log('--------',fileReader);
+    // document.getElementById('file').val = arrayBuffer;
+    // document.getElementById('buffer2').value = fileReader;
+
+    // invokeSaveAsDialog(recorder.getBlob(), 'video.mp4');
+    const downloadLink = downloadBlob(recorder.getBlob(), 'video.mp4');
+    
+    recorder.camera.stop();
+    recorder.destroy();
+    recorder = null;
+
+    document.body.appendChild(downloadLink);
+}
+
+// $('#button').onclick(()=>{
+//     var meter_id= $('#meter_id').val();
+//     var company_name= $('#company_name').val();
+// })
+
+var recorder; // globally accessible
+
+document.getElementById('btn-start-recording').onclick = function() {
+    this.disabled = true;
+    captureCamera(function(camera) {
+        video.muted = true;
+        video.volume = 0;
+        video.srcObject = camera;
+
+        recorder = RecordRTC(camera, {
+            type: 'video'
+        });
+
+        recorder.startRecording();
+
+        // release camera on stopRecording
+        recorder.camera = camera;
+
+        document.getElementById('btn-stop-recording').disabled = false;
+
+    });
+};
+
+document.getElementById('btn-stop-recording').onclick = function() {
+    this.disabled = true;
+    recorder.stopRecording(stopRecordingCallback);
+
+    document.getElementById('btn-start-recording').disabled = false;
+};
+
+
+function downloadBlob(blob, filename) {
+  // Create an object URL for the blob object
+  const url = URL.createObjectURL(blob);
+  
+  // Create a new anchor element
+  const a = document.createElement('a');
+  
+  // Set the href and download attributes for the anchor element
+  // You can optionally set other attributes like `title`, etc
+  // Especially, if the anchor element will be attached to the DOM
+  a.href = url;
+  a.download = filename || 'download';
+  
+  // Click handler that releases the object URL after the element has been clicked
+  // This is required for one-off downloads of the blob content
+  const clickHandler = () => {
+    setTimeout(() => {
+      URL.revokeObjectURL(url);
+      this.removeEventListener('click', clickHandler);
+    }, 150);
+  };
+  
+  // Add the click event listener on the anchor element
+  // Comment out this line if you don't want a one-off download of the blob content
+  a.addEventListener('click', clickHandler, false);
+  
+  // Programmatically trigger a click on the anchor element
+  // Useful if you want the download to happen automatically
+  // Without attaching the anchor element to the DOM
+  // Comment out this line if you don't want an automatic download of the blob content
+  a.click();
+  
+  // Return the anchor element
+  // Useful if you want a reference to the element
+  // in order to attach it to the DOM or use it in some other way
+  return a;
+}
+
+</script>
+
+<footer style="margin-top: 20px;"><small id="send-message"></small></footer>
+
+
+<!-- 
+
+    ADD PIPE CONFIGURATION AND SAVE TO DROPBOX
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIDEO INTEGRATION</title>
+
+    <link rel="stylesheet" href="//cdn.addpipe.com/2.0/pipe.css">
+    <script type="text/javascript" src="//cdn.addpipe.com/2.0/pipe.js"></script>
+
+</head>
+<body>
+
+    <form action="/entry" method="POST">
+    
+    <piperecorder id="custom-id" pipe-width="640" pipe-height="390" pipe-qualityurl="avq/360p.xml" pipe-accounthash="ac925f7f0f60ed7d18363df0048a76d6" pipe-eid="GAyKYN" pipe-mrt="120" pipe-name="hello"></piperecorder>
+
+    <input type="submit" value="Check">
+    </form>
+
+    <video src="https://www.dropbox.com/s/wfkpaxlmqb07ggp/9UCkC5Q1cjRBsvfLZWYnV6S7hhrrnDFY.mp4?raw=1" controls autoplay></video>
+
+    https://www.dropbox.com/s/prfdkntzxx7lu9u/xHLc0xQdtRHuFxzvuZb9kjmwc2UNQmrL.mp4?dl=0
+    https://www.dropbox.com/s/wfkpaxlmqb07ggp/9UCkC5Q1cjRBsvfLZWYnV6S7hhrrnDFY.mp4?dl=0
+
+</body>
+</html> -->

@@ -1,0 +1,444 @@
+<%- include('partials/header.ejs') %>  
+<section class="login-sec">
+	<div class="container-fluid p-0">
+		<div class="row m-0">
+			<div class="col-md-6 p-0">
+				<div class="left-side-login">
+					<div class="logo-box">
+						<a href="">
+							<img src="assets/images/logo.png">
+						</a>
+					</div>
+					<div class="side-text">
+						<h2>
+							Start your journey today
+							
+						</h2>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 p-0">
+				<div class="right-side-login">
+					<p class="first-line">Please signup with your email ID to enjoy benefits.</p>
+					<!-- <div class="social-btns text-center"> 
+						<a class="fb" href="">
+							<span>
+							<i class="fab fa-facebook-f"></i> &nbsp;  Login with Facebook
+						    </span>
+						</a>
+						<a class="tw" href="">
+							<span>
+							<i class="fab fa-twitter"></i> &nbsp;  Login with Twitter
+						    </span>
+						</a>
+						<a class="gp" href="">
+							<span>
+							<i class="fab fa-google-plus-g"></i> &nbsp;  Login with Google
+						    </span>
+						</a>
+					</div>
+					<div class="or-line">
+						<h4>Or</h4>
+					</div> -->
+					<% if(err_msg!=undefined && err_msg !='' ){ %>
+						<div class="alert alert-danger text-center  flash_msg ">
+								<%= err_msg %>
+							 </div>
+					   
+						<% }%>
+					   <% if(success_msg!=undefined && success_msg !='' ){ %>
+						  <div class="alert alert-success text-center  flash_msg ">
+							<%= success_msg %>
+						 </div>
+						<% }%>
+					<form action="/submit_register" method="POST" id="validate" autocomplete="off">
+					<div class="login-form-main">
+						 <div class="form-group">
+						    <label>First Name<span style="color: red;">*</span></label>
+						    <input type="text" name="full_name" class="form-control" placeholder="" data-rule-required="true" data-msg-required="Please enter first Name.">
+						  </div>
+						  <div class="form-group">
+						    <label>Last Name<span style="color: red;">*</span></label>
+						    <input type="text" id="n" name="last_name" class="form-control" placeholder="" data-rule-required="true" data-msg-required="Please enter last Name.">
+						  </div>
+						 <div class="form-group for-warning">
+						    <label>Email ID<span style="color: red;">*</span></label>
+						    <input type="email" name="email"  class="form-control"  placeholder="" data-rule-required="true" data-msg-required="Please enter email." data-rule-email=”true” onchange="checkUserSteps(value)"  autocomplete="false" readonly onfocus="this.removeAttribute('readonly');"/>
+						    <!-- <div class="info-icon" data-toggle="tooltip" data-placement="top" title="Invalid Email ID">
+						    	<img src="assets/images/icons/warning.png" >
+						    </div> -->
+						  </div>
+                          <div class="form-group">
+                          	<label>Date of Birth</label>
+						    <div class="input-group">
+							  <input type="text" name="dob" id="datepicker2" class="form-control" placeholder="" autocomplete="off">
+							  <div class="input-group-append">
+							    <span class="input-group-text" id="basic-addon2"><i class="far fa-calendar-alt"></i></span>
+							  </div>
+							</div>
+						</div>
+						 
+						  <div class="form-group"> 
+						    <label>Place of Birth <br> Select Country</label>
+						     <select class="form-control js-example-basic-multiple country checkbox23" name="place_of_birth">
+
+								<option class="country_select checkbox2" value=" ">--Select Country--</option>
+
+								<%if(countryData[0]!=null){%>
+									<%countryData.forEach(countries=>{%>
+	                                  
+								  <option class="country_select checkbox2">
+									<%=countries.country_name%>
+							
+								   <span>[<%=countries.iso%>]</span>	
+								</option>
+								</form>
+									<%})%>
+								<%}%>     
+								  <!-- <option value="USA">USA</option>
+								  <option value="China">China</option>
+								  <option value="France">France</option>
+								  <option value="Russia">Russia</option>
+								  <option value="UK">UK</option>
+								  <option value="UAE">UAE</option> -->
+						    </select>
+						  </div>
+						  <div class="city_append">
+						  <div class="form-group"> 
+						    <label>Select City</label>
+						     <select class="form-control js-example-basic-multiple country checkbox23" name="place_of_city">
+
+								<option class="country_select checkbox2" value=" ">--Select City--</option>
+								
+								  <!-- <option value="USA">USA</option>
+								  <option value="China">China</option>
+								  <option value="France">France</option>
+								  <option value="Russia">Russia</option>
+								  <option value="UK">UK</option>
+								  <option value="UAE">UAE</option> -->
+						    </select>
+						  </div>  
+						  </div>
+						  <div class="country_append">
+						  <div class="form-group">
+						    <label>Mobile Number<span style="color: red;">*</span></label>
+						     <div class="input-group">
+						     	<div class="input-group-prepend mobile-no-select ">
+							      <select class="form-control select2-country " name="country_code_select">
+							      										  
+
+							      	<%if(countryCode.length>0){%>
+									<%countryCode.forEach(codes=>{%>
+                          
+								  <option value="<%=codes.country_code_id%>">+<%=codes.phonecode%> - <%=codes.iso%></option>
+									<%})%>
+								<%}%>  
+							      
+							      </select>
+							  </div>
+							  <label for=""> Mobile Number</label>
+							  <input type="text" name="mobile" id="mobile" class="form-control test2" placeholder=""
+							data-rule-required="true" maxlength="15" minlength="10" data-msg-required="Please enter mobile number." data-rule-digits="true" >
+							</div>
+							<!-- <span id="errNm1" class="error_validate"></span> -->
+                           
+
+							
+						  </div>
+						  
+						</div>
+						<span id="errNm1" class="error_validate"></span>
+					
+						  <div class="captcha-box">
+							<div class="g-recaptcha" data-sitekey="6LepBNIZAAAAADbgTqyuLwnYV4V-STSFYH0qhE0S"></div>
+
+						  </div>
+						  <span class="captcha_error"style="color:red"></span>
+
+						  <div>
+							  <button type="submit" class="purple-btn hide_btn">Sign Up</button>
+							  <center><span class="loader"><img src="../assets/images/loader-3.gif"height="32" width="52"></span></center>
+						  	<p class="extra-link">Already have an acount? <a href="/login">Login</a></p>
+						  </div>
+					</div>
+				</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<!-- <div id="fb-root"></div> -->
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v7.0" nonce="GzcEl0DF"></script>
+<!-- <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div> -->
+	<!-- JQuery -->
+        <script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- <script type="text/javascript" src="assets/js/jquery-1.11.3.min.js"></script> -->
+        <!-- Bootstrap Core JavaScript -->
+        <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+        <!-- dropdownhover effects JavaScript -->
+        <script type="text/javascript" src="assets/js/bootstrap-dropdownhover.min.js"></script>
+        <!-- wow JavaScript -->
+        <script type="text/javascript" src="assets/js/wow.min.js"></script>
+        <!-- video player JavaScript -->
+
+        <script type="text/javascript" src="assets/js/jquery-ui.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+		<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+		<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+
+        <!-- Custom JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+        <script type="text/javascript" src="assets/js/custom.js"></script>
+        <link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+		
+		<script src="https://www.google.com/recaptcha/api.js"></script>
+
+		<script src="https://www.google.com/recaptcha/api.js?render=6LepBNIZAAAAADbgTqyuLwnYV4V-STSFYH0qhE0S"></script>
+		<script src="https://www.google.com/recaptcha/api.js?render=explicit&onload=onRecaptchaLoadCallback"></script>
+		
+		
+        <script>
+        	$(document).ready(function() {
+				$('.loader').hide();
+
+    $('.js-example-basic-multiple').select2();
+});
+        </script>
+
+            <script>
+            	$(document).ready(function() {
+                $(".select2-country").select2();
+         });
+      $('#datepicker2').datepicker({
+        changeMonth: true,
+		changeYear: true,
+		maxDate : "-18Y",
+        // yearRange: "1970:2000",
+        showButtonPanel: true,
+        dateFormat: 'dd/mm/yy',
+        onClose: function(dateText, inst) { 
+
+            var year = $("#ui-datepicker-div .ui-datepicker-year :selected",).val();
+           
+        }});
+  </script>
+
+		<script type="text/javascript">
+				/*$( "#datepicker2" ).datepicker();*/
+
+			$('#validate').validate({
+				 onfocusout: function(element) {
+				 this.element(element);
+				 },
+				 errorClass: 'error_validate',
+				 errorElement:'span',
+				 errorPlacement: function(error, element) {
+				
+					if (element["0"].id=="mobile") {						
+						error.insertAfter(element.parent());
+					}
+					else {
+						error.insertAfter(element);
+					}
+				},
+
+				 highlight: function(element, errorClass) {
+				 $(element).removeClass(errorClass);
+				 },
+				 submitHandler:function(form)
+					{
+						return check_captch()
+					  $('#submit_signup').attr('disabled',true);
+					  form.submit();
+					}
+				 });
+			</script>
+            <script>
+			  $( function() {
+				var url = new URL( window.location.origin);
+				// alert(url)
+				console.log(url)
+				// var date = new Date(); 
+//   var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+//   var end = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+//   var year_20_ago = date.setFullYear(date.getFullYear() - 20);
+//   var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+// alert(date.setFullYear(date.getFullYear() - 20))
+
+//   $("#datepicker").datepicker({ 
+//         format: "mm/dd/yyyy",
+//         todayHighlight: true,
+//         startDate: today,
+// 		// minDate:today,
+// 		// yearRange: '1945:' + "2002",
+// 		minYear: 1901,
+//     maxYear:2002,
+//         autoclose: true,
+//   }).datepicker('update',date);
+
+// $("#datepicker").datepicker({
+//       changeMonth: true,
+//       changeYear: true,
+//       showButtonPanel: true,
+//       dateFormat: 'dd/mm/yy',
+//       yearRange: '1945:' + (new Date).getFullYear(),
+//       onClose: function (dateText, inst) {
+//         $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+//       }
+//     });
+  });
+			//   } );
+			 
+</script>
+<script>
+	function checkUserSteps(value){
+		// alert(value)
+		$.ajax({
+            type: "post",
+            url: "/check_user_steps",
+            data: { email:value },
+            success: function(data){
+    if(data=="noAnyStep"){
+                           // alert("noAnyStep")
+					   }
+	else{
+		 // alert("useris their")
+			var txt;
+	var r = confirm("You are already registered. please press 'ok' to go the next step and cancel for new sign up.");
+	if (r == true) {
+	
+		            txt = "You pressed OK!";
+					console.log(data)
+				    var url = new URL( window.location.origin);
+					// alert(url)
+					console.log(url)
+					if(data.steps==1){
+						window.location.href = url+"top_verification?userid="+data.userid
+						
+									}
+					if(data.steps==2){
+						window.location.href = url+"sequrity_question/?userid="+data.userid
+									}
+					if(data.steps==3){
+						window.location.href = url+"set_pin/?userid="+data.userid
+									}
+					if(data.steps==4){
+						window.location.href = url+"terms-and-conditions?userId="+data.userid
+									}
+					if(data.steps==5){
+						window.location.href = url+"login"
+									}
+												
+				}  else {
+	                  window.location.reload()
+	              }
+								}
+
+            }
+    });
+	}
+
+</script>
+<script>
+$(document).ready(function(){
+	var selectedCountry;
+    $("select.country").change(function(){
+         selectedCountry = $(".country option:selected").val();
+
+        // alert(selectedCountry)
+  $.ajax({
+                      type : 'POST',
+                      url: "/select-country-code",
+					  data: {country : selectedCountry },
+					  
+                        success: function(data) {
+                        	// alert(data)
+						//	$('.country_append').html("");
+			            //	$('.country_append').html(data);
+						$('.city_append').html("");
+			        	$('.city_append').html(data);
+						
+			}                                                    
+           
+})       
+
+       
+        // $.ajax({
+        //     type: "POST",
+        //       url: "/select-country-code",
+        //     data: { country : selectedCountry } 
+        // }).done(function(data){
+        // 	alert(data)
+        //     // $("#response").html(data);
+        // });
+
+
+     
+    });
+});
+</script>
+<script type="text/javascript">
+
+// $('.checkbox2').click(function() {
+// 	alert('checkbox2')
+// })
+// $('.checkbox22').click(function() {
+// 		alert('checkbox23')
+
+// })
+
+	
+//  $('.').on('select2:select', function (e) {
+//    alert();
+// });	
+
+ // function country_get(selectedCountry)
+ //        {
+ //          alert('hhhhhh'+selectedCountry)	
+           
+ //        }
+</script>
+
+<script>
+	function check_captch(){
+		// alert('load')
+		var captcha = grecaptcha.getResponse();
+		//   alert(captcha)
+		  if(captcha){
+			   $('.hide_btn').hide();
+	
+			   $('.loader').show();
+				setTimeout(function() {
+								$('.captcha_error').fadeOut('fast');
+								}, 100);
+				return true;
+		  }else{
+			$('.captcha_error').html("Please select captcha first.");
+	
+			return false;
+		  }
+		   
+	
+		}
+	</script>
+	
+	
+	<script>
+		function cryptPass(value){
+	
+			// alert(value)
+			// console.log(btoa(value));
+			let codedPass = btoa(value)
+			$("#password").val(codedPass)
+		}
+	</script>
+<%- include('partials/footer.ejs') %>    
+
+
+
+ 

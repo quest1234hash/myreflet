@@ -1,0 +1,71 @@
+<table class="table  " id="myTable3">
+    <thead>
+        <tr> 
+            
+
+              <th scope="col">Name/Type</th>
+              <th scope="col">Send To</th>
+              <th scope="col">Expiry Date</th>
+              <th scope="col">Certified</th>
+              <th scope="col">Self Certified</th>
+              <th scope="col">Creation Date</th>
+              <th scope="col" class="hide_link">Action</th>
+        </tr>
+      </thead>
+    <tbody id="">
+       
+            <%
+if(all_document_Data.length>0)
+{
+
+all_document_Data.forEach(function(each_data){
+  %>
+  <input type="hidden" id="userid" name="userid" value="<%= each_data.reg_user_id %>">
+   <tr class="content_search">
+            <td><%= each_data.document_name %>
+            </td>
+              <td>
+                  <div class="for-flex-align">
+                      <div class="checkbox">
+                          <label>
+                            <img class="profile-table hide_link" src="<%= each_data.profile_pic%>">
+
+                               <p class="line-hgt">
+                                   <span class="font-w-600 upper"><%= each_data.rep_firstname %></span> <br>
+                                   <%= each_data.reflect_code %>
+
+                               </p>
+                          </label>
+                    </div>
+                </div>
+              </td>
+            <td><%=moment(each_data.expire_date).format('MMM DD, YYYY')%>
+            </td>
+            <td class="upper"><%= each_data.certified_status %>
+            </td>
+            <td class="upper"><%= each_data.self_assested %>
+            </td>
+            <td><%=moment(each_data.created_doc).format('MMM DD, YYYY')%>
+            </td>
+            <td >
+                  <a href="/my-doc-license?id=<%= each_data.doc_id%>" class="view-link hide_link">View</a>
+              </td>
+         </tr>
+         <%
+});
+
+}else
+{
+%>
+   <tr>
+     <td colspan="7"><center>No record found.</center> </td>
+   </tr>
+
+<%}%>
+    </tbody>
+    <tbody id="ditv_data">
+       
+        
+    </tbody>
+</table>
+

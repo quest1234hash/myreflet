@@ -1,0 +1,645 @@
+<%-include('../innerHeader')%>
+
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 140px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -75px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-4 col-md-4 col-sm-4">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/home-assets/wallet.png">
+					<h4>BTC Wallets</h4>
+				</div>
+			</div>
+			<div class="col-lg-8 col-md-8 col-sm-8">
+				<div class="text-right">
+					<!-- <a class="btn-common-new" href="/get-create-wallet">Add New Wallet</a> -->
+					<a class="btn-common-new" href="/import-btc-wallet">Import BTC Wallet</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="id-code-box-sec">
+	<div class="container">
+		<div class="row">
+
+			<%
+			    var i=1;j=1;
+				if(btcWallet.length>0)
+				{
+
+					
+			%>
+			<% btcWallet.forEach(function(each_wallet) { %>
+			<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+				<div class="white-box full-box wallet-box">
+					<div class="row align-item-center">
+					   <div class="col-xl-6 col-lg-12 col-md-12">
+					   	  <div class="id-code-represent-heading"> 
+							<img src="../assets/images/icons/home-assets/Representative.png">
+
+							
+				<span><%- (each_wallet.reflectid_by == 'digitalWallet') ? 'Digital Wallet' : each_wallet.reflectid_by %></span>
+				
+ 						  </div> 
+					   </div>
+					   <div class="col-xl-6 col-lg-12 col-md-12">
+					   	 <!-- <h5 class="mb-0 balance-value">Balance :<%= each_wallet.wal_balan %>BTC</h5> -->
+					   </div>
+					 
+					</div>
+					<div>
+						<div class="row inner-box-id-code">
+							<div class="col-md-4 p-0">
+								<div class="for-flex-align">
+									<img src="../assets/images/icons/home-assets/user.png">
+									<p>MyReflet ID </p>
+								</div>
+							</div>
+							<div class="col-md-6 dubble-dot-after p-0">
+								<%if(session.user_type!="client"){%>
+									
+										<a class="click_eye" href="/myreflect-verifier-view?id=<%=each_wallet.reflect_code%>"><p><%= each_wallet.reflect_code %></p></a>
+									
+									
+								<%}else{%>
+									<%if(each_wallet.reflectid_by=="entity"){%>
+										<a class="click_eye" href="/entity?reflect_id=<%=each_wallet.reflect_id%>"><p><%= each_wallet.reflect_code %></p></a>
+									<%}else{%>
+									<a class="click_eye" href="/view-reflect-id?id=<%=each_wallet.reflect_code%>"><p><%= each_wallet.reflect_code %></p></a>
+									<%}%>
+								<%}%>
+
+								
+							</div>
+						</div>
+						<div class="row inner-box-id-code">
+							<div class="col-md-4 p-0">
+								<div class="for-flex-align">
+									<img src="../assets/images/icons/home-assets/user.png">
+									<p>Wallet Name </p>
+								</div>
+							</div>
+							<div class="col-md-6 dubble-dot-after p-0">
+							
+								<%if(each_wallet.wallet_name){%>
+                      	<a href="/view-reflect-id?id=<%=each_wallet.reflect_code%>"><p><%= each_wallet.wallet_name %></p></a>
+								<%}else{%>
+                                 <p>NA</p>  
+								<%}%>
+							</div>
+							
+						</div>
+						<div class="private-key-copy-box mt-15">
+							<div class="form-group">
+								<label>Your BTC Wallet Address</label>
+								<div class="input-group mb-3">
+								  <input type="text" class="form-control"  value="<%- each_wallet.wallet_address %>" id="wallet_addr<%=i %>"readonly>
+								  <div class="input-group-append">
+								  	<!-- <a class="btn-copy" href="javascript:void(0);" onclick="copy_address('<%=i %>')"><img src="../assets/images/icons/createidentity-assets/copy.png"></a> -->
+
+								  		<span class="tooltip">
+										  		<a class="btn-copy " href="javascript:void(0);" onclick="myFunction1('<%=i %>')" onmouseout="outFunc('<%=i %>')"><img src="../assets/images/icons/createidentity-assets/copy.png">
+										  		<span class="tooltiptext" id="myTooltip<%=i%>">Copy to clipboard</span>
+										   	    </a>
+											</span>
+								  </div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Your BTC Public Key</label>
+								<div class="input-group mb-3">
+								  <input type="text" class="form-control"  value="<%- each_wallet.public_key %>" id="pubkey<%=i %>"readonly>
+								  <div class="input-group-append">
+								  	<!-- <a class="btn-copy" href="javascript:void(0);" onclick="copy_address('<%=i %>')"><img src="../assets/images/icons/createidentity-assets/copy.png"></a> -->
+
+								  		<span class="tooltip">
+										  		<a class="btn-copy " href="javascript:void(0);" onclick="myFunction2('<%=i %>','<%=j%>')" onmouseout="outFunc1('<%=i %>','<%=j%>')"><img src="../assets/images/icons/createidentity-assets/copy.png">
+										  		<span class="tooltiptext" id="myTooltip<%=i%><%=j%>">Copy to clipboard</span>
+										   	    </a>
+											</span>
+								  </div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<!-- <div id="qrcode<%= i %>" class="qrcode" ></div> -->
+								
+							</div>
+							<div class="col-md-9">
+								<!-- <h4 class="purple-heading">Just scan the wallet address</h4> -->
+								<!-- <p>You can share this QR code with friends to receive ether or tokens in your wallet.</p> -->
+								<div class="row mt-15">
+									<!-- <div class="col-xl-6 col-lg-12 col-md-12">
+										<a class="btn-common-new single-color-btn" href="/send-ether?ied=<%= base64encode(each_wallet.wallet_id) %>"><img src="../assets/images/icons/wallet/send.png">Send</a>
+									</div>
+									<div class="col-xl-6 col-lg-12 col-md-12">
+									    <a class="btn-common-new border-btn" href="javascript:void(0);" onclick="show_share_modal('<%= each_wallet.wallet_address %>','<%= i %>')" ><img src="../assets/images/icons/wallet/share.png"> Share</a>
+
+									</div> -->
+								</div>
+							</div>
+						</div>
+			         </div>
+			    </div>
+            </div>
+            <% 
+
+            i++;j++;
+
+        }); %>
+            <%}else{%>
+				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+					<div class="white-box create-wallet-box">
+						<div class="row align-item-center">
+		
+							<div class="col-xl-12 col-lg-12 col-md-12">
+								<!-- <h5 class="heading-purple">Create a New Wallet</h5> -->
+								<p><center>Currently, No wallet available.</center></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			
+			<%}%>
+            
+		 </div>
+	</div>
+</section>
+
+<!-- <a onclick="shareit1()">Share on facebook</a>
+ -->
+<script type="text/javascript">
+function shareit1(){
+
+     var url="http://www.example.com"; //Set desired URL here
+var img="http://www.example.com/example.jpg"; //Set Desired Image here
+var totalurl=encodeURIComponent(url+'?img='+img);
+
+window.open ('http://www.facebook.com/sharer.php?u='+totalurl,'','width=500, height=500, scrollbars=yes, resizable=no');
+}
+</script>
+<%- include('../innerFooter')%>
+
+
+<script type="text/javascript" src="../assets/js/custom_qr.min.js"></script>
+<script type="text/javascript" src = "https://connect.facebook.net/en_US/sdk.js#version=v2.2&appId=myAppId&xfbml=true&autoLogAppEvents=true"></script>
+
+<script>
+	var text_share,rowno;
+	function show_share_modal(text_share,rowno)
+	{
+		//alert(text_share);
+		text_share=text_share;
+		var whatsup_url='https://api.whatsapp.com/send?text='+encodeURI('Please send ether to wallet address '+text_share);
+		//var facebook_url='https://m.facebook.com/sharer.php?u=';
+		// var instagram_url='https://api.facebook.com/send?text='+encodeURI('Please send ether to wallet address ',+text_share);
+		// var facebook_url=encodeURIComponent("Hey,I scored 4500"); window.open("https://www.facebook.com/sharer.php?u=http://192.168.1.137:3001/&description="+text_share);
+	// var facebook_url="https://www.facebook.com/sharer.php?u=http://192.168.1.137:3001/&description="+text_share;
+	
+ // location.href = ('https://www.facebook.com/sharer/sharer.php?u=codepen.io/InicianteGit1/full/eGvvBp/');
+  // })
+		$('#whatsup-url').attr('href',whatsup_url);
+		// $('#instagram-url').attr('href',instagram_url);
+
+
+		// $('#facebook-url').attr('href',facebook_url);
+
+		// alert("wallet add"+text_share);
+		$('#wallet-qrcode').html('');
+		create_qrcode('wallet-qrcode',text_share,200,200);
+
+
+
+		$('#share-Modal').modal('show');
+	}
+
+
+$(function(){
+
+	var i=1;
+	$('.qrcode').each(function(){
+
+
+		var wallet_add=$('#wallet_addr'+i).val();
+
+
+		// var wallet_div=$('#qrcode'+i).val();
+
+		create_qrcode('qrcode'+i,wallet_add,110,110);
+
+		// var qr_src=$('#qrcode'+i).html();
+
+         //console.log("qr src",qr_src);
+		i++;
+	});
+
+    
+
+})
+
+var qrdiv,qrtext;
+function create_qrcode(qrdiv,qrtext,qrwidth,qrheight)
+{
+
+		var qrcode = new QRCode(qrdiv, {
+	        text:qrtext,
+		    width:qrwidth,
+		    height:qrheight,
+		    colorDark : "#000000",
+		    colorLight : "#ffffff",
+		    correctLevel : QRCode.CorrectLevel.H
+	   });
+
+
+
+       
+		// var file = dataURLtoFile(base64_string,'qrcode.png');
+
+
+		// $.ajax({
+  //           url:""+authToken,
+  //           type:"POST",
+  //           data:fd,
+  //           processData:false,
+  //           contentType:false,
+  //           cache:false,
+  //           success:function(data){
+  //               console.log("success " + data);
+  //           },
+  //           error:function(shr,status,data){
+  //               console.log("error " + data + " Status " + shr.status);
+  //           },
+  //           complete:function(){
+  //               console.log("Posted to facebook");
+  //           }
+  //       });
+    		
+}
+
+// qrcode.clear(); // clear the code.
+// qrcode.makeCode("http://naver.com"); // make another code.
+// document.body.addEventListener('click', ()=>{
+//             qrcode.clear(); 
+//             qrcode.makeCode("http://google.ca/"); 
+//         })
+
+function shareit()
+{
+
+	var scored = document.getElementById('wallet-qrcode').innerHTML;
+
+     var desc=encodeURIComponent(scored); window.open("https://www.facebook.com/sharer.php?u=http://165.22.209.72:3008/&description="+desc);
+
+
+	// var authToken="EAACbCf6ZCDywBANgEtJuo5LBr4OhQaP7IrFioNzNgxktS3MZBu2tmpJKuwxkLHnl9SFHtSOM04jo3Ad0f18P1FCxFDYLAJNAzSM8kTZCJrCEN02lZAKaTZCONGHhlaDLL7juJZBGS6B1fiEHLTFJ7dG0lnGDktiDtv8Pojf85hfCvzTEZB9QZAkFoH9ADAfsmS4g4VWRXbISSGdUWvTRfiztGVy152wRwovMrTFqdtomvAZDZD";
+ //    // var canvas = document.getElementById("c");
+ //    // var imageData  = canvas.toDataURL("image/png");
+ //    // try {
+ //    //     blob = dataURItoBlob(imageData);
+ //    // }
+ //    // catch(e) {
+ //    //     console.log(e);
+ //    // }
+ //    var base64_string=$('#wallet-qrcode').find('img').attr('src');
+
+ //    var file = dataURLtoFile(base64_string,'qrcode.png');
+    
+ //    var fd = new FormData();
+ //    fd.append("access_token",authToken);
+ //    fd.append("source",file);
+ //    fd.append("message","Photo Text");
+ //    try {
+ //        $.ajax({
+ //            url:"https://graph.facebook.com/me/photos?access_token="+authToken,
+ //            type:"POST",
+ //            data:fd,
+ //            processData:false,
+ //            contentType:false,
+ //            cache:false,
+ //            success:function(data){
+ //                console.log("success " + data);
+ //            },
+ //            error:function(shr,status,data){
+ //                console.log("error " + data + " Status " + shr.status);
+ //            },
+ //            complete:function(){
+ //                console.log("Posted to facebook");
+ //            }
+ //        });
+ //    }
+ //    catch(e) 
+ //    {
+ //        console.log(e);
+ //    }
+}
+
+function shareit_data()
+{
+	var base64_string=$('#wallet-qrcode').find('img').attr('src');
+
+	var file = dataURLtoFile(base64_string,'qrcode.png');
+    // console.log(file);
+
+    $.ajax({
+            url:""+authToken,
+            type:"POST",
+            data:fd,
+            processData:false,
+            contentType:false,
+            cache:false,
+            success:function(data){
+                console.log("success " + data);
+            },
+            error:function(shr,status,data){
+                console.log("error " + data + " Status " + shr.status);
+            },
+            complete:function(){
+                console.log("Posted to facebook");
+            }
+        });
+    			
+
+	//console.log(base64_string);
+	// var img = document.createElement("img");
+	// img.width = "250px";
+	// img.height = "250px";
+	// img.src = base64_string;
+	// var preview = document.getElementById("img_preview");
+	// preview.appendChild(img);
+
+	//console.log('img',img);
+}
+
+
+function dataURLtoFile(dataurl,filename) {
+ 
+	var arr = dataurl.split(','),
+	    mime = arr[0].match(/:(.*?);/)[1],
+	    bstr = atob(arr[1]), 
+	    n = bstr.length, 
+	    u8arr = new Uint8Array(n);
+	    
+	while(n--){
+	    u8arr[n] = bstr.charCodeAt(n);
+	}
+
+	return new File([u8arr], filename, {type:mime});
+}
+
+</script>
+
+<script type="text/javascript">
+// function shareit(){
+// 	var url=window.location.href; //Set desired URL here
+// 	var img=$('#wallet-qrcode').find('img').attr('src'); //Set Desired Image here
+// 	//var totalurl=encodeURIComponent(url+'?img='+img);
+// 	var totalurl='http://192.168.1.137:3001/assets/images/icons/wallet/fb.png';
+
+// 	//alert(img);
+
+// 	// alert("url"+totalurl);
+
+// 	 window.open ('http://www.facebook.com/sharer.php?u='+totalurl,'','width=500, height=500, scrollbars=yes, resizable=no');
+
+// }
+
+//  function shareit() {
+//      var u=$('#wallet-qrcode').find('img').attr('src');
+
+//      var blob_url=dataURItoBlob(u);
+
+//      alert(blob_url);
+//      // t=document.title;
+//     t='img';
+//     // window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(u)+'&t='+encodeURIComponent(t),'sharer','toolbar=0,status=0,width=626,height=436');return false;
+// }
+
+
+function dataURItoBlob(dataURI) {
+  // convert base64 to raw binary data held in a string
+  // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+  var byteString = atob(dataURI.split(',')[1]);
+
+  // separate out the mime component
+  var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+
+  // write the bytes of the string to an ArrayBuffer
+  var ab = new ArrayBuffer(byteString.length);
+
+  // create a view into the buffer
+  var ia = new Uint8Array(ab);
+
+  // set the bytes of the buffer to the correct values
+  for (var i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+  }
+
+  // write the ArrayBuffer to a blob, and you're done
+  var blob = new Blob([ab], {type: mimeString});
+  return blob;
+
+}
+
+</script>
+
+<script type="text/javascript">
+	function fbShare() {
+  var windowHeight = 350,
+  windowWidth = 520,  
+      alignTop = (screen.height / 2) - (windowHeight / 2),
+      alignLeft = (screen.width / 2) - (windowWidth / 2),
+
+      url='http://165.22.209.72:3001/',
+	title='send ether',
+	descr='Please send ether to wallet address '+text_share ,
+      facebookShareUrl = 'https://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url
+  
+  // how to open a window - https://www.w3schools.com/jsref/met_win_open.asp
+  window.open( facebookShareUrl, "","top=" + alignTop + ",left=" + alignLeft + ",width=" + windowWidth +",height=" + windowHeight);
+}
+</script>
+<div class="modal fade field-edit-modal" id="share-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box  for-share">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/wallet/popup-share-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Share</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-4 col-lg-4 col-md-4 m-auto">
+					<div  id="wallet-qrcode">
+						<!-- <img src="../assets/images/icons/wallet/qrcode.png" id="wallet-qrcode" class="img-fluid"> -->
+					</div>
+			    </div>
+				<div class="col-xl-8 col-lg-8 col-md-8 m-auto">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						   <h6>Share to</h6>
+						   <div class="share-links">
+						   	  <a href="" target="blank" id="whatsup-url" >
+						   	  	<img src="../assets/images/icons/wallet/whatsapp.png" >
+						   	  </a>
+						   	  <a href="javascript:void(0);" onclick="shareit()" id="">
+						   	  	<img src="../assets/images/icons/wallet/fb.png">
+						   	  </a >
+						   	  <a href="" target="blank" id="instagram-url">
+						   	  	<img src="../assets/images/icons/wallet/instagram.png">
+						   	  </a>
+
+						   </div>
+						</div>
+						<div >
+							<!-- <a class="btn-common-new" href="">Share</a> -->
+							<a class="btn-common-new" href="">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <script type="text/javascript">
+  $(document).ready(function(){
+    $('#share_button').click(function(e){
+    	// alert('hh')
+      e.preventDefault();
+      FB.ui(
+        {
+          method: 'feed',
+          name: 'This is the content of the "name" field.',
+          link: 'http://165.22.209.72:3008/my-wallets ',
+          picture: "../assets/images/icons/createidentity-assets/copy.png",
+          caption: 'Caption like which appear as title of the dialog box',
+          description: 'Small description of the post',
+          message: ''
+        }
+      );
+    });
+  });
+</script> -->
+
+
+<script>
+	$(document).ready( function () {
+				$('.loader-box').hide();
+	})
+     function fbs_click(TheImg) {
+     u=TheImg.src;
+     // t=document.title;
+    t=TheImg.getAttribute('alt');
+    window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(u)+'&t='+encodeURIComponent(t),'sharer','toolbar=0,status=0,width=626,height=436');return false;
+}
+</script>
+
+
+<script type="text/javascript">
+	function copy_address(i_val) {
+	  var copyText = document.getElementById("wallet_addr"+i_val);
+	  if($('#wallet_addr').val() !="")
+	  {
+	  copyText.select();
+	  document.execCommand("copy");
+	  alert("Wallet address is copied.");
+	  }  
+	}  
+</script>
+ <script>
+function myFunction1(i_val) {
+  var copyText = document.getElementById("wallet_addr"+i_val);
+  copyText.select();
+  copyText.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  
+  var tooltip = document.getElementById("myTooltip"+i_val);
+  tooltip.innerHTML = "Copied";
+    // tooltip.innerHTML = "Copied: " + copyText.value;
+
+}
+
+function outFunc(i_val) {
+  var tooltip = document.getElementById("myTooltip"+i_val);
+  tooltip.innerHTML = "Copy to clipboard";
+}
+</script>
+<script>
+	function myFunction2(i_val,j_val) {
+	  var copyText = document.getElementById("pubkey"+i_val);
+	  copyText.select();
+	  copyText.setSelectionRange(0, 99999);
+	  document.execCommand("copy");
+	  
+	  var tooltip = document.getElementById("myTooltip"+i_val+j_val);
+	  tooltip.innerHTML = "Copied";
+		// tooltip.innerHTML = "Copied: " + copyText.value;
+	
+	}
+	
+	function outFunc1(i_val,j_val) {
+	  var tooltip = document.getElementById("myTooltip"+i_val+j_val);
+	  tooltip.innerHTML = "Copy to clipboard";
+	}
+	</script>
+<script>
+	$('.click_eye').click(()=>{
+					   // $('.hide_btn').hide();
+
+					   $('.loader-box').show();
+
+   })
+</script>

@@ -1,0 +1,46 @@
+<html>
+<head>
+<style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+  background-color:#88beda ;
+  color: white;
+}
+</style>
+</head>
+<body>
+  <div style="font-family: sans-serif;color: #274794;    ">
+    <h3 style="margin: 10px 0;font-weight: 500;">Document Name : <%=download_data[0].document_name%></h3>
+    <h3 style="margin: 10px 0;font-weight: 500;">doc_unique_code : <%=doc_unique_code%></h3>
+    <h3 style="margin: 10px 0;font-weight: 500;">Expiry Date: <%=moment(expire_date).format('MMM DD, YYYY')%></h3>
+    <h3 style="margin: 10px 0;font-weight: 500;">Create Date:<%=moment(download_data[0].doc_create_date).format('MMM DD, YYYY')%>
+    </h3>
+  </div>
+    <div class="personal-info-box table-responsive another-table" style="font-family: sans-serif;">
+        <%  if(download_data.length>0){if(certify =='0'){
+        
+        download_data.forEach((file_data)=>{if(file_data.type === 'image'){%>
+                  
+             <img width="450"height="350" src="https://ipfs.io/ipfs/<%=file_data.file_content%>">
+           
+       
+      <% }}) }else{  download_data[0].req_ipfs_data.forEach(function(each_data){%>
+      <img width="450"height="350" src="<%=each_data%>">
+       <%})}}%> 
+
+       
+       
+    </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<% 
+       var i=1;
+       ClientVerificationModelData.forEach(modelData=>{
+	%>
+
+		<tr>
+	    	<td><%= modelData.ClientVerificationData.request_code %></td>
+	      	<td>
+		      	<div class="for-flex-align">
+		      		<div class="checkbox">
+			          	<label>
+								<%
+								if( modelData.verifer_my_reflect_id_Data.tbl_user_registration.dataValues.profile_pic)
+								{
+									%>
+									<img class="profile-table" src="<%= modelData.verifer_my_reflect_id_Data.tbl_user_registration.dataValues.profile_pic %>">
+									<%
+								}
+								else
+								{
+									
+									%>
+									<img class="profile-table" id="user_profile_image_preview" src="../assets/images/other/face1.jpg" class="m-t-5" >
+									<%
+								}
+							%>
+						   
+				            <!-- <img class="profile-table" src="<%= modelData.verifer_my_reflect_id_Data.tbl_user_registration.dataValues.profile_pic %>"> -->
+		      		     	<p class="line-hgt">
+								<%if(modelData.verifer_my_reflect_id_Data.reflectid_by=="entity"){ %>
+									<span class="font-w-600"><%=modelData.verifer_my_reflect_id_Data.entity_company_name%></span>
+								   <%}else{%>
+									<span class="font-w-600"><%=modelData.verifer_my_reflect_id_Data.rep_username%></span>
+									<%}%>
+								   <br>
+		      		     		<%=modelData.verifer_my_reflect_id_Data.reflect_code%>
+		      		     	</p>
+			         	 </label>
+			        </div>
+				</div>
+	      	</td>
+							    <td>
+                                  <%if(modelData.MyReflectIData.reflectid_by=="entity"){ %>
+									<span class="font-w-600"></span>
+									<%=modelData.MyReflectIData.entity_company_name%>
+								</span>
+									  <%}else{%>
+										<span class="font-w-600"></span>
+										<%=modelData.MyReflectIData.rep_username%>
+									</span>
+										<%}%>
+									 
+
+								 <br> <%=modelData.MyReflectIData.reflect_code%></td>
+								 <%if(modelData.verifier_requset==null){ %>
+									<!-- <td>Requested to me</td> -->
+									<td>Requested by me</td>
+								<%}else{%>
+									<!-- <td>Requested by me</td> -->
+									<td>Requested to me</td>
+									<%}%>
+								<td>
+									<%=moment(modelData.ClientVerificationData.createdAt).format('MMM DD, YYYY')%>
+								</td>
+							    <%if(modelData.ClientVerificationData.due_date!=null){ %>
+									<td><%=moment(modelData.ClientVerificationData.due_date).format('MMM DD, YYYY')%></td>
+								<%}else{%>
+									<td>-</td>
+									<%}%>
+							    <td class="text-center"> <span class="pending-status"><%=modelData.ClientVerificationData.request_status%></span></td>
+							    <td>
+							      	<a href="/myrequest_view?clientId=<%=modelData.ClientVerificationData.client_id%>&request_id=<%=modelData.ClientVerificationData.request_id%>" class="view-link">View</a>
+						      	</td>
+							</tr>
+							<% i++;})
+						%>

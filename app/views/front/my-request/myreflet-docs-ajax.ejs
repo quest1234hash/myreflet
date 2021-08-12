@@ -1,0 +1,27 @@
+<div class="form-group for-select-existing-doc">
+    <div class="input-group">
+      <div class="dropdown keep-inside-clicks-open">
+          <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select from existing documents
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <%if(request_docs.length>0){
+                    var k=0;
+                    for(let document of request_docs){%>
+             <div class="for-doc-select">
+                <div class="checkbox"> 	
+                  <label>
+                        <%=document.document_name%>
+                    <input type="checkbox" onclick="get_check_doc('<%=k%>')" id="doc_check<%=k%>" value="<%=document.user_doc_id%>" name="doc_check">
+                    <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                  </label>
+                </div>	
+             </div>
+             <% k++; }}%>
+             
+          </div>
+        </div>
+      
+    </div>
+</div>
+

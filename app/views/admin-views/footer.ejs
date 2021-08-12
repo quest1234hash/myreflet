@@ -1,0 +1,86 @@
+</div>
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+<footer class="footer">
+  <div class="d-sm-flex justify-content-center justify-content-sm-between">
+    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2019. All rights
+      reserved.</span>
+  </div>
+</footer>
+<!-- partial -->
+</div>
+<!-- main-panel ends -->
+</div>
+<!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+<!-- plugins:js -->
+<script src="/admin-assets/vendors/js/vendor.bundle.base.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<script src="/admin-assets/vendors/chart.js/Chart.min.js"></script>
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script src="/admin-assets/js/off-canvas.js"></script>
+<script src="/admin-assets/js/hoverable-collapse.js"></script>
+<script src="/admin-assets/js/misc.js"></script>
+<!-- endinject -->
+<!-- Custom js for this page -->
+<script src="/admin-assets/js/dashboard.js"></script>
+<script src="/admin-assets/js/todolist.js"></script>
+<!-- End custom js for this page -->
+
+
+
+
+  
+
+
+
+
+<script>
+  $(document).ready(function(){
+    // alert("hello");
+  $.ajax({
+type: "get",
+url: "/admin_header_notifications",
+data:{},
+success: function (data) {
+  // alert("hello2");
+  // alert(data);
+  // console.log(data)
+      // alert(data[0].notification_count);
+      
+      
+      $('#notification_div').html(data)
+      //  if(data[0].notification_count>0){
+      //     $('#notification_count').addClass("badge");
+      // $('#notification_count').html(data[0].notification_count);
+      // $('#notification_count_inner').html(data[0].notification_count+" New");
+      //  }else{
+      //     $('#notification_count').removeClass("badge");
+      // $('#notification_count').html("");
+      // $('#notification_count_inner').html("");
+      //  }
+      
+
+}
+})   
+})
+// $(document).ready(function(){
+// $.ajax({
+// type: "get",
+// url: "/unread-notification-list",
+// data:{},
+// success: function (data) {
+//       // alert(data);
+//       $('#unread_not_div').html(data);
+
+// }
+// })
+// })
+</script>
+
+</body>
+
+</html>

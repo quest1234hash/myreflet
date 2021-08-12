@@ -1,0 +1,235 @@
+<%- include('header'); -%>
+
+<div>
+	<div class="page-header">
+      <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+          <i class="mdi mdi-contacts"></i>
+        </span> Manage Requests </h3>
+      <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="row">
+      <div class="col-md-11 m-auto">
+         <h4 class="Main-heading">Verifier's Information</h4>
+        <div class="card">
+          <div class="card-body">
+            <div>
+               <div class="verifier-heading">
+                 <img src="assets/images/icons/repersentative.png">
+                 <span class="small-heding">Representative</span>
+               </div>
+               <div class="row">
+                 <div class="col-md-10 m-auto">
+                     <div class="row">
+                       <div class="col-md-3">
+                         <div class="account-detail-block">
+                              <h6>First Name</h6>
+                              <h5>George</h5>
+                            </div>
+                       </div>
+                        <div class="col-md-3">
+                         <div class="account-detail-block">
+                              <h6>Last Name</h6>
+                              <h5>Strong</h5>
+                            </div>
+                       </div>
+                         <div class="col-md-4">
+                           <div class="account-detail-block">
+                                <h6>Email ID</h6>
+                                <h5>georgestrong@gmail.com</h5>
+                              </div>
+                         </div>
+                          <div class="col-md-2">
+                           <div class="account-detail-block">
+                                <h6>Country</h6>
+                                <h5>UK</h5>
+                              </div>
+                         </div>
+                     </div>
+                       <div class="row">
+                       <div class="col-md-3">
+                         <div class="account-detail-block">
+                              <h6>My Reflet ID Code</h6>
+                              <h5>53201</h5>
+                            </div>
+                       </div>
+                        <div class="col-md-3">
+                         <div class="account-detail-block">
+                              <h6>Mobile Number</h6>
+                              <h5>8796753452</h5>
+                            </div>
+                       </div>
+                         <div class="col-md-4">
+                           <div class="account-detail-block">
+                                <h6>Submitted On</h6>
+                                <h5>20 July, 2019</h5>
+                              </div>
+                         </div>
+                          <div class="col-md-2">
+                           <div class="account-detail-block">
+                                <h6>Status</h6>
+                                <h5 class="pending">Pending</h5>
+                              </div>
+                         </div>
+                     </div>
+                 </div>
+               </div>
+            </div>
+          </div>
+        </div>
+
+        <h4 class="Main-heading mt-40 mb-0">Received Documents</h4>
+        <div class="recived-doc-details">
+          <div id="accordion">
+            <div class="card">
+              <div class="card-header" id="headingOne">
+                <div class="row align-middle-flex">
+                  <div class="col-md-8">
+                     <h5 class="mb-0 clearfix">
+                      Driving Licence   
+                    </h5>
+                  </div>
+                  <div class="col-md-4 text-right">
+                     <button class="bg-gradient-primary text-white" data-toggle="collapse" data-target="#collapseOne"  aria-expanded="true" aria-controls="collapseOne">
+                       <i class="mdi mdi-menu-down"></i>
+                     </button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body table-responsive">
+                    <table class="table document-table">
+                      <thead>
+                        <tr>
+                          <th width="20%">Version</th>
+                          <th width="10%">Document</th>
+                          <th width="15%">Date</th>
+                          <th width="10%">ID Code</th>
+                          <th width="10%">Status</th>
+                          <th width="25%">Reason</th>
+                          <th width="10%">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Driving Licence 1</td>
+                          <td>
+                            <div class="verifier-typ-img">
+                              <img src="assets/images/icons/document.png">
+                            </div>
+                          </td>
+                          <td>july 30, 2019</td>
+                          <td>DL-1254</td>
+                          <td>
+                            <p class="pending">Pending</p>
+                          </td>
+                          <td>
+                            <p>
+                              The Picture was not clear.
+                            </p>
+                          </td>
+                          <td class="reject-accept">
+                            <i class="approve mdi mdi-checkbox-marked-circle"></i>
+                            <a href="" data-toggle="modal" data-target="#myModal-reason"><i class="reject mdi mdi-close-circle"></i></a>
+                            
+                            
+                          </td>
+                        </tr>
+                       
+                      </tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="headingTwo">
+                <div class="row align-middle-flex">
+                  <div class="col-md-8">
+                     <h5 class="mb-0 clearfix">
+                      Form 3 
+                    </h5>
+                  </div>
+                  <div class="col-md-4 text-right">
+                     <button class="bg-gradient-primary text-white" data-toggle="collapse" data-target="#collapseTwo"  aria-expanded="true" aria-controls="collapseTwo">
+                       <i class="mdi mdi-menu-down"></i>
+                     </button>
+                  </div>
+                </div>
+              </div>
+              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                 -----
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="headingThree">
+                <div class="row align-middle-flex">
+                  <div class="col-md-8">
+                     <h5 class="mb-0 clearfix">
+                      Form 2 
+                    </h5>
+                  </div>
+                  <div class="col-md-4 text-right">
+                     <button class="bg-gradient-primary text-white" data-toggle="collapse" data-target="#collapseThree"  aria-expanded="true" aria-controls="collapseThree">
+                       <i class="mdi mdi-menu-down"></i>
+                     </button>
+                  </div>
+                </div>
+              </div>
+              <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                  -----
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div id="myModal-reason" class="modal fade modal-reason" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+           <div class="reason-heading">
+               <div class="reason-box">
+                 <div class="inner-border">
+                   <i class="fas fa-question"></i>
+                 </div>
+               </div>
+               <div>
+                 Reason For Rejecting Document
+               </div>
+           </div>
+           <div class="reason-form">
+             <div class="form-group">
+               <label>Reason</label>
+                <input type="text" class="form-control" placeholder="Enter the reason">
+              </div>
+              <div class="popup-btn">
+                <a href="" class="btn btn-common bg-gradient-primary">Submit</a>
+                <a href="" class="btn btn-common bg-gradient-primary">Cancel</a>
+              </div>
+           </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<%- include('footer'); -%>

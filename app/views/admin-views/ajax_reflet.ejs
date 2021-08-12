@@ -1,0 +1,84 @@
+   <table class="table tabel-virifier"id="myTable3">
+              <thead> 
+                <tr>
+                   <th>S.No.</th>
+                   <th>Reflet User</th>
+                  <th>Type</th>
+                  <th > All Levels</th>
+                  <!-- <th class="hide_link">View All Documents</th> -->
+                </tr>
+              </thead>
+              <tbody id="myTable" class="data_table">
+                  <% if(count_verifier_list.length>0)
+                  { 
+                     var i=0;
+                     var j=1;
+                     count_verifier_list.forEach(function(each_data){
+                        %>
+              <tr>
+                 
+                 <td>
+                   <div>
+                     <p class=""><%=j%>.</p>
+                   </div>
+                 </td>
+                 <td>
+                   <div> 
+                     <p class="upper">
+                           <%if(each_data.entity_company_name){%>
+                                    <span class="font-w-600"> <%=each_data.entity_company_name%> </span>
+                                    <br><%=each_data.reflect_code%>
+                                <%}else if(each_data.rep_firstname){%>
+                                    <span class="font-w-600"> <%=each_data.rep_firstname%> </span>
+                                    <br><%=each_data.reflect_code%>
+                                   
+                                <%}%>
+                    </p>
+                   </div>
+                  </td>
+                              
+                   <td>
+                          <div> 
+                            <p class="upper"><%=each_data.user_as%></p>
+                          </div>
+                   </td>
+                      
+                  <td>
+
+                        <ul>                                  
+                          
+
+                          <%if(each_data.level_name=='undefined'){%>
+                                                     <p class="upper"style="color: red"> This user not come in any level! </p>
+                                         <%}else{%> 
+                                                 <% each_data.level_name.forEach(function(each_doc){%>
+
+                                                           <li><p class="upper"style="white-space: pre-wrap;"><%=each_doc%></p></li>
+                                                 <%})%>
+                                                 
+                                         <%}%> 
+                         
+                        </ul>
+                       
+                     
+                   </td>
+
+                 
+                  
+                  <!-- <td><a class="dropdown-item hide_link" href="/view-levels-by-userid?reflect_id=<%=each_data.reflect_id%>&user_as=<%=each_data.user_as%>"><i class="fas fa-eye"></i></a></td> -->
+
+
+              <!-- <td><a class="dropdown-item hide_link" href="/view-levels-by-userid?reflect_id=<%=each_data.reflect_id%>&user_as=<%=each_data.user_as%>"><i class="fas fa-eye"></i></a></td> -->
+             
+                </tr>
+                <%
+                i++;  j++;    
+            });
+                }else{
+     %>
+                       <tr>
+            <td colspan="6"><center>No record found.</center> </td>
+             </tr>       <%}%>
+              </tbody>
+              <tbody class="status_table"></tbody>
+            </table>

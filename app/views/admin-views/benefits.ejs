@@ -1,0 +1,594 @@
+<%- include('header'); -%>
+
+<div>
+   <div class="main-bredcrum-box">
+        <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+           Why Choose Us
+          </li> 
+        </ul>
+      </nav>
+    </div> 
+	<div class="page-header">
+      <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+          <i class="mdi mdi-contacts"></i>
+        </span>            Why Choose Us </h3>
+            <div>
+                <!-- <a href="#" class="btn btn-common bg-gradient-primary text-center m-0" data-target="#newMarketPlace" data-toggle="modal">New Document</a> -->
+            </div>
+    </div>
+   
+    <div class="row align-bottom-flex">
+    	<div class="col-md-2">
+        <div>
+          <div class="form-group">
+              <a href="javascript:void(0);" onclick="export_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-export"></i>
+                   </span> 
+                 </span>
+               </a>
+              <a href="javascript:void(0);" onclick="print_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-printer"></i>
+                   </span> 
+                 </span>
+              </a>
+          </div> 
+        </div> 
+        
+      </div>
+   
+    	<div class="col-md-2"> 
+    		<div>
+          <% if(err_msg!=undefined && err_msg !='' ){ %>
+            <div class="alert alert-danger text-center  flash_msg " id="error_msg">
+                <%= err_msg %>
+               </div>
+             
+            <% }%>
+           
+    			<!-- <div class="form-group">
+                    <label for="exampleInputUsername1">MyReflet ID</label>
+                    <select class="form-control form-control-sm" id="exampleFormControlSelect3">
+                        <option>All</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                  </div> -->
+    		</div>
+    	</div>
+    	<div class="col-md-3 offset-md-5">
+          
+    		<div>
+    			<div class="form-group">
+              
+                      <div class="input-group search-input">
+                       <!--  <input type="text"id="myInput" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2"> -->
+                        <div class="input-group-append">
+                         <!--  <button class="btn btn-sm" type="button"><i class=" mdi mdi-magnify"></i></button> -->
+                        </div>
+                      </div>
+                    </div>
+    		</div>
+    	</div>
+    </div>
+    <div class="row">
+    	<div class="col-md-12">
+    		<div class="table-responsive">
+          <% if(success_msg!=undefined && success_msg !='' ){ %>
+            <div class="alert alert-success text-center  flash_msg "id="success_message">
+            <%= success_msg %>
+           </div>
+          <% }%>
+          <div class="div_data">
+    			<table class="table tabel-virifier"id="myTable3">
+              <thead>
+                <tr>
+                  <th width="10%">Benefit Id</th>
+                  <th scope="col">Label</th>
+                  <th scope="col">Descriptions</th>
+                  <th width="10%"class="hide_link">Icon</th>
+                  <th width="10%">Created At</th>
+                    <th width="10%">Updated At</th>
+
+                  <th width="5%"class="hide_link">Action</th>
+
+                  <!-- <th width="5%">Updated At</th> -->
+                </tr>
+              </thead>
+              <tbody id="myTable"class="div_data">
+                    <% if(benefit_data.length>0)
+                    {
+                       var i=0;
+                       benefit_data.forEach(function(each_data){
+                          %>
+                <tr>
+                   <td>
+                     <div>
+                       <p class="">B-<%=each_data.benifit_id%></p>
+                     </div>
+                   </td>
+                     
+                </td>
+                 <td>
+                     <div style="white-space: pre-wrap;"> 
+                       <p class="upper"><%=each_data.benifit_label%></p>
+                     </div>
+                  </td>
+                    <td>
+                        <div style="white-space: pre-wrap;"> 
+                          <p class="upper"><%=each_data.benifit_descriptions%></p>
+                        </div>
+                    </td>
+                 <td class="hide_link">  
+                  <%
+                    if(each_data.icon)
+                    {
+                        %>
+                       <div class="verifier-typ-img upper outer-bg">
+                                     
+                        <img id="user_profile_image_preview" src="../addMPIcon/<%- each_data.icon %>" class="m-t-5" style="background: #274794">
+                                               
+                         
+                      </div>
+                        <%
+                    }
+                    else
+                    {
+                        
+                        %>
+                       ----------
+                        <%
+                    }
+                %></td>
+               
+                  
+                    <td>
+                     <p><%=moment(each_data.createdAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                   <td>
+                     <p><%=moment(each_data.updatedAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                   <td class="hide_link">
+                     <a href="#" class="dropdown-item data_value" data-target="#editDocument<%=i%>" data-toggle="modal"><i class="mdi mdi-pencil"></i> Edit</a>
+                   </td>
+                </tr>
+                <%
+								i++;			
+            });
+              }else{
+     %>
+                       <tr>
+            <td colspan="8"><center>No record found.</center> </td>
+             </tr>       <%}%>
+             
+              </tbody>
+          </table>
+        </div>
+          
+       
+    		</div>
+    	</div>
+    </div>
+</div>
+
+
+<div class="modal field-edit-modal show" id="newMarketPlace" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <div class="create-wallet-box">
+      <div class="row align-item-center">
+        <div class="col-xl-2 col-lg-3 col-md-3">
+          <div>
+            <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+          </div>
+        </div>
+        <div class="col-xl-10 col-lg-9 col-md-9">
+          <h5 class="heading-purple">Add Market Place</h5>
+        </div>
+      </div>
+      <div class="row m-top-30">
+        <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+          <div class="setup-inner-box for-protact pt-15">
+            <form action="/add-benefits" method="post" class="validate1"enctype="multipart/form-data">
+
+            <div class="create-rflet-id-form">
+                <div class="form-group">
+                    <div class="input-group">
+                      <label>Label</label>
+                      <input type="text" id=""name="label" class="form-control" placeholder="Label"data-rule-required="true" data-msg-required="Please enter label.">
+                    </div>
+                </div>
+                <div class="form-group browse-file-section">
+                    <input type="file" name="benefit_icon" class="file" style="visibility: hidden;position: absolute;" accept="image/x-png,image/jpeg">
+                    <div class="input-group col-xs-12">
+                        <span class="input-group-btn">
+                          <button class="browse btn btn-primary input-lg" type="button"> Choose a file</button>
+                        </span>
+                        <input type="text" class="form-control" readonly="" placeholder=""data-rule-required="true" data-msg-required="Please choose file.">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                      <textarea name="descriptions" id="" cols="30" rows="6" class="form-control" placeholder="Description"data-rule-required="true" data-msg-required="Please enter descriptions."></textarea>  
+                    </div>
+                </div>
+            </div>
+            <div>
+              <button class="btn btn-common bg-gradient-primary ">Save</button>
+              <a class="btn-common-new" href="">Cancel</a>
+            </div>
+            </form>
+          </div>
+        </div>
+       </div>
+      </div>
+       </div>
+    </div>
+  </div>
+</div>
+<!--EDIT Modal -->
+<% if(benefit_data.length>0)
+{
+   var i=0;
+   benefit_data.forEach(function(each_data){
+      %>
+
+<div class="modal field-edit-modal show" id="editDocument<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <div class="create-wallet-box">
+      <div class="row align-item-center">
+        <div class="col-xl-2 col-lg-3 col-md-3">
+          <div>
+            <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+          </div>
+        </div>
+        <div class="col-xl-10 col-lg-9 col-md-9">
+          <h5 class="heading-purple">Edit </h5>
+        </div>
+      </div>
+      <div class="row m-top-30">
+        <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+          <div class="setup-inner-box for-protact pt-15">
+            <form action="/edit-benefits" method="post" class="validate_edit"enctype="multipart/form-data">
+
+            <div class="create-rflet-id-form">
+                <div class="form-group">
+                    <div class="input-group">
+                      <label>Label</label>
+                      <input type="text" id=""name="label" class="form-control" placeholder="Label"data-rule-required="true" data-msg-required="Please enter label."value="<%=each_data.benifit_label%>">
+                    </div>
+                </div>
+                <div class="form-group browse-file-section">
+                    <input type="file" name="icon" class="file" style="visibility: hidden;position: absolute;" accept="image/x-png,image/jpeg">
+                    <div class="input-group col-xs-12">
+                        <span class="input-group-btn">
+                          <button class="browse btn btn-primary input-lg" type="button"> Choose a file</button>
+                        </span>
+                        <input type="text" class="form-control" readonly="" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                      <textarea name="descriptions" id="" cols="30" rows="6" class="form-control" placeholder="Description"data-rule-required="true" data-msg-required="Please enter descriptions."><%=each_data.benifit_descriptions%></textarea>  
+                    </div>
+                </div>
+            </div>
+            <div>
+              <input type="hidden" name="benifit_id"value="<%=each_data.benifit_id%>">
+              <button class="btn btn-common bg-gradient-primary "id="submit_edit">Save</button>
+              <a class="btn-common-new" href="">Cancel</a>
+            </div>
+            </form>
+          </div>
+        </div>
+       </div>
+      </div>
+       </div>
+    </div>
+  </div>
+</div>
+  <%
+								i++;			
+            });
+               }
+           %>
+
+
+           <!-- End Doc modal -->
+<%- include('footer'); -%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script>
+
+
+    function export_table(){
+        // alert('hhh')
+      // $('.hide_link').show();
+    
+        $("#myTable3").table2excel({
+          filename: "Document-list.xls",
+          exclude:'.hide_link',
+        });
+      //   $('.hide_link').show();
+      window.location.reload(true);
+    
+      };
+      
+      function print_table(){
+       $('.hide_link').hide();
+     
+       // $("#user_div").print();
+       var restorepage = $('body').html();
+    // $('.nodata').hide();
+     var printcontent = $('#myTable3').clone();
+     $('body').empty().html(printcontent);
+     window.print();
+     $('body').html(restorepage);
+   
+     window.location.reload(true);
+    
+    
+        }   
+   </script>
+<script type="text/javascript">
+var plan_status;
+  // $('.d1').on('click', '.menu-for-id a', function() {
+
+	//    $('.d2').$(this).val(); 
+
+	// //   var lastID = $(this).html();
+	//    plan_status = $(this).find(".change_status").attr("value");
+	// 	// console.log("text", lastID); 
+
+
+  //  });
+ $('.active_change').click(()=>{
+  var plan_status= $('.change_status').val()
+  var plan_id= $('.plan_id_1').val()
+
+  alert(plan_status)
+  alert(plan_id)
+
+  $.ajax({
+			type: "post",
+			url: "/status-submit",
+			data:{plan_is:plan_id,plan_status:plan_status},
+			success: function (data) {
+				
+				location.reload();
+
+			
+			}
+		});
+ })
+
+  $('.validate').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#submit_signup').attr('disabled',true);
+        form.submit();
+      }
+     });
+
+     $('.validate_edit').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#submit_edit').attr('disabled',true);
+        form.submit();
+      }
+     });
+     
+     setTimeout(function() {
+    $('#success_message').fadeOut('fast');
+    }, 3000);
+    
+    setTimeout(function() {
+    $('#error_msg').fadeOut('fast');
+    }, 3000);
+  </script>
+
+<!-- <script>
+function switchUserType(value){
+
+var value1 = $(".switch_user").val();
+alert(value1)
+var plan_status;
+  // alert($("#switch_user").val())
+if(value1=="on"){
+  plan_status='active';
+  $(".switch_user").val("off");
+  $(".change").text("active");
+
+
+}
+if(value1=="off"){
+  plan_status='inactive';
+
+  $(".switch_user").val("on");
+  $(".change").text("inactive");
+
+}
+alert(plan_status)
+$.ajax({
+            type: "post",
+            url: "/change-plan-status",
+            data: { plan_status : plan_status},
+            success: function(data){
+            alert('ver')
+
+            //   $('#div_sidebar').html("");
+            // $('#div_sidebar').html(``);
+            location.reload()
+            }
+    });
+}
+
+
+
+</script> -->
+<script type="text/javascript">
+  
+  // function activestatuschnage(){
+    // alert($(this).find("button").val("value"))
+    $(".acvtive-id").click(function(evnt){
+         
+         var id = $(this).attr("value");
+    //       alert('active')
+    // // var id =$("#activebut").val()
+    // alert(id);
+     var checkstr =  confirm('Are You Sure You Want To Inactive?');
+       if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-document",
+                       data: { doc_id: id,
+                         status:"inactive" },
+                       success:function(resp)
+                       {
+                        // alert('t')
+
+                        // alert(id);
+                       
+                         // $('#pro_img').hide();  
+                         // $('#inactivebut').hide(); 
+                         // $('#activebut').show(); 
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ 
+ 
+  
+  // function inactivestatuschnage(obj1){
+             // alert(obj1)
+             $(".inacvtive-id").click(function(evnt){
+         
+             var id = $(this).attr("value");
+            //  alert(id)
+            //  alert('inactive')
+             //  console.log($(".abc").find("button"))
+            // var preview_div=$(this).parent(".inabc").parent().attr('id');
+            //  var image_name = $(this).parent(".inabc").find('input').attr('value');
+    
+     
+     //var id =$("#inactivebut").val()
+          //alert("Are You Sure You Want To inctive");
+          var checkstr =  confirm('Are You Sure You Want To Active?');
+          if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-document",
+                       data: { doc_id:id,
+                         status:"active" },
+                       success:function(resp)
+                       {
+                        //  alert(id);
+                         // alert(status);
+                         // $('#pro_img').hide(); 
+                         // $('#activebut').hide();  
+                         // $('#inactivebut').show(); 
+                        
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ </script>
+ 
+ <script>
+        $(document).ready(function(){
+          $("#myInput").on("keyup", function() {
+
+            var value = $(this).val().toLowerCase();
+            // alert(value)
+               if(value)
+            {
+                 
+            $.ajax({
+    type: "post",
+    url: "/search-request-document",
+    data:{query:value},
+    success: function (data) {
+      // alert(data);
+      
+           $('.div_data').html("");
+                    $('.div_data').html(data);
+            
+      
+  
+    
+    }
+  })
+ }
+            else
+            {
+              location.reload(true);
+            }
+  })
+
+          $("#myInput1").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+        });
+        </script>
+
+     <script>
+            $(document).on('click', '.browse', function(){
+           var file = $(this).parent().parent().parent().find('.file');
+           file.trigger('click');
+         });
+         $(document).on('change', '.file', function(){
+           $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i,''));
+         }); 
+        </script>
+<!-- <script>

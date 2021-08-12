@@ -1,0 +1,498 @@
+<%- include('header'); -%>
+
+<style>
+  .status {
+  margin-right: 50px;
+}
+</style>
+    <link href="../assets/css/custom-new.css" rel="stylesheet"/>
+
+<div>
+  <!--  <div class="main-bredcrum-box">
+        <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            User List
+          </li>
+        </ul>
+      </nav>
+    </div> -->
+  <div class="page-header">
+      <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+          <i class="mdi mdi-contacts"></i>
+        </span>User List              
+    </h3>
+      <div class="">
+              <a href="javascript:void(0);" onclick="export_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-export"></i>
+                   </span> 
+                 </span>
+               </a>
+              <a href="javascript:void(0);" onclick="print_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-printer"></i>
+                   </span> 
+                 </span>
+              </a>
+          </div>
+            
+    </div>
+
+    <div class="row">
+      
+      <div class="col-md-3 ml-auto">
+         
+          <div class="form-group">
+              
+                      <div class="input-group search-input">
+                               <input type="text" class="form-control"id="myInput" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                          <button class="btn btn-sm" type="button"><i class=" mdi mdi-magnify"></i></button>
+                        </div>
+                      </div>
+                    </div>
+      </div>
+    </div>
+
+   
+   
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          <% if(success_msg!=undefined && success_msg !='' ){ %>
+            <div class="alert alert-success text-center  flash_msg "id="success_message">
+            <%= success_msg %>
+           </div>
+          <% }%>
+          <div class="data_table">
+          <table class="table tabel-virifier " id="myTable3">
+              <thead>
+                <tr>
+                 <th width="5%">Sr.No.</th>
+                  <th width="5%">User Id</th>
+                 
+                  <th width="10%">Created At</th>
+
+                  <th width="5%"class="hide_link">View Wallet</th>
+                  <th width="5%"class="hide_link">View Levels</th>
+
+                </tr>
+              </thead>
+              <tbody id="myTable">
+                    <% if(user_list.data.length>0)
+                    { 
+                       var i=0;k=1;
+                       user_list.data.forEach(function(each_data){
+                          %>
+                <tr>
+                  <td>
+                     <div>
+                       <p class=""><%=k%>.</p>
+                     </div>
+                   </td>
+                   <td>
+                     <div>
+                       <p class="">UI-<%=each_data.reg_user_id%></p>
+                     </div>
+                   </td>
+
+                    <td>
+                     <p><%=moment(each_data.createdAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                    <td class="hide_link">
+                        <a class="dropdown-item" href="/view-wallet-by-userid?reg_user_id=<%=each_data.reg_user_id%>"><i class="fas fa-eye"></i> </a>
+                     </td>
+                   <td class="hide_link">
+                        <a class="dropdown-item" href="/view-reflet-by-userid?reg_user_id=<%=each_data.reg_user_id%>"><i class="fas fa-eye"></i> </a>
+                   </td>
+                </tr>
+                <%
+                i++;     k++; 
+            });
+                }else{
+     %>
+                       <tr>
+            <td colspan="8"><center>No record found.</center> </td>
+             </tr>       <%}%>
+              </tbody>
+          </table>
+          
+       
+             <div class="pagination-list for-user">
+          
+            <% if (user_list.totalPages > 0) { %>
+             <ul class="pagination text-center">
+               <% if (user_list.currentPage == 1) { %>
+                 <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+               <% } else { %>
+                 <li class="page-item"><a class="page-link" href="/user-list?page=1">&lt;</a></li>
+               <% } %>
+          
+          
+          
+               <% var i = (Number(user_list.currentPage) > 5 ? Number(user_list.currentPage) - 4 : 1) %>
+               <% if (i !== 1) { %>
+                 <!-- <li class="disabled"><a>...</a></li> -->
+                 <li class="page-item disabled"><a class="page-link" >...</a></li>
+               <% } %>
+               <% for (; i <= (Number(user_list.currentPage) + 4) && i <= user_list.totalPages; i++) { %>
+                 <% if (i == user_list.currentPage) { %>
+                   <!-- <li class="active"><a><%= i %></a></li> -->
+                   <li class="page-item active">
+                   <a class="page-link" href="#"><%= i %><span class="sr-only">(user_list.currentPage)</span></a>
+                   </li>
+                 <% } else { %>
+                   <li class="page-item"><a class="page-link" href="/user-list?page=<%= i %>"><%= i %></a></li>
+                 <% } %>
+                 <% if (i == Number(user_list.currentPage) + 4 && i < user_list.totalPages) { %>
+                   <!-- <li class="disabled"><a>...</a></li> -->
+                   <li class="page-item disabled"><a class="page-link" >...</a></li>
+                 <% } %>
+               <% } %>
+          
+          
+               <% if (user_list.currentPage == user_list.totalPages) { %>                       
+                 <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+               <% } else { %>
+                 <li><a class="page-link" href="/user-list?page=<%= user_list.totalPages %>">&gt;</a></li>
+               <% } %>
+          
+             </ul>
+          <% } %> 
+              </div>
+           </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+
+
+
+<%- include('footer'); -%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+
+
+
+<script>
+  $(function () {
+  $("#select-new").select2();
+   $("#select-new1").select2();
+  $("#select-new2").select2();
+  $("#select-new3").select2();
+ 
+});
+</script>
+<script src="/assets/js/select2.full.min.js"></script>
+<script src="/assets/js/jquery.nice-select.min.js"></script>
+
+
+<script>
+ function nameFilter(value){
+  //  alert(value)
+
+   if(value){
+                          
+
+            $.ajax({
+                          type: "post",
+                          url: "/user-list-filter",
+                          data:{name:value},
+                          success: function (data) {
+                            // alert('data');
+                            
+                                 $('.data_table').html("");
+                                          $('.data_table').html(data);
+                                  
+      
+  
+    
+                           }
+            })
+      }else {
+
+        window.location.reload()
+
+       }
+ }
+</script>
+
+
+
+
+
+
+<script>
+
+
+    function export_table(){
+        // alert('hhh')
+      // $('.hide_link').show();
+      $('.hide_status').show();
+
+        $("#myTable3").table2excel({
+          filename: "Verifier-list.xls",
+          exclude:'.hide_link',
+          exclude_img: false,
+
+        });
+      //   $('.hide_link').show();
+      window.location.reload(true);
+    
+      };
+      
+      function print_table(){
+        $('.hide_link').hide();
+        $('.hide_status').show();
+
+     // $("#user_div").print();
+     var restorepage = $('body').html();
+  // $('.nodata').hide();
+   var printcontent = $('#myTable3').clone();
+   $('body').empty().html(printcontent);
+   window.print();
+   $('body').html(restorepage);
+ 
+   window.location.reload(true);
+    
+        }   
+   </script>
+<script type="text/javascript">
+var plan_status;
+  // $('.d1').on('click', '.menu-for-id a', function() {
+
+  //    $('.d2').$(this).val(); 
+
+  // //   var lastID = $(this).html();
+  //    plan_status = $(this).find(".change_status").attr("value");
+  //  // console.log("text", lastID); 
+
+
+  //  });
+ $('.active_change').click(()=>{
+  var plan_status= $('.change_status').val()
+  var plan_id= $('.plan_id_1').val()
+
+  alert(plan_status)
+  alert(plan_id)
+
+  $.ajax({
+      type: "post",
+      url: "/status-submit",
+      data:{plan_is:plan_id,plan_status:plan_status},
+      success: function (data) {
+        
+        location.reload();
+
+      
+      }
+    });
+ })
+
+  $('.validate').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#submit_signup').attr('disabled',true);
+        form.submit();
+      }
+     });
+     $('#validate1').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#submit_signup').attr('disabled',true);
+        form.submit();
+      }
+     });
+ 
+     setTimeout(function() {
+    $('#success_message').fadeOut('fast');
+    }, 3000);
+    
+    setTimeout(function() {
+    $('#error_msg').fadeOut('fast');
+    }, 3000);
+  </script>
+
+<!-- <script>
+function switchUserType(value){
+
+var value1 = $(".switch_user").val();
+alert(value1)
+var plan_status;
+  // alert($("#switch_user").val())
+if(value1=="on"){
+  plan_status='active';
+  $(".switch_user").val("off");
+  $(".change").text("active");
+
+
+}
+if(value1=="off"){
+  plan_status='inactive';
+
+  $(".switch_user").val("on");
+  $(".change").text("inactive");
+
+}
+alert(plan_status)
+$.ajax({
+            type: "post",
+            url: "/change-plan-status",
+            data: { plan_status : plan_status},
+            success: function(data){
+            alert('ver')
+
+            //   $('#div_sidebar').html("");
+            // $('#div_sidebar').html(``);
+            location.reload()
+            }
+    });
+}
+
+
+
+</script> -->
+
+ <script>
+        $(document).ready(function(){
+          // ('.show_link').hide()
+          $('.hide_status').hide();
+
+          $("#myInput").on("keyup", function() {
+            // alert('value')
+
+            var value = $(this).val().toLowerCase();
+             if(value)
+            {
+                          // alert('value'+value)
+
+            $.ajax({
+                          type: "post",
+                          url: "/search-admin-user",
+                          data:{query:value},
+                          success: function (data) {
+                            // alert('data');
+                            
+                                 $('.data_table').html("");
+                                          $('.data_table').html(data);
+                                  
+      
+  
+    
+    }
+  })
+ }
+            else
+            {
+              location.reload(true);
+            }
+  })
+        });
+        </script>
+<script type="text/javascript">
+
+    $(".acvtive-id").click(function(evnt){
+         
+         var id = $(this).attr("value");
+
+         
+     var checkstr =  confirm('Are You Sure You Want To update status active?');
+       if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-user",
+                       data: { reg_user_id: id,
+                         status:"active" },
+                       success:function(resp)
+                       {
+                         location.reload();
+
+                   
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+    $(".inacvtive-id").click(function(evnt){
+
+         var id = $(this).attr("value");
+
+   
+     var checkstr =  confirm('Are You Sure You Want To update status inactive?');
+       if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-user",
+                       data: { reg_user_id: id,
+                         status:"inactive" },
+                       success:function(resp)
+                       {
+                       
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   }) 
+     $(".block-id").click(function(evnt){
+         
+         var id = $(this).attr("value");
+
+         // alert(id)
+
+     var checkstr =  confirm('Are You Sure You Want To update status block?');
+       if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-user",
+                       data: { reg_user_id: id,
+                         status:"block" },
+                       success:function(resp)
+                       {
+                       
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+</script>

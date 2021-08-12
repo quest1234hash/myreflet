@@ -1,0 +1,51 @@
+<%-include('../../innerHeader')%>
+
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/createidentity-assets/success.png">
+					<h4>Import Your Wallet</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="setup-id-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="white-box">
+					<div class="row">
+						<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+							<div class="setup-inner-box for-protact">
+								<p>Here is your wallet address. Your wallet address is a unique address on the Ethereum Blockchain. Think of it like a bank account number that you own, used to send and receive Ether and tokens. The ability to authenticate transactions on this address is encrypted by the private key you just created. Download a backup and save this address in a convenient location.</p>
+
+								<div class="private-key-copy-box">
+									<div class="form-group">
+										<label>Your Wallet Address</label>
+										<div class="input-group mb-3">
+										  <input type="text" name="wallet_address"  class="form-control" value="<%=wallet_address%>" readonly="readonly">
+										
+										</div>
+									</div>
+									<a class="btn-common-new" href="/submit-import-wallet-validatore?wallet_address=<%=wallet_address%>">Continue</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+<%- include('../../innerFooter')%>
+
+
+ 

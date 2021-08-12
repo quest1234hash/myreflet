@@ -1,0 +1,167 @@
+<%-include('innerHeader')%>
+
+
+<section class="heading-sec">
+    <div class="container">
+        <div class="row align-item-center">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="main-heading-dash">
+                    <img src="../assets/images/icons/home-assets/change-pass.png">
+                    <h4>Change Email</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<form method="POST" action="/update-email" id="form_change_pass">
+    <section class="setup-id-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="white-box">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+                                <div class="setup-inner-box for-protact">
+                                    <div class="create-rflet-id-form">
+                                        <p>Please verify your  password and security questions for changing the
+                                            email.</p>
+                                        <div id="message">
+                                            <% if(err_msg!=undefined && err_msg !='' ){ %>
+                                            <div class="alert alert-danger text-center  flash_msg ">
+                                                <%= err_msg %>
+                                            </div>
+
+                                            <% }%>
+                                        </div>
+                                        <div id="message">
+                                            <% if(success_msg!=undefined && success_msg !='' ){ %>
+                                            <div class="alert alert-success text-center  flash_msg ">
+                                                <%= success_msg %>
+                                            </div>
+                                            <% }%>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Password</label>
+                                            <div class="input-group">
+                                                <input type="password" name="password" class="form-control"
+                                                    placeholder="*****" data-rule-required="true"
+                                                    data-msg-required="Please enter old password.">
+                                            </div>
+                                        </div>
+                                        <%if(users){%>
+
+                                        <div class="form-group">
+                                            <label>Security Questions</label>
+                                            <div class="input-group">
+
+                                                <select class="form-control" name="question" data-rule-required="true"
+                                                    data-msg-required="Please select security question.">
+
+                                                    <option value="<%=users[0].dataValues.secu_question_id%>">
+                                                        <%=users[0].tbl_security_question.dataValues.question%></option>
+                                                    <!-- <option>What is Your Hometown?</option>
+										      <option>What is Your Hometown?</option>
+										      <option>What is Your Hometown?</option>
+											  <option>What is Your Hometown?</option> -->
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <%}%>
+									 <div class="form-group">
+							         	<label>Your Answer</label>
+							         	<div class="input-group">
+										  <input type="text" class="form-control" placeholder="Enter Your Answer" name="answer" data-rule-required="true" data-msg-required="Please enter answer." autocomplete="off">
+										</div> 
+										<span class="error_validate" for="answer"></span>
+
+									 </div>
+									 
+
+									 <%if(users[1]){%>
+
+                                        <div class="form-group">
+                                            <label>Security Questions</label>
+                                            <div class="input-group">
+
+                                                <select class="form-control" name="question" data-rule-required="true"
+                                                    data-msg-required="Please select security question.">
+
+                                                    <option value="<%=users[1].dataValues.secu_question_id%>">
+                                                        <%=users[1].tbl_security_question.dataValues.question%></option>
+                                                    <!-- <option>What is Your Hometown?</option>
+												 <option>What is Your Hometown?</option>
+												 <option>What is Your Hometown?</option>
+												 <option>What is Your Hometown?</option> -->
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <%}%>
+
+
+										<div class="form-group">
+											<label>Your Answer</label>
+											<div class="input-group">
+											 <input type="text" class="form-control" placeholder="Enter Your Answer" name="answer" data-rule-required="true" data-msg-required="Please enter answer." autocomplete="off">
+										   </div> 
+										   <span class="error_validate" for="answer"></span>
+   
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>New Email</label>
+                                            <div class="input-group">
+                                             <input type="email" class="form-control" 
+                                             name="neewEmail" id="neewEmail" data-rule-required="true" data-msg-required="Please enter new email." data-rule-email="true">
+                                           </div>
+                                           <span class="error_validate" for="neewEmail"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Confirm Email</label>
+                                            <div class="input-group">
+                                             <input type="email" class="form-control"   name="conPassword" id="conPassword" data-rule-required="true" data-msg-required="Please enter confirm password." data-rule-equalTo="#neewEmail" data-msg-equalTo="New email and confirm email should be same." data-rule-email="true">
+                                           </div>
+                                           <span class="error_validate" for="conPassword"></span>
+   
+                                        </div>
+
+									<div class="private-key-copy-box">
+										<button type="submit" class="btn-common-new" id="submit_pass" >Change Email</button>
+									</div>
+							  </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+</form>
+<%- include('innerFooter')%>
+
+
+                                        <script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+                                        <script
+                                            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+                                        <script type="text/javascript">
+                                            $('#form_change_pass').validate({
+                                                onfocusout: function (element) {
+                                                    this.element(element);
+                                                },
+                                                errorClass: 'error_validate',
+                                                errorElement: 'span',
+                                                highlight: function (element, errorClass) {
+                                                    $(element).removeClass(errorClass);
+                                                },
+                                                submitHandler: function (form) {
+                                                    $('#submit_pass').attr('disabled', true);
+                                                    form.submit();
+                                                }
+                                            });
+                                        </script>
+                                        <script>
+                                            setTimeout(function () {
+                                                $('#message').fadeOut('fast');
+                                            }, 3000);
+                                        </script>

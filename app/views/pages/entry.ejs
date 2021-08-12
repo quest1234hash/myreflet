@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
+    <title>Parking Software</title>
+</head>
+<body>
+    <h1>1Parking Software</h1>
+    <h3>Welcome to Entry Side</h3>
+    <form action="/entry" method="POST">
+        
+        <video id="webcam" autoplay playsinline width="640" height="480"></video>
+        <canvas id="canvas" class="d-none"></canvas>
+        <input name="photo" type="text" id="photo" hidden>
+        <input type="button" value="Click Photo" onclick="snap()">
+        <input type="submit" value="Check">
+    </form>
+    
+
+    <script>
+        const webcamElement = document.getElementById('webcam');
+        const canvasElement = document.getElementById('canvas');
+        const webcam = new Webcam(webcamElement, 'user', canvasElement);
+
+        webcam.start()
+            .then(result =>{
+               console.log("webcam started");
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    </script>
+    <script>
+        function snap(){
+            var picture = webcam.snap();
+            document.getElementById('photo').innerHTML = picture;
+            document.getElementById('photo').value = picture;
+            console.log('-----'+picture);
+        }
+    </script>
+
+</body>
+</html>

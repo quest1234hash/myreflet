@@ -1,0 +1,103 @@
+<!-- <div class="col-xl-9"> -->
+    <div class="personal-info-box table-responsive another-table">
+        <table class="table" id="myTableData">
+            <%if(checked_array_con_reflet===0){%>
+            <thead>
+                <tr> 
+                    <%if(checked_array.includes('rep_emailid')){%>
+                      <!-- <th width="25%" scope="col">Email</th> -->
+                     <%}
+                     if(checked_array.includes('reflectid_by')){%> 
+                      <th width="20%" scope="col">MyReflet Type</th>
+                      <%}
+                     if(checked_array.includes('rep_firstname')){%> 
+                      <th width="15%" scope="col">Name</th>
+                      <%}
+                     if(checked_array.includes('reflect_code')){%> 
+                      <th width="15%" scope="col">MyReflet Code</th>
+                      <%}
+                      if(checked_array.includes('status')){%> 
+                        <th width="10%" scope="col">Status</th>
+                      <%}
+                      if(checked_array.includes('country')){%> 
+                        <th width="10%" scope="col">Country</th>
+                    <%}%>
+                      <!-- <th width="15%" scope="col">Status</th> -->
+                </tr>
+              </thead>
+            <tbody id="myTable3">
+                <%if(reflet_id_data.length!=0){
+                for(let client of reflet_id_data){    
+                %>
+                <tr>
+                    <%if(checked_array.includes('rep_emailid')){%>
+                    <!-- <td ><%=client.email%></td> -->
+                    <%}if(checked_array.includes('reflectid_by')){%> 
+                      <td class="upper"><%=client.reflectid_by%></td>
+                      <%}if(checked_array.includes('rep_firstname')){%> 
+                       <td class="upper">
+                                    <%if(client.rep_firstname){%>
+                                    <span class="font-w-600"> <%=client.rep_firstname%> </span>
+
+                                <%}else if(client.entity_company_name){%>
+                                    <span class="font-w-600"> <%=client.entity_company_name%> </span>
+                                <%}else{%>
+                                 ---
+                                <%}%>
+                                </td>         
+                   <%}if(checked_array.includes('reflect_code')){%> 
+                    <td><%=client.reflect_code%></td>
+                    <%}%>
+                    <%if(checked_array.includes('status')){%> 
+                        <td><span class="upper approved-status"><%=client.status%></span></td>
+                        <%}%>
+                    <%if(checked_array.includes('country')){%> 
+                    <td class="upper"><%=client.country_name%></td>						
+                    <%}%>
+                
+
+                </tr> 
+                <%}}else{%>
+  <tr>
+            <td colspan="6"><center>No record found.</center> </td>
+             </tr>                      <%}%>  
+            </tbody>
+          <%}else{%>
+            <thead>
+                <tr> 
+                      <th width="15%" scope="col">MyReflet Type</th>
+                      <th width="20%" scope="col">Name</th>
+                      <th width="15%" scope="col">MyReflet Code</th>
+                      <th width="10%" scope="col">Country</th>
+                      <th width="15%" scope="col">Status</th> 
+                </tr>
+              </thead>
+            <tbody>
+                <%if(reflet_id_data.length>0){
+                for(let reflet_data of reflet_id_data){    
+                %>
+                <tr>
+                      <td class="upper"><%=reflet_data.reflectid_by%></td>
+  <td class="upper">
+                                    <%if(reflet_data.rep_firstname){%>
+                                    <span class="font-w-600"> <%=reflet_data.rep_firstname%> </span>
+
+                                <%}else if(reflet_data.entity_company_name){%>
+                                    <span class="font-w-600"> <%=reflet_data.entity_company_name%> </span>
+                                <%}else{%>
+                                 ---
+                                <%}%>
+                                </td>                        <td><%=reflet_data.reflect_code%></td>
+                    <td class="upper"><%=reflet_data.country_name%></td>
+										<td class="upper"><span class="approved-status"><%=reflet_data.status%></span></td>
+                </tr>  
+                <%}}else{%>
+  <tr>
+            <td colspan="6"><center>No record found.</center> </td>
+             </tr>                      <%}%>    
+            </tbody>
+            <%}%>
+
+        </table>
+    </div>
+<!-- </div> -->

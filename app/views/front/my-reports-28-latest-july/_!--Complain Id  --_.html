@@ -1,0 +1,169 @@
+		  <!--Complain Id  -->
+          <div class="show-me-filter mt-20 main-heading-dash">
+            <div class="drop-down-wrapper edit-filter-new-change main-heading-dash width-full">
+                <label class="font-w-600"> Complain Id</label>
+                <div class="setup-inner-box for-protact p-0">
+                    <div class="create-rflet-id-form">
+                        <div class="form-group for-select-existing-doc">
+                            <div class="input-group">
+                                <div class="dropdown keep-inside-clicks-open">
+                                    <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Name</button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                      <%if(complaint_data){
+                                          for(let complaint of complaint_data){    
+                                          %>
+                                      <div class="for-doc-select">
+                                          <div class="checkbox"> 	
+                                              <label>C - <%=complaint.complain_id%><input type="checkbox" value=""><span class="cr"><i class="cr-icon fa fa-check"></i></span></label>
+                                          </div>
+                                      </div>
+                                      <%}}%>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       <!-- Verifier -->
+        <div class="show-me-filter mt-20 main-heading-dash">
+          <div class="drop-down-wrapper edit-filter-new-change main-heading-dash width-full">
+              <label class="font-w-600"> Verifier</label>
+              <div class="setup-inner-box for-protact p-0">
+                  <div class="create-rflet-id-form">
+                      <div class="form-group for-select-existing-doc">
+                          <div class="input-group">
+                              <div class="dropdown keep-inside-clicks-open">
+                                  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Name</button>
+                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                      <%if(verifier_user){
+                                          for(let complaint of verifier_user){    
+                                          %>
+                                  
+                                          
+                  
+                          <div class="for-doc-select">
+                              <div class="checkbox"> 	
+                                      <label>
+                                          <span class="font-w-600"><%= complaint.rep_firstname%> - <%= complaint.reflect_code %></span> 
+                                          <input type="checkbox" value=""><span class="cr">
+                                          <i class="cr-icon fa fa-check"></i></span></label>
+                              </div>
+                          </div>										
+                                                
+                                                  
+                                      <%}}%>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>	
+     <!-- Complain Messsage -->
+
+      <div class="show-me-filter mt-20 main-heading-dash">
+          <div class="drop-down-wrapper edit-filter-new-change main-heading-dash width-full">
+              <label class="font-w-600"> Complain Messsage</label>
+              <div class="setup-inner-box for-protact p-0">
+                  <div class="create-rflet-id-form">
+                      <div class="form-group for-select-existing-doc">
+                          <div class="input-group">
+                              <div class="dropdown keep-inside-clicks-open">
+                                  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Name</button>
+                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                      <%if(complaint_data){
+                                          for(let complaint of complaint_data){    
+                                          %>
+                                      <div class="for-doc-select">
+                                          <div class="checkbox"> 	
+                                              <label><%=complaint.complaint_message%><input type="checkbox" value=""><span class="cr"><i class="cr-icon fa fa-check"></i></span></label>
+                                          </div>
+                                      </div>
+                                      <%}}%>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+       <!-- MyReflet ID -->
+
+          <div class="show-me-filter mt-20 main-heading-dash">
+          <div class="drop-down-wrapper edit-filter-new-change main-heading-dash width-full">
+              <label class="font-w-600"> MyReflet ID</label>
+              <div class="setup-inner-box for-protact p-0">
+                  <div class="create-rflet-id-form">
+                      <div class="form-group for-select-existing-doc">
+                          <div class="input-group">
+                              <div class="dropdown keep-inside-clicks-open">
+                                  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Name</button>
+                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                      <%if(complaint_data){
+                                          for(let complaint of complaint_data){    
+                                          %>
+                                      <div class="for-doc-select">
+                                          <div class="checkbox"> 	
+                                              <label>C - <%=complaint.complain_id%><input type="checkbox" value=""><span class="cr"><i class="cr-icon fa fa-check"></i></span></label>
+                                          </div>
+                                      </div>
+                                      <%}}%>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+       <!--Status -->
+
+          <div class="show-me-filter mt-20 main-heading-dash">
+          <div class="drop-down-wrapper edit-filter-new-change main-heading-dash width-full">
+              <label class="font-w-600"> Status</label>
+              <div class="setup-inner-box for-protact p-0">
+                  <div class="create-rflet-id-form">
+                      <div class="form-group for-select-existing-doc">
+                          <div class="input-group">
+                              <div class="dropdown keep-inside-clicks-open">
+                                  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Name</button>
+                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                                                   <div class="for-doc-select">
+                                              <div class="checkbox"> 	
+                                                   <label>
+                                                      Pending <input type="checkbox" value="pending"class="checkbox1 ">
+                                                      <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                    </label>
+                                              </div>	
+                                          </div>
+                                          <div class="for-doc-select">
+                                              <div class="checkbox"> 	
+                                                   <label>
+                                                      Closed
+                                                      <input type="checkbox" value="closed"class="checkbox1">
+                                                      <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                    </label>
+                                              </div>	
+                                          </div>
+                                          <div class="for-doc-select">
+                                              <div class="checkbox "> 	
+                                                  <label>
+                                                      Responded
+                                                      <input type="checkbox" value="responded" class="checkbox1">
+                                                      <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                    </label>
+                                              </div>	
+                                          </div>
+
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>

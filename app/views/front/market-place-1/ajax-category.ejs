@@ -1,0 +1,13 @@
+<div class="input-group">
+    <select onchange="get_sub_category(this.value,'<%=j%>')" class="form-control valid" name="ver_category" data-rule-required="true" data-msg-required="Please select category." aria-invalid="false">
+    
+        <option>Select category</option>
+    <% if(categories.length>0){
+    for(var j=0;j<categories.length;j++){
+        %>
+        <option value="<%=categories[j].category_id%>"><%=categories[j].category_name%></option>
+    <%}}%>
+        
+    
+    </select>
+</div> 

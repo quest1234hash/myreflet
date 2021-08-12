@@ -1,0 +1,46 @@
+<div class="form-group for-select-existing-doc">
+    <div class="input-group">
+      <div class="dropdown keep-inside-clicks-open">
+          <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select from existing documents
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <%if(request_docs.length>0){
+                    var k=0;
+                    for(let document of request_docs){%>
+             <div class="for-doc-select">
+                <div class="checkbox"> 	
+                  <label>
+                        <%=document.document_name%>
+                    <input type="checkbox" onclick="get_check_doc('<%=k%>-<%=no%>')" id="doc_check<%=no%><%=k%>" value="<%=document.user_doc_id%>" name="doc_check<%=no%><%=k%>">
+                    <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                  </label>
+                </div>	
+             </div>
+             <% k++; }}%>
+             
+          </div>
+        </div>
+      
+    </div>
+</div>
+<div class="personal-info-box for-download-view-table table-responsive">
+  <table class="table" id="myTable_doc">
+    <thead>
+      <tr>
+        <th scope="col">Label</th>
+        <th scope="col">Self Certify</th>
+        <th scope="col">Sign</th>
+        <th scope="col">Certify</th>
+        <th scope="col">Complete</th>
+        <th scope="col">Video proof</th>
+        <th scope="col">Download</th>
+        <th scope="col">View</th>
+      </tr>
+    </thead>
+    <tbody id="doc_data<%=no%>">
+      
+    </tbody>
+  </table>
+  <span id="prm_error_span<%=no%>" class="error_validate"></span>
+</div>

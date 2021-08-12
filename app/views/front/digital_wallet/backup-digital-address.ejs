@@ -1,0 +1,160 @@
+<%-include('../innerHeader')%>
+
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 140px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -75px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/createidentity-assets/setup.png">
+					<h4>Backup Your RefletID Address</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<% if(err_msg!=undefined && err_msg !='' ){ %>
+	<div class="alert alert-danger text-center  flash_msg " id="error_msg">
+		<%= err_msg %>
+	   </div>
+	 
+	<% }%>
+	 <% if(success_msg!=undefined && success_msg !='' ){ %>
+	  <div class="alert alert-success text-center  flash_msg "id="success_message">
+	  <%= success_msg %>
+	 </div>
+	<% }%>
+<section class="setup-id-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="white-box">
+					<div class="row">
+						<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+							<div class="setup-inner-box for-protact">
+								<p>Your wallet address is a unique address on the Ethereum Blockchain. Think of it like a bank account number that you own, used to send and receive Ether and tokens. The ability to authenticate transactions on this address is encrypted by the private key you just created. Download a backup and save this address in a convenient location.</p>
+                                <form action="digital-pvt-key" method="POST">
+								<div class="private-key-copy-box">
+									<div class="form-group">
+										<label>Your Public Key</label>
+										<div class="input-group mb-3">
+										  <input type="text" class="form-control" id="wallet_address" value="<%=walletAddress%>" readonly="readonly" name="wallet_address">
+										  <input type="hidden" value="<%=segment %>" name="segment">
+										  <div class="input-group-append">
+										  	<!-- <a class="btn-copy" href="javascript:void(0);" onclick="myFunction()"><img src="../assets/images/icons/createidentity-assets/copy.png"></a> -->
+
+										  		<span class="tooltip">
+										  		<a class="btn-copy " href="javascript:void(0);" onclick="myFunction1()" onmouseout="outFunc()"><img src="../assets/images/icons/createidentity-assets/copy.png">
+										  		<span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+										   	    </a>
+											</span>
+										  	<a class="btn-copy" href="javascript:void(0);" id="download" download="wallet-address.txt"><img src="../assets/images/icons/createidentity-assets/download.png"></a>
+										 
+										  </div>
+										</div>
+									</div>
+									<button  type="submit" class="btn-common-new">my address is backed up, continue</button>
+								</div>
+							</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+<%- include('../innerFooter')%>
+
+<script type="text/javascript">
+	function myFunction() {
+	  var copyText = document.getElementById("wallet_address");
+	  if($('#wallet_address').val() !="")
+	  {
+	  copyText.select();
+	  document.execCommand("copy");
+	  alert("Wallet address is copied.");
+	  }  
+	}  
+</script>
+<script type="text/javascript">
+	(function () {
+	var textFile = null,
+	  makeTextFile = function (text) {
+		var data = new Blob([text], {type: 'text/plain'});
+		if (textFile !== null) {
+		  window.URL.revokeObjectURL(textFile);
+		}
+		textFile = window.URL.createObjectURL(data);
+		return textFile;
+	  };
+	  var create = document.getElementById('download'),
+		textbox = document.getElementById('wallet_address');
+	  create.addEventListener('click', function () {
+		var link = document.getElementById('download');
+		link.href = makeTextFile(textbox.value);
+	  }, false);
+	})();
+	</script>
+
+<script>
+function myFunction1() {
+  var copyText = document.getElementById("wallet_address");
+  copyText.select();
+  copyText.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  
+  var tooltip = document.getElementById("myTooltip");
+  tooltip.innerHTML = "Copied";
+    // tooltip.innerHTML = "Copied: " + copyText.value;
+
+}
+
+function outFunc() {
+  var tooltip = document.getElementById("myTooltip");
+  tooltip.innerHTML = "Copy to clipboard";
+}
+</script>
+ 

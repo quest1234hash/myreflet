@@ -1,0 +1,286 @@
+<%- include('partials/header.ejs') %>    
+<section class="login-sec">
+	<div class="container-fluid p-0">
+		<div class="row m-0">
+			<div class="col-md-6 p-0">
+				<div class="left-side-login">
+					<div class="logo-box">
+						<a href="/">
+							<img src="assets/images/logo.png">
+						</a>
+					</div>
+					<div class="side-text">
+						<h2>
+							Welcome  Back! Login
+						</h2>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 p-0">
+				<div class="right-side-login">
+					<p class="first-line">Please enter username and password to login.</p>
+					<div class="social-btns text-center"> 
+						<!-- <a class="fb" href="">
+							<span>
+							<i class="fab fa-facebook-f"></i> &nbsp;  Login with Facebook
+						    </span>
+						</a>
+						<a class="tw" href="">
+							<span>
+							<i class="fab fa-twitter"></i> &nbsp;  Login with Twitter
+						    </span>
+						</a>
+						<a class="gp" href="">
+							<span>
+							<i class="fab fa-google-plus-g"></i> &nbsp;  Login with Google
+						    </span>
+						</a> -->
+					</div>
+					<!-- <div class="or-line">
+						<h4>Or</h4>
+					</div> -->
+				 <% if(err_msg!=undefined && err_msg !='' ){ %>
+						<div class="alert alert-danger text-center  flash_msg " id="error_msg">
+								<%= err_msg %>
+							 </div>
+					   
+						<% }%>
+					   <% if(success_msg!=undefined && success_msg !='' ){ %>
+						  <div class="alert alert-success text-center  flash_msg "id="success_message">
+							<%= success_msg %>
+						 </div>
+						<% }%>
+					
+           <form action="/submit_login" method="POST" id="validate">
+					<div class="login-form-main">
+						 <div class="form-group for-warning">
+						    <label>Email ID</label>
+						    <input type="text" class="form-control" name="email" placeholder="" data-rule-required="true" data-msg-required="Please enter email." data-rule-email=”true”>
+						    <div class="info-icon" data-toggle="tooltip" data-placement="top" title="Invalid Email ID">
+						    	<img src="assets/images/icons/warning.png" >
+						    </div>
+						  </div>
+						
+						  <div class="form-group mb-15">
+						    <label>Password</label>
+							<input type="text" name="password" class="form-control" placeholder=""  minlength="8" placeholder="" data-rule-required="true" data-msg-required="Please enter password." id="p1" >
+							<!-- <input type="hidden" name="password" id="password"> -->
+						
+						
+						  </div>
+						  
+						  <div class="form-group">
+							
+							
+							<div class="text-right">
+								<a  href="#"  onclick="document.getElementById('fileToLoad').click()">Import password file</a>
+								<input type="file" id="fileToLoad"  name="import" onchange="uploadText()" style="display:none;"> 
+							</div>
+							<div class="g-recaptcha" data-sitekey="6LepBNIZAAAAADbgTqyuLwnYV4V-STSFYH0qhE0S"></div> 
+						  <div>
+							<span class="captcha_error"style="color:red"></span>
+							  <input type="hidden" name="ip_add" id="ip_add">
+							  <button class="purple-btn hide_btn" type="submit" >Login</button>
+							  <center><span class="loader"><img src="../assets/images/loader-3.gif"height="32" width="52"></span></center>
+							  
+						  	<p class="extra-link">Don't have an acount? <a href="/signup">Sign Up</a></p>
+						  </div>
+						  <input type="hidden" name="Ip_add" id="ip_add_input" >
+					</div>
+				</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+
+
+
+
+
+
+	<!-- JQuery -->
+        <script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- <script type="text/javascript" src="assets/js/jquery-1.11.3.min.js"></script> -->
+        <!-- Bootstrap Core JavaScript -->
+        <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+        <!-- dropdownhover effects JavaScript -->
+        <script type="text/javascript" src="assets/js/bootstrap-dropdownhover.min.js"></script>
+        <!-- wow JavaScript -->
+        <script type="text/javascript" src="assets/js/wow.min.js"></script>
+        <!-- video player JavaScript -->
+
+        <!-- Custom JavaScript -->
+        <script type="text/javascript" src="assets/js/custom.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+		<!-- <script>window.$ = window.jQuery = require('./jquery-3.0.0.min.js');</script>
+        
+		<script>window.$ = window.jQuery = require('jquery');</script> -->
+		
+		<script src="https://www.google.com/recaptcha/api.js"></script>
+
+		<script src="https://www.google.com/recaptcha/api.js?render=6LepBNIZAAAAADbgTqyuLwnYV4V-STSFYH0qhE0S"></script>
+		<script src="https://www.google.com/recaptcha/api.js?render=explicit&onload=onRecaptchaLoadCallback"></script>
+		
+		<script>
+			$(document).ready( function () {
+				$('.loader').hide();
+			
+			} );
+			</script>
+	   <script>
+	 $(function(){
+// 		$.getJSON('https://json.geoiplookup.io/api?callback=?', function(data) {
+//   console.log(JSON.stringify(data, null, 2));
+// });
+var ip_adds;
+window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;//compatibility for Firefox and chrome
+var pc = new RTCPeerConnection({iceServers:[]}), noop = function(){};      
+pc.createDataChannel('');//create a bogus data channel
+pc.createOffer(pc.setLocalDescription.bind(pc), noop);// create offer and set local description
+pc.onicecandidate = function(ice)
+{
+ if (ice && ice.candidate && ice.candidate.candidate)
+ {
+  var myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
+  console.log('my IP: ', myIP);
+  ip_adds=  myIP 
+  pc.onicecandidate = noop;
+ }
+ console.log("ipadadadad",ip_add)
+ $("#ip_add").val(ip_adds)
+};
+	 })  
+	   </script>
+         
+		<script type="text/javascript">
+			$('#validate').validate({
+				 onfocusout: function(element) {
+				 this.element(element);
+				 },
+				 errorClass: 'error_validate',
+				 errorElement:'span',
+				 highlight: function(element, errorClass) {
+				 $(element).removeClass(errorClass);
+				 },
+				 submitHandler:function(form)
+					{
+						return check_captch()
+
+					  $('#submit_signup').attr('disabled',true);
+					  form.submit();
+					}
+				 });
+			setTimeout(function() {
+        $('#success_message').fadeOut('fast');
+        }, 3000);
+        
+        setTimeout(function() {
+        $('#error_msg').fadeOut('fast');
+        }, 3000);
+			</script>
+			<script>
+				$(document).ready(function () {
+					
+    $.getJSON("http://jsonip.com/?callback=?", function (data) {
+        // console.log(data);
+		// alert(data.ip);
+		$("#ip_add_input").val(data.ip)
+    });
+});
+</script>
+<script>
+function check_captch(){
+	// alert('load')
+	var captcha = grecaptcha.getResponse();
+    //   alert(captcha)
+	  if(captcha){
+		   $('.hide_btn').hide();
+
+		   $('.loader').show();
+			setTimeout(function() {
+							$('.captcha_error').fadeOut('fast');
+							}, 100);
+			return true;
+	  }else{
+		$('.captcha_error').html("Please select captcha first.");
+		return false;
+	  }
+	}
+</script>		
+
+<script>
+	function uploadText(){
+		var fileToLoad = document.getElementById("fileToLoad").files[0];
+  var fileReader = new FileReader();
+  fileReader.onload = function(fileLoadedEvent){
+      var textFromFileLoaded = fileLoadedEvent.target.result;
+   //   console.log("dataaaaaaaaaaaa:::",textFromFileLoaded);
+	  textFromFileLoaded=textFromFileLoaded.toString();
+//decrypting password
+let decryptPass='';
+                 var xhttp = new XMLHttpRequest();
+              xhttp.open("POST", "get_decrypt_pass", true);
+              xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+              xhttp.send(`password=${textFromFileLoaded}`);
+              xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+			//console.log("decrrrrrrrrrrrrrrrrrrrrrrr");
+            decryptPass =this.responseText;
+			
+			decryptPass=decryptPass.replace(/ /g,'+');
+			console.log("decryptedddddddd pass",decryptPass);
+		  document.getElementById("p1").value = decryptPass;
+          
+       }
+    };   
+  };
+  fileReader.readAsText(fileToLoad, "UTF-8");
+}
+</script>
+
+
+
+<script>	
+// 	function getSalt(val){
+// 		alert(val);
+// //	let client_salt='';
+// 	$.ajax({
+//         url : "get_client_salt",
+//         type : "POST",
+//         cache: false,
+//         data : {email:val},
+//         success:function(result){
+//           $('#client_s').val(result);
+//         } 
+//       });
+
+	 
+// 	}
+
+	// function encryptPass(val){
+
+	// 	let cs=  document.getElementById('client_s').value;
+		
+	// //	alert(val);
+	// 	if(cs){
+	//
+
+	// 	console.log("ctrrrrrrrrr",cr1);
+    
+
+	// 	}else{
+	// 		alert("Please enter valid email ID");
+	// 	}
+	// }
+	
+</script>
+
+<%- include('partials/footer.ejs') %>    
+
+
+
+ 

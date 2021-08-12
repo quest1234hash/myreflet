@@ -1,0 +1,54 @@
+
+<div class="personal-info-box for-download-view-table table-responsive">
+	<table class="table" >
+	  <thead>
+		<tr>
+		  <th scope="col">Label</th>
+		  <th scope="col">Self Certify</th>
+		  <th scope="col">Sign</th>
+		  <th scope="col">Certify</th>
+		</tr>
+	  </thead>
+	  <tbody>
+		<% if(requested_docs.length>0){
+			for(var j=0;j<requested_docs.length;j++){
+				%>
+	  <tr >
+		  <th scope="row">
+			  <div class="for-flex-align">
+				   <img src="../assets/images/icons/dashboard-assets/drivinglicense.png">
+				   <%=requested_docs[j].document_name%>
+				   
+			  </div>
+		  </th>
+		  <td>
+			  <%if(requested_docs[j].self_certified=="yes"){%>
+			<div class="for-flex-align">
+				<img src="../assets/images/icons/dashboard-assets/tick.png">
+				
+		   </div>
+		   <%}%>
+		  </td>
+		  <td>
+			<%if(requested_docs[j].sign=="yes"){%>
+			
+				<div class="for-flex-align">
+					<img src="../assets/images/icons/dashboard-assets/tick.png">
+					
+			   </div>
+			   <%}%>
+		  </td>
+		  <td>
+			<%if(requested_docs[j].certified=="yes"){%>
+				<div class="for-flex-align">
+					<img src="../assets/images/icons/dashboard-assets/tick.png">
+					
+			   </div>
+			   <%}%>
+		  </td>
+		</tr>
+		<%}}%>
+	</tbody>
+	</table>
+	<span id="prm_error_span" class="error_validate"></span>
+</div>

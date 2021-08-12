@@ -1,0 +1,633 @@
+<%-include('../innerHeader')%>
+
+<style>
+  .request-doc-list ul{
+  display: flex;
+  padding-left: 0;
+  margin-bottom: 0;
+  }
+   .request-doc-list ul li{
+width: 50%;
+list-style: none;
+  }
+   .request-doc-list ul li img{
+height: 60px;
+margin: 3px 0px;
+  }
+</style>
+
+
+<section class="id-code-box-sec">
+  <form action="/accept-reject-request" method="POST" id="formID"
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+
+                <div class="personal-info-heading">
+                    <div class="row align-item-center">
+                        <div class="col-md-8">
+                            <h4 class="purple-heading">Client Information</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="white-box">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="address-box-full">
+                          <p>First Name</p>
+                          <h6><%=decrypt(requestData[0].full_name)%></h6>
+                        </div>
+                      </div>
+                  <!--     <div class="col-md-3">
+                        <div class="address-box-full">
+                          <p>Middle Name</p>
+                          <h6>-</h6>
+                        </div>
+                      </div> -->
+                      <div class="col-md-3">
+                        <div class="address-box-full mb-15">
+                          <p>Last Name</p>
+                          <h6><%if(requestData[0].last_name){%><%=decrypt(requestData[0].last_name)%><%}else{%>
+                            ----<%}%>
+                          </h6>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="address-box-full mb-15">
+                          <p>Date Of Birth</p>
+                          <h6><%=decrypt(requestData[0].dob)%></h6>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="address-box-full">
+                          <p>Country</p>
+                          <h6><%=decrypt(requestData[0].birthplace)%></h6>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="address-box-full">
+                          <p>Email ID</p>
+                          <h6><%=decrypt(requestData[0].email)%></h6>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="address-box-full mb-15">
+                          <p> Phone Number</p>
+                          <h6><%=decrypt(requestData[0].mobile_number)%></h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                 <div class="personal-info-heading">
+                    <div class="row align-item-center">
+                        <div class="col-md-8">
+                            <h4 class="purple-heading">Documents</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="white-box request-doc-list mb-30">
+                  <div class="row">
+                      <div class="col-md-3">
+                        <div class="address-box-full">
+                          <p>Documents Number</p>
+                          <h6><%=requestData[0].doc_unique_code%></h6>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="address-box-full">
+                          <p>Doument Name</p>
+                          <h6><%=requestData[0].document_name%></h6>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="address-box-full mb-15">
+                          <p>Expire Date</p>
+                          <h6><%=moment(requestData[0].expire_date).format('MMM DD, YYYY')%></h6>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="address-box-full mb-15">
+                          <p>Status</p>
+                          <h6><%=requestData[0].doc_file_status%></h6>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul>
+                                <li>
+                                  <h5 class="approved-status">Scanned copy of driving license</h5>
+                                      <%
+                                      var i=0;  %>
+                                    
+                                  
+                                     <% console.log("requestData[0].ipfsData",requestData[0].ipfsData.length)%>
+
+                                      
+                                      <%requestData[0].ipfsData.forEach(ipfsImage=>{%>
+
+                                      <a href="" data-toggle="modal" data-target="#doc-img-Modal<%=i%>">
+                                        <img src="<%=ipfsImage%>">
+                                        
+                                    </a>
+                                    <%i++;})%>
+                                  
+
+                                   <!--  <img src="../assets/images/icons/createidentity-assets/licence.png">
+                                    <img src="../assets/images/icons/createidentity-assets/licence.png">
+                                    <img src="../assets/images/icons/createidentity-assets/licence.png">
+                                    <img src="../assets/images/icons/createidentity-assets/licence.png">
+                                    <img src="../assets/images/icons/createidentity-assets/licence.png"> -->
+                                </li>
+                                <li>
+                                    <h5 class="approved-status">Document-details</h5>
+                                    <div class="for-transaction-id">
+                                        <span class="details">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                      <input type="hidden" name="validatore_id"value="<%=validatore_req_id%>"id="validatore_id">
+                      <input type="hidden" name="validatore_name"value="<%=decrypt(requestData[0].full_name)%>"id="validatore_name">
+                      <input type="hidden" id="type" name="validator_type"id="validator_type">
+
+                      <%if(requestData[0].validatore_status== "assigned"){%>
+                        <div class="text-center btn-set-doc">
+                          <div class="row">
+                            <div class="col-xl-4 offset-xl-2 col-lg-6 col-md-6 col-sm-6">
+                              <!-- <a href=""  class="btn-common-new">Accept</a> -->
+                              <!-- <input type="hidden" id="type" name="validator_type"id="validator_type"> -->
+                       <!--        <input type="text" onclick="formsubmit(value)"id="private-key-accept-Modal" class="btn-common-new" value="accept" readonly> -->
+                           <!--    <button  class="btn-common-new"id="private-key-accept-Modal" value="accept"data-toggle="modal">Accept</button>  -->
+                        <!--           <a class="dropdown-item" href="private-key-accept-Modal" data-toggle="modal">Accept</a> -->
+                            
+                        <a href="#private-key-accept-Modal" class="btn-common-new" data-toggle="modal">Accept</a>
+                            </div>
+                            <div class="col-xl-4  col-lg-6 col-md-6 col-sm-6">
+                              <!-- <a href="" class="btn-common-new">Reject</a> -->
+                                <a href="#private-key-reject-Modal" class="btn-common-new" data-toggle="modal">Reject</a>
+                      <!--         <input type="text" onclick="formsubmit(value)" class="btn-common-new" value="reject" readonly> -->
+        
+                            </div>
+                          </div>
+                         </div>
+                        <%}else{%>
+                          <%if(requestData[0].validatore_status== "accept"){%>
+                            <div class="text-center btn-set-doc">
+                              <div class="row">
+                                <div class="col-xl-4 offset-xl-2 col-lg-6 col-md-6 col-sm-6">
+                                  <!-- <a href=""  class="btn-common-new">Accept</a> -->
+                                  <!-- <input type="hidden" id="type" name="validator_type"id="validator_type"> -->
+                           <!--        <input type="text" onclick="formsubmit(value)"id="private-key-accept-Modal" class="btn-common-new" value="accept" readonly> -->
+                               <!--    <button  class="btn-common-new"id="private-key-accept-Modal" value="accept"data-toggle="modal">Accept</button>  -->
+                            <!--           <a class="dropdown-item" href="private-key-accept-Modal" data-toggle="modal">Accept</a> -->
+                                
+                            <a href="javascript:void(0)" class="btn-common-new" >Accepted</a>
+                                </div>
+                                <!-- <div class="col-xl-4  col-lg-6 col-md-6 col-sm-6"> -->
+                                  <!-- <a href="" class="btn-common-new">Reject</a> -->
+                                    <!-- <a href="#private-key-reject-Modal" class="btn-common-new" data-toggle="modal">Reject</a> -->
+                          <!--         <input type="text" onclick="formsubmit(value)" class="btn-common-new" value="reject" readonly> -->
+            
+                                <!-- </div> -->
+                              </div>
+                             </div>
+
+                            <%}else{%>
+                              <div class="text-center btn-set-doc">
+                                <div class="row">
+                                  <div class="col-xl-4 offset-xl-2 col-lg-6 col-md-6 col-sm-6">
+                                    <!-- <a href=""  class="btn-common-new">Accept</a> -->
+                                    <!-- <input type="hidden" id="type" name="validator_type" id="validator_type"> -->
+                             <!--        <input type="text" onclick="formsubmit(value)"id="private-key-accept-Modal" class="btn-common-new" value="accept" readonly> -->
+                                 <!--    <button  class="btn-common-new"id="private-key-accept-Modal" value="accept"data-toggle="modal">Accept</button>  -->
+                              <!--           <a class="dropdown-item" href="private-key-accept-Modal" data-toggle="modal">Accept</a> -->
+                                  
+                              <!-- <a href="#private-key-accept-Modal" class="btn-common-new" data-toggle="modal">Accept</a> -->
+                                  </div>
+                                  <div class="col-xl-4  col-lg-6 col-md-6 col-sm-6">
+                                    <!-- <a href="" class="btn-common-new">Reject</a> -->
+                                    <a href="javascript:void(0)" class="btn-common-new" >Rejected</a>
+                            <!--         <input type="text" onclick="formsubmit(value)" class="btn-common-new" value="reject" readonly> -->
+              
+                                  </div>
+                                </div>
+                               </div>
+
+                              <%}%>
+                          <%}%>
+                
+
+
+            </div>          
+        </div>
+    </div>
+  </form>
+</section>
+
+
+ <%var i=0;
+ requestData[0].ipfsData.forEach(ipfsImage=>{%>
+<div class="modal fade field-edit-modal" id="doc-img-Modal<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="modal-img-big">
+<!--           <img src="../assets/images/icons/dashboard-assets/doc.png">
+ -->           
+  <img src="<%=ipfsImage%>">
+        </div>
+       </div>
+    </div>
+  </div>
+</div>
+ <%i++;})%>
+<!-- Modal E -->
+<div class="modal fade field-edit-modal" id="private-key-accept-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-body">
+      <button type="button" class="close hide_click" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="create-wallet-box">
+        <div class="row align-item-center">
+          <div class="col-xl-2 col-lg-3 col-md-3">
+            <div class="for-icon-bg">
+              <img src="../assets/images/icons/createidentity-assets/popup-mobile-icon.png">
+            </div>
+          </div>
+          <div class="col-xl-10 col-lg-10 col-md-10">
+            <h5 class="heading-purple">Please enter your private key.</h5>
+            <!-- <p>Verify your phone number by entering the OTP sent to your registered email address.</p> -->
+            <div id="error_message"><span class="error_validate" id="accept_error"></span></div>
+
+          </div>
+        </div>
+         <div class="login-form-main phone-otp">
+           <div class="form-group">
+            <label>Private Key</label>
+            
+              <input type="text" id="private_key_accept" name="private_key_accept" class="form-control text-center">
+              
+           
+          </div>
+          <input type="hidden" id="request_doc_id" value="<%=requestData[0].request_doc_id%>">
+            <input type="hidden" id="user_id" value="<%=user_id%>">
+          <input type="hidden" id="client_reflect_i" value="<%=requestData[0].reflect_id%>">
+            <input type="hidden" id="request_id" value="<%=requestData[0].request_id%>">
+            
+          <div class="private-key-copy-box">
+            <button class="btn-common-new check hide_click" onclick="accept_request()">Continue</button>
+<!--                         <button class="btn-common-new check hide_click" onclick="formsubmit()">Continue</button>
+ -->
+          <center><span class="loader"><img src="../assets/images/loader-3.gif"></span></center>
+
+          </div>
+        </div>
+       </div>
+     </div>
+    </div>
+  </div>
+  </div>
+
+<div class="modal fade field-edit-modal" id="private-key-reject-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-body">
+      <button type="button" class="close hide_click" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="create-wallet-box">
+        <div class="row align-item-center">
+          <div class="col-xl-2 col-lg-3 col-md-3">
+            <div class="for-icon-bg">
+              <img src="../assets/images/icons/createidentity-assets/popup-mobile-icon.png">
+            </div>
+          </div>
+          <div class="col-xl-10 col-lg-10 col-md-10">
+            <h5 class="heading-purple">Please enter your private key.</h5>
+            <!-- <p>Verify your phone number by entering the OTP sent to your registered email address.</p> -->
+            <div id="error_message"><span class="error_validate" id="reject_error"></span></div>
+          </div>
+        </div>
+         <div class="login-form-main phone-otp">
+          <div class="form-group">
+            <label>Reason to reject</label>
+            
+              
+              <textarea class="form-control" id="reject_reason"></textarea>
+             
+            </div>
+           <div class="form-group">
+            <label>Private Key</label>
+            
+              <input type="text" id="private_key_reject" name="private_key_reject" class="form-control text-center">
+              
+           
+          </div>
+          <div class="private-key-copy-box">
+            <button class="btn-common-new hide_click" onclick="reject_request('')">Continue</button>
+            <p class="extra-link hide_click"><a href="">Cancel</a></p>
+          </div>
+                    <center><span class="loader"><img src="../assets/images/loader-3.gif"></span></center>
+
+        </div>
+       </div>
+     </div>
+    </div>
+  </div>
+  </div>
+
+<%- include('../innerFooter')%>
+--><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script>
+  $(document).ready( function () {
+        $('.loader').hide();
+  
+} );
+</script>
+<script>
+  function formsubmit(value){
+   var validator_type = 'accept'
+    var full_name = `<%=decrypt(requestData[0].full_name)%>`;
+    var validatore_req_id = `<%=validatore_req_id%>`;
+
+      $.ajax({
+          type:"post",
+          url:"/accept-reject-request",
+          data:{full_name,request_doc_id,validatore_req_id},
+          success:function(data) {
+            // alert(data);
+            var success = data.success;
+            var failure = data.fail;
+            if(failure=="true"){
+                      $('.loader').hide()
+
+                          $('.hide_click').show();
+
+
+              $('#accept_error').html("");
+              $('#accept_error').html("Your private key is incorrect.");
+            }else{
+            location.reload();
+            }
+            
+            
+          }
+        });
+    
+  }
+</script>
+<script>
+  function accept_request(){
+    var request_doc_id= $('#request_doc_id').val();
+    var client_reflect_id= `<%=requestData[0].reflect_id%>`
+    var user_id= $('#user_id').val();
+    var request_id= $('#request_id').val();
+    var private_key = $('#private_key_accept').val();
+    var request_file_id = `<%=requestData[0].request_file_id%>`;
+    var document_name = `<%=requestData[0].document_name%>`;
+
+    var request_file_hash = `<%=requestData[0].request_file_hash%>`
+    var validatore_id = `<%=validatore_req_id%>`
+    var verifer_my_reflect_id= `<%=requestData[0].verifer_my_reflect_id%>`
+
+    // alert(client_reflect_id)
+    //     alert(document_name)
+
+    if(private_key!=""){
+
+      if(private_key.length<64){
+        $('#accept_error').html("");
+        $('#accept_error').html("Please enter valid private key.");
+      }else if( private_key.length>66){
+        $('#accept_error').html("");
+        $('#accept_error').html("Please enter valid private key.");
+      }else{
+              $('.hide_click').hide();
+
+                $('.loader').show()
+          var validator_type = 'accept'
+          var validatore_name = `<%=decrypt(requestData[0].full_name)%>`;
+          var validatore_id = `<%=validatore_req_id%>`;
+
+              // alert(validatore_id)
+              // alert(validatore_name)
+              // alert(validator_type)
+              var new_quantity = 0.4;    
+
+              // alert(private_key);
+                $.ajax({
+              type : 'POST',
+              url:'/check-verifier-balance-ether', 
+              data:{new_quantity,sender_pk:private_key},
+              success:function(data)
+              {
+              // alert(data);
+              // 	$('.btn_check').hide()
+              // 	$('.btn_submit').show()
+              if(data>new_quantity)
+              {
+              // alert('data');
+
+                  setTimeout(function() {
+              $('#accept_error').fadeOut('fast');
+              }, 1000);
+
+
+                        $.ajax({
+                            type:"post",
+                            url:"/accept-reject-request",
+                            data:{validatore_name,validator_type,validatore_id,request_id},
+                            success:function(data) {
+                              // alert(data)
+                                // setTimeout(function(){
+                                  // console.log('data : ',data);
+                          //       },
+                          // 5000);
+
+                            if(data){
+                                    // alert('data',data)
+
+                                      $.ajax({
+                                          type:"post",
+                                          url:"/accept-reject-request-validator",
+                                          data:{client_reflect_id,request_doc_id,validatore_id:validatore_id,request_file_id:request_file_id,document_name:document_name,request_file_hash:request_file_hash,ver_reflect_id:user_id,request_id,private_key,reason:"NA",request_status:'accepted',validatore_status:'accept',verifer_my_reflect_id},
+                                          success:function(data) {
+                                            // alert(data);
+                                            var success = data.success;
+                                            var failure = data.fail;
+                                            if(failure=="true"){
+                                                      $('.loader').hide()
+
+                                                          $('.hide_click').show();
+
+
+                                              $('#accept_error').html("");
+                                              $('#accept_error').html("Your private key is incorrect.");
+                                            }else{
+                                            location.reload();
+                                            }
+                                            
+                                            
+                                          }
+                                        });
+                        }else
+                      {
+                                    // alert('else')
+
+                      }
+                      }
+                    });
+                  }
+									else
+							        {
+							        											// alert(data);
+
+							        	$('.loader').hide()
+
+															$('.hide_click').show();
+
+							             $('#accept_error').html("You have insufficient balance");
+								           return false;
+							        }
+							    }
+							    })
+      } 
+      }else{
+                      // $('.hide_click').hide();
+
+      $('#accept_error').html("");
+      $('#accept_error').html("Please enter your private key.");
+    }
+  }
+
+  function reject_request(){
+
+    var request_doc_id=  `<%=requestData[0].request_doc_id%>`
+    var client_reflect_id= `<%=requestData[0].reflect_id%>`
+    var user_id= `<%=user_id%>`
+    var request_id= `<%=requestData[0].request_id%>`
+    var private_key = $('#private_key_reject').val();
+    var request_file_id = `<%=requestData[0].request_file_id%>`;
+    var document_name = `<%=requestData[0].document_name%>`;
+
+    var request_file_hash = `<%=requestData[0].request_file_hash%>`
+    var validatore_id = `<%=validatore_req_id%>`
+    var verifer_my_reflect_id= `<%=requestData[0].verifer_my_reflect_id%>`
+
+    var reason = $('#reject_reason').val();
+    // alert(private_key.length);
+    if(reason==""){
+      $('#reject_error').html("");
+      $('#reject_error').html("Please enter reason.");
+    }else if(private_key==""){
+      $('#reject_error').html("");
+      $('#reject_error').html("Please enter your private key.");
+    }else{
+      if(private_key.length<64){
+        $('#reject_error').html("");
+        $('#reject_error').html("Please enter valid private key.");
+      }else if( private_key.length>66){
+        $('#reject_error').html("");
+        $('#reject_error').html("Please enter valid private key.");
+      }else{
+              $('.hide_click').hide();
+
+        $('.loader').show()
+         var validator_type = 'reject'
+    var validatore_name = `<%=decrypt(requestData[0].full_name)%>`;
+    var validatore_id = `<%=validatore_req_id%>`;
+            
+    var new_quantity = 0.4;    
+
+                // alert(private_key);
+                  $.ajax({
+                type : 'POST',
+                url:'/check-verifier-balance-ether', 
+                data:{new_quantity,sender_pk:private_key},
+                success:function(data)
+                {
+                // alert(data);
+                // 	$('.btn_check').hide()
+                // 	$('.btn_submit').show()
+                if(data>new_quantity)
+                {
+                // alert('data');
+
+                    setTimeout(function() {
+                $('#reject_error').fadeOut('fast');
+                }, 1000);
+
+                              $.ajax({
+                                      type:"post",
+                                      url:"/accept-reject-request",
+                                      data:{validatore_name,validator_type,validatore_id,request_id},
+                                      success:function(data) {
+                                        // alert(data)
+                                          // setTimeout(function(){
+                                            console.log('data : ',data);
+                                  if(data){
+
+                                    $.ajax({
+
+                                        type:"post",
+                                        url:"/accept-reject-request-validator",
+                                        data:{client_reflect_id,request_doc_id,validatore_id:validatore_id,request_file_id:request_file_id,document_name:document_name,request_file_hash:request_file_hash,ver_reflect_id:user_id,request_id,private_key,reason,request_status:'rejected',validatore_status:'reject',verifer_my_reflect_id},
+                                        success:function(data) {
+                                          var success = data.success;
+                                          var failure = data.fail;
+                                          if(failure=="true"){
+                                                    $('.loader').hide()
+
+                                            $('.hide_click').show();
+
+                                            $('#reject_error').html("");
+                                            $('#reject_error').html("Your private key is incorrect.");
+                                          }else{
+                                          location.reload();
+                                          }
+                                          
+                                          
+                                        }
+                                      });
+                                }
+                                }
+                              })
+
+                            }
+									else
+							        {
+							        											// alert(data);
+
+							        	$('.loader').hide()
+
+															$('.hide_click').show();
+
+							             $('#reject_error').html("You have insufficient balance");
+								           return false;
+							        }
+							    }
+							    })
+      }
+    }
+  }
+
+  setTimeout(function() {
+        $('error_message').fadeOut('fast');
+        }, 3000);
+</script>

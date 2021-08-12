@@ -1,0 +1,168 @@
+ </div>
+
+</div><!--  wrapper close --> 
+
+
+  <!-- JQuery -->
+        
+        <script type="text/javascript" src="../assets/js/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="../assets/js/poper.js"></script>
+        <!-- <script type="text/javascript" src="../assets/js/jquery-1.11.3.min.js"></script> -->
+        <!-- Bootstrap Core JavaScript -->
+        <script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
+
+        <!-- dropdownhover effects JavaScript -->
+        <script type="text/javascript" src="../assets/js/bootstrap-dropdownhover.min.js"></script>
+        <!-- wow JavaScript -->
+        <script type="text/javascript" src="../assets/js/wow.min.js"></script>
+        <!-- video player JavaScript -->
+
+         <!-- slick JavaScript -->
+        <script type="text/javascript" src="../assets/js/slick.js"></script>
+         <script type="text/javascript" src="../assets/js/slick.min.js"></script>
+
+        <script type="text/javascript" src="../assets/js/jquery-ui.js"></script>
+
+        <!-- Custom JavaScript -->
+        <script type="text/javascript" src="../assets/js/custom.js"></script>
+
+       
+           <script>
+            $(document).ready(function(){
+                $('#menuToggle').click(function(){
+                    $("#warpper").toggleClass("side-menu");
+                });
+            });
+             $(document).ready(function(){
+                $('#menuToggle1').click(function(){
+                    $("#warpper").toggleClass("mobile-menu");
+                });
+            });
+        </script>
+
+         <script>
+            $(document).ready(function(){
+                $('.aside-wrapper > li > a').click(function(){
+                    if($(this).hasClass("on")){
+                        $(this).parent("li").find(".cus-sub-menu").slideUp(300);
+                        $('.aside-wrapper > li > a').removeClass("on");
+                    }
+                    else{
+                        $('.cus-sub-menu').slideUp(300);
+                        $(this).parent("li").find(".cus-sub-menu").slideDown(300);
+                        $('.aside-wrapper > li > a').removeClass("on");
+                        $(this).addClass("on");
+                    }
+                });
+            });
+        </script>
+
+
+
+        <script>
+            $(document).ready(function(){
+            $.ajax({
+			type: "get",
+			url: "/notification-count",
+			data:{},
+			success: function (data) {
+                // alert(data[0].notification_count);
+                
+                 if(data[0].notification_count>0){
+                    $('#notification_count').addClass("badge");
+                    $('#notification_count').html(data[0].notification_count);
+                    $('#notification_count_inner').html(data[0].notification_count+" New");
+                 }else{
+                    $('#notification_count').removeClass("badge");
+                    $('#notification_count').html("");
+                    $('#notification_count_inner').html("");
+                 }
+                
+				
+			}
+        })   
+    })
+    $(document).ready(function(){
+        $.ajax({
+			type: "get",
+			url: "/unread-notification-list",
+			data:{},
+			success: function (data) {
+                // alert(data);
+                $('#unread_not_div').html(data);
+				
+			}
+        })
+
+
+        $.ajax({
+			type: "get",
+			url: "/side-bar-new-msg-alert",
+			data:{},
+			success: function (data) {
+               
+                if (data[0].msg_count>0) {
+                    $(".showNewMsgDot").show()
+                }   else    {
+                    $(".showNewMsgDot").hide()
+                }
+				
+			}
+        })
+    })
+
+
+
+    $(document).ready(function(){
+            $.ajax({
+            type: "get",
+            url: "/manage-client-message-notification-count",
+            data:{},
+            success: function (data) {
+                // alert(data[0].count_msg);
+                
+                 if(data[0].count_msg>0){
+                    $('#client_manage_msg_notifications').addClass("badge");
+                    $('#client_manage_msg_notifications').html(data[0].count_msg);
+                 }else{
+                 $('#client_manage_msg_notifications').removeClass("new-msg-dot");
+
+                    $('#client_manage_msg_notifications').removeClass("badge");
+                    $('#client_manage_msg_notifications').html("");
+                 }
+                
+                
+            }
+        })   
+    })
+        $(document).ready(function(){
+            $.ajax({
+            type: "get",
+            url: "/manage-verifier-message-notification-count",
+            data:{},
+            success: function (data) {
+                // alert(data[0].count_msg);
+                
+                 if(data[0].count_msg>0){
+                    $('#verifier_manage_msg_notifications').addClass("badge");
+                    $('#verifier_manage_msg_notifications').html(data[0].count_msg);
+                 }else{
+                    $('#verifier_manage_msg_notifications').removeClass("new-msg-dot");
+                    $('#verifier_manage_msg_notifications').removeClass("badge");
+
+                    $('#verifier_manage_msg_notifications').html("");
+                 }
+                
+                
+            }
+        })   
+    })
+        </script>
+
+
+
+
+       
+
+    </body>
+</html>

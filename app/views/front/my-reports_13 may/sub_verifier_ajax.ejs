@@ -1,0 +1,147 @@
+<!-- <div class="col-xl-9"> -->
+    <div class="personal-info-box table-responsive another-table">
+        <table class="table" id="myTableData">
+            <%if(checked_array_con_sub===0){%>
+            <thead>
+                <tr> 
+                    <%if(checked_array.includes('rep_emailid')){%>
+                      <!-- <th width="25%" scope="col">Email</th> -->
+                     <%}
+                     if(checked_array.includes('reflectid_by')){%> 
+                      <th width="20%" scope="col">MyReflet Type</th>
+                      <%}
+                     if(checked_array.includes('rep_firstname')){%> 
+                      <th width="15%" scope="col">Name</th>
+                      <%}
+                     if(checked_array.includes('reflect_code')){%> 
+                      <th width="10%" scope="col">MyReflet Code</th>
+                      <%}
+                      if(checked_array.includes('invite_status')){%> 
+                        <th width="15%" scope="col">Status</th>
+                      <%}
+                      if(checked_array.includes('country')){%> 
+                        <th width="10%" scope="col">Country</th>
+                    <%}%>
+                      <!-- <th width="15%" scope="col">Status</th> -->
+                </tr>
+              </thead>
+            <tbody id="myTable3">
+                <%if(sub_verifier_data.length!=0){
+                for(let sub_verifier of sub_verifier_data){    
+                %>
+                <tr>
+                    <%if(checked_array.includes('rep_emailid')){%>
+                    <!-- <td class="upper"><%=sub_verifier.email%></td> -->
+                    <%}if(checked_array.includes('reflectid_by')){%> 
+                      <td class="upper"><%=sub_verifier.reflectid_by%></td>
+                      <%}if(checked_array.includes('rep_firstname')){%> 
+                        <td>
+                            <%if(sub_verifier.rep_firstname){%>
+                                <span class="font-w-600 upper"><%=sub_verifier.rep_firstname%></span>
+                        <%}else{%>
+                            <span class="font-w-600"> - </span>
+
+                        <%}%>
+                        </td>             
+                   <%}if(checked_array.includes('reflect_code')){%> 
+                    <td><%=sub_verifier.reflect_code%></td>
+                    <%}%>
+                    <%if(checked_array.includes('invite_status')){%> 
+                        <td>
+                            <%if(sub_verifier.invite_status=="pending"){%>
+                            <div class="pending-status">
+                                Pending
+                            </div>
+                            <%}%>
+                            <%if(sub_verifier.invite_status=="reject"){%>
+                                <div class="cancel-status">
+                                    Reject
+                                </div>
+                            <%}%>
+                            <%if(sub_verifier.invite_status=="accept"){%>
+                                    <div class="approved-status">
+                                        Accept
+                                    </div>
+                            <%}%>
+
+                        </td> 
+                                                <%}%>
+                    <%if(checked_array.includes('country')){%> 
+                    <td class="upper"><%if(sub_verifier.country_name){%>
+                        <%=sub_verifier.country_name%>
+                        <%}else{%>
+                        -
+                        <%}%></td>						
+                    <%}%>
+                
+
+                </tr> 
+                <%}}else{
+     %>
+                       <tr>
+            <td colspan="6"><center>No record found.</center> </td>
+             </tr>       <%}%>
+            </tbody>
+            <%}else{%>
+                <thead>
+                    <tr> 
+                          <!-- <th width="25%" scope="col">Email</th> -->
+                          <th width="15%" scope="col">MyReflet Type</th>
+                          <th width="20%" scope="col">Name</th>
+                          <th width="15%" scope="col">MyReflet Code</th>
+                          <th width="15%" scope="col">Invitation Status</th>
+                          <th width="10%" scope="col">Country</th>
+
+                    </tr>
+                  </thead>
+                <tbody id="myTable3">
+                    <%if(sub_verifier_data.length!=0){
+                    for(let sub_verifier of sub_verifier_data){    
+                    %>
+                    <tr>
+                        <!-- <td><%=sub_verifier.email%></td> -->
+                          <td class="upper"><%=sub_verifier.reflectid_by%></td>
+                        <td class="upper">
+                            <%if(sub_verifier.rep_firstname){%>
+                                <span class="font-w-600"><%=sub_verifier.rep_firstname%></span>
+                        <%}else{%>
+                            <span class="font-w-600"><%=sub_verifier.full_name%></span>
+
+                        <%}%>
+                        </td>
+                        <td><%=sub_verifier.reflect_code%></td>  
+                        <td>
+                            <%if(sub_verifier.invite_status=="pending"){%>
+                            <div class="pending-status">
+                                Pending
+                            </div>
+                            <%}%>
+                            <%if(sub_verifier.invite_status=="reject"){%>
+                                <div class="cancel-status">
+                                    Reject
+                                </div>
+                            <%}%>
+                            <%if(sub_verifier.invite_status=="accept"){%>
+                                    <div class="approved-status">
+                                        Accept
+                                    </div>
+                            <%}%>
+
+                        </td> 
+                        <td class="upper">
+                            <%if(sub_verifier.country_name){%>
+                            <%=sub_verifier.country_name%>
+                            <%}else{%>
+                            -
+                            <%}%>
+                        </td>	         </tr>  
+                    <%}}else{
+     %>
+                       <tr>
+            <td colspan="6"><center>No record found.</center> </td>
+             </tr>       <%}%>
+                </tbody>
+                <%}%>
+        </table>
+    </div>
+<!-- </div> -->

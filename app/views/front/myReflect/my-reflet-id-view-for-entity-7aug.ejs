@@ -1,0 +1,3781 @@
+
+<%- include('../innerHeader.ejs')%>
+<style>
+    
+    .dis-able-btn {
+		color: currentColor;
+		pointer-events: none;
+        cursor: default;
+        text-decoration: none;
+  /* color: black; */
+        opacity: 0.5;
+        text-decoration: none;
+        /* cursor: not-allowed;
+		background: #dddddd; */
+    }
+
+    .active {
+        text-decoration-color: yellow;
+    }
+
+    .resend-lint-count {
+        color: #ffb15a;
+        font-weight: 500;
+        margin-right: 6px;
+        text-decoration: none;
+        background-color: transparent;
+        border: none;
+    }
+
+    .count-no {
+        font-size: 20px;
+        margin: 0 20px;
+        color: #000;
+    }
+    </style>
+
+<section class="id-code-box-sec" >
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				
+
+			    <div class="personal-info-heading">
+					<div class="row align-item-center">
+						<div class="col-md-8">
+							<h4 class="purple-heading">Company Information</h4>
+						</div>
+						<div class="col-md-4">
+							<div class="text-right">
+									<a href="javascript:downloadAdditional()" class="nodata">
+											<div class="icon-for-dwnload">
+												<div class="tooltip fade" data-title="Export Data">
+													<img src="../assets/images/icons/dashboard-assets/export.png">
+													 <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+												</div>
+												
+											</div>
+										</a>
+								<a class="nodata" id="" onclick="printdiv()">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Print Data">
+											<img src="../assets/images/icons/dashboard-assets/print.png">
+										    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="personal-info-box table-responsive" id="companycontent">
+						<table class="table" id="myTable">
+						  <thead>
+							<tr>
+							  <th scope="col">Label</th>
+							  <th scope="col">Content</th>
+							  <th scope="col">Create Date</th>
+							  <th scope="col" class="hide_link">Action</th>
+							</tr>
+						  </thead>
+						  <tbody>
+							<tr>
+							  <th scope="row">
+								  <div class="for-flex-align">
+									  <img src="../assets/images/icons/dashboard-assets/company.png"  >
+									  Company Name
+								  </div>
+							  </th>
+							  <%if(myreflectEntityData.entity_company_name!=null){%>
+								<td> <%=myreflectEntityData.entity_company_name%></td>
+
+							   <%}else{%>
+								<td>Not Available</td>
+
+								<%}%>
+							  <td><%=moment(myreflectEntityData.createdAt).format('MMM DD, YYYY')%></td>
+							  <td>
+								  <div class="hide_link">
+									  <a href="" data-toggle="modal" data-target="#company-name-Modal">
+										  <img src="../assets/images/icons/dashboard-assets/edit.png" >
+									  </a>
+								  </div>
+							  </td>
+							</tr>
+							 <tr>
+							  <th scope="row">
+								  <div class="for-flex-align">
+									  <img src="../assets/images/icons/dashboard-assets/companyregistration.png" >
+									  Company Registration Number
+								  </div>
+							  </th>
+							  <%if(myreflectEntityData.entity_company_regno!=null){%>
+								<td><%=myreflectEntityData.entity_company_regno%></td>
+
+							   <%}else{%>
+								<td>Not Available</td>
+
+								<%}%>
+							  <td><%=moment(myreflectEntityData.createdAt).format('MMM DD, YYYY')%></td>
+							  <td>
+								  <div class="hide_link">
+									  <a href="" data-toggle="modal" data-target="#registration-no-Modal">
+										<img src="../assets/images/icons/dashboard-assets/edit.png" >
+									  </a>
+								  </div>
+							  </td>
+							</tr>
+							 <tr>
+							  <th scope="row">
+								  <div class="for-flex-align">
+									  <img src="../assets/images/icons/dashboard-assets/verified-emailID.png" >
+									  Company Email ID
+								  </div>
+							  </th>
+							   <%if(myreflectEntityData.entity_company_emailid!=null){
+								  // console.log(myreflectEntityData.entity_company_emailid)
+								  %>
+								
+								<td><%=myreflectEntityData.entity_company_emailid%></td>
+
+							   <%}else{%>
+								<td>Not Available</td>
+
+								<%}%>
+
+							  <td><%=moment(myreflectEntityData.createdAt).format('MMM DD, YYYY')%></td>
+							  <td>
+								  <div class="hide_link">
+									  <a href="" data-toggle="modal" data-target="#company-email-Modal">
+										<img src="../assets/images/icons/dashboard-assets/edit.png">
+									  </a>
+								  </div>
+							  </td>
+							</tr>
+							 <tr>
+							  <th scope="row">
+								  <div class="for-flex-align">
+									  <img src="../assets/images/icons/dashboard-assets/DOB.png" >
+									  Date of Incorporation
+								  </div>
+							  </th>
+							  <%if(myreflectEntityData.entity_dateof_incorporation!=null){%>
+								<td>
+									<%=moment(myreflectEntityData.entity_dateof_incorporation).format('MMM DD, YYYY')%>
+								</td>
+
+							   <%}else{%>
+								<td>Not Available</td>
+
+								<%}%>
+							  <td><%=moment(myreflectEntityData.createdAt).format('MMM DD, YYYY')%></td>
+							  <td>
+								  <div class="hide_link">
+									  <a href="" data-toggle="modal" data-target="#date-incorpo-Modal">
+										<img src="../assets/images/icons/dashboard-assets/edit.png">
+									  </a>
+								  </div>
+							  </td>
+							</tr>
+							 <tr>
+							  <th scope="row">
+								  <div class="for-flex-align">
+									  <img src="../assets/images/icons/dashboard-assets/country.png" >
+									  Country
+								  </div>
+							  </th>
+							  <%if(myreflectEntityData.entity_company_country!=null){%>
+								<td>     
+									<%allCountries.forEach(countryid=>{%> 
+												 <%if(countryid.country_id==myreflectEntityData.entity_company_country){%>
+												 <%=countryid.country_name%>
+												 <%}%>
+								        <%})%>
+									     
+								</td>
+
+							   <%}else{%>
+								<%if(!myreflectEntityData.birthplace){%>
+									<td>Not Available</td>
+								<%}else{%>
+									<td><%=myreflectEntityData.birthplace%></td>
+									
+									<%}%>
+								
+
+								<%}%>
+							  <td><%=moment(myreflectEntityData.createdAt).format('MMM DD, YYYY')%></td>
+							  <td>
+								  <div class="hide_link">
+									  <a href="" data-toggle="modal" data-target="#country-name-Modal">
+										<img src="../assets/images/icons/dashboard-assets/edit.png">
+									  </a>
+								  </div>
+							  </td>
+							</tr>
+							 <tr>
+							  <th scope="row">
+								  <div class="for-flex-align">
+									  <img src="../assets/images/icons/dashboard-assets/address.png" >
+									  Address 
+								  </div>
+							  </th>
+							  <%if(myreflectEntityData.entity_company_address!=null){%>
+								<td><%=myreflectEntityData.entity_company_address%></td>
+
+							   <%}else{%>
+								<td>Not Available</td>
+
+								<%}%>
+							  <td><%=moment(myreflectEntityData.createdAt).format('MMM DD, YYYY')%></td>
+							  <td class="hide_link">
+								  <div class="hide_link">
+									  <a href="" data-toggle="modal" data-target="#address-Modal">
+										<img src="../assets/images/icons/dashboard-assets/edit.png">
+									  </a>
+									  <span class="tooltip fade" data-title="Your email is verified.">
+										  <img class="tooltip-inner-img" src="../assets/images/icons/dashboard-assets/verified.png" >
+										  <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+									  </span>
+									  
+								  </div>
+							  </td>
+							</tr>
+							  <tr>
+							  <th scope="row">
+								  <div class="for-flex-align">
+									  <img src="../assets/images/icons/dashboard-assets/phone.png" >
+									  Phone Number
+								  </div>
+							  </th>
+							  <%if(myreflectEntityData.mobile_number!=null){%>
+								<td><%=myreflectEntityData.mobile_number%></td>
+
+							   <%}else{%>
+								<td>Not Available</td>
+
+								<%}%>
+							  <td><%=moment(myreflectEntityData.createdAt).format('MMM DD, YYYY')%></td>
+							   <td>
+								  <div>
+									  <!-- <a href="" data-toggle="modal" data-target="#phone-no-Modal">
+										<img src="../assets/images/icons/dashboard-assets/edit.png">
+									  </a>
+									  <a href="" data-toggle="modal" data-target="#phone-not-verified-Modal">
+										  <span class="tooltip fade" data-title="Your phone number is not verified. Click here to verify.">
+											  <img class="tooltip-inner-img" src="../assets/images/icons/dashboard-assets/verificationpending.png" >
+											  <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										  </span>
+									  </a> -->
+									  
+									  
+								  </div>
+							  </td>
+							</tr>
+						  </tbody>
+						</table>
+					</div>
+
+				 <div class="personal-info-heading" id="additionalcontent">
+					<div class="row align-item-center">
+						<div class="col-xl-10 cl-lg-9 col-md-9">
+							<ul class="nav nav-tabs all-doc-tabs" id="myTab" role="tablist">
+							  <li class="nav-item">
+							    <a class="nav-link active" id="doc1" data-toggle="tab" href="#doc-tab1" role="tab" aria-controls="doc-tab1" aria-selected="true">All Documents</a>
+							  </li>
+							  <li class="nav-item">
+							    <a class="nav-link" id="doc2" data-toggle="tab" href="#doc-tab2" role="tab" aria-controls="doc-tab2" aria-selected="false">Certified Documents</a>
+							  </li>
+							  <li class="nav-item">
+							    <a class="nav-link" id="doc3" data-toggle="tab" href="#doc-tab3" role="tab" aria-controls="doc-tab3" aria-selected="false">Self Attested Documents</a>
+							  </li>
+							 
+							</ul>
+						</div>
+						<div class="col-xl-2 col-lg-3 col-md-3">
+							<div class="text-right">
+									<a href="javascript:downloadDocDiv()" class="nodata">
+											<div class="icon-for-dwnload">
+												<div class="tooltip fade" data-title="Export Data">
+													<img src="../assets/images/icons/dashboard-assets/export.png">
+													 <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+												</div>
+												
+											</div>
+										</a>
+								<a class="nodata" id="" onclick="printDocdiv()">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Print Data">
+											<img src="../assets/images/icons/dashboard-assets/print.png">
+										    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				
+				<div class="tab-content" id="doc_div" >
+					<div class="tab-pane fade show active" id="doc-tab1" role="tabpanel" aria-labelledby="doc1">
+						<div class="btn-all-dwnload">
+						  <a class="upload_check sb_id" id="up_id"><img src="../assets/images/icons/dashboard-assets/upload-purple.png"> Upload</a>
+						  <a class="nodata" href="javascript:void(0)" onclick="downloaddoclistmulti()"><img src="../assets/images/icons/dashboard-assets/download-purple.png"> Download</a>
+						  <!-- <a href="" id="sp_id"><img src="../assets/images/icons/dashboard-assets/set-docs-permission-purple.png"> Set Document Permission</a> -->
+						  <a onclick="checked_self_attest()" id="sa_id"><img src="../assets/images/icons/dashboard-assets/selfattest-purple.png"> Self Attest</a>
+					  </div>
+						 <div class="personal-info-box table-responsive">
+						  <table class="table" id="myTable3">
+							<thead>
+							  <tr >
+								<th scope="col">Label</th>
+								<th scope="col" class="hide_link">Content</th>
+								<th scope="col">Document Number</th>
+								<th scope="col">Expiry Date</th>
+								<th scope="col">Create Date</th>
+								<th scope="col" class="hide_link">Action</th>
+							  </tr>
+							 
+							</thead>
+							<tbody>
+                               <%if(DocData.length>0){var i=0; var count=1;DocData.forEach(doc_data=>{%>
+
+							
+							  <tr id="tr_of_table">
+								<th scope="row"  id="table_doc_name<%=i%>">
+									<div class="for-flex-align">
+										 <div class="checkbox">
+										<label>
+										  <input class="hide_link_1 " type="checkbox" name="cilentId" value="<%=i%>" onclick="checkForSelect()">
+										  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+										  <!-- Letter of Incorpration -->
+										  <%=doc_data.document_name%>
+										</label>
+									  </div>
+									  
+									</div>
+								</th>
+								<td class=".hide_td" id="table_doc_img<%=i%>">
+
+									<div class="doc-img">
+									<% var k=0,l=0;
+									doc_data.file_content.forEach(hashData=>{%>
+
+										<a href="" data-toggle="modal" onclick="show_doc_img('<%=i%><%=k%>')" data-target="#doc-img-Modal">
+											<img id="img_tag<%=i%><%=k%>" src="https://ipfs.io/ipfs/<%=hashData%>">
+										</a>
+									
+									<%k++;})%>
+									<% doc_data.video_content.forEach(function(vid){%>
+										<a href="" data-toggle="modal" onclick="show_doc_vid('<%=i%><%=l%>')" data-target="#doc-img-Modal">
+										    <video width="100" height="100" controls>
+												<source id="vid_tag<%=i%><%=l%>" src="https://ipfs.io/ipfs/<%=vid%>" type="video/mp4">
+											</video>
+										</a>
+										<%l++;})%>
+									</div>
+								</td>
+								<td id="table_doc_code<%=i%>"><%=doc_data.doc_unique_code%></td>
+									<td id="table_doc_expiry<%=i%>"><%=moment(doc_data.expire_date).format('MMM DD, YYYY')%></td>
+									<td id="table_doc_create<%=i%>"><%=moment(doc_data.doc_create_date).format('MMM DD, YYYY')%></td>
+								<td class="hide_link">
+										 <input type="hidden" name="user_doc_id"id="user_doc_id<%=i%>"value="<%=doc_data.user_doc_id%>">
+							             <input type="hidden" name="user_doc_id"id="document_name<%=i%>"value=" <%=doc_data.document_name%>">
+					                    <input type="hidden" name="doc_unique_code"id="doc_unique_code<%=i%>"value="<%=doc_data.doc_unique_code%>">
+
+									
+									<div class="dropdown-menu-new">
+									  <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+										<div class="doc-img">
+												<img src="../assets/images/icons/dashboard-assets/menu.png">
+											</div>
+									  </a>
+									  <div class="dropdown-menu" aria-labelledby="profileDropdown">
+										  <a class="dropdown-item" href="" data-toggle="modal" data-target="#upload-doc-Modal<%=i%>"><img src="../assets/images/icons/dashboard-assets/upload.png"> Upload</a>
+										  <a class="dropdown-item"  href="javascript:void(0)"onclick="DownloadDetails('<%=i%>')"><img src="../assets/images/icons/dashboard-assets/download.png"> Download</a>
+										   <a class="dropdown-item" href="" data-toggle="modal" data-target="#Mail-Modal<%=i%>"><img src="../assets/images/icons/dashboard-assets/self-attest.png"> Share By Mail</a>
+										  <!-- <a class="dropdown-item"  href="javascript:void(0)" onclick="downloaddoclist()"><img src="../assets/images/icons/dashboard-assets/download.png"> Download</a> -->
+										  <!-- <a class="dropdown-item" href="" data-toggle="modal" data-target="#set-docs-permission-Modal"><img src="../assets/images/icons/dashboard-assets/set-docs-permission.png"> Set Document Permission</a> -->
+										  <a class="dropdown-item" href="" data-toggle="modal" data-target="#self-attested-Modal<%=i%>"><img src="../assets/images/icons/dashboard-assets/self-attest.png"> Self Attest</a>	
+									  </div>
+								   </div>
+								</td>
+							  </tr>
+			          <%i++;})}else{
+			          var count=0;
+							 %>
+									
+								   <%}%>
+							  
+							  
+							</tbody>
+						  </table>
+					   </div>
+					   <div class="text-center btn-set-doc">
+						   <div class="row">
+							<div class="col-xl-4 offset-xl-2 col-lg-6 col-md-6 col-sm-6">
+							<!-- 	<a class="btn-common-new"  href="javascript:void(0)" onclick="getVerifierList('<%=count%>')"  >set documents permission</a> -->
+									<a href="javascript:void(0)" onclick="getVerifierList('<%=count%>')" id="setpermissionbtn" class="btn-common-new hide_click" data-toggle="modal" >Send to verifier</a>
+									<span class="loader"><img src="../assets/images/loader-3.gif"height="42" width="62"></span>	
+							</div>
+							   <div class="col-xl-4  col-lg-6 col-md-6 col-sm-6">
+								   <a href="" data-toggle="modal" data-target="#add-new-doc-Modal" class="btn-common-new">add new document</a>
+							   </div>
+						   </div>
+						   
+						   
+					   </div>
+					</div>
+
+
+					
+					<div class="tab-pane fade" id="doc-tab2" role="tabpanel" aria-labelledby="doc2">
+	  
+						<div class="btn-all-dwnload">
+						  <a class="nodata"  href="javascript:void(0)" onclick="downloaddoclistmulti()"><img src="../assets/images/icons/dashboard-assets/download-purple.png"> Download Certified Document</a>
+						  <!-- <a class="nodata" href=""><img src="../assets/images/icons/dashboard-assets/cancel-purple.png"> Cancel</a> -->
+					  </div>
+						<div class="personal-info-box table-responsive">
+						  <table class="table" id="myTable3">
+							<thead>
+							  <tr>
+								<th scope="col">Label</th>
+								<th scope="col">Verifier</th>
+								<th scope="col">Request ID</th>
+								<th scope="col">Transaction ID</th>
+								<th scope="col">Status</th>
+								<th scope="col">Reason</th>
+								<th scope="col">Action</th>
+							  </tr>
+							</thead>
+							<tbody>
+						
+
+							
+							<%if(certified.length>0){
+										var l = 0;
+
+							for(var i=0;i< certified.length;i++){
+								%>
+								<%if(certified[i].certified_doc_data.length>0){%>
+							  <tr>
+								<th scope="row">
+									<div class="for-flex-align">
+										 <div class="checkbox">
+										<label>
+										  <input type="checkbox" name="certify_doc_check<%=i%>" id="self_check"value="<%=i%>">
+										  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+										  <%if( typeof certified[i].certified_doc_data[0].doc_name != 'undefined'){%>
+											<%-certified[i].certified_doc_data[0].doc_name %>
+											<%}%>
+								 
+								 
+										</label>
+									  </div>
+									</div>
+								</th>
+								<td>
+									<%if(certified[i].certified_data[i].reflectid_by=="representative"){%>
+										<%=certified[i].certified_data[i].reflect_code%>-<%=certified[i].certified_data[i].rep_username%>
+									<%}else{%>
+										<%=certified[i].certified_data[i].reflect_code%>-<%=certified[i].certified_data[i].entity_company_name%>
+									<%}%>	
+								</td>
+								<td><%=certified[i].certified_data[i].request_code%></td>
+								
+								<td width="20%" ><a href="/search-personal-from-wallet?tx_hash_ser=<%- typeof certified[i].certified_doc_data[0].transaction_hash !== 'undefined' ? certified[i].certified_doc_data[0].transaction_hash : '' %>" style="color: blue;"><%- typeof certified[i].certified_doc_data[0].transaction_hash !== 'undefined' ? certified[i].certified_doc_data[0].transaction_hash : '' %></a></td>
+								<td>
+									<%if(certified[i].certified_doc_data[0].docfile_status=="accept"){%>
+									  <div class="clr-green">Accepted</div>
+									<%}else{%>
+										<div class="cancel-status">Rejected</div>
+									<%}%>
+									
+								</td>
+								<td>
+								
+									<%- typeof certified[i].certified_doc_data[0].reason !== 'undefined' ? certified[i].certified_doc_data[0].reason : '' %>
+								</td>
+
+								<td>
+									<a href="javascript:void(0)" onclick = "get_image_download('<%=l%>','<%=certified[i].certified_doc_data[0].transaction_hash%>')"><i class="cr-icon fa fa-download"></i></a>
+								</td>
+							  </tr>
+							  <%  l++;}}}else{
+							 %>
+									<td colspan="6"><center>No record found.</center></td>
+								   <%}%>
+  
+							  
+							</tbody>
+						  </table>
+					   </div>
+					</div>
+
+
+					<div class="tab-pane fade" id="doc-tab3" role="tabpanel" aria-labelledby="doc3">
+						<div class="btn-all-dwnload">
+						  <a class="nodata"href="javascript:void(0)" onclick="DownloadSelfAttestedMulti()"><img src="../assets/images/icons/dashboard-assets/download-purple.png"> Download Attested Document</a>
+						  <!-- <a class="nodata" href=""><img src="../assets/images/icons/dashboard-assets/cancel-purple.png"> Cancel</a> -->
+						</div> 				 
+					  
+						<div class="personal-info-box table-responsive">
+						  <table class="table" id="myTable3">
+							<thead>
+							  <tr>
+								<th scope="col">Label</th>
+								<th scope="col">Content</th>
+								<th scope="col">Document Number</th>
+								<th scope="col">Expiry Date</th>
+								<th scope="col">Create Date</th>
+								
+								<th scope="col">Action</th>
+							  </tr>
+							</thead>
+							<tbody>
+									<%if(DocData!=null){
+										var i=0;
+									for(let document of DocData){
+										if(document.self_assested=="yes"){%>
+							  <tr>
+								<th scope="row">
+									<div class="for-flex-align">
+										 <div class="checkbox">
+										<label>
+										  <input type="checkbox" name="attested_doc_check<%=i%>" id="self_check"value="<%=i%>">
+										  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+										  <%=document.document_name%>
+										</label>
+									  </div>
+									</div>
+								</th>
+								<td>
+									<input type="hidden" name="user_doc_self_id"id="user_doc_self_id<%=i%>"value="<%=document.user_doc_id%>">
+
+									<div class="doc-img">
+										<%
+										if(document!=null){
+											var k=0;
+										document.self_attested_content.forEach(function(file){%>
+											<a href="" data-toggle="modal" onclick="show_attested_img('<%=i%><%=k%>')" data-target="#attested-doc-img-Modal">
+												<img id="attested_img<%=i%><%=k%>" src="<%=file%>">
+											</a>
+											
+									  <%k++; })%>
+									   <%}%>
+									</div>
+								</td>
+								<td><%=document.doc_unique_code%></td>
+								<td><%=moment(document.expire_date).format('MMM DD, YYYY')%></td>
+								<td><%=moment(document.doc_create_date).format('MMM DD, YYYY')%></td>
+							
+								<td>
+									<!-- <div class="doc-img">
+										<img src="../assets/images/icons/dashboard-assets/menu.png">
+									</div> -->
+									<div class="dropdown-menu-new">
+									  <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+										<div class="doc-img">
+												<img src="../assets/images/icons/dashboard-assets/menu.png">
+											</div>
+									  </a>
+									  <div class="dropdown-menu" aria-labelledby="profileDropdown">
+
+										<a class="dropdown-item" data-toggle="modal" onclick="show_attested_img('<%=i%>0')" data-target="#attested-doc-img-Modal">View Attested Document</a>
+										  <!-- <a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/view.png"> View Attested Document</a> -->
+										  <a class="dropdown-item" href="javascript:void(0)"onclick="DownloadSelfAttestedDetails('<%=i%>')"><img src="../assets/images/icons/dashboard-assets/download.png"> Download Attested Document</a>
+
+										  <!-- <a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/cancel.png"> Cancel</a> -->
+									  </div>
+								   </div>
+								</td>
+							  </tr>
+							  <% i++; }else{%>
+								<!-- <td>No record found.</td> -->
+								<%}}}else{%>
+								<td>No record found.</td>
+								   <%}%>
+							  
+							</tbody>
+						  </table>
+					   </div>
+					 </div>
+				  </div>
+			</div>			
+		</div>
+	</div>
+</section>
+
+
+
+<!-- Modal -->
+<div class="modal fade field-edit-modal" id="company-name-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<form action="/submit_myreflect_entity" method="POST" id="company-form-id">
+
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-body">
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			  <div class="create-wallet-box">
+				  <div class="row align-item-center">
+					  <div class="col-xl-2 col-lg-3 col-md-3">
+						  <div>
+							  <img src="../assets/images/icons/createidentity-assets/popup-company-icon.png">
+						  </div>
+					  </div>
+					  <div class="col-xl-7 col-lg-7 col-md-7">
+						  <h5 class="heading-purple">Update Information</h5>
+					  </div>
+				  </div>
+				  <div class="row">
+					  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+						  <div class="setup-inner-box for-protact">
+							  <div class="create-rflet-id-form">
+								  <div class="form-group">
+									  <label>Label</label>
+									  <div class="input-group">
+										<input type="text" class="form-control" readonly placeholder="Company Name" value="Company Name">
+										<div class="input-group-append">
+										  <span class="input-group-text">
+											  <img src="../assets/images/icons/dashboard-assets/company.png">
+										  </span>
+										</div>
+									  </div>
+								  </div>
+								  <div class="form-group">
+									  <div class="input-group">
+									  		  <%if(myreflectEntityData.entity_company_name!=null){%>
+				
+                                     <input type="text" value="<%=myreflectEntityData.entity_company_name%>"class="form-control" name="company_name" placeholder="Content" data-rule-required="true" data-msg-required="Please enter company name.">
+							   <%}else{%>
+                                   <input type="text" class="form-control" name="company_name" placeholder="Content" data-rule-required="true" data-msg-required="Please enter company name.">
+								<%}%>
+										
+										<input type="hidden" name="reflect_id" value="<%=reflect_id%>">
+
+										<div class="input-group-append">
+										  <span class="input-group-text">
+											  <img src="../assets/images/icons/dashboard-assets/company.png">
+										  </span>
+										</div>
+									  </div>
+								  </div>
+							  </div>
+							  <div >
+									<button class="btn-common-new" type="submit" id="com-name-btn">Save</button>
+							
+									<a class="btn-common-new"  data-dismiss="modal" href="">Cancel</a>
+							  </div>
+						  </div>
+					  </div>
+				   </div>
+				 </div>
+			 </div>
+		  </div>
+		</div>
+		</form>
+	  </div>
+	  
+	  
+	  <div class="modal fade field-edit-modal" id="registration-no-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<form action="/submit_myreflect_entity" method="POST" id="reg-no-form-id">
+
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-body">
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			  <div class="create-wallet-box">
+				  <div class="row align-item-center">
+					  <div class="col-xl-2 col-lg-3 col-md-3">
+						  <div>
+							  <img src="../assets/images/icons/createidentity-assets/popup-company-icon.png">
+						  </div>
+					  </div>
+					  <div class="col-xl-7 col-lg-7 col-md-7">
+						  <h5 class="heading-purple">Update Information</h5>
+					  </div>
+				  </div>
+				  <div class="row">
+					  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+						  <div class="setup-inner-box for-protact">
+							  <div class="create-rflet-id-form">
+								  <div class="form-group">
+									  <label>Label</label>
+									  <div class="input-group">
+										<input type="text" class="form-control" readonly placeholder="Company Registration Number" value="Company Registration Number">
+										<div class="input-group-append">
+										  <span class="input-group-text">
+											  <img src="../assets/images/icons/dashboard-assets/companyregistration.png">
+										  </span>
+										</div>
+									  </div>
+								  </div>
+								  <div class="form-group">
+									  <div class="input-group">
+										<input type="text" class="form-control" name="registration_No" placeholder="Content" data-rule-required="true" data-msg-required="Please enter registration number.">
+										<input type="hidden" name="reflect_id" value="<%=reflect_id%>">
+
+										<div class="input-group-append">
+										  <span class="input-group-text">
+											  <img src="../assets/images/icons/dashboard-assets/companyregistration.png">
+										  </span>
+										</div>
+									  </div>
+								  </div>
+							  </div>
+							  <div >
+									<button class="btn-common-new" type="submit" id="reg-no-btn">Save</button>
+							
+									<a class="btn-common-new"  data-dismiss="modal" href="">Cancel</a>
+							  </div>
+						  </div>
+					  </div>
+				   </div>
+				 </div>
+			 </div>
+		  </div>
+		</div>
+		</form>
+	  </div>
+	  
+	  <div class="modal fade field-edit-modal" id="company-email-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<form action="/submit_myreflect_entity" method="POST" id="company-email-form-id">
+
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-body">
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			  <div class="create-wallet-box">
+				  <div class="row align-item-center">
+					  <div class="col-xl-2 col-lg-3 col-md-3">
+						  <div>
+							  <img src="../assets/images/icons/createidentity-assets/popup-email-icon.png">
+						  </div>
+					  </div>
+					  <div class="col-xl-7 col-lg-7 col-md-7">
+						  <h5 class="heading-purple">Update Information</h5>
+					  </div>
+				  </div>
+				  <div class="row">
+					  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+						  <div class="setup-inner-box for-protact">
+							  <div class="create-rflet-id-form">
+								  <div class="form-group">
+									  <label>Label</label>
+									  <div class="input-group">
+										<input type="text" class="form-control" readonly placeholder="Company Email ID" value="Company Email ID">
+										<div class="input-group-append">
+										  <span class="input-group-text">
+											  <img src="../assets/images/icons/dashboard-assets/verified-emailID.png">
+										  </span>
+										</div>
+									  </div>
+								  </div>
+								  <div class="form-group">
+									  <div class="input-group">
+										<input type="email" class="form-control" name="company_email" placeholder="Content" data-rule-required="true" data-msg-required="Please enter company email." data-rule-email=”true” >
+										<input type="hidden" name="reflect_id" value="<%=reflect_id%>">
+
+										<div class="input-group-append">
+										  <span class="input-group-text">
+											  <img src="../assets/images/icons/dashboard-assets/verified-emailID.png">
+										  </span>
+										</div>
+									  </div>
+								  </div>
+							  </div>
+							  <div >
+									<button class="btn-common-new" type="submit" id="com-email-btn">Save</button>
+							
+									<a class="btn-common-new"  data-dismiss="modal" href="">Cancel</a>
+							  </div>
+						  </div>
+					  </div>
+				   </div>
+				 </div>
+			 </div>
+		  </div>
+		</div>
+		</form>
+
+	  </div>
+	  
+	  <div class="modal fade field-edit-modal" id="date-incorpo-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<form action="/submit_myreflect_entity" method="POST" id="date-incorpo-form-id">
+				<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-body">
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			  <div class="create-wallet-box">
+				  <div class="row align-item-center">
+					  <div class="col-xl-2 col-lg-3 col-md-3">
+						  <div>
+							  <img src="../assets/images/icons/createidentity-assets/popup-dob-icon.png">
+						  </div>
+					  </div>
+					  <div class="col-xl-7 col-lg-7 col-md-7">
+						  <h5 class="heading-purple">Update Information</h5>
+					  </div>
+				  </div>
+				  <div class="row">
+					  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+						  <div class="setup-inner-box for-protact">
+							  <div class="create-rflet-id-form">
+								  <div class="form-group">
+									  <label>Label</label>
+									  <div class="input-group">
+										<input type="text" class="form-control" readonly placeholder="Date of Incorporation" value="Date of Incorporation">
+										<div class="input-group-append">
+										  <span class="input-group-text">
+											  <img src="../assets/images/icons/dashboard-assets/DOB.png">
+										  </span>
+										</div>
+									  </div>
+								  </div>
+								  <div class="form-group">
+									  <div class="input-group">
+										<input type="text" class="form-control" id="datepicker4" name="date" placeholder="Content" data-rule-required="true" data-msg-required="Please enter date of incorporation.">
+										<input type="hidden" name="reflect_id" value="<%=reflect_id%>">
+
+										<div class="input-group-append">
+										  <span class="input-group-text">
+											  <img src="../assets/images/icons/dashboard-assets/DOB.png">
+										  </span>
+										</div>
+									  </div>
+								  </div>
+							  </div>
+							  <div >
+									<button class="btn-common-new" type="submit" id="date-incorpo-btn">Save</button>
+							
+									<a class="btn-common-new"  data-dismiss="modal" href="">Cancel</a>
+							  </div>
+						  </div>
+					  </div>
+				   </div>
+				 </div>
+			 </div>
+		  </div>
+		</div>
+			</form>
+	  </div>
+	  
+
+<div class="modal fade field-edit-modal" id="country-name-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<form action="/submit_myreflect_entity" method="POST" id="country-form-id">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</spaentity_company_country>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-country-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Update Information</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+						    	<label>Label</label>
+						    	<div class="input-group">
+								  <input type="text" class="form-control" readonly placeholder="Country Name" value="Country Name" >
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/country.png">
+								    </span>
+								  </div>
+								</div>
+						    </div>
+						    <div class="form-group">
+								<div class="input-group">
+								  <!-- <input type="text" class="form-control" name="country_name" placeholder="Content"> -->
+								  <select class="form-control" name="country_name">
+										<!-- <option value=""> Select country Name</option> -->
+										<%if(myreflectEntityData.birthplace){%>
+											<option value="<%=myreflectEntityData.birthplace%>"><%=myreflectEntityData.birthplace%></option>
+										<%}%>
+											
+										<%for(let country of allCountries){%>
+											<%if(myreflectEntityData.birthplace!=country.country_name){%>
+											<option value="<%=country.country_id%>"><%=country.country_name%></option>
+											<%}%>
+											<%}%>
+								 </select>
+								  <input type="hidden" name="reflect_id" value="<%=reflect_id%>">
+
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/country.png">
+								    </span>
+								  </div>
+								</div>
+							</div>
+						</div>
+						<div >
+							<button class="btn-common-new" type="submit" id="country-btn">Save</button>
+							
+							<a class="btn-common-new"  data-dismiss="modal" href="">Cancel</a>
+
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</form>
+</div>
+
+<div class="modal fade field-edit-modal" id="address-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<form action="/submit_myreflect_entity" method="POST" id="address-form-id">
+
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-body">
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			  <div class="create-wallet-box">
+				  <div class="row align-item-center">
+					  <div class="col-xl-2 col-lg-3 col-md-3">
+						  <div>
+							  <img src="../assets/images/icons/createidentity-assets/popup-address-icon.png">
+						  </div>
+					  </div>
+					  <div class="col-xl-7 col-lg-7 col-md-7">
+						  <h5 class="heading-purple">Update Information</h5>
+					  </div>
+				  </div>
+				  <div class="row">
+					  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+						  <div class="setup-inner-box for-protact">
+							  <div class="create-rflet-id-form">
+								  <div class="form-group">
+									  <label>Label</label>
+									  <div class="input-group">
+										<input type="text" class="form-control" readonly placeholder="Address " value="Address">
+										<div class="input-group-append">
+										  <span class="input-group-text">
+											  <img src="../assets/images/icons/dashboard-assets/address.png">
+										  </span>
+										</div>
+									  </div>
+								  </div>
+								  <div class="form-group">
+									  <div class="input-group">
+										<input type="text" class="form-control" name="company_address" placeholder="Content" data-rule-required="true" data-msg-required="Please enter company address.">
+										<input type="hidden" name="reflect_id" value="<%=reflect_id%>">
+
+										<div class="input-group-append">
+										  <span class="input-group-text">
+											  <img src="../assets/images/icons/dashboard-assets/address.png">
+										  </span>
+										</div>
+									  </div>
+								  </div>
+							  </div>
+							  <div >
+									<button class="btn-common-new" type="submit" id="com-add-btn">Save</button>
+							
+									<a class="btn-common-new"  data-dismiss="modal" href="">Cancel</a>
+							  </div>
+						  </div>
+					  </div>
+				   </div>
+				 </div>
+			 </div>
+		  </div>
+		</div>
+		</form>
+	  </div>
+	  
+	  
+	  <div class="modal fade field-edit-modal" id="phone-no-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<form action="/submit_myreflect_entity" method="POST" id="phone-no-form-id">
+
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-body">
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			  <div class="create-wallet-box">
+				  <div class="row align-item-center">
+					  <div class="col-xl-2 col-lg-3 col-md-3">
+						  <div>
+							  <img src="../assets/images/icons/createidentity-assets/popup-mobile-icon.png">
+						  </div>
+					  </div>
+					  <div class="col-xl-7 col-lg-7 col-md-7">
+						  <h5 class="heading-purple">Update Information</h5>
+					  </div>
+				  </div>
+				  <div class="row">
+					  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+						  <div class="setup-inner-box for-protact">
+							  <div class="create-rflet-id-form">
+								  <div class="form-group">
+									  <label>Label</label>
+									  <div class="input-group">
+										<input type="text" class="form-control" readonly placeholder="Phone Number" value="Phone Number">
+										<div class="input-group-append">
+										  <span class="input-group-text">
+											  <img src="../assets/images/icons/dashboard-assets/phone.png">
+										  </span>
+										</div>
+									  </div>
+								  </div>
+								  <div class="form-group">
+									  <div class="input-group">
+										<input type="text" class="form-control" name="phone_no" placeholder="Content" data-rule-required="true" data-msg-required="Please enter phone number." data-rule-digits=”true”>
+										<input type="hidden" name="reflect_id" value="<%=reflect_id%>">
+
+										<div class="input-group-append">
+										  <span class="input-group-text">
+											  <img src="../assets/images/icons/dashboard-assets/phone.png">
+										  </span>
+										</div>
+									  </div>
+								  </div>
+							  </div>
+							  <div >
+									<button class="btn-common-new" type="submit" id="phone-btn">Save</button>
+							
+									<a class="btn-common-new"  data-dismiss="modal" href="">Cancel</a>
+							  </div>
+						  </div>
+					  </div>
+				   </div>
+				 </div>
+			 </div>
+		  </div>
+		</div>
+		</form>
+	  </div>
+	  
+	  
+	  <!-- <div class="modal fade field-edit-modal" id="phone-not-verified-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-body">
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			  <div class="create-wallet-box">
+				  <div class="row align-item-center">
+					  <div class="col-xl-2 col-lg-3 col-md-3">
+						  <div class="for-icon-bg">
+							  <img src="../assets/images/icons/createidentity-assets/popup-mobile-icon.png">
+						  </div>
+					  </div>
+					  <div class="col-xl-10 col-lg-10 col-md-10">
+						  <h5 class="heading-purple">Phone Number Verification</h5>
+						  <p>Verify your phone number by entering the OTP sent to your registered email address.</p>
+					  </div>
+				  </div>
+					 <div class="login-form-main phone-otp">
+					   <div class="form-group">
+						  <label>OTP</label>
+						  <div class="otp-box digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+							  <input type="text" id="otp1" name="otp1" class="form-control text-center" placeholder="-" maxlength="1" data-next="otp2">
+							  <input type="text" id="otp2" name="otp2" class="form-control" placeholder="-" maxlength="1" data-next="otp3" data-previous="otp1">
+							  <input type="text" id="otp3" name="otp3" class="form-control" placeholder="-" maxlength="1" data-next="otp4" data-previous="otp2">
+							  <input type="text" id="otp4" name="otp4" class="form-control" placeholder="-" maxlength="1" data-previous="otp3">
+						  </div>
+						</div>
+						<div class="private-key-copy-box">
+							<button class="btn-common-new">Continue</button>
+						  <p class="extra-link">Don't got OTP?<a href="">Resend</a></p>
+						</div>
+				  </div>
+				 </div>
+			 </div>
+		  </div>
+		</div>
+	  </div> -->
+
+
+	  <div class="modal fade field-edit-modal" id="attested-doc-img-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-body">
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			  <div class="modal-img-big">
+				  <img id="attested_img_modal" src="" class="img-fluid">
+			  </div>
+				<!-- <video width="400" height="400" controls>
+					<source src="" type="video/mp4">
+				</video> -->
+			 </div>
+		  </div>
+		</div>
+</div>
+
+
+<!-- completed -->
+
+<div class="modal fade field-edit-modal" id="doc-img-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-body">
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			 
+			  <div id="img_modal" class="modal-img-big">
+				  
+			  </div>
+			 
+				
+				
+			 </div>
+		  </div>
+		</div>
+	  </div>
+
+
+<div class="modal fade field-edit-modal" id="add-info-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-add-info-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Add Information</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+						    	<div class="input-group">
+								  <input type="text" class="form-control" placeholder="Label">
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/info-icon.png">
+								    </span>
+								  </div>
+								</div>
+						    </div>
+						    <div class="form-group">
+								<div class="input-group">
+								  <input type="text" class="form-control" placeholder="Content">
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/dashboard-assets/info-icon.png">
+								    </span>
+								  </div>
+								</div>
+							</div>
+						</div>
+						<div >
+							<a class="btn-common-new" href="">Save</a>
+							<a class="btn-common-new" href="">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+
+
+<%var b=0;DocData.forEach(doc_data=>{%>
+	
+	<div class="modal fade field-edit-modal" id="upload-doc-Modal<%=b%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-body">
+			<button type="button" class="close hide_click" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+			<div class="create-wallet-box"> 
+				<div class="row align-item-center">
+					<div class="col-xl-2 col-lg-3 col-md-3">
+						<div>
+							<img src="../assets/images/icons/createidentity-assets/popup-upload-icon.png">
+						</div>
+					</div>
+					<div class="col-xl-7 col-lg-7 col-md-7">
+						<h5 class="heading-purple">Upload Document</h5>
+					</div>
+				</div>
+				<form action="/upload-new-doc-entity" method="POST"  enctype="multipart/form-data" >
+				<div class="row">
+					<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+						<div class="setup-inner-box1 for-protact">
+							
+							<div class="create-rflet-id-form">
+								
+								<div class="form-group">
+									<label>File Name</label>
+									<div class="input-group">
+										<input type="text" class="form-control"value="  <%=doc_data.document_name%>" readonly="" placeholder="">
+									</div>
+								</div>
+								<div class="form-group">
+									<label>Document Number</label>
+									<div class="input-group">
+										<input type="text" class="form-control"value="<%=doc_data.doc_unique_code%>" readonly="" placeholder="">
+									</div>
+								</div>
+								<div class="form-group">
+									<label>Expire Date</label>
+									<div class="input-group">
+										<input type="text" class="form-control"value="<%=moment(doc_data.expire_date).format('MMM DD, YYYY')%>" readonly="" placeholder="">
+									</div>
+								</div>
+								<div class="form-group">
+									<label>Created Date</label>
+									<div class="input-group">
+										<input type="text" class="form-control"value="<%=moment(doc_data.createdAt).format('MMM DD, YYYY')%>" readonly="" placeholder="">
+									</div>
+								</div>
+								<div class="form-group browse-file-section">
+									<label>Upload Document</label>
+										<!-- <div class="input-group col-xs-12" > -->
+						<!-- 			<input type="file" name="entity_image" id="entity_image<%=b%>" onchange="fileInfo('<%=b%> ')"class="file check_type check_type_<%=b%> " style="visibility: hidden;position: absolute;"> -->
+									<!-- <input type="file" name="entity_image" class="file" style="visibility: hidden;position: absolute;" accept="image/x-png,image/jpeg"> -->
+
+										<input type="file"name="entity_image" id="entity_image<%=b%> " onchange="fileInfo('<%=b%> ')"class="file  check_type_<%=b%> " style="visibility: hidden;position: absolute;"/>
+									<div class="input-group col-xs-12">
+										<span class="input-group-btn">
+										<button class="browse btn btn-primary input-lg" type="button"> Choose a file</button>
+										</span>
+										<input type="text" class="form-control file_upload<%=b%>" readonly="" placeholder="">
+									</div>
+				            <span class="success_message_span success_span_1"style="color:red"></span>
+							<span class="success_message_span success_span"style="color:red"></span>
+								</div>
+								<div class="input-group for-radio-check-id-as responsive-field-radio">
+									<input type="text" class="form-control" readonly="" placeholder="Select file type"value="">
+									<div class="input-group-append">
+										<span class="input-group-text">
+											<div class="radio">
+											<label>
+												<input type="radio"id="image_dis<%=b%>" name="o1" value="image">
+												<span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+												Image
+											</label>
+											</div>
+											<div class="radio">
+											<label>
+												<input type="radio"id="video_dis<%=b%>" name="o1" value="video">
+												<span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+												Video
+											</label>
+											</div>
+										</span>
+									</div>
+								</div>
+							</div>
+							<input type="hidden"  name="user_doc_id" value="<%=doc_data.user_doc_id%>" >
+							<input type="hidden"  name="reflect_id" value="<%=reflect_id%>" >
+							    <input type="hidden"  name="value_o1" id="value_o1<%=b%>"value="" >
+
+							<div class="text-center">
+								<button type="submit" class="btn-common-new hide_click" id="upload-btn"href=""onclick="return check_upload('<%=b%>')">Upload</button>
+								<span class="loader"><img src="../assets/images/loader-3.gif"height="42" width="62"></span>
+
+								<a class="btn-common-new hide_click" href="">Cancel</a>
+							</div>
+						</div>
+					</div>
+				 </div>
+				 						</form>
+
+			   </div>
+		   </div>
+		</div>
+	  </div>
+	</div>
+	<% b++;})%>
+
+
+
+	<%var i=0; DocData.forEach(doc_data=>{%>
+<div class="modal fade field-edit-modal" id="self-attested-Modal<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close hide_click" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-self-attest-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Self Attestation</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="self-attested-imges">
+						    	
+						    	<%if(DocData!=null){
+									doc_data.file_content.forEach(function(file){%>
+								  <div class="licence-img">
+									  <img src="https://ipfs.io/ipfs/<%=file%>">
+								  </div>	
+								  <%})%>
+								  
+
+									<%}%>
+						    </div>
+						    						    
+							<div class="form-group for-signature-pad">
+								<div class="row for-heading-sign">
+									<label class="col-sm-6">Draw Your Sign</label>
+								    <div class="col-sm-6 text-right">
+								    	<button class="clear-sign" id="clear-signature">Clear</button>
+								    </div>
+								</div>
+								<canvas id="signature<%=i%>" class="signature-data" width="640" height="150"></canvas>
+							</div>
+							<span id="canvas_error" class="error_validate"></span>
+							<div class="form-group">
+							  	<div class="input-group">
+							  		<input type="text" class="form-control" placeholder="Commante/Note" name="text_for_signature" id="text_for_signature<%=i%>" maxlength="20">
+							  	</div> 
+							  </div>
+							
+						</div>
+						<div >
+							<input type="hidden" name="reflect_id" value="<%=reflect_id%>">
+							<input type="hidden" id="attested_doc_id<%=i%>" name="attested_doc_i" value="<%=doc_data.user_doc_id%>">
+							<button class="btn-common-new hide_click" id="sub_sign_btn" type="button" onclick="submit_signature('<%=i%>')">Save</button>
+							<span class="loader"><img src="../assets/images/loader-3.gif"height="42" width="62"></span>
+							<a class="btn-common-new hide_click" href="">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+<%i++; })%>
+
+
+
+
+		
+		<div class="modal fade field-edit-modal" id="set-docs-permission-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+			<div class="modal-content">
+			  <div class="modal-body">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+				<div class="create-wallet-box">
+					<div class="row align-item-center">
+						<div class="col-xl-2 col-lg-3 col-md-3">
+							<div>
+								<img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+							</div>
+						</div>
+						<div class="col-xl-7 col-lg-7 col-md-7">
+							<h5 class="heading-purple">Document Permission</h5>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+							<div class="setup-inner-box for-protact pt-15">
+								<div class="create-rflet-id-form">
+									<div class="licence-img-small">
+										<img src="../assets/images/icons/createidentity-assets/licence.png">
+									</div>						    
+									 <div class="form-group select-verifier-box">
+										<div class="input-group">
+										  <div class="dropdown">
+											  <button class="dropbtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												Select Verifiers Via Code
+											  </button>
+											  <div class="dropdown-menu menu-for-id" aria-labelledby="dropdownMenuButton">
+												<a class="dropdown-item" href="#">
+													<div class="for-verify-box-inner for-pending">
+														<i class="fas fa-check"></i>
+														<span class="user-img-verify">
+															<img src="../assets/images/other/face1.jpg">
+														</span>
+														<span class="tooltip fade" data-title="On boarding Pending">
+															Natasha-251100
+															<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+														</span>
+													</div>
+												</a>
+												<a class="dropdown-item" href="#">
+													<div class="for-verify-box-inner for-approve">
+														<i class="fas fa-check"></i>
+														<span class="user-img-verify">
+															<img src="../assets/images/other/face1.jpg">
+														</span>
+														<span class="tooltip fade" data-title="On boarding Accepted">
+															Heena-215020
+															<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+														</span>
+													</div>
+												</a>
+												<a class="dropdown-item" href="#">
+													<div class="for-verify-box-inner for-cancel">
+														<i class="fas fa-check"></i>
+														<span class="user-img-verify">
+															<img src="../assets/images/other/face1.jpg">
+														</span>
+														<span class="tooltip fade" data-title="On boarding Rejected/ Not Requested.">
+															Akansha-354653
+															<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+														</span>
+													</div>
+												</a>
+											  </div>
+											</div>
+										  <div class="input-group-append">
+											<button class="btn address-book" type="button">Address Book</button>
+										  </div>
+										</div>
+									</div>
+									<div class="form-group for-verify-text">
+										<textarea class="form-control" rows="5" placeholder="Message"></textarea>
+									</div>
+		
+									<div class="personal-info-box for-download-view-table table-responsive">
+										<table class="table">
+										  <thead>
+											<tr>
+											  <th scope="col">Label</th>
+											  <th scope="col">Download</th>
+											  <th scope="col">View</th>
+											  <th scope="col">Certify</th>
+											</tr>
+										  </thead>
+										  <tbody>
+											<tr>
+											  <th scope="row">
+												  <div class="for-flex-align">
+													   <img src="../assets/images/icons/dashboard-assets/drivinglicense.png">
+												   Driving License 
+												  </div>
+											  </th>
+											  <td>
+												  <div class="checkbox">
+												  <label>
+													<input type="checkbox" value="">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+												  </label>
+												</div>
+											  </td>
+											  <td>
+												  <div class="checkbox">
+												  <label>
+													<input type="checkbox" value="">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+												  </label>
+												</div>
+											  </td>
+											  <td>
+												  <div class="checkbox">
+												  <label>
+													<input type="checkbox" value="">
+													<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+												  </label>
+												</div>
+											  </td>
+											</tr>
+										  </tbody>
+										</table>
+									</div>
+								</div>
+								<div >
+									<a class="btn-common-new" href="">Submit</a>
+									<a class="btn-common-new" href="">Cancel</a>
+								</div>
+							</div>
+						</div>
+					 </div>
+				   </div>
+			   </div>
+			</div>
+		  </div>
+		</div>
+		
+		
+		<div class="modal fade field-edit-modal" id="add-new-doc-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-body">
+				  <button type="button" class="close hide_click" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				  <div class="create-wallet-box">
+					  <div class="row align-item-center">
+						  <div class="col-xl-2 col-lg-3 col-md-3">
+							  <div>
+								  <img src="../assets/images/icons/createidentity-assets/popup-upload-icon.png">
+							  </div>
+						  </div>
+						  <div class="col-xl-7 col-lg-7 col-md-7">
+							  <h5 class="heading-purple">Add New Document</h5>
+						  </div>
+					  </div>
+					  <form action="/add_new_doc" method="POST" enctype="multipart/form-data" id="add-new-doc-form">
+					  <div class="row">
+						  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+							  <div class="setup-inner-box for-protact">
+								  <div class="create-rflet-id-form">
+									  <div class="form-group browse-file-section">
+											<input type="file" name="document" class="file" style="visibility: hidden;position: absolute;" accept="image/x-png,image/jpeg">
+											<div class="input-group col-xs-12" data-rule-required="true" data-msg-required="Please upload file.">
+											  <span class="input-group-btn">
+												<button class="browse btn btn-primary input-lg" type="button"> Choose a file</button>
+											  </span>
+											  <input type="text" class="form-control" readonly="" placeholder="">
+											</div>
+										</div>
+											<%for(let DocMaster of docMasterData){%>
+							<input type="hidden" id="doc_entity<%=DocMaster.doc_id%>" value="<%=DocMaster.document_name%>"/>
+													<%}%>
+								<div class="form-group">
+								  <div class="input-group">
+										<select class="form-control slect_doc_type select_document select_document_list" onchange="get_select_value(this.value)" name="doc_name"  data-rule-required="true" data-msg-required="Please select document type. "required>
+																						<option value="select">Select document</option>
+
+											<%for(let DocMaster of docMasterData){%>
+													<option value="<%=DocMaster.doc_id%>"><%=DocMaster.document_name%></option>
+													<%}%>
+									</select>
+								  </div>
+							  </div>  
+									   <div class="form-group">
+								  <div class="input-group">
+									<input type="text" id="datepicker2" class="form-control" name="exp_date" placeholder="Expiry Date" data-rule-required="true" data-msg-required="Please select expiry date." autocomplete="off">
+								  </div>
+                              </div>
+                                <div class="form-group user_defined_document_name">
+									<div class="input-group">
+									  <input type="text"  class="form-control" name="document_name" placeholder="Document Name" autocomplete="off"data-rule-required="true" data-msg-required="Please enter document name.">
+									</div>
+							     </div>
+                                <div class="form-group special_class">
+									<div class="input-group">
+									  <input type="text"  class="form-control" name="issue_place" placeholder="Issue Place" autocomplete="off">
+									</div>
+								</div>
+						     	<!-- 	 <div class="form-group">
+									<div class="input-group">
+									  <input type="textarea"  class="form-control" name="proof_of_address" placeholder="Proof of address" autocomplete="off">
+									</div>
+								</div> -->
+								 <div class="form-group proof_of_address_class driving_lic">
+				                    <div class="input-group">
+				                      <textarea name="proof_of_address" id="" cols="30" rows="6" class="form-control" placeholder="Proof of address"data-rule-required="true" data-msg-required="Please enter descriptions."></textarea>  
+				                    </div>
+				                </div>
+								  <div class="form-group  ">
+									<div class="input-group">
+									  <input type="text" id="datepicker3" class="form-control" name="issue_date" placeholder="Issue Date"  autocomplete="off">
+									</div>
+								</div>
+<!-- 								  <div class="form-group  proof_of_address_class">
+									<div class="input-group">
+									  <input type="text" id="datepicker6" class="form-control" name="issue_date" placeholder="Issue Date"  autocomplete="off">
+									</div>
+								</div> -->
+									  <div class="form-group">
+										  <div class="input-group">
+											<input type="text" class="form-control" name="id_number" placeholder="Document Number" data-rule-required="true" data-msg-required="Please enter id number.">
+										  </div>
+									  </div>
+									  <input type="hidden" name="reflect_id" value="<%=reflect_id%>">
+		
+								  </div>
+								  <div >
+									  <button type="submit" class="btn-common-new hide_click" id="add-doc-btn">Upload</button>
+									  <span class="loader"><img src="../assets/images/loader-3.gif"height="42" width="62"></span>
+									  <a class="btn-common-new hide_click" href="">Cancel</a>
+								  </div>
+							  </div>
+						  </div>
+					   </div>
+					</form>
+					 </div>
+				 </div>
+			  </div>
+			</div>
+		  </div>
+		  <div class="modal  field-edit-modal" id="set-all-permission-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-body">
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				  <div class="create-wallet-box">
+					  <div class="row align-item-center">
+						  <div class="col-xl-2 col-lg-3 col-md-3">
+							  <div>
+								  <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+							  </div>
+						  </div>
+						  <div class="col-xl-7 col-lg-7 col-md-7">
+							  <h5 class="heading-purple">Document Permission</h5>
+						  </div>
+					  </div>
+					  <div class="row">
+						  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+							  <div class="setup-inner-box for-protact pt-15">
+								  <div class="create-rflet-id-form">
+															  
+									   <div class="form-group select-verifier-box">
+										  <div class="input-group">
+											<div class="dropdown">
+												<button class="dropbtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												  Select Verifiers Via Code
+												</button>
+												<div class="dropdown-menu menu-for-id" id="verifierDropdown" aria-labelledby="dropdownMenuButton">
+													
+												</div>
+											  </div>
+											
+										  </div>
+									  </div>
+									  <div class="info-line-blue">
+										  <img src="../assets/images/icons/dashboard-assets/info-icon.png"> On boarding request will be sent when you send this documents.
+									  </div>
+									  <div id="category_list" class="form-group">
+									
+
+									  </div>
+									      <span style="color: red;" id="selcte_cat_err_id"></span>
+
+									  <div id="sub_category_list" class="form-group">
+										  
+									  </div>
+		  
+									  <div id="category_docs" class="form-group">
+										  
+									  </div>
+		  
+		  
+									 
+		  
+									   <div class="form-group for-select-existing-doc">
+										  <div class="input-group">
+											<div class="dropdown keep-inside-clicks-open">
+												<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												  Select from existing documents
+												</button>
+												<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+													  <%if(documents!=null && documents!="" && documents!=undefined){
+														  var i=0;
+														  for(let document of documents){%>
+												   <div class="for-doc-select">
+													  <div class="checkbox"> 	
+														<label>
+															  <%=document.document_name%>
+														  <input type="checkbox" onclick="get_check_doc('<%=i%>')" id="doc_check<%=i%>" value="<%=document.user_doc_id%>" name="doc_check">
+														  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+														</label>
+													  </div>	
+												   </div>
+												   <% i++; }}%>
+												   
+												</div>
+											  </div>
+											
+										  </div>
+									  </div>
+		  
+									  
+		  
+									  <div class="personal-info-box for-download-view-table table-responsive mb-0">
+										  <table class="table" id="myTable">
+											<thead>
+											  <tr>
+												<th scope="col">Label</th>
+												<th scope="col">Download</th>
+												<th scope="col">View</th>
+												<th scope="col">Certify</th>
+											  </tr>
+											</thead>
+											<tbody id="doc_data">
+											  
+											</tbody>
+										  </table>
+										  <span id="prm_error_span" class="error_validate"></span>
+									  </div>
+
+									  <div class="form-group">
+									  	<div class="input-group">
+									  		<input type="text" class="form-control" id="note" placeholder="Note" name="note" maxlength="20">
+									  	</div> 
+									  </div>
+
+									  
+								  </div>
+								  <div >
+										<input type="hidden" name="p_cat_id" id="p_cat_id">
+										<input type="hidden" name="sub_cat_id" id="sub_cat_id">
+										  <input type="hidden" name="doc_reflect_id" id="doc_reflect_id" value="<%=myreflectEntityData.reflect_id%>">
+										  <button class="btn-common-new" type="button" id="subPerm" onclick="submit_all_perm()">Save</button>
+										  <a class="btn-common-new"  data-dismiss="modal" href="#">Cancel</a>
+								  </div>
+							  </div>
+						  </div>
+					   </div>
+					 </div>
+				 </div>
+			  </div>
+			</div>
+		  </div>
+		  <div class="modal field-edit-modal" id="doc-check-permission-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-body">
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				  <div class="create-wallet-box">
+					  <div class="row align-item-center">
+						  <div class="col-xl-2 col-lg-3 col-md-3">
+							  <div class="for-icon-bg">
+								  <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+							  </div>
+						  </div>
+						  <div class="col-xl-10 col-lg-10 col-md-10">
+							  <h5 class="heading-purple">Document Permission</h5>
+							  
+						  </div>
+					  </div>
+					  <div class="setup-inner-box for-protact mt-30 p-0">
+						   <p>Are you sure you want to give document permission? click yes to continue.</p>
+								  <div>
+									  <a class="btn-common-new" href="" data-toggle="modal" data-target="#validate-pin-check-Modal" data-dismiss="modal">Yes</a>
+									  <a class="btn-common-new" href="">No</a>
+								  </div>
+							  </div>
+					 </div>
+				 </div>
+			  </div>
+			</div>
+		  </div>
+		
+		<!--pin modal start-->
+		 <div class="modal field-edit-modal" id="validate-pin-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-body">
+			  <button type="button" class="close hide_click" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			  <div class="create-wallet-box">
+				  <div class="row align-item-center">
+					  <div class="col-xl-2 col-lg-3 col-md-3">
+						  <div class="for-icon-bg">
+							  <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+						  </div>
+					  </div>
+					  <div class="col-xl-10 col-lg-10 col-md-10">
+						  <h5 class="heading-purple">Validate Pin</h5>
+						  <p>Enter Your PIN to Continue</p>
+					  </div>
+				  </div>
+					 <div class="login-form-main phone-otp mt-15">
+					   <div class="form-group mb-0">
+						  <label>PIN</label>
+						  <div class="otp-box digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+							  <input type="text" id="otp1" name="otp1" class="form-control text-center" placeholder="-" maxlength="1" data-next="otp2">
+							  <input type="text" id="otp2" name="otp2" class="form-control" placeholder="-" maxlength="1" data-next="otp3" data-previous="otp1">
+							  <input type="text" id="otp3" name="otp3" class="form-control" placeholder="-" maxlength="1" data-next="otp4" data-previous="otp2">
+							  <input type="text" id="otp4" name="otp4" class="form-control" placeholder="-" maxlength="1" data-previous="otp3">
+						  </div>
+						</div>
+				  </div>
+				  <span class="error_validate" id="req_err_prm"></span>
+				  <div class="setup-inner-box for-protact pt-15">
+					  <div>
+						  <a class="btn-common-new hide_click" href="javascript:void(0)" onclick="pin_for_prm()" id="pin_prm_btn">Confirm</a>
+						  						   <span class="loader"><img src="../assets/images/loader-3.gif"height="42" width="62"></span>
+						  <a class="btn-common-new hide_click" href="">Cancel</a>
+					  </div>
+				  </div>
+				 </div>
+			 </div>
+		  </div>
+		</div>
+		</div> 
+		
+		<div class="modal field-edit-modal" id="doc-permission-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-body">
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				  <div class="create-wallet-box">
+					  <div class="row align-item-center">
+						  <div class="col-xl-2 col-lg-3 col-md-3">
+							  <div class="for-icon-bg">
+								  <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+							  </div>
+						  </div>
+						  <div class="col-xl-10 col-lg-10 col-md-10">
+							  <h5 class="heading-purple">Document Permission</h5>
+							  
+						  </div>
+					  </div>
+					  <div class="setup-inner-box for-protact mt-30 p-0">
+						   <p>Are you sure you want to give document permission? click yes to continue.</p>
+								  <div>
+									  <a class="btn-common-new" href="" data-toggle="modal" data-target="#validate-pin-Modal" data-dismiss="modal">Yes</a>
+									  <a class="btn-common-new" href="">No</a>
+								  </div>
+							  </div>
+					 </div>
+				 </div>
+			  </div>
+			</div>
+		  </div>
+		  <div class="modal  field-edit-modal" id="dsuccess-doc-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-body">
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				  <div class="create-wallet-box">
+					  <div class="row align-item-center">
+						  <div class="col-xl-2 col-lg-3 col-md-3">
+							  <div class="for-icon-bg">
+								  <img src="../assets/images/icons/createidentity-assets/popup-success-icon.png">
+							  </div>
+						  </div>
+						  <div class="col-xl-10 col-lg-10 col-md-10">
+							  <h5 class="heading-purple">Document Sent Successfully</h5>
+							  
+						  </div>
+					  </div>
+					  <div class="setup-inner-box for-protact mt-30 p-0">
+						   <p>Your Document has been successfully sent to the verifier. Your document will be verified shortly and you'll ve notified in regards that.</p>
+					  </div>
+					  <div class="setup-inner-box for-protact pt-15">
+						<div>
+							<a href="" class="btn-common-new">OK!</a>
+						</div>
+						</div>
+					 </div>
+				 </div>
+			  </div>
+			</div>
+		  </div>
+		<%if(documents!=null && documents!="" && documents!=undefined){
+			var i=0;
+			for(let document of documents){%>
+		  <div class="modal field-edit-modal" id="doc-permission-Modal-for-indiv<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-body">
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				  <div class="create-wallet-box">
+					  <div class="row align-item-center">
+						  <div class="col-xl-2 col-lg-3 col-md-3">
+							  <div class="for-icon-bg">
+								  <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+							  </div>
+						  </div>
+						  <div class="col-xl-10 col-lg-10 col-md-10">
+							  <h5 class="heading-purple">Document Permission</h5>
+							  
+						  </div>
+					  </div>
+					  <div class="setup-inner-box for-protact mt-30 p-0">
+						   <p>Are you sure you want to give document permission? click yes to continue.</p>
+								  <div>
+									  <a class="btn-common-new" href="" data-toggle="modal" data-target="#validate-pin-Modal-for-indiv<%=i%>" data-dismiss="modal">Yes</a>
+									  <a class="btn-common-new" href="">No</a>
+								  </div>
+							  </div>
+					 </div>
+				 </div>
+			  </div>
+			</div>
+		  </div>
+		<% i++;}}%>
+
+		<!-- SHARE Modal -->
+		<%if(DocData!=null && DocData!="" && DocData!=undefined){
+	var i=0;
+DocData.forEach(document=>{%>
+<div class="modal fade field-edit-modal" id="Mail-Modal<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/updateinfo.png">
+					</div>
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<h5 class="heading-purple">Share Information</h5>
+				</div>
+			</div>
+		<form method="POST" action="/share-entity-document" id="share_form">
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact">
+						<div class="create-rflet-id-form">
+						    <div class="form-group">
+						    	<label>User Email</label>
+						    	<div class="input-group">
+									
+								  <input type="text" class="form-control" readonly placeholder="user email" >
+									
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/createidentity-assets/user.png">
+								    </span>
+								  </div>
+								</div>
+						    </div>
+						    <div class="form-group">
+								<div class="input-group">
+							
+								  <input type="text" class="form-control" name="user_email" placeholder="Content" data-rule-required="true" data-msg-required="Please enter email." data-rule-email="true"autocomplete="off">
+								 
+								  <div class="input-group-append">
+								    <span class="input-group-text">
+								    	<img src="../assets/images/icons/createidentity-assets/user.png">
+								    </span>
+								  </div>
+								</div> 
+							</div>
+						</div>
+						<div >
+					<input type="hidden" id="reflect_id" name="reflect_id" value="<%=myreflectEntityData.reflect_id%>">
+					<input type="hidden" id="reflect_code" name="reflect_code" value="<%=myreflectEntityData.reflect_code%>">
+
+					<input type="hidden" id="expire_date" name="expire_date" value="<%=document.expire_date%>">
+					<input type="hidden" id="doc_unique_code" name="doc_unique_code" value="<%=document.doc_unique_code%>">
+					<input type="hidden" id="doc_create_date" name="doc_create_date" value="<%=document.doc_create_date%>">
+					<input type="hidden" id="document_name" name="document_name" value="<%=document.document_name%>">
+					<input type="hidden" id="user_doc_id" name="user_doc_id" value="<%=document.user_doc_id%>">
+					<%if(myreflectEntityData.rep_firstname){%>
+					<input type="hidden" id="" name="share_name" value="<%=myreflectEntityData.rep_firstname%> <%=myreflectEntityData.rep_lastname%>">
+					<%}else if(myreflectEntityData.entity_company_name){%>
+					<input type="hidden" id="" name="share_name" value="<%=myreflectEntityData.entity_company_name%>">
+					<%}%>
+           		
+
+							<button class="btn-common-new" id="share_form_btn" type="submit">Share</button>
+							<a class="btn-common-new"  data-dismiss="modal" href="">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+	 	  </form>
+       </div>
+    </div>
+  </div>
+</div>
+<% i++; })}%>
+<div class="document_details_pdf"></div>
+
+<%if(certified.length>0){
+
+         var l =  0;
+			
+		for(var i=0;i< certified.length;i++){
+			
+			%>
+			<%if(certified[i].certified_doc_data.length>0){%>
+
+<div class="modal fade field-edit-modal" id="doc-img-Modal-download<%=l%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		 
+		  <div id="img_modal" class="modal-img-big">
+			<img id="download_image<%=l%>" src="">
+		  </div>
+			
+		
+		  <div class="modal-img-big" id="download_link<">
+			<input type="hidden" id="src_val<%=l%>"value="">
+			<a href=""class="hide_click download_class" onclick="download_img('<%=l%>')">click here to download</a>
+			  <center><span class="loader"><img src="../assets/images/loader-3.gif"height="42" width="62"></span></center> 
+		  </div>
+			
+			
+		 </div>
+	  </div>
+	</div>
+  </div>
+ <% l++; }}}%>
+
+<%- include('../innerFooter.ejs')%>
+
+<script type="text/javascript" src="assets/js/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+
+
+<script type="text/javascript">
+	$('#company-form-id').validate({
+		 onfocusout: function(element) {
+		 this.element(element);
+		 },
+		 errorClass: 'error_validate',
+		 errorElement:'span',
+		 highlight: function(element, errorClass) {
+		 $(element).removeClass(errorClass);
+		 },
+		 submitHandler:function(form)
+			{
+			  $('#com-name-btn').attr('disabled',true);
+			  form.submit();
+			}
+		 });
+</script>
+<script type="text/javascript">
+	$('#company-email-form-id').validate({
+		 onfocusout: function(element) {
+		 this.element(element);
+		 },
+		 errorClass: 'error_validate',
+		 errorElement:'span',
+		 highlight: function(element, errorClass) {
+		 $(element).removeClass(errorClass);
+		 },
+		 submitHandler:function(form)
+			{
+			  $('#com-email-btn').attr('disabled',true);
+			  form.submit();
+			}
+		 });
+</script>
+<script type="text/javascript">
+	$('#date-incorpo-form-id').validate({
+		 onfocusout: function(element) {
+		 this.element(element);
+		 },
+		 errorClass: 'error_validate',
+		 errorElement:'span',
+		 highlight: function(element, errorClass) {
+		 $(element).removeClass(errorClass);
+		 },
+		 submitHandler:function(form)
+			{
+			  $('#date-incorpo-btn').attr('disabled',true);
+			  form.submit();
+			}
+		 });
+</script>
+<script type="text/javascript">
+	$('#country-form-id').validate({
+		 onfocusout: function(element) {
+		 this.element(element);
+		 },
+		 errorClass: 'error_validate',
+		 errorElement:'span',
+		 highlight: function(element, errorClass) {
+		 $(element).removeClass(errorClass);
+		 },
+		 submitHandler:function(form)
+			{
+			  $('#country-btn').attr('disabled',true);
+			  form.submit();
+			}
+		 });
+</script>
+<script type="text/javascript">
+	$('#address-form-id').validate({
+		 onfocusout: function(element) {
+		 this.element(element);
+		 },
+		 errorClass: 'error_validate',
+		 errorElement:'span',
+		 highlight: function(element, errorClass) {
+		 $(element).removeClass(errorClass);
+		 },
+		 submitHandler:function(form)
+			{
+			  $('#com-add-btn').attr('disabled',true);
+			  form.submit();
+			}
+		 });
+		$('#share_form').validate({
+		 onfocusout: function(element) {
+		 this.element(element);
+		 },
+		 errorClass: 'error_validate',
+		 errorElement:'span',
+		 highlight: function(element, errorClass) {
+		 $(element).removeClass(errorClass);
+		 },
+		 submitHandler:function(form)
+			{
+			  $('#share_form_btn').attr('disabled',true);
+			  form.submit();
+			}
+		 });
+</script>
+<script type="text/javascript">
+	$('#phone-no-form-id').validate({
+		 onfocusout: function(element) {
+		 this.element(element);
+		 },
+		 errorClass: 'error_validate',
+		 errorElement:'span',
+		 highlight: function(element, errorClass) {
+		 $(element).removeClass(errorClass);
+		 },
+		 submitHandler:function(form)
+			{
+			  $('#phone-btn').attr('disabled',true);
+			  form.submit();
+			}
+		 });
+</script>
+
+
+<script type="text/javascript">
+	$('#reg-no-form-id').validate({
+		 onfocusout: function(element) {
+		 this.element(element);
+		 },
+		 errorClass: 'error_validate',
+		 errorElement:'span',
+		 highlight: function(element, errorClass) {
+		 $(element).removeClass(errorClass);
+		 },
+		 submitHandler:function(form)
+			{
+			  $('#reg-no-btn').attr('disabled',true);
+			  form.submit();
+			}
+		 });
+</script>
+
+<script type="text/javascript">
+	$('#add-new-doc-form').validate({
+		 onfocusout: function(element) {
+		 this.element(element);
+		 },
+		 errorClass: 'error_validate',
+		 errorElement:'span',
+		 highlight: function(element, errorClass) {
+		 $(element).removeClass(errorClass);
+		 },
+		 submitHandler:function(form)
+			{
+					  	$('.hide_click').hide();
+
+				 	        	$('.loader').show();
+
+			  $('#add-doc-btn').attr('disabled',true);
+			  form.submit();
+			}
+		 });
+		$('#upload-new-doc-form').validate({
+		 onfocusout: function(element) {
+		 this.element(element);
+		 },
+		 errorClass: 'error_validate',
+		 errorElement:'span',
+		 highlight: function(element, errorClass) {
+		 $(element).removeClass(errorClass);
+		 },
+		 submitHandler:function(form)
+			{
+				// alert('test')
+					  	$('.hide_click').hide();
+
+				 	        	$('.loader').show();
+
+			  $('#upload-btn').attr('disabled',true);
+			  form.submit();
+			}
+		 });
+</script>
+<script>
+	$(document).ready( function () {
+     var entity_company_name=`<%=myreflectEntityData.entity_company_name%>`
+     // alert(entity_company_name)
+		           if(entity_company_name){
+							   }else{
+
+		                    $('#company-name-Modal').modal('show');
+
+								}
+		// $('#hide_head').hide();
+			$('.proof_of_address_class').hide();
+		  		$('.passport_class').hide();
+		  		 	 	    $('.user_defined_document_name').hide();
+
+		  				  		$('.special_class').hide();
+		$('.hide_td').hide();
+		$('.loader').hide();
+
+	$('#myTable').DataTable();
+	$('#myTable2').DataTable();
+	$('#myTable3').DataTable();
+	$('#myTable4').DataTable();
+	$('#myTable5').DataTable();
+} );
+// 	$(document).ready( function () {
+//     $('#myTable2').DataTable();
+// } );
+// 		$(document).ready( function () {
+//     $('#myTable3').DataTable();
+// } );
+// 			$(document).ready( function () {
+//     $('#myTable4').DataTable();
+// } );
+// 				$(document).ready( function () {
+//     $('#myTable5').DataTable();
+// } );
+</script>
+        <script>
+    $('.digit-group').find('input').each(function() {
+    $(this).attr('maxlength', 1);
+    $(this).on('keyup', function(e) {
+        var parent = $($(this).parent());
+        
+        if(e.keyCode === 8 || e.keyCode === 37) {
+            var prev = parent.find('input#' + $(this).data('previous'));
+            
+            if(prev.length) {
+                $(prev).select();
+            }
+        } else if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
+            var next = parent.find('input#' + $(this).data('next'));
+            
+            if(next.length) {
+                $(next).select();
+            } else {
+                if(parent.data('autosubmit')) {
+                    parent.submit();
+                }
+            }
+        }
+    });
+});
+</script>
+
+<script>
+	 $(document).on('click', '.browse', function(){
+    var file = $(this).parent().parent().parent().find('.file');
+    file.trigger('click');
+  });
+  $(document).on('change', '.file', function(){
+    $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i,''));
+  }); 
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
+ <script>
+ 	jQuery(document).ready(function($){
+	
+		
+
+
+		$('.signature-data').each(function(){
+
+	var canvas_id=$(this).attr('id');
+
+	var canvas = document.getElementById(canvas_id);
+	var signaturePad = new SignaturePad(canvas);
+	
+	$('#clear-signature').on('click', function(){
+		signaturePad.clear();
+   });
+
+});
+    
+});
+ </script>
+
+ <script type="text/javascript">
+   $(document).on('click', '.menu-for-id a', function() {
+       $('.dropbtn').html($(this).html());  
+   });
+</script>
+
+
+<script>
+	$(document).on('click.bs.dropdown.data-api', '.dropdown.keep-inside-clicks-open', function (e) {
+	  e.stopPropagation();
+	});
+</script>
+
+<script>
+	var reflect_code = $('#reflect_code').val();
+			function downloadDocDiv(){
+
+
+				$("#myTable3").table2excel({
+		  filename: "document_list.xls",
+		  exclude:'.hide_link',
+		  exclude_img:true,
+	  });
+	//   $('.hide_link').show();
+	window.location.reload(true);
+
+				// alert(reflect_code)
+				// html2canvas(document.getElementById('doc_div')).then(function(canvas) {
+				// var img = canvas.toDataURL("image/png");
+				// var doc = new jsPDF();
+				// doc.text(2,5, "MY REFLECT ID"+" "+reflect_id);
+				// doc.addImage(img,'JPEG',5,6);
+				// doc.save('Personal-info.pdf');
+				// });
+
+
+// 				$('.nodata').hide();
+// 				var quotes = document.getElementById('doc_div');
+
+// html2canvas(quotes, {
+// 	onrendered: function(canvas) {
+
+// 	//! MAKE YOUR PDF
+// 	var pdf = new jsPDF('p', 'pt', 'letter');
+
+// 	for (var i = 0; i <= quotes.clientHeight/980; i++) {
+// 		//! This is all just html2canvas stuff
+// 		var srcImg  = canvas;
+// 		var sX      = 0;
+// 		var sY      = 980*i; // start 980 pixels down for every new page
+// 		var sWidth  = 900;
+// 		var sHeight = 980;
+// 		var dX      = 0;
+// 		var dY      = 0;
+// 		var dWidth  = 900;
+// 		var dHeight = 980;
+
+// 		window.onePageCanvas = document.createElement("canvas");
+// 		onePageCanvas.setAttribute('width', 900);
+// 		onePageCanvas.setAttribute('height', 980);
+// 		var ctx = onePageCanvas.getContext('2d');
+// 		pdf.text(40,50, "MY REFLECT ID"+" "+reflect_code);
+// 		// details on this usage of this function: 
+// 		// https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images#Slicing
+// 		ctx.drawImage(srcImg,sX,sY,sWidth,sHeight,dX,dY,dWidth,dHeight);
+
+// 		// document.body.appendChild(canvas);
+// 		var canvasDataURL = onePageCanvas.toDataURL("image/png", 1.0);
+
+// 		var width         = onePageCanvas.width;
+// 		var height        = onePageCanvas.clientHeight;
+
+// 		//! If we're on anything other than the first page,
+// 		// add another page
+// 		if (i > 0) {
+// 			pdf.addPage(612, 791); //8.5" x 11" in pts (in*72)
+// 		}
+// 		//! now we declare that we're working on that page
+// 		pdf.setPage(i+1);
+// 		//! now we add content to that page!
+// 		pdf.addImage(canvasDataURL, 'PNG', 20, 40, (width*.62), (height*.62));
+
+// 	}
+// 	//! after the for loop is finished running, we save the pdf.
+// 	pdf.save('Documnets.pdf');
+// }
+
+// });
+// $('.nodata').show();
+
+
+
+			  }
+			</script>
+			<script>
+			var reflect_id = $('#reflect_id').val();
+			function downloadAdditional(){
+
+				// html2canvas(document.getElementById('companycontent')).then(function(canvas) {
+				// var img = canvas.toDataURL("image/png");
+				// var doc = new jsPDF();
+				// doc.text(15,15, "MY REFLECT ID"+" "+reflect_id);
+				// doc.addImage(img,'JPEG',50,60);
+				// doc.save('Additional-info.pdf');
+				// });
+				// $('.hide_icon').hide();
+				
+				$("#myTable").table2excel({
+						filename: "document_list",
+						exclude:'.hide_link',
+						exclude_img:true,
+						exclude_inputs:true,
+						fileext:".xls",
+
+	            });
+	//   $('.hide_icon').show();
+	window.location.reload(true);
+			  }
+			</script>
+<script>
+	var reflect_id = $('#reflect_id').val();
+	function printdiv(){
+		
+	  var restorepage = $('body').html();
+		$('.nodata').hide();
+	   var printcontent = $('#companycontent').clone();
+	   $('body').empty().html(printcontent);
+	   window.print();
+	   $('body').html(restorepage);
+	 
+	
+	}
+	function printDocdiv(){
+		
+		var restorepage = $('body').html();
+		  $('.nodata').hide();
+		 var printcontent = $('#doc_div').clone();
+		 $('body').empty().html(printcontent);
+		 window.print();
+		 $('body').html(restorepage);
+	   
+	  
+	  }
+	
+	</script>
+
+<script>
+	var reflect_id = $('#reflect_id').val();
+	function downloaddoclist(){
+		html2canvas(document.getElementById('doc_div')).then(function(canvas) {
+		var img = canvas.toDataURL("image/png");
+		var doc = new jsPDF();
+		doc.text(2,5, "MY REFLECT ID"+" "+reflect_id);
+		doc.addImage(img,'JPEG',-10,10);
+		doc.save('doc-list.pdf');
+		});
+	  }
+	</script>
+ <script>
+    $("#datepicker").datepicker();
+    $("#datepicker1").datepicker();
+	$("#datepicker2").datepicker({ minDate:  "+1M" });
+	$("#datepicker3").datepicker({ maxDate:  "-0M" });
+		$("#datepicker6").datepicker({ maxDate:  "-0M" });
+
+	$("#datepicker4").datepicker({ maxDate:  "-1M" });
+ </script>
+ 	
+<script>
+
+    function show_doc_img(img_val){
+		var img = $('#img_tag'+img_val).attr('src');
+		// alert(img_val);
+		// alert(img);
+        if(img!=""){
+			$('#img_modal').html("");
+            $('#img_modal').html(`<img src="${img}" class="img-fluid">`);
+			$('#doc-img-Modal').show();
+
+		}
+	}
+
+	function show_doc_vid(vid_val){
+		var vid = $('#vid_tag'+vid_val).attr('src');
+		// alert(img);
+        if(vid!=""){
+			$('#img_modal').html("");
+            $('#img_modal').html(`<video id="vid_modal" width="400" height="400" controls>
+					
+				<source src="${vid}" type="video/mp4"></video>`);
+			$('#doc-img-Modal').show();
+
+		}
+	}
+
+	function show_attested_img(att_img_val){
+		var img = $('#attested_img'+att_img_val).attr('src');
+		// alert(img);
+        if(img!=""){
+            $('#attested_img_modal').attr('src',img);
+			$('#attested-doc-img-Modal').show();
+
+		}
+	}
+</script>
+	<script>
+		var rowCount;
+		var rowVal=[];
+		var download = [];
+		var view = [];
+		var certify = [];
+
+	
+	
+	function submit_all_perm(){
+		var sel_cat =	$("#select_ver_category").val()
+		if(sel_cat == ""){
+				
+			$("#selcte_cat_err_id").text("Please select category.")
+			return false;
+
+		}else{
+			
+		
+			$("#selcte_cat_err_id").text("")
+
+		if(getVerifierID!="" || getVerifierID!=undefined){
+		//  alert(getVerifierID);
+		 
+		rowCount = $('table#myTable tr:last').index() + 1;
+		//  alert(rowCount);
+	
+		var reflect_id = $('#doc_reflect_id').val();
+		
+	
+		if(rowCount>0)
+		{
+	
+			if($('input[name="doc_check"]:checked')){
+			   $('#doc_data tr').each(function(index) {
+				   var hidden_val=$(this).find('input[type="hidden"]').val();
+	
+				   rowVal.push(hidden_val);
+	
+	
+				   var down_val=$(this).find('input[name="downloadPerm"]:checked').val();
+				   var view_val = $(this).find('input[name="viewPerm"]:checked').val();
+				   var certify_val = $(this).find('input[name="certifyPerm"]:checked').val();
+	
+				   if(down_val==undefined)
+				   {
+					   var dwn_per='no';
+				   }
+				   else
+				   {
+					  var dwn_per='yes';	
+				}
+				if(view_val==undefined)
+				   {
+					   var vw_per='no';
+				   }
+				   else
+				   {
+					  var vw_per='yes';	
+				}
+				   if(certify_val==undefined)
+				   {
+					   var crt_per='no';
+				   }
+				   else
+				   {
+					  var crt_per='yes';	
+				   }
+				   
+	
+				   download.push(dwn_per);
+				view.push(vw_per);
+				certify.push(crt_per)
+			   });
+			   $('#subPerm').attr('data-toggle', 'modal');
+				$('#subPerm').attr('data-target', '#doc-permission-Modal'); 
+				$('#subPerm').attr('data-dismiss', 'modal');
+		}else if(rowCount<=0){
+			$('#prm_error_span').html("Please select atleast one document.");
+		}
+	 }
+	} else{
+		$('#prm_error_span').html("Please select verifier.");
+	 }
+		
+ }		
+			
+}
+	
+	function submit_permission(){
+	
+	// alert("submit_permission");
+var reflect_id = $('#doc_reflect_id').val();
+var vrfr = getVerifierID.split('-');
+	 var vId = vrfr[0];
+	 var vRefId = vrfr[1];
+	 var p_cat_id1= $("#p_cat_id").val()
+	 var sub_cat_id1= $("#sub_cat_id").val()
+        var note =$("#note").val()
+	//  alert("vrfr "+vrfr);
+	//  alert("vId "+vId);
+	//  alert("vRefId "+vRefId);
+$.ajax({
+	type: "post",
+	url:"/request-doc",
+	data:{reflect_id:reflect_id,
+		download:JSON.stringify(download),
+		view:JSON.stringify(view),
+		certify:JSON.stringify(certify),
+		total_doc:JSON.stringify(rowVal),
+		verifier_id:vId,
+		verifier_reflect_id:vRefId,
+		rowCount:rowCount,
+		p_cat_id:p_cat_id1,
+		sub_cat_id:sub_cat_id1,
+		note:note
+	},
+	success:function(datas) {
+		// alert("[[[[[[[[[[[[[[[");
+		// console.log("ggggggggggg",datas)
+		$('#validate-pin-Modal').modal('hide');
+		
+		$('#dsuccess-doc-Modal').modal('show');
+	}
+});
+
+}
+
+	
+	function pin_for_prm(){
+		// alert("hellllllllllllll0000");
+		
+	var otp1=$('#otp1').val();
+	var otp2=$('#otp2').val();
+	var otp3=$('#otp3').val();
+	var otp4=$('#otp4').val();
+	var otp = otp1+""+otp2+""+otp3+""+otp4;
+	if(otp1=="" || otp1=="" || otp1=="" || otp1==""){
+		// alert("otp",otp);
+	 $('#req_err_prm').html("Please enter valid Pin.");
+	}else{
+	// alert(otp);
+	$('.hide_click').hide();
+ 	        	$('.loader').show();
+	$('#req_err_prm').html("");
+		$.ajax({
+				type: "post",
+				url: "/request-check-pin",
+				data:{pin:otp},
+				success: function (data) {
+					// alert(data);
+					if(data.success_data){
+						$('#req_err_prm').html('');
+						// alert(data);
+						submit_permission();
+					}else{
+						$('#req_err_prm').html('Please enter valid Pin');
+					}
+				}
+		})
+	}
+	}
+	
+
+	// var rowCount;
+	// 	var indrowVal=[];
+	// 	var inddownload = [];
+	// 	var indview = [];
+	// 	var indcertify = [];
+	
+	// function submit_all_perm(indiv_val){
+	
+	// 	if(getVerifierID!="" || getVerifierID!=undefined){
+	// 	//  alert(getVerifierID);
+		 
+	// 	rowCount = $('table#myTable tr:last').index() + 1;
+	// 	//  alert(rowCount);
+	
+	// 	var reflect_id = $('#doc_reflect_id').val();
+		
+	
+	// 	if(rowCount>0)
+	// 	{
+	
+	// 		if($('input[name="doc_check"]:checked')){
+	// 	   	$('#doc_data tr').each(function(index) {
+	// 	   		var hidden_val=$(this).find('input[type="hidden"]').val();
+	
+	// 	   		rowVal.push(hidden_val);
+	
+	
+	// 			   var down_val=$(this).find('input[name="downloadPerm"]:checked').val();
+	// 			   var view_val = $(this).find('input[name="viewPerm"]:checked').val();
+	// 			   var certify_val = $(this).find('input[name="certifyPerm"]:checked').val();
+	
+	// 	   		if(down_val==undefined)
+	// 	   		{
+	// 	   			var dwn_per='no';
+	// 	   		}
+	// 	   		else
+	// 	   		{
+	// 	   		   var dwn_per='yes';	
+	// 			}
+	// 			if(view_val==undefined)
+	// 	   		{
+	// 	   			var vw_per='no';
+	// 	   		}
+	// 	   		else
+	// 	   		{
+	// 	   		   var vw_per='yes';	
+	// 			}
+	// 			   if(certify_val==undefined)
+	// 	   		{
+	// 	   			var crt_per='no';
+	// 	   		}
+	// 	   		else
+	// 	   		{
+	// 	   		   var crt_per='yes';	
+	// 	   		}
+				   
+	
+	// 	   		download.push(dwn_per);
+	// 			view.push(vw_per);
+	// 			certify.push(crt_per)
+	// 	   	});
+	// 		   $('#subPerm').attr('data-toggle', 'modal');
+	// 			$('#subPerm').attr('data-target', '#doc-permission-Modal'); 
+	// 			$('#subPerm').attr('data-dismiss', 'modal');
+	// 	}else if(rowCount<=0){
+	// 		$('#prm_error_span').html("Please select atleast one document.");
+	// 	}
+	// }
+	// }else{
+	// 	$('#prm_error_span').html("Please select verifier.");
+	// }
+		
+		
+			
+	// }
+	
+	function indiv_pin_for_prm(indiv_val){
+		// alert("hellllllllllllll0000");
+	var otp1=$('#op1'+indiv_val).val();
+	var otp2=$('#op2'+indiv_val).val();
+	var otp3=$('#op3'+indiv_val).val();
+	var otp4=$('#op4'+indiv_val).val();
+	var otp = otp1+""+otp2+""+otp3+""+otp4;
+	if(otp1=="" || otp1=="" || otp1=="" || otp1==""){
+	 $('#req_err_prm_indiv'+indiv_val).html("Please enter valid Pin.");
+	}else{
+	// alert(otp);
+	$('#req_err_prm_indiv'+indiv_val).html("");
+		$.ajax({
+				type: "post",
+				url: "/request-check-pin",
+				data:{pin:otp},
+				success: function (data) {
+					// alert(data);
+					if(data.success_data){
+						$('#req_err_prm_indiv'+indiv_val).html('');
+						// alert(data);
+						submit_indiv_perm(indiv_val);
+					}else{
+						$('#req_err_prm_indiv'+indiv_val).html('Please enter valid Pin');
+					}
+				}
+		})
+	}
+	}
+	
+	function submit_indiv_perm(div_value){
+		var indiv_reflect_id = $('#indiv_reflect_id').val();
+		var doc_id = $('#docIdIndividual'+div_value).val();
+		var msg = $('#msg_textArea'+div_value).val();
+		// alert(msg);
+		var in_download;
+		var in_view;
+		var in_certify;
+		if($(`input[name="indiv_down${div_value}"]:checked`).val()=="yes"){
+			in_download="yes";
+		}else{
+			in_download="no";
+		}
+		if($(`input[name="indiv_view${div_value}"]:checked`).val()=="yes"){
+			in_view="yes";
+		}else{
+			in_view="no";
+		}
+		if($(`input[name="indiv_certify${div_value}"]:checked`).val()=="yes"){
+			in_certify="yes";
+		}else{
+			in_certify="no";
+		}
+	
+		// alert(in_download+" "+in_view+" "+in_certify);
+		 if(getIndivVerifierID!=undefined){
+			$('#indiv_error'+div_value).html("");
+			var vrfr = getIndivVerifierID.split('-');
+			var vId = vrfr[0];
+			var vRefId = vrfr[1];
+		// alert(msg);
+			
+		$.ajax({
+			type: "post",
+			url:"/request-doc-individual",
+			data:{reflect_id:indiv_reflect_id,
+				download:in_download,
+				view:in_view,
+				certify:in_certify,
+				verifier_id:vId,
+				verifier_reflect_id:vRefId,
+				doc_id:doc_id,
+				msg:msg
+			},
+			success:function(indivdata) {
+				// alert(indivdata);
+				
+				$('#set-docs-permission-Modal'+div_value).modal('hide');
+				$('#dsuccess-doc-Modal').modal('show');
+				// $('#dsuccess-doc-Modal').modal('show');
+			}
+		});
+		}else{
+			$('#indiv_error'+div_value).html("Please select verifier.");
+		}
+	}
+	
+	function submit_signature(sign_val)
+	 {
+	
+		 var signature=$(`#signature${sign_val}`).get(0);
+		 var signature_url=signature.toDataURL();
+		var text_for_signature=$("#text_for_signature"+sign_val).val()
+
+		var reflect_id=$("#reflect_id").val()
+		 alert(text_for_signature);
+		 if(signature_url)
+		 {
+		 				 var can_val =isCanvasBlank(signature);
+			//  alert(can_val);
+			if(can_val!=true){
+				$('.hide_click').hide();
+
+			$('.loader').show();
+
+				$('#canvas_error').html("");
+				var blob_url=signature_url;
+				var user_doc_id = $('#attested_doc_id'+sign_val).val();
+				$.ajax({
+					type:"post",
+					url:"/self-attested",
+					data:{attested_doc_id:user_doc_id,blob_url:blob_url,text_for_signature,reflect_id},
+					success:function(data) {
+						location.reload();
+						// $('#example_img').attr('src',`https://ipfs.io/ipfs/${data}`)
+						// console.log("submit sinagure",data)
+					}
+				});
+	
+			 }else{
+				$('#canvas_error').html("Please sign first.");
+			}
+	
+		}
+	
+		 
+	}
+	function isCanvasBlank(canvas) {
+	  return !canvas.getContext('2d')
+		.getImageData(0, 0, canvas.width, canvas.height).data
+		.some(channel => channel !== 0);
+	}
+	function dataURItoBlob(dataURI) {
+			// alert("in");
+			console.log("canvas",dataURI);
+	 // convert base64 to raw binary data held in a string
+	 // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+	 var byteString = atob(dataURI.split(',')[1]);
+	
+	 // separate out the mime component
+	 var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+	
+	 // write the bytes of the string to an ArrayBuffer
+	 var ab = new ArrayBuffer(byteString.length);
+	
+	 // create a view into the buffer
+	 var ia = new Uint8Array(ab);
+	
+	 // set the bytes of the buffer to the correct values
+	 for (var i = 0; i < byteString.length; i++) {
+		 ia[i] = byteString.charCodeAt(i);
+	 }
+	
+	 // write the ArrayBuffer to a blob, and you're done
+	 var blob = new Blob([ab], {type: mimeString});
+	 return blob;
+	
+	}
+	// }
+	
+	</script>
+
+
+
+
+<script>
+	function capitalize(str) {
+	  strVal = '';
+	  str = str.split(' ');
+	  for (var chr = 0; chr < str.length; chr++) {
+		strVal += str[chr].substring(0, 1).toUpperCase() + str[chr].substring(1, str[chr].length) + ' '
+	  }
+	  return strVal
+	}
+	
+	function getVerifierList(count){ 
+	// alert(count)
+	 if(count==0)
+	 {
+	 		// alert(count)
+
+	 	alert('You need to upload a document first.')
+	 	// return false;
+	 }
+	 else
+	 {
+		$('.hide_click').hide();
+	    $('.loader').show();
+		$.ajax({
+				type: "get",
+				url: "/get-verifier-list",
+				data:{},
+				success: function (data) {
+					console.log("getVerifierList",data);  
+					for(var i=0;i<data.length;i++){ 
+						if($(`#anchor${i}`).text()!=""){
+							$('.hide_click').show();
+	                        $('.loader').hide();
+							$('#set-all-permission-Modal').modal();
+							// alert("if")
+						}
+						else{
+							// alert("else")
+							if(data[i].reflectid_by == 'entity'){
+								var firstname = capitalize(data[i].entity_company_name);
+							}else{
+								var firstname = capitalize(data[i].rep_username);
+							}
+						
+							$('#verifierDropdown').append(`<a class="dropdown-item" id="anchor${i}" onclick="get_category(${data[i].reflect_id})" href="javascript:void(0)">
+												<div class="for-verify-box-inner for-pending">
+													 <i class="fas fa-check"></i>
+													<span class="user-img-verify">
+															<img src="admin-assets/images/faces/face1.jpg" alt="image">
+													</span>
+													<span class="tooltip fade" data-title="On boarding Pending">
+														<input type="hidden" class="getId" id="verifier_id${i}" value="${data[i].reg_user_id}-${data[i].reflect_id}">
+														${firstname}-${data[i].reflect_code}
+														<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+
+													</span>
+													<a href="/verifier_terms_and_conditions?reflect_id=${data[i].reflect_id}" target="_blank">t&c</a>
+												</div>
+											</a>`)
+							// $('#set-all-permission-Modal').show();
+							$('.hide_click').show();
+	                        $('.loader').hide();
+							$('#set-all-permission-Modal').modal();
+						}					
+					}
+				}
+			});
+              	}
+	}
+	
+	function get_category(cat_val){
+		// alert(cat_val);
+		if(cat_val!=""){
+			$.ajax({
+				type: "post",
+				url: "/get-category-list",
+				data:{reflect_id:cat_val},
+				success: function (data) {
+					console.log("get_category",data);  
+					$('#category_list').html(data);
+				}
+			});
+		}else{
+					$('#category_list').html("");
+		}
+	}
+	
+	function get_sub_category(sub_cat_val){
+		// alert(sub_cat_val);
+		$("#p_cat_id").val(sub_cat_val)
+		if(sub_cat_val!=""){
+			$.ajax({
+				type: "post",
+				url: "/get-sub-category-list",
+				data:{category_id:sub_cat_val},
+				success: function (data) {
+					console.log("get_sub_category",data);  
+					$('#sub_category_list').html(data);
+				}
+			});
+		}else{
+					$('#sub_category_list').html("");
+		}
+	}
+	
+	function get_requested_doc(category_id){
+	//    alert(category_id);
+	$("#sub_cat_id").val(category_id)
+
+	   if(category_id!=""){
+			$.ajax({
+				type: "post",
+				url: "/get-requested-doc",
+				data:{category_id:category_id},
+				success: function (data) {
+					console.log("get request doc",data);  
+					$('#category_docs').html(data);
+				}
+			});
+		}else{
+					$('#category_docs').html("");
+		}
+	}
+	
+	function verifier_for_indivi(ind_val){
+		$.ajax({
+				type: "get",
+				url: "/get-verifier-list",
+				data:{},
+				success: function (data) {
+					console.log("verifier for indi",data);
+					for(var i=0;i<data.length;i++){ 
+						if($(`#anchor_indiv${i}`).text()!=""){
+	
+						}else{
+							// alert('#indivi_verify_div'+ind_val); 
+							var firstname = capitalize(data[i].rep_firstname);
+							$('#indivi_verify_div'+ind_val).append(`<a class="dropdown-item" id="anchor_indiv${ind_val}${i}" href="javascript:void(0)">
+												<div class="for-verify-box-inner for-pending">
+													<i class="fas fa-check"></i>
+													<span class="user-img-verify">
+														<img src="admin-assets/images/faces/face1.jpg">
+													 </span>
+													<span class="tooltip fade" data-title="On boarding Pending">
+														<input type="hidden" class="getId" id="indi_verifier_id${ind_val}${i}" value="${data[i].reg_user_id}-${data[i].reflect_id}">
+														${firstname}-${data[i].reflect_code}
+														<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+													</span>
+												</div>
+											</a>`)
+						}					
+					}
+					$('#set-docs-permission-Modal'+ind_val).show();
+				}
+			});
+	}
+	function get_check_doc(value){
+        // alert(value);
+		var user_doc_id = $(`#doc_check${value}`).val();
+		var trow = $(`#docRow${value}`).text();
+		// alert(user_doc_id);
+		// console.log("user_doc_id",user_doc_id);
+		if(trow!=""){
+			$(`#docRow${value}`).remove();
+		}else{
+        $.ajax({
+			type: "post",
+			url: "/get-checked-doc",
+			data:{user_doc_id:user_doc_id},
+			success: function (data) {
+			
+				$('#doc_data').append(`<tr id="docRow${value}">
+								      <th scope="row">
+								      	<div class="for-flex-align">
+								      		 <img src="../assets/images/icons/dashboard-assets/drivinglicense.png">
+											   ${data[0].document_name}
+											   <input type="hidden" id="docIdRow" value="${data[0].user_doc_id}">
+								      	</div>
+								      </th>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" name="downloadPerm" id="downloadPerm" value="${data[0].user_doc_id}">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" name="viewPerm" id="viewPerm" value="${data[0].user_doc_id}">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								      <td>
+								      	<div class="checkbox">
+								          <label>
+								            <input type="checkbox" name="certifyPerm" id="certifyPerm" value="${data[0].user_doc_id}">
+								            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          </label>
+								        </div>
+								      </td>
+								    </tr>`);
+			}
+		});
+	}
+	}
+	</script>
+	 <script type="text/javascript">
+
+		var getVerifierID ;
+		 $(document).on('click', '.menu-for-id a', function() {
+			 $(this).parent().parent().find("button").html($(this).html()); 
+			 getVerifierID = $(this).find(".getId").attr("value");
+		 });
+	  
+		 var getIndivVerifierID ;
+		 $(document).on('click', '.menu-for-id-indiv a', function() {
+			  $(this).parent().parent().find("button").html($(this).html()); 
+				 getIndivVerifierID = $(this).find(".getId").attr("value");
+		 });
+	  
+		 var getCheckedVerifierID ;
+		 $(document).on('click', '.menu-for-id-checked a', function() {
+			  $(this).parent().parent().find("button").html($(this).html()); 
+			  getCheckedVerifierID = $(this).find(".getId").attr("value");
+		 });
+	  
+	  </script>
+	  <script type="text/javascript">
+	
+</script>
+
+<script>
+	function checkForSelect(value) {
+		
+			var doc_list = [];
+			$.each($("input[name='cilentId']:checked"), function(){
+				doc_list.push($(this).val());
+				});
+				// alert(value)
+				// console.log("request_ids",invite_client_id)
+				if(doc_list.length>1){
+												$("#up_id").addClass('dis-able-btn')
+												$("#sp_id").addClass('dis-able-btn')
+												$("#sa_id").addClass('dis-able-btn')
+				}else{
+												$("#up_id").removeClass('dis-able-btn')
+												$("#sp_id").removeClass('dis-able-btn')
+												$("#sa_id").removeClass('dis-able-btn')
+	
+	// 								if(value!=undefined){
+	// 									                 if(value=="m_request"){
+	
+												
+	// 								}			
+	
+				}
+	
+	}
+	</script>
+
+<script type="text/javascript">
+	function checked_self_attest(){
+		//
+		var i = $("input[name='cilentId']:checked").val();  
+		if( i == undefined){
+
+			alert("Please first select check box.")
+
+		}	else {
+			$('#self-attested-Modal'+i).modal('show')
+		}
+		
+            
+	}
+</script>
+<script>
+$('.upload_check').click(()=>{
+	var check_doc=[];
+				var doc_list = $('input[name=cilentId]:checked').map(function(){
+					check_doc.push($(this).val());
+					return $(this).val();
+		}).get();
+		// alert(doc_list)
+		if(check_doc[0] == null){
+
+			alert("Please first select check box.")
+
+		}	else	{
+
+			$('#upload-doc-Modal'+doc_list).modal('show');
+
+		}
+		
+		   
+						
+			})
+		</script>
+
+<script>
+
+function DownloadDetails(i_value){
+	var reflect_id=`<%=myreflectEntityData.reflect_id%>`
+	var user_doc_id = $("#user_doc_id"+i_value ).val();
+	var document_name = $("#document_name"+i_value ).val();
+	var doc_unique_code = $("#doc_unique_code"+i_value ).val();
+     var reflect_code=`<%=myreflectEntityData.reflect_code%>`
+
+	// alert('document_name '+reflect_code)
+	// alert('report_filter_id '+report_filter_id)
+
+
+$.ajax({
+		type: "post",
+		url: "/export-individual-document",
+		data:{i_value,user_doc_id,reflect_id,certify:0},
+		success: function (data) {
+			// alert(data);
+			$('.document_details_pdf').html("");
+			$('.document_details_pdf').html(data);
+	
+			var restorepage = $('body').html();
+			// $('.hide_data').hide();
+			var printcontent = $('.document_details_pdf').clone();
+			$('body').empty().html(printcontent);
+			    document.title = `${document_name}-${reflect_code}.pdf`;
+
+			window.print();
+			$('body').html(restorepage);
+			              	 window.location.reload(true);
+
+
+		
+		}
+	})	// $('#delete_report_id').val(report_id);
+}
+function downloaddoclistmulti(){
+		var check_doc=[];
+		
+		var doc_list = $("input[name='cilentId']:checked").map(function(){
+			check_doc.push($(this).val());
+			return $(this).val();
+}).get();
+
+
+if(doc_list=='')
+{
+
+	// window.location.reload(true);
+	alert("Please first select check box.")
+
+}
+
+	$('.hide_link_1').hide();
+ 
+   for( var i=0;i< doc_list.length;i++)
+   {
+   	$('.document_details_pdf').html("");
+
+     var reflect_id=`<%=myreflectEntityData.reflect_id%>`
+	var user_doc_id = $("#user_doc_id"+doc_list[i] ).val();
+	var document_name = $("#document_name"+doc_list[i]).val();
+	var doc_unique_code = $("#doc_unique_code"+doc_list[i] ).val();
+     var reflect_code=`<%=myreflectEntityData.reflect_code%>`
+
+
+
+$.ajax({
+	 async: false,
+
+		type: "post",
+		url: "/export-individual-document",
+		data:{user_doc_id,reflect_id,certify:0},
+		success: function (data) {
+			    		$('.document_details_pdf').html("");
+			$('.document_details_pdf').html(data);
+	
+			var restorepage = $('body').html();
+			// $('.hide_data').hide();
+			var printcontent = $('.document_details_pdf').clone();
+			$('body').empty().html(printcontent);
+			    document.title = `${document_name}-${reflect_code}.pdf`;
+            // window.open("");
+
+			window.print();
+			$('body').html(restorepage);	
+                  window.close();
+                           	// alert(i)
+               var check_length=doc_list.length-1
+
+                                          	// alert(check_length)
+
+              if(check_length<=i)
+              {
+              	// alert('inside')
+              	 window.location.reload(true);
+              }
+
+			// alert(data);
+	
+			
+			//
+
+		
+		}
+	})	
+   }
+
+	}   
+	
+
+
+    
+
+	
+
+</script>
+
+<script>
+
+
+		function check_upload(i_val)
+			{
+					// var end_date = $(".end-date"+i_value ).val();
+	// alert(i_val)
+
+		// var option_val=$(".file_upload"+i_val).val();
+	   var check_type=$(".check_type_"+i_val).val();
+	//         	alert(check_type)
+	// alert(option_val)
+	  if(check_type)
+	   {
+		// alert(option_val)
+     
+     	// alert('check_type')
+	   		$('.hide_click').hide();
+
+				 $('.loader').show();
+		return true;
+		 
+	   }
+	   else{
+	     $('.success_span').html('Please Select any file');
+ 
+	           return false;
+
+
+	   }
+	}
+</script>
+<script type="text/javascript">
+  
+
+  function get_select_value(option){
+
+  var doc_name = $('#doc_entity'+option).val();
+         
+ 	// alert("option : "+doc_name)
+
+if(doc_name==undefined)
+ {
+$('.proof_of_address_class').hide();
+		  				  		$('.special_class').hide();
+
+ 	    $('.passport_class').hide();
+
+ 	     	 	    $('.user_defined_document_name').hide();
+
+ }
+  else if(doc_name=='Other')
+ {
+
+$('.proof_of_address_class').hide();
+		  				  		$('.special_class').hide();
+
+ 	    $('.passport_class').hide();
+ 	 	    $('.user_defined_document_name').show();
+
+
+ }
+else if(doc_name=='Passport')
+ {
+ 	 	// alert("option : "+doc_name)
+   $('.proof_of_address_class').hide();
+
+    $('.passport_class').show();
+
+  $('.special_class').show();
+ 	 	    $('.user_defined_document_name').hide();
+
+      // $('.proof_of_address_class').hide();
+
+ }
+  else if(doc_name=='Proof of Address')
+ {
+    $('.passport_class').hide();
+		  				  		$('.special_class').hide();
+ 	 	    $('.user_defined_document_name').hide();
+
+  $('.proof_of_address_class').show();
+ } 
+    else if(doc_name=='PAN Card')
+
+ {
+		  				  		$('.special_class').hide();
+ 	 	    $('.user_defined_document_name').hide();
+
+ 	       $('.proof_of_address_class').hide();
+
+ 	    $('.passport_class').show();
+
+
+  //   $('.span_error').show();
+
+  //      setTimeout(function() {
+  //   $('.span_error').fadeOut('fast');
+  //   }, 3000);
+  // return false;
+ }
+  else if(doc_name=='Identity Card')
+
+ {
+ 			  				  		$('.special_class').hide();
+ 	 	    $('.user_defined_document_name').hide();
+
+ 	       $('.proof_of_address_class').hide();
+
+
+ 	       $('.passport_class').show();
+}
+else if(doc_name=='Driving licence')
+
+ {
+		  				  		$('.special_class').hide();
+ 	 	    $('.user_defined_document_name').hide();
+
+ 	       $('.proof_of_address_class').hide();
+
+ 	    $('.passport_class').show();
+
+}else if(doc_name=='Utility bills')
+
+ {
+  
+
+ 	    // $('.driving_lic').hide();
+$('.passport_class').hide();
+		  				  		$('.special_class').hide();
+
+  $('.proof_of_address_class').show();}
+
+     }
+
+
+     function DownloadSelfAttestedDetails(i_value){
+var reflect_id=`<%=myreflectEntityData.reflect_id%>`
+	var user_doc_id = $("#user_doc_self_id"+i_value ).val();
+	var document_name = $("#document_name"+i_value ).val();
+	var doc_unique_code = $("#doc_unique_code"+i_value ).val();
+     var reflect_code=`<%=myreflectEntityData.reflect_code%>`
+
+
+
+	// alert('reflect_id '+reflect_id)
+	// alert('user_doc_id '+user_doc_id)
+	// alert('document_name '+reflect_code)
+
+
+$.ajax({
+		type: "post",
+		url: "/export-individual-document",
+		data:{i_value,user_doc_id,reflect_id,certify:1},
+		success: function (data) {
+			// alert(data);
+			$('.document_details_pdf').html("");
+			$('.document_details_pdf').html(data);
+	
+			var restorepage = $('body').html();
+			// $('.hide_data').hide();
+			var printcontent = $('.document_details_pdf').clone();
+			$('body').empty().html(printcontent);
+			    document.title = `${document_name}-${reflect_code}.pdf`;
+
+			window.print();
+			$('body').html(restorepage);
+			              	 window.location.reload(true);
+
+
+		
+		}
+	})	// $('#delete_report_id').val(report_id);
+}
+
+
+ 
+function DownloadSelfAttestedMulti(){
+	var check_doc=[];
+		
+		var doc_list = $("input[id='self_check']:checked").map(function(){
+			check_doc.push($(this).val());
+			return $(this).val();
+}).get();
+// alert(doc_list)
+
+if(doc_list=='')
+{
+
+	// window.location.reload(true);
+	alert("Please first select check box.")
+
+}
+
+	$('.hide_link_1').hide();
+ 
+   for( var i=0;i< doc_list.length;i++)
+   {
+   	$('.document_details_pdf').html("");
+
+     var reflect_id=`<%=myreflectEntityData.reflect_id%>`
+	var user_doc_id = $("#user_doc_id"+doc_list[i] ).val();
+	var document_name = $("#document_name"+doc_list[i]).val();
+	var doc_unique_code = $("#doc_unique_code"+doc_list[i] ).val();
+     var reflect_code=`<%=myreflectEntityData.reflect_code%>`
+
+
+
+$.ajax({
+	 async: false,
+
+		type: "post",
+		url: "/export-individual-document",
+		data:{user_doc_id,reflect_id,certify:1},
+		success: function (data) {
+			    		$('.document_details_pdf').html("");
+			$('.document_details_pdf').html(data);
+	
+			var restorepage = $('body').html();
+			// $('.hide_data').hide();
+			var printcontent = $('.document_details_pdf').clone();
+			$('body').empty().html(printcontent);
+			    document.title = `${document_name}-${reflect_code}.pdf`;
+            // window.open("");
+
+			window.print();
+			$('body').html(restorepage);	
+                  window.close();
+                           	// alert(i)
+               var check_length=doc_list.length-1
+
+                                          	// alert(check_length)
+
+              if(check_length<=i)
+              {
+              	// alert('inside')
+              	 window.location.reload(true);
+              }
+
+			// alert(data);
+	
+			
+			//
+
+		
+		}
+	})	
+   }
+
+
+	}   
+
+ </script>
+
+
+<script>
+	function fileInfo(i_g_value){
+		// alert(i_g_value)
+    var fileName = document.getElementById('entity_image'+i_g_value).files[0].name;
+    var fileSize = document.getElementById('entity_image'+i_g_value).files[0].size;
+    var fileType = document.getElementById('entity_image'+i_g_value).files[0].type;
+    var fileModifiedDate = document.getElementById('entity_image'+i_g_value).files[0].lastModifiedDate;
+    
+    var file_info = fileSize+"\n"+fileType+"\n";
+    
+    // alert(file_info);
+
+
+
+               $(`input[id=image_dis${i_g_value}]`).attr("disabled",true);
+			   $(`input[id=video_dis${i_g_value}]`).attr("disabled",true);
+			//    alert('file_check')
+
+				   // if (file_check.length > 0) {
+
+		     //            $.each(file_check.files, function (index, value) {
+		     //                $('#fp').html($('#fp').html() + '<br />' +
+		     //                    '<b>' + Math.round((value.size / 1024)) + '</b> KB');
+		     //            })
+		     //        }
+						
+
+				var fileExtension = ['png','jpeg','jpg'];
+				var fileExtension_1 = ['mp4'];
+				
+				var type=fileType.split('/').pop().toLowerCase()
+		   
+				// alert(type)
+
+
+		
+				if (type=='jpg'||type=='png'||type=='jpeg') {
+					// alert('true 1')
+						$('#value_o1'+i_g_value).attr("value","image")
+
+					$('#video_dis'+i_g_value).attr('checked', false);
+
+					$('#image_dis'+i_g_value).attr('checked', true);
+
+					// $(`input[id=video_dis${i_g_value}]`).attr("disabled",true);
+
+					return true;
+
+				   
+				}
+				
+
+				else if(type=='mp4'){
+
+					// alert('true 2'+fileSize) 
+					if (fileSize>=3530998) {
+	                                 
+							   $('.success_span').html('Video  maximum size should be 3.5 MB');
+					 //            setTimeout(function() {
+					 //    $('.success_message_span').fadeOut('fast');
+						// }, 3000);
+						return false;
+					}
+					else
+					{
+						$('#value_o1'+i_g_value).attr("value","video")
+
+						  setTimeout(function() {
+					    $('.success_message_span').fadeOut('fast');
+						}, 1000);
+						$('#image_dis'+i_g_value).attr('checked', false);
+
+						$('#video_dis'+i_g_value).attr('checked', true);
+
+						// $(`input[id=image_dis${i_g_value}]`).attr("disabled",true);
+
+					return true;
+				}
+				}
+			
+				else
+				{
+					alert('plz select image or video');
+					$(`input[id=video_dis${i_g_value}]`).attr("disabled",true);
+                        $(`input[id=image_dis${i_g_value}]`).attr("disabled",true);
+
+					return false;
+
+				}
+
+}
+</script>
+
+<script type="text/javascript">
+
+
+	function download_img(img_src){
+		
+					$('.hide_click').hide();
+
+						$('.loader').show();
+            // alert(img_src)
+
+		var success = $('#src_val'+img_src).val();
+
+	   var url = success.replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
+	              $(".download_class").attr("download", "certified.png").attr("href", url);
+                      	          window.location.reload(true);
+
+
+	                            // window.open(url);
+	}
+	function get_image_download(l_val,tx_value){
+    
+    // alert(l_val+" - "+tx_value)
+		$.ajax({
+				 
+				 type: "post",
+				 url: "/search-transactions-for-download",
+				 data:{tx_value},
+				 success: function (data) {
+								// alert(data.data[0].document)
+					 
+
+
+								var document_img =  data.data[0].document
+
+								          $( "#download_image"+l_val).attr( "src", document_img );//this is the attr
+
+								          $( "#src_val"+l_val).attr( "value", document_img );//this is the attr
+
+
+                                     $('#doc-img-Modal-download'+l_val).modal();
+
+                               // $('#doc-img-Modal-download'+l_val).attr('data-toggle','modal'); 										
+	                             	// $('#doc-img-Modal-download'+l_val).attr('data-target','#doc-img-Modal-download'+l_val); 	
+								// $("#add-new-wallet-Modal").modal("toggle")
+								// data-toggle="modal" data-target="
+				 
+				 }
+			 })
+      
+}
+</script>
+	

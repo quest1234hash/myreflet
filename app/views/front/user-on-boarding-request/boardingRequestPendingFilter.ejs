@@ -1,0 +1,220 @@
+<table class="table" id="pendingTable">
+						<thead>
+					    	<tr>
+						      	<th width="25%" scope="col">Date | Time</th>
+						      	<th width="10%" scope="col">Client</th>
+						      	<th width="20%" scope="col">Email</th>
+						      	<th width="15%" scope="col">MyReflet ID</th>
+						      	<th width="20%" scope="col">Verified Status</th>
+						      	<th width="5%" scope="col">Action</th>
+					    	</tr>
+					  	</thead>
+						<tbody id="tableIDofData" >
+						    <%if(RequsetOnBoardingPending.length>0){%>
+							<%RequsetOnBoardingPending.forEach(modaldata=>{%>
+                    
+						    <tr>
+						      	<td>
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" name="pen_Req_checkbox" value="<%=modaldata.request_id%>">
+												<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+												<%
+												const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+												"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+											  ];
+											  //console.log("date1", modaldata.createdAt)
+				   
+											   var today1 = new Date(modaldata.createdAt); 
+											   
+					 
+										
+									
+									var date1  = moment(today1).format('MMM')+" "+moment(today1).format('DD')+', '+moment(today1).format('YYYY');
+
+
+								   // var time = today1.getHours() + ":" + today1.getMinutes();
+				   
+								   var d = today1;
+								   var hour = d.getHours(); 
+								   var minute = d.getMinutes();
+								   var fulltime = "";
+								   
+					   <!-- console.log(hour , minute ) -->
+								   const arrayHrs = [12,1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4,5,6,7,8,9,10,11];
+						   
+									  
+									   if( minute < 10 ) {
+										   minute = "0" + minute;
+									   }
+								   
+									   if( hour < 12 ) {
+										   
+										   fulltime = arrayHrs[hour] + ":" + minute + " AM"; 
+									   }else {
+										   
+										   fulltime = arrayHrs[hour] + ":" + minute + " PM";
+									   }
+												%>
+
+
+                                                <%=date1%> | <%=fulltime%>
+												
+							      		     	<!-- July 18, 2019 | 3:00 PM -->
+								         	 </label>
+								        </div>
+									</div>
+						      	</td>
+						      		<td>
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+							      		     	<p class="line-hgt">
+												   <%if(modaldata.reflectid_by=="entity"){ %>
+												
+																<span class="font-w-600"><%=modaldata.entity_company_name%></span>
+														
+																  <%}else{%>
+															
+																	<span class="font-w-600"><%=modaldata.rep_username%></span>
+														
+																	<%}%> -
+													   
+													    <br>
+														<%=modaldata.reflect_code%>
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</td>
+								<td><%=decrypt(modaldata.email)%></td>
+								
+							    <td>
+
+								 <%if(modaldata.v_reflectid_by=="entity"){ %>
+												
+																<span class="font-w-600"><%=modaldata.v_entity_company_name%></span>
+														
+																  <%}else{%>
+															
+																	<span class="font-w-600"><%=modaldata.v_rep_username%></span>
+														
+																	<%}%> -
+													   
+													    <br>
+														<%=modaldata.v_r_code%>
+									
+								</td>
+							    <td>
+							    	<div>
+										
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verified.png">
+											Email
+										</span>
+										<!-- <span>
+											<img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+											Phone
+										</span> -->
+									</div>
+							    </td>
+							   
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="pen_request_view_client_info?request_id=<%=modaldata.request_id%>" >
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> View
+				                            </a>
+											<a class="dropdown-item" href="/request_status_change?status=accept&request_id=<%=modaldata.request_id%>">
+												<img src="../assets/images/icons/verifier-home-assets/requestdoc-grey.png"> Accept
+											</a>
+											<!-- <a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage messages
+											</a> -->
+											<a class="dropdown-item " href="/request_status_change?status=reject&request_id=<%=modaldata.request_id%>">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Reject
+											</a>
+											<!-- <a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+											</a> -->
+
+				                        </div>
+				                    </div>
+						      	</td>
+							</tr>
+                             
+							<%})%>
+							 <%}%>  
+						  	 <!-- <tr>
+						      	<td>
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							      		     	July 18, 2019 | 3:00 PM
+								         	 </label>
+								        </div>
+									</div>
+						      	</td>
+						      		<td>
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600">Jack Ma</span> <br>
+							      		     		25102
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</td>
+							    <td>questglt@gmail.com</td>
+							    <td>6464646894</td>
+							    <td>
+							    	<div>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verified.png">
+											Email
+										</span>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+											Phone
+										</span>
+									</div>
+							    </td>
+							   
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="" >
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> Manage Requests
+				                            </a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/requestdoc-grey.png"> Request documents
+											</a>
+											<a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage messages
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Reject
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+											</a>
+
+				                        </div>
+				                    </div>
+						      	</td>
+						    </tr>					   -->
+						</tbody>
+					</table>

@@ -1,0 +1,326 @@
+<%- include('../innerHeader.ejs')%>
+<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+<style>
+	.toggle.btn {
+    min-width: 6.7rem;
+    min-height: 2.15rem;
+}
+/* .btn-light .toggle-off {
+    color: #ffffff;
+    background-color: #ff0000;
+    border-color: #ff0000;
+}
+.btn-primary  .toggle-on {
+    color: #ffffff;
+    background-color: #274794;
+    border-color: #274794;
+} */
+</style>
+<!-- upper div part -->
+<section class="id-code-box-sec">
+	<div class="container">
+		<div class="row">
+		<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" style="margin: auto;">
+								<div class="white-box full-box wallet-box">
+									<div class="row align-item-center">
+									   <div class="col-xl-6 col-lg-12 col-md-12">
+									   	   <div class="id-code-represent-heading"> 
+												  <% if(reflet_obj.type="entity"){%>
+											  <img src="../assets/images/icons/home-assets/entity.png">
+											  <% } else{%>
+												<img src="../assets/images/icons/home-assets/Representative.png">
+											  <% }%>
+						                       <span><%= reflet_obj.type %></span>
+										  </div> 
+									   </div>
+									   <div class="col-xl-6 col-lg-12 col-md-12">
+									   	 <h5 class="mb-0 balance-value">Wallet name :<%= reflet_obj.name %> </h5>
+									   </div> 
+									</div>
+									<div>
+									<div class="row inner-box-id-code">
+											<div class="col-md-3 p-0">
+												<div class="for-flex-align">
+													<img src="../assets/images/icons/home-assets/user.png">
+													<p>Wallet ID</p>
+												</div>
+											</div>
+											<div class="col-md-9 dubble-dot-after p-0">
+												<p><%= reflet_obj.wallet_id %></p>
+											</div>
+										</div>
+										<div class="row inner-box-id-code">
+											<div class="col-md-3 p-0">
+												<div class="for-flex-align">
+													<img src="../assets/images/icons/home-assets/user.png">
+													<p>MyReflet ID</p>
+												</div>
+											</div>
+											<div class="col-md-3 dubble-dot-after p-0">
+												<p><%= reflet_obj.reflet_id %></p>
+											</div>
+											<div class="col-md-3 p-0">
+												<div class="for-flex-align">
+													<img src="../assets/images/icons/home-assets/user.png">
+													<p>ETH Balance</p>
+												</div>
+											</div>
+											<div class="col-md-3 dubble-dot-after p-0">
+												<p><%= reflet_obj.balance %></p>
+											</div>
+										</div>
+							         </div>
+							    </div>
+				            </div>
+							         </div>
+							    </div>
+	<!-- message -->
+	<% if(err_msg!=undefined && err_msg !='' ){ %>
+		<div class="alert alert-danger text-center  flash_msg " id="error_msg">
+			<%= err_msg %>
+		   </div>
+		 
+		<% }%>
+		 <% if(success_msg!=undefined && success_msg !='' ){ %>
+		  <div class="alert alert-success text-center  flash_msg "id="success_message">
+		  <%= success_msg %>
+		 </div>
+		<% }%>
+							<!-- Tab nav -->
+			<div class="col-md-12">
+				<div>
+					<ul class="nav nav-tabs dashboard-tabs-outer" id="myTab" role="tablist">
+					  <li class="nav-item" style="margin-right: 44px;">
+					    <a class="nav-link active" id="dash-tab" data-toggle="tab" href="#dashtab1" role="tab" aria-controls="home" aria-selected="true">
+					    <span>
+					    	<img class="gray" src="../assets/images/icons/home-assets/wallet.png">
+					    	<img class="purple" src="../assets/images/icons/home-assets/wallet-white.png">
+					    </span> 	
+					    All Wallet IDs</a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link" id="dash-tab" data-toggle="tab" href="#dashtab2" role="tab" aria-controls="profile" aria-selected="false">
+					    <span>
+					    	<img class="gray" src="../assets/images/icons/home-assets/myrequests.png">
+					    	<img class="purple" src="../assets/images/icons/home-assets/myrequests-white.png">
+					    </span> 
+					    Shared History
+					    </a>
+					  </li>
+					</ul>
+				</div>
+			</div>
+</section>
+<!--Main content-->
+<section class="col-md-12">
+	<div class="white-box client-dash-sec">
+		<div  class="tab-content" id="myTabContent">
+			<!--Nav 1-->
+		<div class="tab-pane fade show active" id="dashtab1" role="tabpanel" aria-labelledby="dash-tab">
+		<div class="row">
+			<% if(wallets.length>0){ %>
+				<%for(let i=0;i<wallets.length;i++){  %>
+		<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+								<div class="white-box full-box wallet-box">
+									<div class="row align-item-center">
+									   <div class="col-xl-6 col-lg-12 col-md-12">
+									   </div>
+									   <div class="col-xl-6 col-lg-12 col-md-12">
+									   	 <h5 class="mb-0 balance-value">Wallet type : <%= wallets[i].name %></h5>
+									   </div> 
+									</div>
+									<div>
+									<div class="row inner-box-id-code">
+											<div class="col-md-4 p-0">
+												<div class="for-flex-align">
+												<img src="../assets/images/icons/home-assets/user.png">
+													<p>Wallet ID</p>
+												</div>
+											</div>
+											<div class="col-md-6 dubble-dot-after p-0">
+												<p><%= wallets[i].walletid %></p>
+											</div>
+										</div>
+										<div class="row inner-box-id-code">
+											<div class="col-md-4 p-0">
+												<div class="for-flex-align">
+												<img src="../assets/images/icons/home-assets/user.png">
+													<p>Public Key</p>
+												</div>
+											</div>
+											<div class="col-md-6 dubble-dot-after p-0">
+												<p><%= wallets[i].walletAddress %></p>
+											</div>
+										</div>
+										<div class="row inner-box-id-code">
+											<div class="col-md-3 p-0">
+												<div class="for-flex-align">
+													<img src="../assets/images/icons/home-assets/user.png">
+													<p>MyReflet ID</p>
+												</div>
+											</div>
+											<div class="col-md-3 dubble-dot-after p-0">
+												<p><%= wallets[i].refletid %></p>
+											</div>
+											<div class="col-md-3 p-0">
+												<div class="for-flex-align">
+													<img src="../assets/images/icons/home-assets/user.png">
+													<p>Balance</p>
+												</div>
+											</div>
+											<div class="col-md-3 dubble-dot-after p-0">
+												<p><%= wallets[i].balance %></p>
+											</div>
+										</div>
+							         </div>
+							    </div>
+				            </div>
+
+							<% }}else{ %>
+				            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+								<div class="white-box full-box wallet-box">
+									<!-- no wallets -->
+									<p>No wallets linked</p>
+							    </div>
+				            </div>
+							<% } %>
+		</div>
+	</div>
+	<!-- Nav 2-->
+	<div class="tab-pane fade" id="dashtab2" role="tabpanel" aria-labelledby="dash-tab">
+		<div class="row">
+			<% if(sharedArr.length>0){  %>
+				<% for(let i=0;i<sharedArr.length;i++){  %>
+				            <div class="col-xl-5 col-lg-6 col-md-12 col-sm-12">
+								<div class="white-box full-box wallet-box">
+									<div class="row align-item-center">
+									   <div class="col-xl-6 col-lg-12 col-md-12">
+									   </div>
+									</div>
+									<div>
+									<div class="row inner-box-id-code">
+											<div class="col-md-12 p-0">
+											<div class="media w-100 align-items-center">
+											<a href="#" data-toggle="modal" data-target="#keyModal1"><img src=".../assets/images/icons/home-assets/sharing.png"style="  width: 33px; height: 39px; margin-right: 16px; margin-left: 40px;"></a>
+												<div class="media-body">
+												   <div class="for-flex-align">
+														
+														<p>MyReflet ID:<span id="ref<%=i %>"><%= sharedArr[i].employee_refletid  %></span></p>
+													</div>
+													<div>
+														<p><%= sharedArr[i].date %> | <%= sharedArr[i].time %></p>
+													</div>
+												</div>
+												 <% if(sharedArr[i].block_status=='yes') {%>
+												<input id="btn-block<%=i %>" type="checkbox" data-toggle="toggle" style="color: white;background-color:#274794 !important;" data-on="Blocked" data-off="Unblock" onchange="blockAndUnblock(`<%=sharedArr[i].block_status %>`,`<%=i %>`,'<%= reflet_obj.reflet_id %>')">
+										         <% }else{ %>
+													<input id="btn-block<%=i %>" type="checkbox" data-toggle="toggle" style="color: white;background-color:#ff0000 !important;" data-on="Unblock" data-off="Blocked" onchange="blockAndUnblock(`<%=sharedArr[i].block_status %>`,`<%=i %>`,'<%= reflet_obj.reflet_id %>')">
+													<% } %>
+												</div>
+												
+											</div>
+										</div>
+							         </div>
+							    </div>
+				            </div>
+
+							<% } }else{%>
+								<div class="col-xl-5 col-lg-6 col-md-12 col-sm-12">
+									<p>It is not shared with anyone</p>
+                                 </div>
+							<% } %>
+							
+		</div>
+	</div>
+	</div>
+	</div>
+</section>
+           <!--modal1-->
+		   <div class="modal fade modal-key" id="keyModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-body" style="background-color: white;">
+        <div class="row">
+          <div class="col-md-12">
+            <h3 class="green-heading text-center">Share</h3>
+            <div class="form-group">
+<label for="name">Natural MyReflet ID</label>
+<input type="text" name="" class="form-control" value="Enter MyReflet ID"  style="padding: 10px 10px; width: 100%;">
+            </div>
+            <div class="text-center mt-4">
+            <a href="#" class="btn-common-new single-color-btn" style="margin-right: 14px; border-radius: 20px; padding:11px 30px">Cancel</a>
+			<a href="#" class="btn-common-new single-color-btn" style="border-radius: 20px; padding:11px 30px">Sumbit</a>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+  </div>
+</div> 
+<%- include('../innerFooter.ejs')%>
+
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+
+<script>
+  $(function() {
+    $('#toggle-two').bootstrapToggle({
+      on: 'Enabled',
+      off: 'Disabled'
+    });
+  })
+</script>
+<script>
+	function blockAndUnblock(value,i,entity_ref_id){
+		//console.log("clkkkkkkkkkk iiii",i);
+           console.log("clicked:",value);
+		   if(value=='no'){
+			   let id2='btn-block'+i;
+			   console.log(id2);
+			//   document.getElementsByClassName("btn btn-light").style.color="white";
+		//	 document.getElementsByClassName("btn btn-light").style.backgroundColor="#ff0000";
+			let id1='ref'+i;
+			console.log(id1);
+			let emp_ref_id=document.getElementById(id1).innerHTML;
+
+			console.log("emp ref id:",emp_ref_id);
+			$.ajax({
+                          type: "post",
+                          url: "/block-unblock",
+                          data:{isBlock:value,emp_reflet_id:emp_ref_id,entity_refletid:entity_ref_id},
+                          success: function (data) {
+                            // alert(data);
+							console.log("blocked")
+							location.reload();
+                                          
+    }
+  })
+ 
+		   }else{
+			let id2='btn-block'+i;
+			   console.log(id2);
+			//document.getElementById(id2).value='no';
+		//	document.getElementsByClassName("btn btn-light").style="white";
+		//	document.getElementsByClassName("btn btn-light").style.backgroundColor="#274794";
+			let id1='ref'+i;
+			console.log(id1);
+			let emp_ref_id=document.getElementById(id1).innerHTML;
+			$.ajax({
+                          type: "post",
+                          url: "/block-unblock",
+                          data:{isBlock:value,emp_reflet_id:emp_ref_id,entity_refletid:entity_ref_id},
+                          success: function (data) {
+                            // alert(data);
+							console.log("unblocked")
+							location.reload();
+                                          
+    }
+  })
+		   }
+		 
+		 //console.log("bbbbbbbbbbb:",val);
+	}
+</script>

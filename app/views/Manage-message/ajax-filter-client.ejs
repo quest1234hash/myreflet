@@ -1,0 +1,85 @@
+    <%  if(verifiers_message_list.length>0)
+        {
+      var i=0;
+      var j=0;
+      var k=1;
+        for(let each_data of verifiers_message_list){
+          %>
+            <tr>
+              <td class="upper"><%=k%>.</td>
+                <th scope="row">
+                  <div class="for-flex-align">
+                    <div class="checkbox">
+                        <label>
+                          <!-- <input class="hide_link" type="checkbox" value=""> -->
+<!--                          <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+ -->                          <div>
+                            <span class="upper">
+                              <%if(each_data.rep_firstname){%>
+                              <%=each_data.rep_firstname%>
+                                <%}else if(each_data.entity_company_name){%>
+
+                                         <%= each_data.entity_company_name %>
+                                         <%}else{%>
+                               <%= decrypt(each_data.full_name) %>
+                               <%}%>
+                              </span><br>
+                            <span><%=each_data.reflect_code%></span>
+                          </div>
+                       </label>
+                    </div>
+              </div>
+              </th>
+
+          <!--    <%if(each_data.rep_email)
+              {%>
+              <td><%=each_data.rep_email%></td>
+
+              <%}else{%> 
+                         <td> <%=each_data.email%>
+              
+                      </td>
+                <%}%> -->
+                               <td class="upper">
+
+                                            <%if(each_data.message_data=='undefined'){%>
+                                                      -------
+                                         <%}else{%>
+                                               
+                              <%=each_data.message_data[0].message%>
+                                                
+                                                <%if(each_data.message_data[0].seen_status=='unread' && each_data.message_data[0].sender_user_id!=user_id){%>
+                                       
+
+                                               <span id=""class="new-msg-red-dot "></span>
+                                               <%}%>
+                                          <%}%>
+                                       </td>
+              <td class="upper"><%=each_data.verifier_type%></td>
+                        <td>
+                        <p>   <%if(each_data.message_data=='undefined'){%>
+                                                              <%=moment(each_data.created_at).format('MMM DD, YYYY')%>
+
+                                         <%}else{%>
+                                               
+                            
+                                                                        <%=moment(each_data.message_data[0].msg_date).format('MMM DD, YYYY')%>
+
+                                          <%}%></p>
+                      </td>
+                                  <td class="hide_link" >
+                
+                  <a class="dropdown-item" href="/manage-client-to-verifier-message?request_msg_id=<%=each_data.request_msg_id%>&reflect_id=<%=each_data.reflect_id%>">
+                    <i class="cr-icon fa fa-eye"></i>
+                  </a>  
+                </td>
+            </tr> 
+           
+          <%
+          i++;k++;    j++;        
+        } 
+           }else{
+     %>
+                       <tr>
+            <td colspan="8"><center>No record found.</center> </td>
+             </tr>       <%}%>

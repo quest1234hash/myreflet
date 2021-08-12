@@ -1,0 +1,117 @@
+  <table class="table tabel-virifier "id="myTable3">
+              <thead>
+                <tr>
+                  <th width="15%">Country Id</th>
+                  <th width="20%">Country Name</th>
+                 
+                  <th width="20%"class="">Status</th>
+
+                  <!-- <th width="20%">Status</th> -->
+<!--                   <th width="20%">Created At</th>
+ -->
+                  <!-- <th width="5%">Updated At</th> -->
+                </tr>
+              </thead>
+              <tbody id="myTable">
+                    <% if(country_list.length>0)
+                    { 
+                       var i=0;
+                       country_list.forEach(function(each_data){
+                          %>
+                <tr>
+                   <td>
+                     <div>
+                       <p class="">CI-<%=each_data.country_id%></p>
+                     </div>
+                   </td>
+                   <td>
+                     <div> 
+                       <p class="upper"><%=each_data.country_name%></p>
+                     </div>
+                    </td>
+                    
+                  
+                  
+                    <td class=""> 
+                        <% 
+                        if(each_data.status=="active"){ %>
+                          
+                          <button type="button" value="<%-each_data.country_id%>" id="inactivebut"  class="btn  mr-2 btn-success_1 inacvtive-id-1 ">Active </button>
+                              
+                      <%  }else{ %>
+                          
+                        <button type="button" value="<%-each_data.country_id%>" id="activebut"  class="btn  btn-danger mr-2 active-id-1 " >Inactive</button>
+              
+                      <%  }
+                        %>
+                      
+                   <!--  <td>
+                     <p><%=moment(each_data.createdAt).format('MMM DD, YYYY')%></p>
+                   </td> -->
+                  
+                 
+                </tr>
+                <%
+                i++;      
+            });
+               }else{
+     %>
+                       <tr>
+            <td colspan="6"><center>No record found.</center> </td>
+             </tr>       <%}%>
+             
+              </tbody>
+          </table>
+          <script type="text/javascript">
+  
+  
+    $(".active-id-1").click(function(evnt){
+         
+         var id = $(this).attr("value");
+    
+     var checkstr =  confirm('Are You Sure You Want To Active?');
+       if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-country",
+                       data: { country_id: id,
+                         status:"active" },
+                       success:function(resp)
+                       {
+
+                       location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ 
+ 
+  
+ 
+$(".inacvtive-id-1").click(function(evnt){
+
+             var id = $(this).attr("value");
+          var checkstr =  confirm('Are You Sure You Want To Inactive?');
+          if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-country",
+                       data: { country_id:id,
+                         status:"inactive" },
+                       success:function(resp)
+                       {
+                       
+                        
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+  
+ </script>

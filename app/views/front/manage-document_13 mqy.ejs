@@ -1,0 +1,387 @@
+<%- include('innerHeader')%>
+
+
+<section class="id-code-box-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="personal-info-heading">
+					<div class="row align-item-center">
+						<div class="col-xl-7 col-lg-5 col-md-5">
+							<h4 class="purple-heading">Manage Documents</h4>
+						</div>
+						<div class="col-xl-3 col-lg-4 col-md-4">
+							<div>
+								<a href="" class="btn-common-new btn-with-extra-padding" data-target="#addDocument" data-toggle="modal">Add Documents</a>
+							</div>
+						</div>
+						<div class="col-xl-2 col-lg-3 col-md-3">
+							<div class="text-right">
+									<a href="javascript:void(0);" onclick="export_table();">									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Export Data">
+											<img src="../assets/images/icons/dashboard-assets/export.png">
+									     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+										
+									</div>
+								</a>
+								<a href="javascript:void(0);" onclick="print_table();">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Print Data">
+											<img src="../assets/images/icons/dashboard-assets/print.png">
+										    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="custom-space-btw another-drop-down m-top-30 align-items-end">
+					<div class="for-select-existing-doc three-drop-custom align-items-end">
+					    <!-- one section -->
+						<!-- <div class="input-group">
+							<div class="dropdown keep-inside-clicks-open">
+								<h3 class="small-title">MyReflet ID</h3>
+								<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    All
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 20px, 0px);">
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								        	<label>
+								          		All
+								            	<input type="checkbox" value="">
+								            	<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+								    </div>
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								         	<label>
+									          	John Doe - 1235556
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+								    </div>
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								         	<label>
+									          	Quest Glt - 1235556
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+								    </div>
+								</div>
+							</div>
+						</div> -->
+						<!-- second section -->
+						<div class="">
+							<form class="response-search width-250"> 
+			                     <div class="input-group search-address-book">
+										<input type="text" class="form-control"id="myInput1" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+			                        <div class="input-group-append">
+			                            <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+			                        </div>
+			                    </div>
+		                  	</form>
+						</div>
+
+						<div class="form-group">
+              
+								
+							  </div>
+					</div>
+					<!-- <div>
+						<div class="btn-all-dwnload m-0">
+							<a href=""><img src="../assets/images/icons/dashboard-assets/edit_per.png"> Edit</a>
+							<a href=""><img src="../assets/images/icons/dashboard-assets/trash_per.png"> Delete</a>
+						</div>
+					</div> -->
+				</div>
+				
+				<div class="tab-content m-top-40" id="myTabContent">
+				  <div class="tab-pane fade show active" id="doc-tab1" role="tabpanel" aria-labelledby="doc1">
+				  	 <div class="personal-info-box table-responsive">
+						<table class="table" id="myTable3">
+						  <thead>
+						    <tr>
+						      <th scope="col">Name</th>
+						      <th scope="col"class="hide_link">Document</th>
+						      <th scope="col">Description</th>
+						      <th scope="col">Create Date</th>
+						      <th scope="col">Create By</th>
+						      <!-- <th scope="col"class="hide_link">Action</th> -->
+						    </tr>
+						  </thead>
+						  <tbody id="myTable_1">
+							    <% if(document_list.data.length>0)
+                    { 
+                       var i=0;
+                       document_list.data.forEach(function(each_data){
+                          %>
+						    <tr>
+						      <th scope="row">
+						      	<div class="for-flex-align">
+						      		 <div class="checkbox">
+							          <label>
+							            <input type="checkbox" value="yes">
+							            <span class="cr "><i class="cr-icon fa fa-check "></i></span>
+										<p class="upper"><%=each_data.document_name%></p>
+							          </label>
+							        </div>
+								</div>
+						      </th>
+						      <td class="hide_link">
+						      	<div class="doc-img " >
+									  <%if(each_data.doc_file!="" && each_data.doc_file!=null){%>
+									  <img src="https://ipfs.io/ipfs/<%=each_data.doc_file%>">
+									  <%}else{%>
+										--
+										<%}%>
+						      	</div>
+						      </td>
+							  <td class="upper"><%=each_data.descriptions%></td>
+						      <td><%=moment(each_data.createdAt).format('MMM DD, YYYY')%></td>
+						      <!-- <td>
+						      	<div class="for-flex-align">
+						      		<div class="checkbox">
+							          	<label> 
+								            <img class="profile-table" src="../assets/images/other/img_user1.png">
+						      		     	<p class="line-hgt">
+						      		     		<span class="font-w-600">Jack Ma</span> <br>
+						      		     		25102
+						      		     	</p>
+							         	 </label>
+							        </div>
+								</div>
+						      </td> --> 
+							 <td>--------</td>
+							  <!-- <td class="hide_link">
+						      	<div class="dropdown-menu-new">
+			                        <a class="nav-link dropdown-toggle" id="profileDropdown"href="edit-manage-document?document_id=<%=each_data.doc_id%>"data-toggle="dropdown" aria-expanded="false">
+			                          <div class="doc-img">
+								      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+								      	</div>
+			                        </a>
+			                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+			                            <a class="dropdown-item" href="edit-manage-document?document_id=<%=each_data.doc_id%>"><img src="../assets/images/icons/dashboard-assets/edit.png"> Edit</a>
+										<a class="dropdown-item" href="delete-manage-document?id=<%=each_data.category_doc_id%>"><img src="../assets/images/icons/dashboard-assets/trash.png"> Delete</a>
+			                        </div>
+			                     </div>
+						      </td> -->
+						    </tr>
+							<%
+							i++;			
+		});
+		   }else{
+	   %>
+<tr>
+						<td colspan="6"><center>No record found.</center> </td>
+					   </tr>
+        <%}	   %>
+						    
+						  </tbody>
+						</table>
+						<table class="paginate_table">
+								<div class="pagination-list for-ava">
+							  <% if (document_list.totalPages> 0) { %>
+								
+								<ul class="pagination text-center">
+								  <% if (document_list.currentPage == 1) { %>
+									<li class="disabled"><a>First &nbsp;</a></li>
+								  <% } else { %>
+									<li><a href="/manage-document?page=1">First &nbsp;</a></li>
+								  <% } %>
+								  <% var i = (Number(document_list.currentPage) > 5 ? Number(document_list.currentPage) - 4 : 1) %>
+								  <% if (i !== 1) { %>
+									<li class="disabled"><a>...</a></li>
+								  <% } %>
+								  <% for (; i <= (Number(document_list.currentPage) + 4) && i < document_list.totalPages; i++) { %>
+									<% if (i == document_list.currentPage) { %>
+									  
+									  <li class="active"><a><%= i %> &nbsp;</a></li>
+									<% } else { %>
+									  <li><a href="/manage-document?page=<%= i %>"><%= i %> &nbsp;</a></li>
+									<% } %>
+									<% if (i == Number(document_list.currentPage) + 4 && i <= document_list.totalPages) { %>
+									  <li class="disabled"><a>...</a></li>
+									<% } %>
+								  <% } %>
+								  <% if (document_list.currentPage ==document_list.totalPages) { %>
+									<li class="disabled"><a>Next</a></li>
+								  <% } else { %>
+									<li><a href="/manage-document?page=<%=document_list.totalPages %>"> &gt;Next</a></li>
+								  <% } %>
+								</ul>
+							  <% } %>
+								</div>
+							</table>
+					 </div>
+				  </div>
+				</div>
+			</div>			
+		</div>
+	</div>
+</section>
+
+
+<!-- Add Document Modal S -->
+<div class="modal fade field-edit-modal" id="addDocument" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span> 
+		  </button>
+		  <div class="create-wallet-box">
+			  <div class="row align-item-center">
+				  <div class="col-xl-2 col-lg-3 col-md-3">
+					  <div>
+						  <img src="../assets/images/icons/createidentity-assets/popup-add-info-icon.png">
+					  </div>
+				  </div>
+				  <div class="col-xl-7 col-lg-7 col-md-7">
+					  <h5 class="heading-purple">Add Documents</h5>
+				  </div>
+			  </div>
+			  <form action="/add-manage-document" method="POST"  id="form_add_doc" enctype="multipart/form-data" >
+
+			  <div class="row">
+				  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					  <div class="setup-inner-box for-protact">
+						  <div class="create-rflet-id-form">
+							<div class="form-group">
+								<div class="input-group">
+								  <select class="form-control" name="document_id" data-rule-required="true" data-msg-required="Please select document type.">
+									  <%if(all_docs){
+											  for(let docu of all_docs){%>
+									  <option value="<%=docu.doc_id%>"><%=docu.document_name%></option>
+									  <%}}%>
+									  </select>
+								</div>
+							</div>  
+							  <div class="form-group">
+								  <div class="input-group">
+									  <label for=""> Dscription</label>
+									<input type="text" name="descriptions"class="form-control" placeholder="Description">
+								  </div>
+							  </div>
+							  <div class="form-group browse-file-section">
+								<input type="file" name="manage_file" class="file" style="visibility: hidden;position: absolute;" accept="image/x-png,image/jpeg">
+								<div class="input-group col-xs-12">
+								  <span class="input-group-btn">
+									<button class="browse btn btn-primary input-lg" type="button"> Choose a file</button>
+								  </span>
+								  <input type="text" class="form-control" readonly="" placeholder="">
+								</div>
+							</div>
+						  </div>
+						  <div >
+							<button class="btn-common-new" id="form_add_doc_btn" type="submit">Save</button>
+							<a class="btn-common-new" href="/manage-document">Cancel</a>
+						  </div>
+					  </div>
+				  </div>
+			   </div>
+			   </form>
+			 </div>
+		 </div>
+	  </div>
+	</div>
+  </div>
+  <%- include('innerFooter')%>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+<script type="text/javascript" src="assets/js/jquery-ui.js"></script>
+
+
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script>
+
+
+    function export_table(){
+        // alert('hhh')
+      // $('.hide_link').show();
+    
+        $("#myTable3").table2excel({
+          filename: "Manage-document-list.xls",
+          exclude:'.hide_link',
+        });
+      //   $('.hide_link').show();
+      window.location.reload(true);
+    
+      };
+      
+      function print_table(){
+        $('.hide_link').hide();
+     
+       // $("#user_div").print();
+       var divToPrint=document.getElementById("myTable3");
+       newWin= window.open("");
+       newWin.document.write(divToPrint.outerHTML);
+       window.location.reload(true);
+    
+       newWin.print();
+       newWin.close();
+    
+        }   
+   </script>
+<script>
+	$(document).ready( function () {
+	
+
+		$("#myInput1").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable_1 tr").filter(function() {
+
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+		
+	});
+</script>
+<script>
+	$(document).on('click.bs.dropdown.data-api', '.dropdown.keep-inside-clicks-open', function (e) {
+	  e.stopPropagation();
+	});
+</script>
+<script type="text/javascript">
+	$('#form_add_doc').validate({
+		 onfocusout: function(element) {
+		 this.element(element);
+		 },
+		 errorClass: 'error_validate',
+		 errorElement:'span',
+		 highlight: function(element, errorClass) {
+		 $(element).removeClass(errorClass);
+		 },
+		 submitHandler:function(form)
+			{
+			  $('#form_add_doc_btn').attr('disabled',true);
+			  form.submit();
+			}
+		 });
+</script>
+<script>
+	$(document).on('click', '.browse', function(){
+   var file = $(this).parent().parent().parent().find('.file');
+   file.trigger('click');
+ });
+ $(document).on('change', '.file', function(){
+   $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i,''));
+ }); 
+</script>
+<script>
+	
+</script>

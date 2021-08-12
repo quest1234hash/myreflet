@@ -1,0 +1,218 @@
+<%- include('innerHeader')%>
+
+<!--keyboard css/js start-->
+<link rel="stylesheet" type="text/css" href="../assets/css/keyboard.css">
+<script type="text/javascript" src="../assets/js/keyboard.js"></script>
+<!--keyboard css/js end-->
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/home-assets/change-pass.png">
+					<h4>Change Pin</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<form  action="/post-change-pin" method="POST" id="form_change_pin">
+<section class="setup-id-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="white-box">
+					<div class="row">
+						<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+								<div id="message">
+										<% if(err_msg!=undefined && err_msg !='' ){ %>
+											<div class="alert alert-danger text-center  flash_msg ">
+													<%= err_msg %>
+												 </div>
+										   
+											<% }%>
+										</div>
+										<div id="message">
+										   <% if(success_msg!=undefined && success_msg !='' ){ %>
+											  <div class="alert alert-success text-center  flash_msg ">
+												<%= success_msg %>
+											 </div>
+											<% }%>
+										</div>
+							<div class="setup-inner-box for-protact">
+								<div class="login-form-main inner-pin-box">
+								 <div class="form-group">
+								    <label>Old Pin</label>
+	                                <div class="otp-box digit-group " data-group-name="digits" data-autosubmit="false" autocomplete="off">
+	                                    <input type="text" id="otp1" name="otp1" class="form-control text-center use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp2" tabindex="1">
+	                                    <input type="text" id="otp2" name="otp2" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp3" data-previous="otp1" tabindex="2">
+	                                    <input type="text" id="otp3" name="otp3" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp4" data-previous="otp2" tabindex="3">
+	                                    <input type="text" id="otp4" name="otp4" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-previous="otp3" tabindex="4">
+									</div>
+									<span id="otp_err"  style="color: red;"></span>
+								  </div>
+	                              <div class="form-group">
+	                                <label>New Pin</label>
+	                                <div class="otp-box digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+	                                    <input type="text" id="newotp1" name="newotp1" class="form-control text-center use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="newotp2" tabindex="5"/>
+
+	                                    <input type="text" id="newotp2" name="newotp2" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="newotp3" data-previous="newotp1" tabindex="6">
+	                                    <input type="text" id="newotp3" name="newotp3" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="newotp4" data-previous="newotp2" tabindex="7"/>
+
+	                                    <input type="text" id="newotp4" name="newotp4" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-previous="newotp3" tabindex="8" />
+									</div>
+									<span id="new_otp_err"  style="color: red;"></span>
+	                              </div>
+	                               
+	                               <div class="form-group">
+	                                <label>Confirm Pin</label>
+	                                <div class="otp-box digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+
+	                                    <input type="text" id="conotp1" name="conotp1" class="form-control text-center use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="conotp2" tabindex="9" />
+
+	                                    <input type="text" id="conotp2" name="conotp2" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="conotp3" data-previous="conotp1" tabindex="10" />
+
+	                                    <input type="text" id="conotp3" name="conotp3" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="conotp4" data-previous="conotp2" tabindex="11" />
+
+	                                    <input type="text" id="conotp4" name="conotp4" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-previous="conotp3" tabindex="12" />
+									</div>
+									<span id="con_otp_err"  style="color: red;"></span>
+	                              </div>
+                                  <div class="text-center">
+										<button type="submit" class="btn-common-new" id="submit_pin" >Change Pin</button>
+								  </div>
+						      </div>
+						    </div>
+					   </div>
+				  </div>
+			 </div>
+		</div>
+	</div>
+</section>
+</form>
+
+<script>
+        setTimeout(function() {
+        $('#message').fadeOut('fast');
+        }, 3000);
+</script>
+
+<%- include('innerFooter')%>
+
+<script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+
+	$('#form_change_pin').validate({
+		 onfocusout: function(element) {
+		 this.element(element);
+		 },
+		 errorClass: 'error_validate',
+		 errorElement:'span',
+		 highlight: function(element, errorClass) {
+		 $(element).removeClass(errorClass);
+		 },
+		 submitHandler:function(form)
+			{
+			  
+				var otp1=   $("#otp1").val();
+                 var otp2= $("#otp2").val();
+                 var otp3=  $("#otp3").val();
+                 var otp4= $("#otp4").val();
+
+                 var otp6=   $("#newotp1").val();
+                     var otp7= $("#newotp2").val();
+                     var otp8=  $("#newotp3").val();
+					 var otp9=  $("#newotp4").val();
+
+					 var otp10=   $("#conotp1").val();
+                     var otp11= $("#conotp2").val();
+                     var otp12=  $("#conotp3").val();
+                     var otp13=  $("#conotp4").val();
+
+                 var totalOtp1 = otp1+otp2+otp3+otp4;
+                     var totalOtp2 = otp6+otp7+otp8+otp9;
+					 var totalOtp3 = otp10+otp11+otp12+otp13;
+					 
+                    if($("#otp1").val()==""||$("#otp2").val()==""||$("#otp3").val()==""||$("#otp4").val()==""){
+                    //    alert("dnsfjksd")
+                       $("#otp_err").text("All fields are required.")
+                     }else{
+                        $("#otp_err").text("")
+					 }
+					 
+					 
+
+					 if(otp10==""||otp11==""||otp12==""||otp13==""){
+                    //    alert("dnsfjksd")
+                       $("#con_otp_err").text("All fields are required.")
+                     }else{
+						$("#con_otp_err").text("") 
+					 }
+
+                    if(otp6==""||otp7==""||otp8==""||otp9==""){
+                    //    alert("dnsfjksd")
+                       $("#new_otp_err").text("All fields are required.")
+                     }else{
+                        // $("#con_otp_err").text("")
+                        if(totalOtp1==totalOtp2){
+                           $("#new_otp_err").text("New-pin and Old pin can not be same.")
+						}else{
+							$("#new_otp_err").text("")
+							if(otp10==""||otp11==""||otp12==""||otp13==""){
+                    //    alert("dnsfjksd")
+                       $("#con_otp_err").text("All fields are required.")
+                     }else{
+                        // $("#con_otp_err").text("")
+                        if(totalOtp3!=totalOtp2){
+                           $("#con_otp_err").text("New-pin and confirm pin should be same.")
+						}else{
+							$("#con_otp_err").text("")
+							$('#submit_pin').attr('disabled',true);
+							form.submit();
+						}
+						}
+						}
+						}
+						
+						}	
+		 });
+
+		/**remove keyboard start**/
+	    $('.restrict_key').bind('keyup keydown keypress', function (evt) {
+       			return false;
+  		 });
+	    /**remove keyboard end**/
+});
+</script>
+    <script>
+    $('.digit-group').find('input').each(function() {
+    $(this).attr('maxlength', 1);
+    $(this).on('keyup', function(e) {
+        var parent = $($(this).parent());
+        
+        if(e.keyCode === 8 || e.keyCode === 37) {
+            var prev = parent.find('input#' + $(this).data('previous'));
+            
+            if(prev.length) {
+                $(prev).select();
+            }
+        } else if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
+            var next = parent.find('input#' + $(this).data('next'));
+            
+            if(next.length) {
+                $(next).select();
+            } else {
+                if(parent.data('autosubmit')) {
+                    parent.submit();
+                }
+            }
+        }
+    });
+});
+</script>
+ 

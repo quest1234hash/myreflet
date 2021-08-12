@@ -1,0 +1,92 @@
+<%- include('partials/header.ejs') %>  
+
+
+<header class="terms-header">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="logo-box">
+					<a href="">
+						<img src="assets/images/logo-white.png">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+
+<section class="terms-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h5>Terms and Conditions</h5>
+
+				<p><%=term_data[0].descriptions%></p>
+
+				<!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
+				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p> -->
+			</div>
+			<div class="col-md-8 offset-md-2">
+				<form action="/terms-and-conditions-submit" method="POST">
+				<div class="text-center check-with-terms">
+					 <div class="checkbox checkbox-reflet">
+                      <label>
+                        <input type="checkbox" name="check_term" required>
+                        <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                        I have read and I agree to the terms & Conditions.
+					  </label>
+					  <span id="accept_error" style="color:red"></span>
+					  <input type="hidden" name="user_id" id="userid">
+                    </div>
+                    <button type="submit" class="purple-btn" onclick="return check_con()">Submit</button>
+				</div>
+			</form>
+			</div>
+		</div>
+	</div>
+</section>
+
+	<!-- JQuery -->
+        <script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- <script type="text/javascript" src="assets/js/jquery-1.11.3.min.js"></script> -->
+        <!-- Bootstrap Core JavaScript -->
+        <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+        <!-- dropdownhover effects JavaScript -->
+        <script type="text/javascript" src="assets/js/bootstrap-dropdownhover.min.js"></script>
+        <!-- wow JavaScript -->
+        <script type="text/javascript" src="assets/js/wow.min.js"></script>
+        <!-- video player JavaScript -->
+
+        <!-- Custom JavaScript -->
+		<script type="text/javascript" src="assets/js/custom.js"></script>
+		
+
+
+		<script>
+		$(function(){
+
+		var url = new URL( window.location.href);
+		var userId = url.searchParams.get("userId");
+		// alert(userId)
+		$("#userid").val(userId)
+
+		})
+		function check_con(){
+			var check_term = $('input[name="check_term"]:checked').val()
+            //  alert(check_term)
+			if(check_term){
+            return true;
+			}else{
+				$('#accept_error').html("Please select the terms and conditions.");
+
+                 return false;
+			}
+           
+        }
+</script>
+<%- include('partials/footer.ejs') %>    
+
+
+
+ 

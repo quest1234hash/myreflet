@@ -1,0 +1,347 @@
+
+  <table class="table" id="myTable3">
+						<thead>
+					    	<tr>
+						      	<th width="10%" scope="col">Type</th>
+						      	<th width="10%" scope="col">Client</th>
+						      	<th width="20%" scope="col">Email</th>
+						      	<th width="15%" scope="col">MyReflet ID</th>
+						      	<th width="10%" scope="col">Country</th>
+						      	<th width="20%" scope="col">Verified Status</th>
+						      	<th width="10%" scope="col">Status</th>
+						      	<th width="5%" scope="col">Action</th>
+					    	</tr>
+					  	</thead>
+						<tbody id="table_id">
+							<%requestToverifierData.data.forEach(modaldata=>{%>
+								
+									<tr class="foraearch">
+										 
+											<td scope="row">
+												<div class="for-flex-align">
+													<div class="checkbox">
+														<label>
+														  <input type="checkbox" name="requestcheckbox" value="<%=modaldata.request_id%>">
+														  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+														  <%
+														  if(modaldata.profile_pic)
+														  {
+															  %>
+															  <img class="profile-table for-square-img" src="<%=modaldata.profile_pic %>">
+															  <%
+														  }
+														  else
+														  {
+															  
+															  %>
+															  <img class="profile-table for-square-img" src="../assets/images/icons/repersentative.png">
+														<%  }
+													  %>
+														  
+														</label>
+												  </div>
+											  </div>
+											</td>
+										  
+											  <td>
+											  <div class="for-flex-align">
+												  <div class="checkbox">
+													  <label>
+														   	<p class="line-hgt">
+												   <%if(modaldata.reflectid_by=="entity"){ %>
+												
+																<span class="font-w-600"><%=modaldata.entity_company_name%></span>
+														
+																  <%}else{%>
+															
+																	<span class="font-w-600"><%=modaldata.rep_username%></span>
+														
+																	<%}%> -
+													   
+													    <br>
+														<%=modaldata.reflect_code%>
+							      		     	</p>
+													  </label>
+												</div>
+											</div>
+										  </td>
+										<td><%=decrypt(modaldata.email)%></td>
+										
+										<td>
+
+								 <%if(modaldata.v_reflectid_by=="entity"){ %>
+												
+																<span class="font-w-600"><%=modaldata.v_entity_company_name%></span>
+														
+																  <%}else{%>
+															
+																	<span class="font-w-600"><%=modaldata.v_rep_username%></span>
+														
+																	<%}%> -
+													   
+													    <br>
+														<%=modaldata.v_r_code%>
+									
+								</td>
+
+										<%
+										
+										if(modaldata.entity_company_country){%>
+										
+											<td><%=modaldata.country_name%></td>
+										<%}else{%>
+									
+
+											<td>-</td>
+										<%}%>
+										<td>
+											<div>
+												
+												<span>
+													<img src="../assets/images/icons/dashboard-assets/verified.png">
+													Email
+												</span>
+												<!-- <span>
+													<img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+													Phone
+												</span> -->
+											</div>
+										</td>
+										<td>
+											<%if(modaldata.request_status=="pending"){%>
+											<div class="pending-status">
+												Pending
+											</div>
+											<%}%>
+											<%if(modaldata.request_status=="reject"){%>
+												<div class="cancel-status">
+													Rejected
+												</div>
+											<%}%>
+											<%if(modaldata.request_status=="accept"){%>
+													<div class="approved-status">
+														Accepted
+													</div>
+											<%}%>
+
+										</td>
+									   
+										<td>
+											  <div class="dropdown-menu-new">
+												<a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+												  <div class="doc-img">
+														  <img src="../assets/images/icons/dashboard-assets/menu.png">
+													  </div>
+												</a>
+												<div class="dropdown-menu" aria-labelledby="profileDropdown">
+													<!-- <a class="dropdown-item" href="pen_request_view_client_info?request_id=<%=modaldata.request_id%>" >
+														<img src="../assets/images/icons/dashboard-assets/view.png"> View
+													</a> -->
+													<a class="dropdown-item" href="" >
+														<img src="../assets/images/icons/dashboard-assets/view.png"> Manage Requests
+													</a>
+													<a class="dropdown-item" href="">
+														<img src="../assets/images/icons/verifier-home-assets/requestdoc-grey.png"> Request documents
+													</a>
+													<a class="dropdown-item" href="/request_status_type?status=accept&request_id=<%=modaldata.request_id%>">
+														<img src="../assets/images/icons/verifier-home-assets/requestdoc-grey.png"> Accepte
+													</a>
+													<!-- <a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage messages
+													</a> -->
+													<a class="dropdown-item" href="/request_status_type?status=reject&request_id=<%=modaldata.request_id%>">
+														<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Reject
+													</a>
+													<!-- <a class="dropdown-item" href="">
+														<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+													</a> -->
+		
+												</div>
+											</div>
+										  </td>
+									</tr>
+								       
+									<%})%>
+
+						    <!-- <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table for-square-img" src="../assets/images/icons/repersentative.png">
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+						      		<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600">Jack Ma</span> <br>
+							      		     		25102
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td>questglt@gmail.com</td>
+							    <td>6464646894</td>
+							    <td>China</td>
+							    <td>
+							    	<div>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verified.png">
+											Email
+										</span>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+											Phone
+										</span>
+									</div>
+							    </td>
+							    <td>
+							    	<div class="pending-status">
+							    		Pending
+							    	</div>
+							    </td>
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="" >
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> Manage Requests
+				                            </a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/requestdoc-grey.png"> Request documents
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Reject
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+											</a>	
+				                        </div>
+				                    </div>
+						      	</td>
+							</tr> -->
+							
+						    <!-- <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table for-square-img" src="../assets/images/icons/entity.png">
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+						      		<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600">Jack Ma</span> <br>
+							      		     		25102
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td>questglt@gmail.com</td>
+							    <td>6464646894</td>
+							    <td>China</td>
+							    <td>
+							    	<div>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verified.png">
+											Email
+										</span>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+											Phone
+										</span>
+									</div>
+							    </td>
+							    <td>
+							    	<div class="pending-status">
+							    		Pending
+							    	</div>
+							    </td>
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="" >
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> Manage Requests
+				                            </a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/requestdoc-grey.png"> Request documents
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Reject
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+											</a>	
+				                        </div>
+				                    </div>
+						      	</td>
+						    </tr> -->
+						 
+						</tbody>
+</table>
+					<div class="pagination-list for-user">
+          
+						<% if (requestToverifierData.totalPages > 0) { %>
+					   <ul class="pagination text-center">
+						   <% if (requestToverifierData.currentPage == 1) { %>
+							   <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+						   <% } else { %>
+							   <li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="callUrl('1')">&lt;</a></li>
+						   <% } %>
+					
+					
+					
+						   <% var i = (Number(requestToverifierData.currentPage) > 5 ? Number(requestToverifierData.currentPage) - 4 : 1) %>
+						   <% if (i !== 1) { %>
+							   <!-- <li class="disabled"><a>...</a></li> -->
+							   <li class="page-item disabled"><a class="page-link" >...</a></li>
+						   <% } %>
+						   <% for (; i <= (Number(requestToverifierData.currentPage) + 4) && i <= requestToverifierData.totalPages; i++) { %>
+							   <% if (i == requestToverifierData.currentPage) { %>
+								   <!-- <li class="active"><a><%= i %></a></li> -->
+								   <li class="page-item active">
+									 <a class="page-link" href="#"><%= i %><span class="sr-only">(requestToverifierData.currentPage)</span></a>
+								   </li>
+							   <% } else { %>
+								   <li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="callUrl('<%=i%>')"><%= i %></a></li>
+							   <% } %>
+							   <% if (i == Number(requestToverifierData.currentPage) + 4 && i < requestToverifierData.totalPages) { %>
+								   <!-- <li class="disabled"><a>...</a></li> -->
+								   <li class="page-item disabled"><a class="page-link" >...</a></li>
+							   <% } %>
+						   <% } %>
+					
+					
+						   <% if (requestToverifierData.currentPage == requestToverifierData.totalPages) { %>                       
+							   <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+						   <% } else { %>
+							   <li><a class="page-link" href="javascript:void(0)" onclick="callUrl('<%= requestToverifierData.totalPages %>')>&gt;</a></li>
+						   <% } %>
+					
+					   </ul>
+					<% } %>
+					
+                     </div> 

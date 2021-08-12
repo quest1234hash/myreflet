@@ -1,0 +1,1059 @@
+<%- include('header'); -%>
+
+<div>
+  <!--  <div class="main-bredcrum-box">
+        <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+        Allot Reflect List
+          </li>
+        </ul> 
+      </nav>
+    </div> -->
+	<div class="page-header">
+      <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+          <i class="mdi mdi-contacts"></i>
+        </span>          Allot Reflect List </h3>
+            <div>
+                <a href="#" class="btn btn-common bg-gradient-primary text-center m-0" data-target="#newMarketPlace" data-toggle="modal">Allot ReflectId</a>
+
+              <a href="javascript:void(0);" onclick="export_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-export"></i>
+                   </span> 
+                 </span>
+               </a>
+              <a href="javascript:void(0);" onclick="print_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-printer"></i>
+                   </span> 
+                 </span>
+              </a>
+         
+        
+      </div>
+    </div>
+    
+  
+    <div class="row align-bottom-flex">
+    	
+    	  <div class="col-md-2"> 
+      
+
+           
+          <div class="form-group">
+                    <label for="exampleInputUsername1">Status</label>
+                    <select class="form-control form-control-sm select-new2" id="exampleFormControlSelect3" onchange="statusFilter(value)">
+                        <option>All</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                      </select>
+
+         </div>
+         
+      
+      </div>  
+       <div class="col-md-2"> 
+
+           
+              <div class="form-group">
+                        <label for="exampleInputUsername1">Label Name</label>
+                        <select class="form-control form-control-sm select-new1" id="exampleFormControlSelect3"onchange="nameFilter(value)">
+                                                  <option>All</option>
+
+                        <% if(label_name.length>0)
+                          {
+                          
+                        label_name.forEach(function(each_data){
+                              %>
+                            <option value="<%=each_data.label%>"><%=each_data.label%></option>
+                          <%});}%>
+                          </select>
+             </div>
+             
+      </div>  
+    	<div class="col-md-3 ml-auto">
+          
+        
+          
+    			<div class="form-group">
+              
+                      <div class="input-group search-input">
+                        <input type="text" class="form-control"id="myInput" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                          <button class="btn btn-sm" type="button"><i class=" mdi mdi-magnify"></i></button>
+                        </div>
+                      </div>
+                    </div>
+    		</div>
+    	</div>
+    
+    <div class="row">
+    	<div class="col-md-12">
+    		<div class="table-responsive">
+          <% if(success_msg!=undefined && success_msg !='' ){ %>
+            <div class="alert alert-success text-center  flash_msg "id="success_message">
+            <%= success_msg %>
+           </div>
+          <% }%>
+
+          <div>
+        <div class="data_table">
+          <table class="table tabel-virifier "id="myTable3">
+              <thead>
+                <tr>
+                  <th width="15%">Sr.No.</th>
+                  <!-- <th width="20%">Icon</th> -->
+                  <th width="20%">Label</th>
+                  <th width="20%">Username</th>
+                  <th width="20%">Status</th>
+                  <th width="20%">Created At</th>
+                  
+                </tr>
+              </thead>
+              <tbody id="myTable">
+                    <% if(mp_list.data.length>0)
+                    { 
+                       var i=0;
+                       var j=1;
+                       mp_list.data.forEach(function(each_data){
+                          %>
+                <tr>
+                   <td>
+                     <div>
+                       <p class=""><%=j%>.</p>
+                     </div>
+                   </td>
+                   <!-- <td>
+                    <%
+                    if(each_data.icon)
+                    {
+                        %>
+                        <img id="user_profile_image_preview" src="<%= each_data.icon %>" class="m-t-5" >
+                        <%
+                    }
+                    else
+                    {
+                        
+                        %>
+                       ----------
+                        <%
+                    }
+                %>
+                  </td> -->
+                   <td> 
+                     <div> 
+                       <p class="upper"><%=each_data.label%></p>
+                       <%
+                    if(each_data.icon)
+                    {
+                        %>
+                        <img id="user_profile_image_preview" src="../addMPIcon/<%= each_data.icon %>" class="m-t-5" >
+                        <%
+                    }
+                    else
+                    {
+                        
+                        %>
+                       ----------
+                        <%
+                    }
+                %>
+
+                     </div>
+                    </td>
+                    <td>
+                        <div> 
+                          <p class="upper"><%=each_data.rep_username%></p>
+                        </div>
+                    </td>
+                   <td>
+                      <% 
+                      if(each_data.status=="active"){ %>
+                        
+                        <button type="button" value="<%-each_data.mp_reflect_id%>" id="inactivebut"  class="btn  mr-2 btn-success_1 acvtive-id ">Active </button>
+                            
+                    <%  }else{ %>
+                        
+                      <button type="button" value="<%-each_data.mp_reflect_id%>" id="activebut"  class="btn  btn-danger mr-2 inacvtive-id " >Inactive</button>
+            
+                    <%  }
+                      %> 
+                    <!-- <div class="switch-option">
+                       <div class="inner-div ">
+                          <label class="switch ">
+                            <input type="checkbox"class="switch_user"  onchange="switchUserType(value)"> 
+                           
+                            <span class="slider round"></span>
+                          </label> 
+                       </div> 
+                    </div>
+    
+                  <p class="change"><%=each_data.status%></p> -->
+                   <!-- </td> -->
+                    <td>
+                     <p><%=moment(each_data.createdAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                   <!--  <td>
+                     <p><%=moment(each_data.updatedAt).format('MMM DD, YYYY')%></p>
+                   </td> -->
+                  
+                  <!--  <td class="hide_link"> 
+                     <div class="dropdown-menu-new">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+
+                             <a href="#" class="dropdown-item data_value" data-target="#editMarketPlace<%=i%>" data-toggle="modal">Edit</a>
+
+                          <a href="/delete-market-place?id=<%=each_data.market_place_id%>"class="dropdown-item" href="#"><i class="mdi mdi-delete "></i> Delete</a>
+                        </div>
+                     </div>
+                   </td> -->
+                </tr> 
+                <%
+                i++;  j++;    
+            });}
+               else{
+          %>
+              <tr>
+                              <td colspan="8"><center>No record found.</center> </td>
+             </tr>       <%}%>
+             
+              </tbody>
+          </table>
+            <div class="pagination-list for-user">
+          
+            <% if (mp_list.totalPages > 0) { %>
+             <ul class="pagination text-center">
+               <% if (mp_list.currentPage == 1) { %>
+                 <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+               <% } else { %>
+                 <li class="page-item"><a class="page-link" href="/allot-reflect-list?page=1">&lt;</a></li>
+               <% } %>
+          
+          
+          
+               <% var i = (Number(mp_list.currentPage) > 5 ? Number(mp_list.currentPage) - 4 : 1) %>
+               <% if (i !== 1) { %>
+                 <!-- <li class="disabled"><a>...</a></li> -->
+                 <li class="page-item disabled"><a class="page-link" >...</a></li>
+               <% } %>
+               <% for (; i <= (Number(mp_list.currentPage) + 4) && i <= mp_list.totalPages; i++) { %>
+                 <% if (i == mp_list.currentPage) { %>
+                   <!-- <li class="active"><a><%= i %></a></li> -->
+                   <li class="page-item active">
+                   <a class="page-link" href="#"><%= i %><span class="sr-only">(mp_list.currentPage)</span></a>
+                   </li>
+                 <% } else { %>
+                   <li class="page-item"><a class="page-link" href="/allot-reflect-list?page=<%= i %>"><%= i %></a></li>
+                 <% } %>
+                 <% if (i == Number(mp_list.currentPage) + 4 && i < mp_list.totalPages) { %>
+                   <!-- <li class="disabled"><a>...</a></li> -->
+                   <li class="page-item disabled"><a class="page-link" >...</a></li>
+                 <% } %>
+               <% } %>
+          
+          
+               <% if (mp_list.currentPage == mp_list.totalPages) { %>                       
+                 <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+               <% } else { %>
+                 <li><a class="page-link" href="/allot-reflect-list?page=<%= mp_list.totalPages %>">&gt;</a></li>
+               <% } %>
+          
+             </ul>
+          <% } %>
+          
+           </div>
+         </div>
+      
+        </div>
+          
+      
+    	</div>
+    </div>
+
+</div>
+</div>
+
+<!-- </div> -->
+
+
+<!--ADD Modal -->
+
+
+<div class="modal fade field-edit-modal" id="newMarketPlace" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="create-wallet-box">
+              <div class="row align-item-center">
+                  <div class="col-xl-2 col-lg-3 col-md-3">
+                      <div>
+                          <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+                      </div>
+                  </div>
+                  <div class="col-xl-7 col-lg-7 col-md-7">
+                      <h5 class="heading-purple">Allot ReflectId</h5>
+                  </div>
+                  <div class="success_message_div"id="success"style="color:green"></div>
+              </div>
+              <div class="row">
+                  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+                      <div class="setup-inner-box for-protact pt-15">
+                          <div class="create-rflet-id-form">
+  
+                                  <!-- <div class="form-group select-verifier-box  m-top-40">
+                                    
+                                    <div class="input-group">
+                                    <div class="dropdown d1">
+                                        <button class="dropbtn dropbtn_1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                          Select Market Place Id
+                                        </button>
+                                        <div class="dropdown-menu menu-for-id" aria-labelledby="dropdownMenuButton">
+                                          <%	if(reflect_code.length>0)
+                                          {
+                                               
+                                            for(let each_data of reflect_code){
+                                                %>
+                                          <a class="dropdown-item" href="#">
+                                              <div class="for-verify-box-inner for-pending">
+                                                      
+                                               
+                                                  <i class="fas fa-check"></i>
+                                                  <span class="user-img-verify">
+                                                      <img src="../assets/images/other/face1.jpg"> -->
+                                                      <!-- <img id="" src="<%= each_data.icon %>" class="m-t-5" >
+   -->
+                                                  <!-- </span>
+                                                  <span class="upper"><%=each_data.rep_username %> - <%=each_data.reflect_code %></span>
+                                                  <input type="hidden" class="getId1" id="t1" value="<%=each_data.reflect_id%>">
+                                               
+                                                <span class="desc_error" style="font-size:13px;color:red;"></span> -->
+  
+                                           
+                                          
+                                     <!--  </div>
+                                  </a>
+                                  <%
+                              }
+                
+                                }
+                            %></div> -->
+                                        
+                                          
+                                        <!-- </div>
+                                        <div class="input-group-append">
+                                          <button class="btn address-book" type="button">Address Book</button>
+                                        </div>
+                                      </div>
+  
+                                  </div> -->
+                                  <span class="err_msg_all"style="color:red"></span>
+               
+
+
+                                 <div class="form-group for-select-existing-doc">
+                                <div class="input-group">
+                                  <div class="dropdown keep-inside-clicks-open">
+                                      <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Select Verifier
+                                      </button>
+                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <%	if(reflect_code.length>0)
+                                          {
+                                               
+                                            for(let each_data of reflect_code){
+                                                %>
+                                        <div class="for-doc-select">
+                                            <div class="checkbox">  
+                                              <label>
+                                                 <%if(each_data.reflectid_by==="representative"){%>
+                                        <span class="font-w-600"><%=each_data.rep_firstname%></span>
+                                <%}else if(each_data.reflectid_by==="entity"){%>
+                                    <span class="font-w-600"> <%=each_data.entity_company_name%> </span>
+
+                                <%}else{%>
+                                    <span class="font-w-600"> <%=each_data.full_name%> </span>
+                                <%}%>
+                                                 - <%=each_data.reflect_code %>                           
+                                                                     <input type="checkbox" value="<%=each_data.reflect_id %> ">
+                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                              </label>
+                                            </div>  
+                                         </div>
+                                         <%
+                                         }
+                          
+                                          }
+                                      %>
+                                      </div>
+                                    </div>
+                                  
+                                </div>
+                            </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                       <select class="form-control mp_select">
+                                          <option value="mp_empty">Select by market-place</option>
+                                          <%	if(market_list_data.length>0)
+                                          {
+                                               
+                                            for(let each_data of market_list_data){
+                                                %>
+                                          <option  class="getId2" value="<%=each_data.market_place_id%>"><%=each_data.label%></option>
+                                         
+                                          <%
+                                        }
+                          
+                                          }
+                                      %>
+                                        </select>
+                                    </div>
+                                </div>
+                              </div>
+  
+                            
+  
+                              <!-- soniya upper -->
+                            </div>
+                              <div class="text-center">
+                                  <a class="btn-common-new" id="reflect_code">Submit</a>
+                                  <a class="btn-common-new all_check" href="">Cancel</a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+               </div>
+             </div>
+         </div>
+      </div>
+<!--EDIT Modal -->  
+   <% if(mp_list.data.length>0)
+                    { 
+                       var i=0;
+                       mp_list.data.forEach(function(each_data){
+                          %>
+<div class="modal fade field-edit-modal" id="editMarketPlace<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="create-wallet-box">
+              <div class="row align-item-center">
+                  <div class="col-xl-2 col-lg-3 col-md-3">
+                      <div>
+                          <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+                      </div>
+                  </div>
+                  <div class="col-xl-7 col-lg-7 col-md-7">
+                      <h5 class="heading-purple">Allot ReflectId</h5>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+                      <div class="setup-inner-box for-protact pt-15">
+                          <div class="create-rflet-id-form">
+  
+                                  <!-- <div class="form-group select-verifier-box  m-top-40">
+                                    
+                                    <div class="input-group">
+                                    <div class="dropdown d1">
+                                        <button class="dropbtn dropbtn_1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                          Select Market Place Id
+                                        </button>
+                                        <div class="dropdown-menu menu-for-id" aria-labelledby="dropdownMenuButton">
+                                          <%  if(reflect_code.length>0)
+                                          {
+                                               
+                                            for(let each_data of reflect_code){
+                                                %>
+                                          <a class="dropdown-item" href="#">
+                                              <div class="for-verify-box-inner for-pending">
+                                                      
+                                               
+                                                  <i class="fas fa-check"></i>
+                                                  <span class="user-img-verify">
+                                                      <img src="../assets/images/other/face1.jpg"> -->
+                                                      <!-- <img id="" src="<%= each_data.icon %>" class="m-t-5" >
+   -->
+                                                  <!-- </span>
+                                                  <span class="upper"><%=each_data.rep_username %> - <%=each_data.reflect_code %></span>
+                                                  <input type="hidden" class="getId1" id="t1" value="<%=each_data.reflect_id%>">
+                                               
+                                                <span class="desc_error" style="font-size:13px;color:red;"></span> -->
+  
+                                           
+                                          
+                                     <!--  </div>
+                                  </a>
+                                  <%
+                              }
+                
+                                }
+                            %></div> -->
+                                        
+                                          
+                                        <!-- </div>
+                                        <div class="input-group-append">
+                                          <button class="btn address-book" type="button">Address Book</button>
+                                        </div>
+                                      </div>
+  
+                                  </div> -->
+                                 
+
+
+                                 <div class="form-group for-select-existing-doc">
+                                <div class="input-group">
+                                  <div class="dropdown keep-inside-clicks-open">
+                                      <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <%=each_data.rep_username%></button>
+                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <%  if(reflect_code.length>0)
+                                          {
+                                               
+                                            for(let each_data of reflect_code){
+                                                %>
+                                        <div class="for-doc-select">
+                                            <div class="checkbox">  
+                                              <label>
+                                                <%=each_data.rep_username %> - <%=each_data.reflect_code %>                           
+                                                                     <input type="checkbox" value="<%=each_data.reflect_id %> ">
+                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                              </label>
+                                            </div>  
+                                         </div>
+                                         <%
+                                         }
+                          
+                                          }
+                                      %>s
+                                      </div>
+                                    </div>
+                                  
+                                </div>
+                            </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                       <select class="form-control ">
+                                          <option><%=each_data.label%></option>
+                                          <%  if(market_list_data.length>0)
+                                          {
+                                               
+                                            for(let each_data of market_list_data){
+                                                %>
+                                          <option  class="" value="<%=each_data.market_place_id%>"><%=each_data.label%></option>
+                                         
+                                          <%
+                                        }
+                          
+                                          }
+                                      %>
+                                        </select>
+                                    </div>
+                                </div>
+                              </div>
+  
+                            
+  
+                              <!-- soniya upper -->
+                            </div>
+                              <div class="text-center">
+                                  <a class="btn-common-new" id="reflect_code">Submit</a>
+                                  <a class="btn-common-new all_check" href="">Cancel</a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+               </div>
+             </div>
+         </div>
+      </div>
+  <%
+                i++;      
+            });
+               }
+           %>
+
+
+
+<%- include('footer'); -%>
+<script>
+    $(document).on('click.bs.dropdown.data-api', '.dropdown.keep-inside-clicks-open', function (e) {
+      e.stopPropagation();
+    });
+</script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+
+<script src="/assets/js/select2.full.min.js"></script>
+<script src="/assets/js/jquery.nice-select.min.js"></script>
+
+
+<script>
+  $(function () {
+  $(".select-new").select2();
+   $(".select-new1").select2();
+  $(".select-new2").select2();
+  $("#select-new3").select2();
+ 
+});
+</script>
+<script>
+
+    function export_table(){
+        // alert('hhh')
+      // $('.hide_link').show(); 
+    
+        $("#myTable3").table2excel({
+          filename: "market-place-list.xls",
+          exclude:'.hide_link',
+        });
+      //   $('.hide_link').show();
+      window.location.reload(true);
+    
+      };
+      
+      function print_table(){
+        $('.hide_link').hide();
+     
+     // $("#user_div").print();
+     var restorepage = $('body').html();
+  // $('.nodata').hide();
+   var printcontent = $('#myTable3').clone();
+   $('body').empty().html(printcontent);
+   window.print();
+   $('body').html(restorepage);
+ 
+   window.location.reload(true);
+  
+    
+        }   
+   </script>
+<script type="text/javascript">
+var plan_status;
+  // $('.d1').on('click', '.menu-for-id a', function() {
+
+	//    $('.d2').$(this).val(); 
+
+	// //   var lastID = $(this).html();
+	//    plan_status = $(this).find(".change_status").attr("value");
+	// 	// console.log("text", lastID); 
+
+
+  //  });
+ $('.active_change').click(()=>{
+  var plan_status= $('.change_status').val()
+  var plan_id= $('.plan_id_1').val()
+
+  // alert(plan_status)
+  // alert(plan_id)
+
+  $.ajax({
+			type: "post",
+			url: "/status-submit",
+			data:{plan_is:plan_id,plan_status:plan_status},
+			success: function (data) {
+				
+				location.reload();
+
+			
+			}
+		});
+ })
+
+  $('.validate').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span', 
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#submit_signup').attr('disabled',true);
+        form.submit();
+      }
+     });
+     $('#validate1').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#submit_signup').attr('disabled',true);
+        form.submit();
+      }
+     });
+ 
+     setTimeout(function() {
+    $('#success_message').fadeOut('fast');
+    }, 3000);
+    
+    setTimeout(function() {
+    $('#error_msg').fadeOut('fast');
+    }, 3000);
+  </script>
+
+<!-- <script>
+function switchUserType(value){
+
+var value1 = $(".switch_user").val();
+alert(value1)
+var plan_status;
+  // alert($("#switch_user").val())
+if(value1=="on"){
+  plan_status='active';
+  $(".switch_user").val("off");
+  $(".change").text("active");
+
+
+}
+if(value1=="off"){
+  plan_status='inactive';
+
+  $(".switch_user").val("on");
+  $(".change").text("inactive");
+
+}
+alert(plan_status)
+$.ajax({
+            type: "post",
+            url: "/change-plan-status",
+            data: { plan_status : plan_status},
+            success: function(data){
+            alert('ver')
+
+            //   $('#div_sidebar').html("");
+            // $('#div_sidebar').html(``);
+            location.reload()
+            }
+    });
+}
+
+
+
+</script> -->
+<script type="text/javascript">
+  
+  // function activestatuschnage(){
+    // alert($(this).find("button").val("value"))
+    $(".acvtive-id").click(function(evnt){
+         
+         var id = $(this).attr("value");
+        //  alert(id)
+    //       alert('active')
+    // // var id =$("#activebut").val()
+    // alert(id);
+     var checkstr =  confirm('Are You Sure You Want To Inactive?');
+       if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-allot-market-place",
+                       data: { mp_reflect_id: id,
+                         status:"inactive" },
+                       success:function(resp)
+                       {
+                        // alert('t')
+
+                        // alert(id);
+                       
+                         // $('#pro_img').hide();  
+                         // $('#inactivebut').hide(); 
+                         // $('#activebut').show(); 
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ 
+ 
+  
+  // function inactivestatuschnage(obj1){
+             // alert(obj1)
+             $(".inacvtive-id").click(function(evnt){
+
+             var id = $(this).attr("value");
+            //  alert(id)
+            //  alert('inactive')
+             //  console.log($(".abc").find("button"))
+            // var preview_div=$(this).parent(".inabc").parent().attr('id');
+            //  var image_name = $(this).parent(".inabc").find('input').attr('value');
+    
+     
+     //var id =$("#inactivebut").val()
+          //alert("Are You Sure You Want To inctive");
+          var checkstr =  confirm('Are You Sure You Want To Active?');
+          if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-allot-market-place",
+                       data: { mp_reflect_id:id,
+                         status:"active" },
+                       success:function(resp)
+                       {
+                        //  alert(id);
+                         // alert(status);
+                         // $('#pro_img').hide(); 
+                         // $('#activebut').hide();  
+                         // $('#inactivebut').show(); 
+                        
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ </script>
+ <script>
+        $(document).ready(function(){
+           $("#myInput").on("keyup", function() {
+            // alert('value')
+
+            var value = $(this).val().toLowerCase();
+             if(value)
+            {
+                          // alert('value'+value)
+
+            $.ajax({
+                          type: "post",
+                          url: "/search-admin-allot-reflect",
+                          data:{query:value},
+                          success: function (data) {
+                            // alert('data');
+                            
+                                 $('.data_table').html("");
+                                          $('.data_table').html(data);
+                                  
+      
+  
+    
+    }
+  })
+ }
+            else
+            {
+              location.reload(true);
+            }
+  })
+        });
+        </script>
+        <script>
+            $(document).on('click', '.browse', function(){
+           var file = $(this).parent().parent().parent().find('.file');
+           file.trigger('click');
+         });
+         $(document).on('change', '.file', function(){
+           $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i,''));
+         }); 
+        </script>
+<!-- <script>
+$('.check').click(function() {
+
+  var plan_id= $(".plan_id").html()
+  var plan_name= $('.plan_name').html()
+  var plan_price= $(".plan_price").html()
+
+	// if(plan_name==''&& plan_price=='')
+	// {
+	// 	window.location.reload(true);
+  //   false;
+	// }
+
+  alert(plan_name)
+  alert(plan_price)
+  alert(plan_id)
+
+	       
+})
+                
+
+</script> -->
+<script type="text/javascript" > 
+    function readURL(input) {
+    if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+    
+        // alert(e.target.result);
+     
+    $('#text_img_name').val(e.target.result);
+    
+    $('#user_profile_image_preview')
+    .attr('src', e.target.result)
+    .width(200)
+    .height(150);
+    };
+    
+     reader.readAsDataURL(input.files[0]);
+    
+     
+    
+      
+    
+    }
+    var src = $('#imgInp6').val(); // "static/images/banner/blue.jpg"
+    var tarr = src.split('/');      // ["static","images","banner","blue.jpg"]
+    var file = tarr[tarr.length-1]; // "blue.jpg"
+    var data = file.split('.')[0];  // "blue"
+    
+    //alert(data);
+      //$('#text_img_name').val(src);
+    }
+    
+    </script>
+    <script>
+        	var mp_id,getClientID,getClientName
+ 
+ $('.d1').on('click', '.menu-for-id a', function() {
+     $('.dropbtn_1').html($(this).html()); 
+
+  // alert(reflect_id)
+      // console.log("text", lastID); 
+
+
+ });
+ $('.mp_select').click(function() {
+    //  $('.dropbtn_2').html($(this).html()); 
+
+  //   var lastID = $(this).html();
+  
+  // mp_id = $(this).find(".getId2").attr("value");
+     mp_id = $(this).children("option:selected").val();
+      // console.log("text", lastID); 
+  // alert(mp_id)
+
+ });
+
+ 
+      
+  
+  
+
+  // }
+      // ##################### Add complaint #######################
+$('#reflect_code').click(function()
+  {
+    // alert('mp_id')
+    var reflect_id_list = $('input[type=checkbox]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+      // $('.close').modal('hide');
+      if(reflect_id_list==''||mp_id=='mp_empty')
+	{
+    $('.err_msg_all').html('<h3>Please fill  all the fields<h3>');
+			setTimeout(function() {
+    $('.err_msg_all').fadeOut('fast');
+    }, 5000);
+ return false;
+	}
+    
+
+      // alert(reflect_id_list)
+      // alert(mp_id)
+
+
+      
+
+      
+              
+
+              $.ajax({
+          type: "post",
+          url: "/post-allot-reflect-list",
+          data:{reflect_id_list:JSON.stringify(reflect_id_list),mp_id:mp_id},
+          success: function (data) {
+            $('#success').html('<h2>Your Entry successfully created !<h2>');
+            setTimeout(function() {
+    $('.success_message_div').fadeOut('fast');
+    }, 3000);
+              location.reload();
+
+          
+          }
+      });
+  })
+
+
+</script>
+<script>
+ function nameFilter(value){
+   // alert(value)
+
+   if(value!='All'){
+                          
+
+            $.ajax({
+                          type: "post",
+                          url: "/search-admin-allot-reflect",
+                          data:{query:value},
+                          success: function (data) {
+                            // alert('data');
+                            
+                               $('.data_table').html("");
+                                          $('.data_table').html(data);
+  
+    
+                           }
+            })
+      } else {
+
+        window.location.reload()
+
+       }
+ }
+  function statusFilter(value){
+   // alert(value)
+
+   if(value!='All'){
+                          
+
+            $.ajax({
+                          type: "post",
+                          url: "/search-admin-allot-reflect-status",
+                          data:{query:value},
+                          success: function (data) {
+                            // alert('data');
+                            
+                               $('.data_table').html("");
+                                          $('.data_table').html(data);
+  
+    
+                           }
+            })
+      } else {
+
+        window.location.reload()
+
+       }
+ }
+ </script>

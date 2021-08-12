@@ -1,0 +1,276 @@
+<table class="table" id="myTable3">
+						<thead>
+					    	<tr>
+						      	<th width="10%" scope="col">Type</th>
+						      	<th width="10%" scope="col">Client</th>
+						      	<th width="20%" scope="col">Email</th>
+						      	<th width="15%" scope="col">MyReflet ID</th>
+						      	<th width="10%" scope="col">Country</th>
+						      	<th width="20%" scope="col">Verified Status</th>
+						      	<th width="10%" scope="col">Status</th>
+						      	<th width="5%" scope="col">Action</th>
+					    	</tr>
+					  	</thead>
+						<tbody id="tble1">
+							<%if(clientOfSubVer.data.length>0){%>
+								<%clientOfSubVer.data.forEach(client=>{%>
+                           <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="<%=client.request_id%>">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table for-square-img" src="../assets/images/icons/repersentative.png">
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+						      		<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600"><%=client.full_name%></span> <br>
+							      		     	<%=client.reflect_code%>
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td><%=client.email%></td>
+								<td><%=client.p_r_code%></td>
+								
+							    <td>
+										<%if(client.country_name==null){%>
+									-
+									<%}else{%>
+								<%=client.country_name%>
+										<%}%>
+								</td>
+							    <td>
+							    	<div>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verified.png">
+											Email
+										</span>
+										<!-- <span>
+											<img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+											Phone
+										</span> -->
+									</div>
+							    </td>
+							    
+							    <td>
+									<%if(client.sub_client_status=="inactive"){%>
+										<div class="cancel-status">
+											Deactive
+										</div>
+									<%}else{%>
+							    	<div class="approved-status">
+							    		Active
+									</div>
+									<%}%>
+							    </td>
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="/sub_client_info_view?request_id=<%=client.request_id%>" >
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> View
+				                            </a>
+											<a class="dropdown-item" href="/delete_sub_ver_client?status=deactive&sub_client_id=<%=client.sub_client_id%>&invite_sub_id=<%=invite_sub_id%>">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Deactivate
+											</a>
+											<a class="dropdown-item" href="/delete_sub_ver_client?status=delete&sub_client_id=<%=client.sub_client_id%>&invite_sub_id=<%=invite_sub_id%>">
+												<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+											</a>	
+				                        </div>
+				                    </div>
+						      	</td>
+						    </tr>
+						
+							
+							<%})%>
+							<%}%>
+						    <!-- <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table for-square-img" src="../assets/images/icons/repersentative.png">
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+						      		<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600">Jack Ma</span> <br>
+							      		     		25102
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td>questglt@gmail.com</td>
+							    <td>6464646894</td>
+							    <td>China</td>
+							    <td>
+							    	<div>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verified.png">
+											Email
+										</span>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+											Phone
+										</span>
+									</div>
+							    </td>
+							   
+							    <td>
+							    	<div class="cancel-status">
+							    		Rejected
+							    	</div>
+							    </td>
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="client-info-view.php" >
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> View
+				                            </a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Deactivate
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+											</a>	
+				                        </div>
+				                    </div>
+						      	</td>
+						    </tr> -->
+						    <!-- <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table for-square-img" src="../assets/images/icons/entity.png">
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+						      		<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600">Jack Ma</span> <br>
+							      		     		25102
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td>questglt@gmail.com</td>
+							    <td>6464646894</td>
+							    <td>China</td>
+							    <td>
+							    	<div>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verified.png">
+											Email
+										</span>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+											Phone
+										</span>
+									</div>
+							    </td>
+							    
+							    <td>
+							    	<div class="approved-status">
+							    		Approved
+							    	</div>
+							    </td>
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="client-info-view.php" >
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> View
+				                            </a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Deactivate
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+											</a>	
+				                        </div>
+				                    </div>
+						      	</td>
+						    </tr> -->
+						</tbody>
+					</table>
+					<div class="pagination-list for-user">
+          
+						<% if (clientOfSubVer.totalPages > 0) { %>
+					   <ul class="pagination text-center">
+						   <% if (clientOfSubVer.currentPage == 1) { %>
+							   <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+						   <% } else { %>
+							   <li class="page-item"><a class="page-link" href="/sub_verifier_client?invite_sub_id=<%=invite_sub_id%>&page=1">&lt;</a></li>
+						   <% } %>
+					
+					
+					
+						   <% var i = (Number(clientOfSubVer.currentPage) > 5 ? Number(clientOfSubVer.currentPage) - 4 : 1) %>
+						   <% if (i !== 1) { %>
+							   <!-- <li class="disabled"><a>...</a></li> -->
+							   <li class="page-item disabled"><a class="page-link" >...</a></li>
+						   <% } %>
+						   <% for (; i <= (Number(clientOfSubVer.currentPage) + 4) && i <= clientOfSubVer.totalPages; i++) { %>
+							   <% if (i == clientOfSubVer.currentPage) { %>
+								   <!-- <li class="active"><a><%= i %></a></li> -->
+								   <li class="page-item active">
+									 <a class="page-link" href="#"><%= i %><span class="sr-only">(clientOfSubVer.currentPage)</span></a>
+								   </li>
+							   <% } else { %>
+								   <li class="page-item"><a class="page-link" href="/sub_verifier_client?invite_sub_id=<%=invite_sub_id%>&page=<%= i %>"><%= i %></a></li>
+							   <% } %>
+							   <% if (i == Number(clientOfSubVer.currentPage) + 4 && i < clientOfSubVer.totalPages) { %>
+								   <!-- <li class="disabled"><a>...</a></li> -->
+								   <li class="page-item disabled"><a class="page-link" >...</a></li>
+							   <% } %>
+						   <% } %>
+					
+					
+						   <% if (clientOfSubVer.currentPage == clientOfSubVer.totalPages) { %>                       
+							   <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+						   <% } else { %>
+							   <li><a class="page-link" href="/sub_verifier_client?invite_sub_id=<%=invite_sub_id%>&page=<%= clientOfSubVer.totalPages %>">&gt;</a></li>
+						   <% } %>
+					
+					   </ul>
+					<% } %>
+					
+					 </div>

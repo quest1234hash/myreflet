@@ -1,0 +1,605 @@
+<%- include('header'); -%>
+<style>
+  .verifier-typ-img.upper a{
+   padding: 5px;
+  }
+</style>
+<div>
+    <div class="main-bredcrum-box">
+         <nav aria-label="breadcrumb">
+         <ul class="breadcrumb">
+           <li class="breadcrumb-item active" aria-current="page">
+             Verifier List
+           </li>
+           <li class="breadcrumb-item active" aria-current="page">
+             <a href="">Manage My Reflet ID</a>
+           </li>
+         </ul>
+       </nav>
+     </div>
+   <div class="page-header">
+       <h3 class="page-title">
+         <span class="page-title-icon bg-gradient-primary text-white mr-2">
+           <i class="mdi mdi-file-check"></i>
+         </span> Manage My Reflet ID </h3>
+     </div>
+     <div class="row">
+       <div class="col-md-11 m-auto">
+          
+         <div class="main-outer-verifier collapse show">
+            <div class="card">
+
+                       <div class="card-body">
+                         <div>
+                            <% if(verifier_list.length>0)
+                            { 
+                              i=1
+                               verifier_list.forEach(function(each_data){
+                             if(i==1)
+                                { 
+                                  
+                                  %>      
+                                     <%if(each_data.admin_status==="pending"){%>
+                                              <div class="row">
+                                      <div class="col-md-12 m-auto">
+                                          <div class="row">
+                                            <div class="col-md-2">
+                                            
+                                               
+                                          
+                                                     <div class="account-detail-block"><h6>First Name</h6>
+                                                   <h5>   <%if(each_data.rep_firstname){%>
+                                            <%=each_data.rep_firstname%> 
+
+                                      <%}else if(each_data.entity_company_name){%>
+                                         <%=each_data.entity_company_name%> 
+
+                                  <%}else{%>
+                                         <%=decrypt(each_data.full_name)%> 
+
+                                                    <%}%>
+
+
+                                                   </h5>
+
+                                                   
+                                                 </div>
+                                           
+                                          
+                                            </div>
+                                             <div class="col-md-3">
+                                              <div class="account-detail-block">
+                                                   <h6>Last Name</h6>
+                                                   <h5><%if(each_data.rep_lastname){%>
+                                                    <%=each_data.rep_lastname%> 
+                                                    <%}else{%>
+                                                 <%=decrypt(each_data.last_name)%> 
+                       
+                                                    <%}%> </h5>
+                                             </div>
+                                            </div>
+                                              <div class="col-md-4">
+                                                <div class="account-detail-block">
+                                                     <h6>Email ID</h6>
+
+                                                      <%if(each_data.rep_emailid){%>
+                                                     <h5><%=each_data.rep_emailid%></h5>
+                                             <%}else if(each_data.entity_company_emailid ){%>
+                                                     <h5><%=each_data.entity_company_emailid  %></h5>
+
+                                            <%}else{%>
+                                                     <h5><%=decrypt(each_data.email)%></h5>
+                                            <%}%>
+                                                   </div>
+                                              </div>
+                                               <div class="col-md-3">
+                                                <div class="account-detail-block">
+                                                   <h6>My Reflet ID Code</h6>
+                                                   <h5><%=each_data.reflect_code%> </h5>
+                                                 </div>
+                                              </div>
+                                          </div>
+                                            <div class="row">
+                                            <div class="col-md-2">
+                                             <div class="account-detail-block">
+                                                     <h6>Country</h6>
+                                                    
+                                                      <%if(each_data.country_name){%>
+                                             <h5><%=each_data.country_name%></h5>
+                                           <%}else{%>
+                                        <%=decrypt(each_data.birthplace)%>                                    
+
+                                        <%}%>
+                                                   </div>
+                                              
+                                            </div>
+                                             <div class="col-md-3">
+                                              <div class="account-detail-block">
+                                                   <h6>Mobile Number</h6>
+                                                   <h5><%=decrypt(each_data.mobile_number)%></h5>
+                                                 </div>
+                                            </div> 
+                                              <div class="col-md-4">
+                                                <div class="account-detail-block">
+                                                     <h6>Submitted On</h6>
+                                                     <h5><%=moment(each_data.created_at).format('MMM DD, YYYY')%></h5>
+                                                   </div>
+                                              </div>
+                                               <div class="col-md-3">
+                                                <div class="account-detail-block">
+                                                     <h6>Verified Status</h6>
+                                                     <div class="verifier-typ-img for-verify-typ">
+                                                         <% if(each_data.email_verification_status=='yes'){ %>
+         
+                                                        <img src="/admin-assets/images/icons/email.png"><span>Email &nbsp;</span>
+                                                        <%}else{%>
+         
+                                                            <%}%>
+                                                            <img src="/admin-assets/images/icons/phone.png"><span>Phone</span>
+         
+                                                        <!-- <% if(each_data.email_verification_status=='yes'){ %> -->
+         
+                                                         <!-- <img src="/admin-assets/images/icons/email.png"><span>Email &nbsp;</span> -->
+                                                         <!-- <%}else{%> -->
+          
+                                                         <!-- <%}%> -->
+                                                      </div>
+                                                   </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                    </div>
+                                    
+                                            <%}else{%>
+                                             <div class="row">
+                                      <div class="col-md-12 m-auto">
+                                          <div class="row">
+                                           
+                                            
+                                               <div class="col-md-3">
+                                                <div class="account-detail-block">
+                                                   <h6>My Reflet ID Code</h6>
+                                                   <h5><%=each_data.reflect_code%> </h5>
+                                                 </div>
+                                              </div>
+                                         
+                                            
+                                              <div class="col-md-3">
+                                                <div class="account-detail-block">
+                                                     <h6>Submitted On</h6>
+                                                     <h5><%=moment(each_data.created_at).format('MMM DD, YYYY')%></h5>
+                                                   </div>
+                                              </div>
+                                               <div class="col-md-3">
+                                                <div class="account-detail-block">
+                                                     <h6>Verified Status</h6>
+                                                     <div class="verifier-typ-img for-verify-typ">
+                                                         <% if(each_data.email_verification_status=='yes'){ %>
+         
+                                                        <img src="/admin-assets/images/icons/email.png"><span>Email &nbsp;</span>
+                                                        <%}else{%>
+         
+                                                            <%}%>
+                                                            <img src="/admin-assets/images/icons/phone.png"><span>Phone</span>
+         
+                                                        <!-- <% if(each_data.email_verification_status=='yes'){ %> -->
+         
+                                                         <!-- <img src="/admin-assets/images/icons/email.png"><span>Email &nbsp;</span> -->
+                                                         <!-- <%}else{%> -->
+          
+                                                         <!-- <%}%> -->
+                                                      </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                    </div>
+                                        <%}%>
+                                    <%
+                                  }i++;
+                                  });
+                                  }
+                                 else{
+     %>
+                       <tr>
+            <td colspan="6"><center>No record found.</center> </td>
+             </tr>       <%}%>
+
+                                  <% if(verifier_list.length>0)
+                                  { 
+                                    i=1,k=0;
+                                     verifier_list.forEach(function(each_data){
+                                  
+                                        
+                                        %>      
+                     <h4 class="Main-heading mt-40 mb-0">Received Documents</h4>
+                     <div class="recived-doc-details">
+                       <div id="accordion">
+                          <div class="card">
+                              <div class="card-header" id="headingOne">
+                                <div class="row align-middle-flex">
+                                  <div class="col-md-8">
+                                     <h5 class="mb-0 clearfix upper">
+                                        <%=each_data.document_name%>          
+                                                            </h5>
+                                  </div>
+                                  <div class="col-md-4 text-right">
+                                     <button class="bg-gradient-primary text-white" data-toggle="collapse" data-target="#collapseOne<%=i%>"  aria-expanded="true" aria-controls="collapseOne">
+                                       <i class="mdi mdi-menu-down"></i>
+                                     </button>
+                                  </div>
+                                </div>
+                              </div>
+    
+                              <div id="collapseOne<%=i%>" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                <div class="card-body table-responsive">
+                                    <table class="table document-table">
+                                      <thead>
+                                        <tr>
+                                          <th width="20%">Version</th>
+                                          <th width="10%">Document</th>
+                                          <th width="15%">Date</th>
+                                          <th width="10%">ID Code</th>
+                                          <th width="10%">Status</th>
+                                          <th width="25%">Reason</th>
+                                          <th width="10%">Action</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td class="upper"><%=each_data.document_name%></h5></td>
+                                      
+                                           <%if(each_data.admin_status==="pending"){%>
+                                               <td>
+                                                  <div class="verifier-typ-img upper" style="display: flex;
+                                                  align-items: center;">
+                                                    
+                                                    <%if(each_data.file_data=='undefined'){%>
+                                                      <p class="upper"style="color: green;white-space: pre-wrap;"> *User just add   document but not verified! </p>
+                                                      <%}else{
+                                                        var p =0;
+                                                        %> 
+                                                              <% each_data.file_data.forEach(function(each_doc){
+            
+                                                                       if(each_doc.type =='image'){%>
+                                                                        
+                                                                        <!-- <a href="" data-toggle="modal" data-target="#doc-img-Modal<%=k%><%=p%>">
+                                                                          <img src="https://ipfs.io/ipfs/<%=each_doc.file_content%>">
+                                                                        </a> -->
+
+                                                                        <a href="" data-toggle="modal" onclick="show_doc_img('<%=k%><%=p%>')" data-target="#doc-Modal">
+                                                                            <img id="img_tag<%=k%><%=p%>" src="https://ipfs.io/ipfs/<%=each_doc.file_content%>" data-toggle="tooltip"  data-placement="top" title="Click here to view Document Images">
+                                                                        </a>
+                                                                      <%}else if(each_doc.type =='pdf'){%>
+
+                                                                     
+                                                                       <a href="" data-toggle="modal" onclick="show_doc_pdf('<%=k%><%=p%>')" data-target="#doc-Modal">
+                      
+                                                                        <object id="pdf_tag<%=k%><%=p%>" class="PDFdoc" width="50" height="50" type="application/pdf" data="https://ipfs.io/ipfs/<%=each_doc.file_content%>" ></object>
+                                                                      </a>
+                                                                      <% }else{%>
+                                                                        
+                                                                      <a href="" data-toggle="modal" onclick="show_doc_vid('<%=k%><%=p%>')" data-target="#doc-Modal">
+                                                                          <video width="50" height="50"  controls>
+                                                                          <source id="vid_tag<%=k%><%=p%>" src="https://ipfs.io/ipfs/<%=each_doc.file_content%>" type="video/mp4">
+                                                                        </video>
+                                                                      </a>
+
+
+                                                                      <% }%>
+
+                                                                        
+                                                              <%p++;})%>
+                                                              
+                                                      <%}%> 
+                                                    
+                                                  </div>
+                                               </td>
+                                            <%}else{%>
+                                            <td> NA</td>
+                                            
+                                        <%}%>
+                                          <td><%=moment(each_data.created_at).format('MMM DD, YYYY')%></td>
+                                          <td><%=each_data.doc_unique_code%></td>
+                                          <td>
+                                            <p class="pending upper"><%=each_data.admin_status%></p>
+                                          </td>
+                                          <td>
+                                            <p class="upper">
+                                        
+                                             <%if(each_data.admin_reason){%>
+                                            <%=each_data.admin_reason%>
+                                           <%}else{%>
+                                          NA                                     
+
+                                        <%}%>
+                                           </p>
+                                           <td class="reject-accept ">
+                                            <%if(each_data.admin_status==="verified"){%>
+                                            <a href="#"> <i class="approve mdi mdi-checkbox-marked-circle"></i></a>
+                                            <%}else if(each_data.admin_status==="none"){%>
+                                            <a class="ref_id"href="#" data-toggle="modal" data-target=""><i class="reject mdi mdi-close-circle"></i></a>
+                                            <%}else{%>
+                                            <a href="/approve-request-verifier?id=<%=each_data.user_doc_id%>&reflect_id=<%=each_data.reflect_id%>"> <i class="approve mdi mdi-checkbox-marked-circle"></i></a>
+                                            <a class="ref_id"href="" data-toggle="modal" data-target="#myModal-reason<%=i%>"><i class="reject mdi mdi-close-circle"></i></a>
+                                        <%}%>
+
+                                        </tr>
+                                       
+                                      </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                            </div>
+                         <%
+                                 i++;k++;
+                                  });
+                                  }
+                                  %>
+                        
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+         </div>
+               
+         </div>
+            
+                    
+              
+       </div>
+             </div>
+       </div>
+     </div>
+ </div>
+ 
+ 
+ <!-- Modal -->
+ <% if(verifier_list.length>0)
+ { 
+   i=1
+    verifier_list.forEach(function(each_data){
+ 
+       
+       %>    
+       <div id="myModal-reason<%=i%>" class="modal fade modal-reason" role="dialog">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <form method="post" action="/reject-request-verifier">
+              <div class="modal-body">
+                   <div class="reason-heading">
+                       <div class="reason-box">
+                         <div class="inner-border">
+                           <i class="fas fa-question"></i>
+                         </div>
+                       </div>
+                       <div>
+                         Reason For Rejecting Document
+                       </div>
+                   </div>
+                   <div class="reason-form">
+                     <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Enter the reason" name="reason">
+                      </div>
+                      <input name="user_doc_id" type="hidden" value="<%=each_data.user_doc_id%>">
+                      <input name="reflect_id" type="hidden" value="<%=each_data.reflect_id%>">
+
+                      <div class="popup-btn">
+                        <button type="submit" class="btn btn-common bg-gradient-primary">Submit</button>
+                        <a href="" class="btn btn-common bg-gradient-primary">Cancel</a>
+                      </div>
+                   </div>
+              </div>
+            </div>
+          </form>
+          </div>
+        </div>
+ <%
+ i++;
+  });
+  }
+  %>
+
+
+<% if(verifier_list.length>0)
+{ 
+var  i=1,k=0,p=0;;
+   verifier_list.forEach(function(each_data){
+
+     each_data.file_data.forEach(function(each_doc){
+      %>     
+<div class="modal fade field-edit-modal" id="doc-img-Modal<%=k%><%=p%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="modal-img-big">
+                <img src="https://ipfs.io/ipfs/<%=each_doc.file_content%>"class="img-fluid">                    
+        </div>
+       </div>
+      </div>
+    </div>
+    </div>
+
+     <%
+            p++; })
+       k++; });
+
+        }
+      %>
+      <% if(verifier_list.length>0)
+      { 
+      var  i=1,k=0,p=0;;
+         verifier_list.forEach(function(each_data){
+      
+           each_data.file_data.forEach(function(each_doc){
+            %>     
+            <div class="modal fade field-edit-modal" id="doc-video-Modal<%=k%><%=p%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                  <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="modal-img-big">
+                      <video  controls>
+                        <source id="vid_tag<%=k%><%=p%>" src="https://ipfs.io/ipfs/<%=each_doc.file_content%>" type="video/mp4">
+                      </video>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+                </div>
+      
+           <%
+                  p++; })
+             k++; });
+      
+              }
+            %>
+<!-- PDF Modal -->
+ <% if(verifier_list.length>0)
+      { 
+      var  i=1,k=0,p=0;;
+         verifier_list.forEach(function(each_data){
+      
+           each_data.file_data.forEach(function(each_doc){
+            %>     
+            <div class="modal fade field-edit-modal" id="doc-pdf-Modal<%=k%><%=p%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                  <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="modal-img-big">
+                      
+
+                      <object id="pdf_tag<%=k%><%=p%>" class="PDFdoc" width="50" height="50" type="application/pdf" data="https://ipfs.io/ipfs/<%=each_doc.file_content%>" ></object>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+                </div>
+      
+           <%
+                  p++; })
+             k++; });
+      
+              }
+            %>
+     <div class="modal fade field-edit-modal" id="doc-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                  <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div id="img_modal" class="modal-img-big">
+          
+                     </div>
+                  </div>
+                  </div>
+                </div>
+                </div>
+<%- include('footer'); -%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script>
+  function show_doc_img(img_val){
+    var img = $('#img_tag'+img_val).attr('src');
+    // alert(img_val);
+    // alert(img);
+        if(img!=""){
+      $('#img_modal').html("");
+            $('#img_modal').html(`<img src="${img}" class="img-fluid">`);
+      $('#img_modal').show();
+
+    }
+  }
+
+  function show_doc_vid(vid_val){
+    var vid = $('#vid_tag'+vid_val).attr('src');
+    // alert(img);
+        if(vid!=""){
+      $('#img_modal').html("");
+            $('#img_modal').html(`<video id="vid_modal" width="400" height="400" controls>
+          
+        <source src="${vid}" type="video/mp4"></video>`);
+      $('#doc-img-Modal').show();
+
+    }
+  }
+    function show_doc_pdf(doc_val){
+    var doc = $('#pdf_tag'+doc_val).attr('data');
+    // alert(doc_val);
+    // alert(doc);
+        if(doc!=""){
+      $('#img_modal').html("");
+
+
+            $('#img_modal').html(`<object id="pdf_tag" class="PDFdoc" width="100%" height="500px" type="application/pdf" data="${doc}"></object>`);
+      $('#doc-img-Modal').show();
+
+    }
+  }
+    </script>
+<script>
+
+  
+    function export_table(){
+        // alert('hhh')
+      // $('.hide_link').show();
+    
+        $("#myTable3").table2excel({
+          filename: "Verifier-list.xls",
+          exclude:'.hide_link',
+        });
+      //   $('.hide_link').show();
+      window.location.reload(true);
+    
+      };
+      
+      function print_table(){
+        $('.hide_link').hide();
+     
+       // $("#user_div").print();
+       var divToPrint=document.getElementById("myTable3");
+       newWin= window.open("");
+       newWin.document.write(divToPrint.outerHTML);
+       window.location.reload(true);
+    
+       newWin.print();
+       newWin.close();
+    
+        }   
+   </script>
+<script>
+    $(document).ready(function(){
+      // (".data_verfier").hide();
+      $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        }); 
+      });
+    });
+ </script> 
+

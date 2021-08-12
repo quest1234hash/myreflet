@@ -1,0 +1,479 @@
+<%- include('header'); -%>
+
+<style>
+  .status {
+  margin-right: 50px;
+}
+</style>
+    <link href="../assets/css/custom-new.css" rel="stylesheet"/>
+
+<div>
+   <div class="main-bredcrum-box">
+        <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            Complaint List
+          </li>
+        </ul>
+      </nav>
+    </div>
+	<div class="page-header">
+      <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+          <i class="mdi mdi-contacts"></i>
+        </span>Complaint List              
+    </h3>
+            
+    </div>
+    
+    <div class="row align-bottom-flex">
+   <div class="col-md-2">
+        <div>
+          <div class="form-group">
+              <a href="javascript:void(0);" onclick="export_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-export"></i>
+                   </span> 
+                 </span>
+               </a>
+              <a href="javascript:void(0);" onclick="print_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-printer"></i>
+                   </span> 
+                 </span>
+              </a>
+          </div>
+        </div>
+        
+      </div>
+    	<div class="col-md-2"> 
+    		<div>
+    			<!-- <div class="form-group">
+                    <label for="exampleInputUsername1">MyReflet ID</label>
+                    <select class="form-control form-control-sm" id="exampleFormControlSelect3">
+                        <option>All</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                  </div> -->
+    		</div>
+      </div>
+      
+    	<div class="col-md-3 offset-md-5">
+         
+    		<div>
+       
+    			<div class="form-group">
+              
+                      <div class="input-group search-input">
+                        <input type="text" class="form-control"id="myInput" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                          <button class="btn btn-sm" type="button"><i class=" mdi mdi-magnify"></i></button>
+                        </div>
+                      </div>
+                    </div>
+    		</div>
+    	</div>
+    </div>
+     <!-- <div class="personal-info-heading">
+        <div class="text-right"> --> 
+            <!-- <div class="icon-for-dwnload">
+              <div class="tooltip fade" data-title="Export Data">
+                <img src="../admin-assets/images/icons/dashboard-assets/export.png">
+                   <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+              </div>
+            </div> -->
+        <!-- <div class="icon-for-dwnload">
+              <div class="tooltip fade" data-title="Print Data">
+                <img src="../admin-assets/images/icons/dashboard-assets/print.png">
+                  <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+              </div>
+            </div> -->
+          </a>
+        <!-- </div>
+      </div> -->
+    </div>
+    <!-- <a href="javascript:void(0);" onclick="export_table();">Export Data</a>
+    <a href="javascript:void(0);" onclick="print_table();">Print Data</a>  -->
+    <div class="row">
+    	<div class="col-md-12">
+    		<div class="table-responsive">
+          <% if(success_msg!=undefined && success_msg !='' ){ %>
+            <div class="alert alert-success text-center  flash_msg "id="success_message">
+            <%= success_msg %>
+           </div>
+          <% }%>
+    			<table class="table tabel-virifier " id="myTable3">
+              <thead>
+                <tr>
+                  <th width="15%">Complain Id</th>
+                  <th width="20%">Verifier Name</th>
+                  <th width="20%">Client name</th>
+                  <th width="20%">Complain Message</th>
+                  <th width="20%">Complain Status</th>
+                  <th width="20%">Created At</th>
+
+
+                </tr>
+              </thead>
+              <tbody id="myTable"class="div_data">
+                    <% if(complaint_list.data.length>0)
+                    { 
+                       var i=0;
+                       complaint_list.data.forEach(function(each_data){
+                          %>
+                <tr>
+                   <td>
+                     <div>
+                       <p class="">UI-<%=each_data.complain_id%></p>
+                     </div>
+                   </td>
+                   <td>
+                     <div> 
+         
+                                   <%if(each_data.rep_firstname){%>
+                                        <p class="upper"><%=each_data.rep_firstname%></p>
+                                        
+                                <%}else if(each_data.entity_company_name){%>
+                                     <p class="upper"><%=each_data.entity_company_name%></p>
+
+                                <%}else{%>
+                                 <p class="upper"><%=each_data.full_name%></p>
+                                  
+                                <%}%>
+                                                 
+                       <p class="upper"><%=each_data.reflect_code%></p>
+                     </div>
+                    </td>
+                    <td>
+                            <div> 
+                              <p class="upper"><%=each_data.client_reflect_name%></p>
+                              <p class="upper"><%=each_data.client_reflect_code%></p>
+
+                            </div>
+                    </td>
+                    <td>
+                            <div> 
+                              <p class="upper"><%=each_data.complain_message%></p>
+                            </div>
+                    </td>
+                    <td>
+                            <div> 
+                              <p class="upper"><%=each_data.complaint_status%></p>
+                            </div>
+                         
+
+                    </td>
+                    <td>
+                        <p><%=moment(each_data.created_at).format('MMM DD, YYYY')%></p>
+                      </td>
+                     
+                  
+                     <!-- <td class="show_link">
+                        <% 
+                        if(each_data.status=="active"){ %>
+
+                            <div> 
+                               <p class="upper"><%=each_data.status%></p>
+                           </div>
+                      <%}else{%>
+                       <div> 
+                           <p class="upper"><%=each_data.status%></p>
+                       </div>
+                       <%}%> -->
+                      </td>
+                    <td class=""> 
+                        <!-- <% 
+                        if(each_data.status=="active"){ %>
+                           -->
+                          <!-- <button type="button" value="<%-each_data.reg_user_id%>" id="inactivebut"  class="btn  mr-2 btn-success_2 block-id ">Block </button> -->
+                              
+                      <!-- <%  }else{ %> -->
+                          
+                        <!-- <button type="button" value="<%-each_data.reg_user_id%>" id="activebut"  class="btn  btn-danger_1 mr-2 unblock-id " >Unblock</button> -->
+               
+                      <!-- <%  }
+                        %> -->
+                       
+                  
+                 
+                </tr>
+                <%
+								i++;			
+            });
+            }else{
+     %>
+                       <tr>
+            <td colspan="8"><center>No record found.</center> </td>
+             </tr>       <%}%>
+             
+              </tbody>
+          </table>
+          
+<!--                 </div>
+ -->            <div class="pagination-list for-user">
+          
+            <% if (complaint_list.totalPages > 0) { %>
+             <ul class="pagination text-center">
+               <% if (complaint_list.currentPage == 1) { %>
+                 <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+               <% } else { %>
+                 <li class="page-item"><a class="page-link" href="/complaint-list?page=1">&lt;</a></li>
+               <% } %>
+          
+          
+          
+               <% var i = (Number(complaint_list.currentPage) > 5 ? Number(complaint_list.currentPage) - 4 : 1) %>
+               <% if (i !== 1) { %>
+                 <!-- <li class="disabled"><a>...</a></li> -->
+                 <li class="page-item disabled"><a class="page-link" >...</a></li>
+               <% } %>
+               <% for (; i <= (Number(complaint_list.currentPage) + 4) && i <= complaint_list.totalPages; i++) { %>
+                 <% if (i == complaint_list.currentPage) { %>
+                   <!-- <li class="active"><a><%= i %></a></li> -->
+                   <li class="page-item active">
+                   <a class="page-link" href="#"><%= i %><span class="sr-only">(complaint_list.currentPage)</span></a>
+                   </li>
+                 <% } else { %>
+                   <li class="page-item"><a class="page-link" href="/complaint-list?page=<%= i %>"><%= i %></a></li>
+                 <% } %>
+                 <% if (i == Number(complaint_list.currentPage) + 4 && i < complaint_list.totalPages) { %>
+                   <!-- <li class="disabled"><a>...</a></li> -->
+                   <li class="page-item disabled"><a class="page-link" >...</a></li>
+                 <% } %>
+               <% } %>
+          
+          
+               <% if (complaint_list.currentPage == complaint_list.totalPages) { %>                       
+                 <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+               <% } else { %>
+                 <li><a class="page-link" href="/complaint-list?page=<%= complaint_list.totalPages %>">&gt;</a></li>
+               <% } %>
+          
+             </ul>
+          <% } %>
+          
+           </div>
+    		</div>
+    	</div>
+    </div>
+
+
+
+
+
+<%- include('footer'); -%>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script>
+
+
+    function export_table(){
+        // alert('hhh')
+      // $('.hide_link').show();
+    
+        $("#myTable3").table2excel({
+          filename: "Complaint-list.xls",
+          exclude:'.hide_link',
+        });
+      //   $('.hide_link').show();
+      window.location.reload(true);
+    
+      };
+      
+      function print_table(){
+       $('.hide_link').hide();
+     
+       // $("#user_div").print();
+       var restorepage = $('body').html();
+    // $('.nodata').hide();
+     var printcontent = $('#myTable3').clone();
+     $('body').empty().html(printcontent);
+     window.print();
+     $('body').html(restorepage);
+   
+     window.location.reload(true);
+    
+        }   
+   </script>
+<script type="text/javascript">
+var plan_status;
+  // $('.d1').on('click', '.menu-for-id a', function() {
+
+	//    $('.d2').$(this).val(); 
+
+	// //   var lastID = $(this).html();
+	//    plan_status = $(this).find(".change_status").attr("value");
+	// 	// console.log("text", lastID); 
+
+
+  //  });
+ $('.active_change').click(()=>{
+  var plan_status= $('.change_status').val()
+  var plan_id= $('.plan_id_1').val()
+
+7
+
+  $.ajax({
+			type: "post",
+			url: "/status-submit",
+			data:{plan_is:plan_id,plan_status:plan_status},
+			success: function (data) {
+				
+				location.reload();
+
+			
+			}
+		});
+ })
+
+  $('.validate').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#submit_signup').attr('disabled',true);
+        form.submit();
+      }
+     });
+     $('#validate1').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#submit_signup').attr('disabled',true);
+        form.submit();
+      }
+     });
+ 
+     setTimeout(function() {
+    $('#success_message').fadeOut('fast');
+    }, 3000);
+    
+    setTimeout(function() {
+    $('#error_msg').fadeOut('fast');
+    }, 3000);
+  </script>
+
+<!-- <script>
+function switchUserType(value){
+
+var value1 = $(".switch_user").val();
+alert(value1)
+var plan_status;
+  // alert($("#switch_user").val())
+if(value1=="on"){
+  plan_status='active';
+  $(".switch_user").val("off");
+  $(".change").text("active");
+
+
+}
+if(value1=="off"){
+  plan_status='inactive';
+
+  $(".switch_user").val("on");
+  $(".change").text("inactive");
+
+}
+alert(plan_status)
+$.ajax({
+            type: "post",
+            url: "/change-plan-status",
+            data: { plan_status : plan_status},
+            success: function(data){
+            alert('ver')
+
+            //   $('#div_sidebar').html("");
+            // $('#div_sidebar').html(``);
+            location.reload()
+            }
+    });
+}
+
+
+
+</script> -->
+
+ <script>
+        $(document).ready(function(){
+          $("#myInput").on("keyup", function() {
+
+            var value = $(this).val().toLowerCase();
+            // alert(value)
+            if(value)
+            {
+                   $.ajax({
+                      type: "post",
+                      url: "/search-admin-complaint",
+                      data:{query:value},
+                      success: function (data) {
+                        // alert(data);
+                        
+                             $('.div_data').html("");
+                                      $('.div_data').html(data);
+                              
+                        
+                    
+                      
+                      }
+                    })
+
+            }
+            else
+            {
+              location.reload(true);
+            }
+           
+  })
+        });
+        </script>
+<!-- <script>
+$('.check').click(function() {
+
+  var plan_id= $(".plan_id").html()
+  var plan_name= $('.plan_name').html()
+  var plan_price= $(".plan_price").html()
+
+	// if(plan_name==''&& plan_price=='')
+	// {
+	// 	window.location.reload(true);
+  //   false;
+	// }
+
+  alert(plan_name)
+  alert(plan_price)
+  alert(plan_id)
+
+	       
+})
+                
+
+</script> -->

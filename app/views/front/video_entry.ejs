@@ -1,0 +1,501 @@
+<%- include('partials/header.ejs') %>  
+
+<style>
+    .purple-btn[disabled] {
+    background-color: #7483a9;
+}
+.disabled-btn {
+    background-color: #7483a9;
+}
+</style>
+<header class="terms-header">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="logo-box">
+					<a href="">
+						<img src="assets/images/logo-white.png">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+
+<section class="terms-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 m-auto">
+				<div class="white-box">
+					   <div class="text-center">
+                         <h5>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's</h5>
+                        <button id="btn-start-recording" class="purple-btn">Start Recording</button>
+                        <button id="btn-stop-recording" class="purple-btn" disabled>Stop Recording</button>               
+                       </div>
+
+                       <div class="text-center">
+                            <video controls autoplay playsinline width="80%"></video>
+                       </div>
+
+                       <!--  <form action="/entry" method="POST" encType="multipart/form-data">
+
+                            <input name="photo" id="photo">
+                            <input name="blob" id="blob">
+                            <input type="submit" value="Check">
+                        </form> -->
+                        <div class="text-center upload-video">
+                         <br>                              <br>
+
+                          <h6 style="padding-left: 80px;padding-right: 80px; color: #274794; text-align: center;
+                          ">You successfully recorded the video now please upload the recorded video. </h6>
+
+                          <form action="/upload-new-doc-rep" method="POST"  enctype="multipart/form-data" id="">
+                            <div class="create-rflet-id-form">
+                              
+                              <!-- <br> -->
+                              <br>
+
+                              <div class="form-group browse-file-section Upload_video">
+                                <label>Upload Document</label>
+                        
+                        
+                                <input type="file"name="staff_image" id="staff_image" onchange="return fileInfo()" class="file  check_type_ " style="visibility: hidden;position: absolute;"accept="video/mp4,video/x-m4v,video/*"/>
+                        
+                                <div class="input-group col-xs-12">
+                                  <span class="input-group-btn">
+                                  <button class="browse btn btn-primary input-lg" type="button"> Choose a file</button>
+                                  </span>
+                                  <input type="text" class="form-control" readonly="" placeholder="">
+                                </div>
+                                              <span class="success_message_span success_span"style="color:red"></span>
+                        
+                              </div>
+                              
+                            </div>
+                            <input type="hidden"  name="user_doc_id" value="<%=user_doc_id%>" >
+                            <input type="hidden"  name="reflect_id" value="<%=reflect_id%>" >
+                              <input type="hidden"  name="value_o1" id="value_o1"value="<%=value_o1%>" >
+                        
+                            <div class="text-center">
+                              <button type="submit" class="btn-common-new hide_click dis size_check" href=""onclick="return check_upload()">Upload</button>
+                              <span class="loader"><img src="../assets/images/loader-3.gif"height="42" width="62"></span>
+                              <a class="btn-common-new hide_click" href="">Cancel</a>
+                            </div>
+                          </form>
+                            <!-- <a href="" class="purple-btn"  data-toggle="modal" data-target="#upload-video-Modal">Upload Video</a> -->
+                        </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+
+<!-- <div class="modal fade field-edit-modal" id="upload-video-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+            <div class="row align-item-center">
+                <div class="col-xl-2 col-lg-3 col-md-3">
+                    <div>
+                        <img src="../assets/images/icons/createidentity-assets/popup-upload-icon.png">
+                    </div>
+                </div>
+                <div class="col-xl-7 col-lg-7 col-md-7">
+                    <h5 class="heading-purple">Add Video</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+                    <div class="setup-inner-box for-protact">
+                        <div class="create-rflet-id-form">
+                            <div class="form-group browse-file-section">
+                                  <input type="file" name="staff_image1" class="file" style="visibility: hidden;position: absolute;" accept="image/x-png,image/jpeg">
+                                  <div class="input-group col-xs-12">
+                                    <span class="input-group-btn">
+                                      <button class="browse btn btn-primary input-lg" type="button"> Choose a file</button>
+                                    </span>
+                                    <input type="text" class="form-control" readonly="" placeholder="">
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="input-group">
+                                  <input type="text"  class="form-control" placeholder="Document Name">
+                                </div>
+                            </div>  
+                            <div class="form-group">
+                                <div class="input-group">
+                                  <input type="text" id="datepicker2" class="form-control" placeholder="Expiry Date">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                  <input type="text" class="form-control" placeholder="Document ID Number">
+                                </div>
+                            </div>
+                        </div>
+                        <div >
+                            <a class="btn-common-new" href="">Upload</a>
+                            <a class="btn-common-new" href="">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+  </div>
+</div> -->
+
+
+
+<script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+
+
+
+<script src="/RecordRTC.js"></script>
+<script>
+  $(document).ready( function () {
+    $('.upload-video').hide();
+    $('.loader').hide();
+
+} );
+var video = document.querySelector('video');
+
+function captureCamera(callback) {
+    navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(function(camera) {
+        callback(camera);
+    }).catch(function(error) {
+        alert('Unable to capture your camera. Please check console logs.');
+        console.error(error);
+    });
+}
+
+function stopRecordingCallback() {
+    video.src = video.srcObject = null;
+    video.muted = false;
+    video.volume = 1;
+    video.src = URL.createObjectURL(recorder.getBlob());
+
+    console.log(video.src)
+    let blob = recorder.getBlob();
+    console.log(blob);
+    console.log('6^^^',typeof blob);
+    console.log('---..........',JSON.stringify(blob));
+    let stringblob = JSON.stringify(blob);
+
+    // document.getElementById('buffer5').value = stringblob;
+    // document.getElementById('photo').value = video.src;
+    // document.getElementById('blob').value = recorder.getBlob();
+    
+    let fileReader = new FileReader();
+
+    fileReader.readAsArrayBuffer(blob);
+
+    let arrayBuffer,stringarray;
+    fileReader.onload = function(event) {
+      arrayBuffer = fileReader.result;
+      console.log('--------2---------',arrayBuffer);
+    //   stringarray = JSON.stringify(arrayBuffer);
+        // console.log('-----////-----',stringarray);
+        // console.log('-----////-----',typeof stringarray);
+
+        function uintToString(uintArray) {
+        var encodedString = String.fromCharCode.apply(null, uintArray),
+        decodedString = decodeURIComponent(escape(atob(encodedString)));
+        return decodedString;
+        }
+
+        console.log('-------------------------------', uintToString(arrayBuffer));
+
+        // document.getElementById('buffer3').value = stringarray;
+        // document.getElementById('buffer4').value = arrayBuffer;
+    };
+
+    console.log('--------',fileReader);
+    // document.getElementById('file').val = arrayBuffer;
+    // document.getElementById('buffer2').value = fileReader;
+
+    // invokeSaveAsDialog(recorder.getBlob(), 'video.mp4');
+    const downloadLink = downloadBlob(recorder.getBlob(), 'video.mp4');
+    
+    recorder.camera.stop();
+    recorder.destroy();
+    recorder = null;
+
+    document.body.appendChild(downloadLink);
+}
+
+// $('#button').onclick(()=>{
+//     var meter_id= $('#meter_id').val();
+//     var company_name= $('#company_name').val();
+// })
+
+var recorder; // globally accessible
+
+document.getElementById('btn-start-recording').onclick = function() {
+    this.disabled = true;
+    captureCamera(function(camera) {
+        video.muted = true;
+        video.volume = 0;
+        video.srcObject = camera;
+
+        recorder = RecordRTC(camera, {
+            type: 'video'
+        });
+
+        recorder.startRecording();
+
+        // release camera on stopRecording
+        recorder.camera = camera;
+
+        document.getElementById('btn-stop-recording').disabled = false;
+
+    });
+};
+
+document.getElementById('btn-stop-recording').onclick = function() {
+    this.disabled = true;
+    $('.upload-video').show();
+
+    recorder.stopRecording(stopRecordingCallback);
+      
+    document.getElementById('btn-start-recording').disabled = false;
+};
+
+
+function downloadBlob(blob, filename) {
+  // Create an object URL for the blob object
+  const url = URL.createObjectURL(blob);
+  
+  // Create a new anchor element
+  const a = document.createElement('a');
+  
+  // Set the href and download attributes for the anchor element
+  // You can optionally set other attributes like `title`, etc
+  // Especially, if the anchor element will be attached to the DOM
+  a.href = url;
+  a.download = filename || 'download';
+  
+  // Click handler that releases the object URL after the element has been clicked
+  // This is required for one-off downloads of the blob content
+  const clickHandler = () => {
+    setTimeout(() => {
+      URL.revokeObjectURL(url);
+      this.removeEventListener('click', clickHandler);
+    }, 150);
+  };
+  
+  // Add the click event listener on the anchor element
+  // Comment out this line if you don't want a one-off download of the blob content
+  a.addEventListener('click', clickHandler, false);
+  
+  // Programmatically trigger a click on the anchor element
+  // Useful if you want the download to happen automatically
+  // Without attaching the anchor element to the DOM
+  // Comment out this line if you don't want an automatic download of the blob content
+  a.click();
+  
+  // Return the anchor element
+  // Useful if you want a reference to the element
+  // in order to attach it to the DOM or use it in some other way
+  return a;
+}
+
+</script>
+
+<footer style="margin-top: 20px;"><small id="send-message"></small></footer>
+
+
+<!-- 
+
+    ADD PIPE CONFIGURATION AND SAVE TO DROPBOX
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIDEO INTEGRATION</title>
+
+    <link rel="stylesheet" href="//cdn.addpipe.com/2.0/pipe.css">
+    <script type="text/javascript" src="//cdn.addpipe.com/2.0/pipe.js"></script>
+
+</head>
+<body>
+
+    <form action="/entry" method="POST">
+    
+    <piperecorder id="custom-id" pipe-width="640" pipe-height="390" pipe-qualityurl="avq/360p.xml" pipe-accounthash="ac925f7f0f60ed7d18363df0048a76d6" pipe-eid="GAyKYN" pipe-mrt="120" pipe-name="hello"></piperecorder>
+
+    <input type="submit" value="Check">
+    </form>
+
+    <video src="https://www.dropbox.com/s/wfkpaxlmqb07ggp/9UCkC5Q1cjRBsvfLZWYnV6S7hhrrnDFY.mp4?raw=1" controls autoplay></video>
+
+    https://www.dropbox.com/s/prfdkntzxx7lu9u/xHLc0xQdtRHuFxzvuZb9kjmwc2UNQmrL.mp4?dl=0
+    https://www.dropbox.com/s/wfkpaxlmqb07ggp/9UCkC5Q1cjRBsvfLZWYnV6S7hhrrnDFY.mp4?dl=0
+
+</body>
+</html> -->
+<%- include('partials/footer.ejs') %>  
+
+
+	<script>
+     $(document).on('click', '.browse', function(){
+    var file = $(this).parent().parent().parent().find('.file');
+    file.trigger('click');
+  });
+  $(document).on('change', '.file', function(){
+    $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i,''));
+  }); 
+</script>	
+
+
+		<script>
+		$(function(){
+
+var url = new URL( window.location.href);
+var userId = url.searchParams.get("userId");
+// alert(userId)
+$("#userid").val(userId)
+
+})
+</script>
+<script>
+  function check_upload()
+			{
+					// var end_date = $(".end-date"+i_value ).val();
+	// alert('i_val')
+
+		// var option_val=$(".file_upload"+i_val).val();
+	   var check_type=$(".check_type_").val();
+	        	// alert(check_type)
+	// alert(option_val)
+	  if(check_type)
+	   {
+		// alert(option_val)
+     
+     	// alert('check_type')
+	   		$('.hide_click').hide();
+
+				 $('.loader').show();
+		return true;
+		 
+	   }
+	   else{
+	     $('.success_span').html('Please Select any file');
+ 
+	           return false;
+
+
+	   }
+	}
+</script>
+
+<%- include('partials/footer.ejs') %>    
+
+<script>
+	function fileInfo(){
+    // alert('file_info');
+
+    var fileName = document.getElementById('staff_image').files[0].name;
+    var fileSize = document.getElementById('staff_image').files[0].size;
+    var fileType = document.getElementById('staff_image').files[0].type;
+    var fileModifiedDate = document.getElementById('staff_image').files[0].lastModifiedDate;
+    
+    var file_info = fileSize+"\n"+fileType+"\n";
+    // alert(file_info);
+
+
+
+               $(`input[id=image_dis]`).attr("disabled",true);
+			   $(`input[id=video_dis]`).attr("disabled",true);
+			//    alert('file_check')
+
+				   // if (file_check.length > 0) {
+
+		     //            $.each(file_check.files, function (index, value) {
+		     //                $('#fp').html($('#fp').html() + '<br />' +
+		     //                    '<b>' + Math.round((value.size / 1024)) + '</b> KB');
+		     //            })
+		     //        }
+						
+
+				var fileExtension = ['png','jpeg','jpg'];
+				var fileExtension_1 = ['mp4'];
+				
+				var type=fileType.split('/').pop().toLowerCase()
+		   
+				// alert(type)
+
+
+				if (type=='jpg'||type=='png'||type=='jpeg') {
+					// alert('true 1')
+						$('#value_o1').attr("value","image")
+
+					$('#video_dis').attr('checked', false);
+
+					$('#image_dis').attr('checked', true);
+
+					// $(`input[id=video_dis${i_g_value}]`).attr("disabled",true);
+
+					return true;
+
+				   
+				}
+				
+
+				else if(type=='mp4'){
+
+					// alert('true 2'+fileSize) 
+					if (fileSize>=3530998) {
+            $('.size_check').prop( "disabled", true );;
+
+							   $('.success_span').html('Video  maximum size should be 3.5 MB');
+					 //            setTimeout(function() {
+					 //    $('.success_message_span').fadeOut('fast');
+						// }, 3000);
+						return false;
+					}
+					else
+					{
+            $('.size_check').prop( "disabled", false );;
+
+						$('#value_o1').attr("value","video")
+
+						  setTimeout(function() {
+					    $('.success_message_span').fadeOut('fast');
+						}, 1000);
+						$('#image_dis').attr('checked', false);
+
+						$('#video_dis').attr('checked', true);
+
+						// $(`input[id=image_dis${i_g_value}]`).attr("disabled",true);
+
+					return true;
+				}
+				}
+			
+				else
+				{
+					alert('plz select image or video');
+					$(`input[id=video_dis]`).attr("disabled",true);
+                        $(`input[id=image_dis]`).attr("disabled",true);
+
+					return false;
+
+				}
+
+}
+
+
+</script>
+
+ 

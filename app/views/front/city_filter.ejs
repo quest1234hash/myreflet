@@ -1,0 +1,28 @@
+<div class="form-group"> 
+    <label>Select City</label>
+     <select class="form-control js-example-basic-multiple city-select checkbox23" name="place_of_birth">
+
+        <option class="city_select checkbox2" value=" ">--Select City--</option>
+        
+    
+        <%if(cities[0]!=null){%>
+            <%cities.forEach(city=>{%>
+              
+          <option class="country_select checkbox2">
+            <%=city.name%>
+            
+            <%})%> 
+         <%}%>     
+      
+          <!-- <option value="USA">USA</option>
+          <option value="China">China</option>
+          <option value="France">France</option>
+          <option value="Russia">Russia</option>
+          <option value="UK">UK</option>
+          <option value="UAE">UAE</option> -->
+    </select>
+  </div> 
+  <script>
+    $(document).ready(function() {
+    $(".city-select").select2();
+});

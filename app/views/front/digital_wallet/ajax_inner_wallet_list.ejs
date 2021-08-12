@@ -1,0 +1,190 @@
+<table class="table" id="myTable3">
+    <thead>
+      <tr>
+        <th scope="col">Wallet</th>
+        <th scope="col" >Reflect Id</th>
+        <th scope="col">Wallet Address</th>
+    
+        <th scope="col">Action</th>
+      </tr>
+    
+    </thead >
+    <tbody>
+
+        <%if(walletdetails.length>0){
+          var i=0;
+        %>
+            <%walletdetails.forEach(each_data=>{%>
+        
+      <tr>
+        <td scope="row" >
+            <div class="for-flex-align">
+                 <div class="checkbox">
+                <label>
+                  <input type="checkbox"  >
+                  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                  <%=each_data.wallet_name%>
+                </label>
+              </div>
+              
+            </div>
+        </td>
+    
+        <td ><%=each_data.reflect_code%></td>
+        <td ><%=each_data.wallet_address%></td>
+        <td ><a href="#private-key-accept-Modal<%=i%>" class="" data-toggle="modal">View</a>
+
+        </td>
+        
+        
+
+      </tr>
+      <%i++;})%>
+      <%}else{%>
+
+       <tr> <td colspan="4"><center>No record found.</center></td></tr>
+
+        <%}%>
+      
+    </tbody>
+  </table>
+  <%
+          var i=0;
+        if(walletdetails.length>0)
+        {
+
+    walletdetails.forEach(function(each_wallet) { %>
+<div class="modal fade field-edit-modal" id="private-key-accept-Modal<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-body">
+      <button type="button" class="close hide_click" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="create-wallet-box">
+        <div class="row align-item-center">
+          <div class="col-xl-2 col-lg-3 col-md-3">
+            <div class="for-icon-bg">
+              <img src="../assets/images/icons/createidentity-assets/popup-mobile-icon.png">
+            </div>
+          </div>
+          <div class="col-xl-10 col-lg-10 col-md-10">
+            <h5 class="heading-purple">Please enter your private key.</h5>
+            <!-- <p>Verify your phone number by entering the OTP sent to your registered email address.</p> -->
+            <div id="error_message"><span class="error_validate" id="accept_error<%=i%>"></span></div>
+
+          </div>
+        </div>
+         <div class="login-form-main phone-otp">
+           <div class="form-group">
+            <label>Private Key</label>
+            
+              <input type="text" id="private_key_accept<%=i%>" name="private_key_accept" class="form-control text-center">
+              
+           
+          </div>
+            <input type="hidden" id="wallet_address<%=i%>" value="<%=each_wallet.wallet_address %>">
+            <input type="hidden" id="reflect_code<%=i%>" value="<%=each_wallet.reflect_code%>">
+
+          <div class="private-key-copy-box">
+            <button class="btn-common-new check hide_click" onclick="accept_request('<%=i%>')">Continue</button>
+<!--                         <button class="btn-common-new check hide_click" onclick="formsubmit()">Continue</button>
+ -->
+<!--           <center><span class="loader"><img src="../assets/images/loader-3.gif"></span></center>
+ -->
+          </div>
+        </div>
+       </div>
+     </div>
+    </div>
+  </div>
+  </div>
+<%
+      i++;    })
+      }%>
+<script type="text/javascript">
+
+    function accept_request(i_val){
+
+    var private_key = $('#private_key_accept'+i_val).val();
+    var wallet_address = $('#wallet_address'+i_val).val();
+    var reflect_code = $('#reflect_code'+i_val).val();
+
+
+    // alert(reflect_code)
+
+    // alert(private_key)
+    //     alert(wallet_address)
+
+    if(private_key!=""){
+
+      if(private_key.length<64){
+        $('#accept_error'+i_val).html("");
+        $('#accept_error'+i_val).html("Please enter valid private key.");
+      }else if( private_key.length>66){
+        $('#accept_error'+i_val).html("");
+        $('#accept_error'+i_val).html("Please enter valid private key.");
+      }else{
+              $('.hide_click').hide();
+
+                $('.loader').show()
+
+
+// alert(validatore_id)
+// alert(validatore_name)
+// alert(validator_type)
+
+      $.ajax({
+          type:"post",
+          url:"/check-private-key-for-digital-wallet",
+          data:{private_key,wallet_address,reflect_code},
+          success:function(data) {
+            // alert(data)
+              // setTimeout(function(){
+                // alert('data : '+data.fail);
+                //                 alert('data : '+data.success);
+
+        //       },
+        // 5000);
+
+           if(data.fail=='true' && data.success=='true'){
+
+                   // alert('data'+data)
+           //         if(type==='entity')
+           //         { 
+           //             var view_url="entity?reflect_id="+reflect_id
+
+           //         }else{
+             //            var view_url="/view-reflect-id?id"+reflect_code
+
+           //         }
+           window.location="/view-reflect-id?id="+reflect_code
+
+
+            // $(".append_link").attr("href", view_url)
+
+                }else
+                {
+                                $('.hide_click').show();
+
+                                                   $('.loader').hide()
+
+                              $('#accept_error'+i_val).html("");
+                                         $('#accept_error'+i_val).html("Your private key is not match with this wallet-address.");
+
+                }
+    }
+  });
+      } 
+      }else{
+                      // $('.hide_click').hide();
+
+      $('#accept_error'+i_val).html("");
+      $('#accept_error'+i_val).html("Please enter your private key.");
+    }
+  }
+
+</script>
+
+          
+      %>

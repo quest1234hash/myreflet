@@ -1,0 +1,579 @@
+<%- include('header'); -%>
+
+<div>
+   <div class="main-bredcrum-box">
+        <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            Wallet List
+          </li>
+        </ul>
+      </nav>
+    </div>
+	<div class="page-header">
+      <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+          <i class="mdi mdi-contacts"></i>
+        </span> Wallet List </h3>
+    </div>
+    <div class="row align-bottom-flex">
+    	<!-- <div class="col-md-2">
+    		<div>
+    			<div class="form-group">
+                    <label for="exampleInputUsername1">Status</label>
+                    <select class="form-control form-control-sm " onchange="nameFilter(value)"  id="exampleFormControlSelect3">
+                        <option value="all">All</option>
+                        <option >Active</option>
+                        <option >Inactive</option>
+                      </select>
+                  </div>
+    		</div>
+      </div>
+ -->
+      <div class="col-md-2">
+    		<div>
+    			<div class="form-group">
+                    <label for="exampleInputUsername1">User As</label>
+                    <select class="form-control form-control-sm " onchange="nameFilter(value)"  id="exampleFormControlSelect3">
+                        <option value="all">All</option>
+                        <option>Verifier</option>
+                        <option>Client</option>
+                        <!-- <option value="3">Block</option> -->
+                      </select>
+                  </div>
+    		</div>
+      </div>
+      
+    	<div class="col-md-2">
+    		<div>
+    			<div class="form-group">
+              <a href="javascript:void(0);" onclick="export_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-export"></i>
+                   </span> 
+                 </span>
+               </a>
+              <a href="javascript:void(0);" onclick="print_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-printer"></i>
+                   </span> 
+                 </span>
+              </a>
+          </div>
+        </div>
+        
+    	</div>
+    	<div class="col-md-3 offset-md-9">
+    		<div>
+    			<div class="form-group">
+                      <div class="input-group search-input">
+                        <input type="text" class="form-control"id="myInput" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                          <button class="btn btn-sm" type="button"><i class=" mdi mdi-magnify"></i></button>
+                        </div>
+                      </div>
+                    </div>
+    		</div>
+    	</div>
+    </div>
+    <div class="row">
+    	<div class="col-md-12"> 
+    		<div class="table-responsive">
+          <% if(success_msg!=undefined && success_msg !='' ){ %>
+            <div class="alert alert-success text-center  flash_msg "id="success_message">
+            <%= success_msg %>
+           </div>
+          <% }%>
+          <% if(err_msg!=undefined && err_msg !='' ){ %>
+            <div class="alert alert-danger text-center  flash_msg " id="error_msg">
+                <%= err_msg %>
+               </div>
+             
+            <% }%>
+            <div class="data_table">
+        			<table class="table tabel-virifier"id="myTable3">
+                  <thead>
+                    <tr>
+                       <th width="5%">Sr.No.</th>
+                       <th width="5%">Wallet Id</th>
+                       <th width="15%">Wallet Address</th>
+    <!--                    <th width="15%">Reflet ID</th>
+     -->                  <th width="20%">User As</th>
+                     <!--  <th width="15%">Status</th> -->
+                          <th width="20%">Created At</th>
+
+    <!--                   <th width="5%"class="hide_link">Action</th>
+     -->                </tr>
+                  </thead>
+                  <tbody id="myTable" >
+                      <% if(wallet_list.data.length>0)
+                      { 
+                         var i=0;
+                         var j=1;k=1;
+                         wallet_list.data.forEach(function(each_data){
+                            %>
+                  <tr>
+                      <td>
+                       <div>
+                         <p class=""><%=k%>.</p>
+                       </div>
+                     </td>
+                     <td>
+                       <div>
+                         <p class="">WI-<%=each_data.wallet_id%></p>
+                       </div>
+                     </td>
+                     <td>
+                       <div> 
+                         <p class="upper"><%=each_data.wallet_address%></p>
+                       </div>
+                      </td>
+                     <!--  <td>
+                        <div> 
+             
+                                       <%if(each_data.rep_firstname){%>
+                                            <p class="upper"><%=each_data.rep_firstname%></p>
+                                            
+                                    <%}else if(each_data.entity_company_name){%>
+                                         <p class="upper"><%=each_data.entity_company_name%></p>
+
+                                    <%}else{%>
+                                     <p class="upper"><%=each_data.full_name%></p>
+                                      
+                                    <%}%>
+                                                     
+                           <p class="upper"><%=each_data.reflect_code%></p>
+                         </div>
+                       </td> -->
+                      <td>
+                              <div> 
+                                <p class="upper"><%=each_data.user_as%></p>
+                              </div>
+                      </td>
+
+            
+                     
+              <!--     <div> 
+                    <p class="upper"><%=each_data.status%></p>
+                  </div>
+                  -->
+                                    <td>
+                                                   
+                               <p class=""><%=moment(each_data.sub_createdAt).format('MMM DD, YYYY')%>
+                                    </p>
+               
+           </td>
+    <!--                    <td class="hide_link">
+     -->                     <!-- <div class="dropdown-menu-new">
+                            <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                              <i class="fas fa-ellipsis-v"></i>
+                            </a>
+                            <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                              <a class="dropdown-item" href="#"><i class="fas fa-cogs"></i> Manage MyReflet ID</a> -->
+                              <!-- <a class="dropdown-item" href="#"><i class="mdi mdi-close-box"></i> Reject</a> -->
+                              <!-- <a class="dropdown-item" href="#"><i class="mdi mdi-delete"></i> Delete</a>
+                              <a class="dropdown-item" href="#"><i class="mdi mdi-delete-forever"></i> Block</a>
+                            </div>
+                         </div> -->
+                         <!-- --
+                       </td> -->
+                    </tr>
+                    <%
+    								i++;	j++;		k++;
+                });
+                  }else{
+         %>
+                           <tr>
+                <td colspan="5"><center>No record found.</center> </td>
+                 </tr>       <%}%>
+                  </tbody>
+                </table>
+         <!--   <table class="paginate_table">
+              <div class="pagination-list for-ava">
+            <% if (wallet_list.totalPages> 0) { %>
+              
+              <ul class="pagination text-center">
+                <% if (wallet_list.currentPage == 1) { %>
+                  <li class="disabled page-link"><a>First &nbsp;</a></li>
+                <% } else { %>
+                  <li class="page-link"><a href="/view-wallet-by-userid?page=1&reg_user_id=<%=reg_user_id%>">First</a></li>
+                <% } %>
+                <% var i = (Number(wallet_list.currentPage) > 5 ? Number(wallet_list.currentPage) - 4 : 1) %>
+                <% if (i !== 1) { %>
+                  <li class="disabled "><a>...</a></li>
+                <% } %>
+                <% for (; i <= (Number(wallet_list.currentPage) + 4) && i < wallet_list.totalPages; i++) { %>
+                  <% if (i == wallet_list.currentPage) { %>
+                    
+                    <li class="active page-link"><a><%= i %></a></li>
+                  <% } else { %>
+                    <li class="page-link"><a href="/view-wallet-by-userid?page=<%= i %>&reg_user_id=<%=reg_user_id%>"><%= i %></a></li>
+                  <% } %>
+                  <% if (i == Number(wallet_list.currentPage) + 4 && i <= wallet_list.totalPages) { %>
+                    <li class="disabled"><a>...</a></li>
+                  <% } %>
+                <% } %>
+                <% if (wallet_list.currentPage ==wallet_list.totalPages) { %>
+                  <li class="disabled page-link"><a>Next</a></li>
+                <% } else { %>
+                  <li class="page-link"><a href="/view-wallet-by-userid?page=<%= wallet_list.totalPages %>&reg_user_id=<%=reg_user_id%>"> &gt;Next</a></li>
+                <% } %>
+              </ul>
+            <% } %>
+              </div>
+             
+      </table> -->
+       <div class="pagination-list for-user">
+          
+            <% if (wallet_list.totalPages > 0) { %>
+             <ul class="pagination text-center">
+               <% if (wallet_list.currentPage == 1) { %>
+                 <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+               <% } else { %>
+                 <li class="page-item"><a class="page-link" href="/view-wallet-by-userid?page=<%= wallet_list.totalPages %>&reg_user_id=<%=reg_user_id%>">&lt;</a></li>
+               <% } %>
+          
+          
+          
+               <% var i = (Number(wallet_list.currentPage) > 5 ? Number(wallet_list.currentPage) - 4 : 1) %>
+               <% if (i !== 1) { %>
+                 <!-- <li class="disabled"><a>...</a></li> -->
+                 <li class="page-item disabled"><a class="page-link" >...</a></li>
+               <% } %>
+               <% for (; i <= (Number(wallet_list.currentPage) + 4) && i <= wallet_list.totalPages; i++) { %>
+                 <% if (i == wallet_list.currentPage) { %>
+                   <!-- <li class="active"><a><%= i %></a></li> -->
+                   <li class="page-item active">
+                   <a class="page-link" href="#"><%= i %><span class="sr-only">(wallet_list.currentPage)</span></a>
+                   </li>
+                 <% } else { %>
+                   <li class="page-item"><a class="page-link" href="/view-wallet-by-userid?page=<%= wallet_list.totalPages %>&reg_user_id=<%=reg_user_id%>"><%= i %></a></li>
+                 <% } %>
+                 <% if (i == Number(wallet_list.currentPage) + 4 && i < wallet_list.totalPages) { %>
+                   <!-- <li class="disabled"><a>...</a></li> -->
+                   <li class="page-item disabled"><a class="page-link" >...</a></li>
+                 <% } %>
+               <% } %>
+          
+          
+               <% if (wallet_list.currentPage == wallet_list.totalPages) { %>                       
+                 <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+               <% } else { %>
+                 <li><a class="page-link" href="/view-wallet-by-userid?page=<%= wallet_list.totalPages %>&reg_user_id=<%=reg_user_id%>">&gt;</a></li>
+               <% } %>
+          
+             </ul>
+          <% } %>
+             </div>
+           </div>
+    		</div>
+    	</div>
+    </div>
+</div>
+
+<%- include('footer'); -%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+
+
+<script>
+  function nameFilter(value){
+    // alert(value)
+    
+        if(value=="all"){
+
+             window.location.reload()
+
+        }else{
+
+        
+                    if(value) {
+                                     var userId ='<%=reg_user_id%>'
+                            // alert(userId)
+                            $.ajax({
+                                          type : "post",
+                                          url  : "/search-wallet-by-userid",
+                                          data : { query:value,
+                                                   reg_user_id :userId
+                                               },
+                                          success: function (data) {
+                                                                                
+                                                $('.data_table').html("");
+                                                $('.data_table').html(data);
+                                            
+                                          }
+                               })
+                        }
+      }
+  }
+ </script>
+
+<script type="text/javascript">
+function filterFun(inputValue){
+  alert(inputValue)
+
+}
+
+</script>
+
+<script>
+
+
+    function export_table(){
+        // alert('hhh')
+      // $('.hide_link').show();
+    
+        $("#myTable3").table2excel({
+          filename: "Verifier-list.xls",
+          exclude:'.hide_link',
+        });
+      //   $('.hide_link').show();
+      window.location.reload(true);
+    
+      };
+      
+      function print_table(){
+        $('.hide_link').hide();
+     
+       // $("#user_div").print();
+       var restorepage = $('body').html();
+    // $('.nodata').hide();
+     var printcontent = $('#myTable3').clone();
+     $('body').empty().html(printcontent);
+     window.print();
+     $('body').html(restorepage);
+   
+     window.location.reload(true);
+    
+    
+        }   
+   </script>
+<script>
+    $(document).ready(function(){
+      // ('.show_link').hide()
+       $("#myIncncgvnput").on("keyup", function() {
+
+            var value = $(this).val().toLowerCase();
+             if(value)
+            {
+            alert(value)
+            $.ajax({
+                          type: "post",
+                          url: "/search-wallet-by-userid",
+                          data:{query:value,
+                          reg_uer_id :'<%- reg_user_id%>'
+                          },
+                          success: function (data) {
+                            // alert(data);
+                            
+                                 $('.data_table').html("");
+                                          $('.data_table').html(data);
+                                  
+      
+  
+    
+    }
+  })
+ }
+            else
+            {
+              location.reload(true);
+            }
+  })
+      $("#ghkm").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+ </script>
+
+
+
+
+
+<script>
+  $(document).ready(function(){
+    // (".status_table").hide();
+              $("#myInput").on("keyup", function() {
+
+          var value = $(this).val().toLowerCase();
+           if(value)
+          {
+            var userId ='<%=reg_user_id%>'
+          // alert(userId)
+          $.ajax({
+                        type: "post",
+                        url: "/search-wallet-by-userid",
+                        data:{query:value,
+                          reg_user_id :userId
+                          },
+                        success: function (data) {
+                          // alert(data);
+                          
+                               $('.data_table').html("");
+                                        $('.data_table').html(data);
+                                
+    
+
+  
+  }
+})
+}
+          else
+          {
+            location.reload(true);
+          }
+})
+  });
+</script> 
+
+
+
+
+ <script>
+    $('.select_option').click(function() {
+      $('.status_table').html(" ")
+  
+      var option = $('option:selected', this).attr('value');
+
+       // alert(option)
+
+    //    if(option==="all")
+    //    {
+        
+    // // setTimeout(60000);
+    //  location.reload(true)
+    //     }
+       
+      //  var checkstr =  confirm('Are You Sure You Want To Active?');
+      $.ajax({
+                        type : 'POST',
+                        url  : '/show-client-by-status',
+                        data: {option_value:option},
+              
+                         success: function(client_data) {
+  
+  
+                       if(client_data.length==0)
+                        {
+  
+                               $(".data_table").hide();
+  
+                                      $(".status_table").append(`<tr>
+						<td colspan="8"><center>No record found.</center> </td>
+					   </tr>`);
+  
+                        }
+                      else{
+                        
+  
+                      console.log("ajax success data : ")	
+                      $('.data_table').hide();
+                    $(".status_table").show();
+                    client_data.forEach(function(each_data){
+                      
+                        
+                      $(".status_table").append(`  <tr>
+                   
+                   <td>
+                     <div>
+                       <p class="">UI-${each_data.user_id}</p>
+                     </div>
+                   </td>
+                   <td>
+                     <div> 
+                       <p class="upper">${each_data.full_name}</p>
+                     </div>
+                    </td>
+                    <td>
+                            <div> 
+                              <p class="upper">${each_data.email}</p>
+                            </div>
+                    </td>
+                    <!-- <td>
+                            <div> 
+                              <p class="upper">${each_data.mobile_number}</p>
+                            </div>
+                    </td> -->
+                    <td>
+                            <div> 
+                              <p class="upper">${each_data.dob}</p>
+                            </div>
+                             
+  
+                    </td>
+                    <td>
+                        <div> 
+                          <p class="upper">${each_data.birthplace}</p>
+                        </div>
+                       
+  
+                </td>
+                <td>
+                   
+                    <div> 
+                      <p class="upper">${each_data.status}</p>
+                    </div>
+                   
+  
+             </td>
+                <td>
+                   
+                    <div> 
+                      <p class="upper">${each_data.numReflect}</p>
+                    </div>
+                   
+  
+             </td>
+                     <td>
+                       <div class="dropdown-menu-new">
+                          <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v"></i>
+                          </a>
+                          <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                            <a class="dropdown-item" href="manage_request.php"><i class="fas fa-cogs"></i> Manage MyReflet ID</a>
+                            <!-- <a class="dropdown-item" href="#"><i class="mdi mdi-close-box"></i> Reject</a> -->
+                            <a class="dropdown-item" href="/delete/:${each_data.user_id}"><i class="mdi mdi-delete"></i> Delete</a>
+                            <a class="dropdown-item" href="/block-verifier/:${each_data.user_id}"><i class="mdi mdi-delete-forever"></i> Block</a>
+                          </div>
+                       </div>
+                     </td>
+                  </tr>`);
+  
+                      });
+  
+  
+            } 
+                }                                                    
+             
+  })
+  })
+   
+    
+  setTimeout(function() {
+    $('#success_message').fadeOut('fast');
+    }, 3000);
+    
+    setTimeout(function() {
+    $('#error_msg').fadeOut('fast');
+    }, 3000);
+             
+   </script>
+
+   
+

@@ -1,0 +1,48 @@
+
+
+<div class="input-group">
+    <%if(verifier_data[0].reflectid_by=="entity"){%>
+        <label>Verifier : <%=verifier_data[0].reflect_code%>-<%=verifier_data[0].entity_company_name%></label>
+    <%}else{%>  
+        <label>Verifier : <%=verifier_data[0].reflect_code%>-<%=verifier_data[0].rep_username%></label>
+    <%}%>      
+</div>
+<label for="">Category</label>
+<div class="input-group ">
+    <select onchange="get_sub_category(this.value)" class="form-control valid" name="my_reflet_for_req" data-rule-required="true" data-msg-required="Please select sub-category." aria-invalid="false">
+    
+        <option>Select Category</option>
+        <% if(categories.length>0){
+            for(var i=0;i<categories.length;i++){
+                %>
+        <option value="<%=categories[i].category_id%>-<%=no%>"><%=categories[i].category_name%></option>
+    
+        <%}}%>
+    
+    </select>
+</div>
+<div id="sub_category_data<%=no%>" ></div>
+<div id="category_docs<%=no%>"></div>
+<label>MyReflet Id</label>
+<div class="input-group hide_sub">
+    <select onchange="get_doc_from_myreflet(this.value)" class="form-control valid" name="my_reflet_for_req" data-rule-required="true" data-msg-required="Please select sub-category." aria-invalid="false">
+        <label>MyReflet Id</label>
+        <option>Select MyReflet Id</option>
+        <% if(myids.length>0){
+            for(var j=0;j<myids.length;j++){
+                %>
+                <%if(myids[j].user_as!='verifier'){if(myids[j].reflectid_by=="entity"){%>
+        <option value="<%=myids[j].reflect_id%>-<%=no%>"><%=myids[j].reflect_code%>-<%=myids[j].entity_company_name%></option>
+    <%}else{%>
+        <option value="<%=myids[j].reflect_id%>-<%=no%>"><%=myids[j].reflect_code%>-<%=myids[j].rep_username%></option>
+
+        <%}}}}%>
+    
+    </select>
+</div>
+<script>
+$(document).ready( function () {
+	
+	$('.hide_sub').hide();
+} );
+</script>

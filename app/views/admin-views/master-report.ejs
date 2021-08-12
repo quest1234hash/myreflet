@@ -1,0 +1,661 @@
+<%- include('header'); -%>
+
+<div>
+   <div class="main-bredcrum-box">
+        <nav aria-label="breadcrumb"> 
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            Report List
+          </li>
+        </ul>
+      </nav>
+    </div>
+	<div class="page-header">
+      <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+          <i class="mdi mdi-contacts"></i>
+        </span> Report List </h3>
+            <!-- <div>
+                <a href="#" class="btn btn-common bg-gradient-primary text-center m-0" data-target="#newReport" data-toggle="modal">Add Report</a>
+            </div> -->
+    </div>
+   
+  
+    <div class="row align-bottom-flex">
+    <div class="col-md-2">
+        <div>
+          <div class="form-group">
+              <a href="javascript:void(0);" onclick="export_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-export"></i>
+                   </span> 
+                 </span>
+               </a>
+              <a href="javascript:void(0);" onclick="print_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-printer"></i>
+                   </span> 
+                 </span>
+              </a>
+          </div>
+        </div>
+        
+      </div>
+    	<div class="col-md-2"> 
+    		<div>
+    			<!-- <div class="form-group">
+                    <label for="exampleInputUsername1">MyReflet ID</label>
+                    <select class="form-control form-control-sm" id="exampleFormControlSelect3">
+                        <option>All</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                  </div> -->
+    		</div>
+    	</div>
+    	<div class="col-md-3 offset-md-5">
+          <!-- <% if(err_msg!=undefined && err_msg !='' ){ %>
+            <div class="alert alert-danger text-center  flash_msg " id="error_msg">
+                <%= err_msg %>
+               </div>
+             
+            <% }%>
+             <% if(success_msg!=undefined && success_msg !='' ){ %>
+              <div class="alert alert-success text-center  flash_msg "id="success_message">
+              <%= success_msg %>
+             </div>
+            <% }%> -->
+    		<div>
+    			<div class="form-group">
+              
+                      <div class="input-group search-input">
+                        <input type="text" class="form-control" id="myInput"placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                          <button class="btn btn-sm" type="button"><i class=" mdi mdi-magnify"></i></button>
+                        </div>
+                      </div>
+                    </div>
+    		</div>
+    	</div>
+    </div>
+    <div class="row">
+    	<div class="col-md-12">
+    		<div class="table-responsive">
+          <% if(success_msg!=undefined && success_msg !='' ){ %>
+            <div class="alert alert-success text-center  flash_msg "id="success_message">
+            <%= success_msg %>
+           </div>
+          <% }%>
+          <div class="div_data">
+    			<table class="table tabel-virifier"id="myTable3">
+              <thead>
+                <tr>
+                  <th width="10%">Sr.No.</th>
+                  <th width="20%">Report Name</th>
+                  <th width="20%" class="">User Type</th>
+                  <th width="20%" class="">Status</th>
+                  <th width="20%">Created At</th>
+                  <!-- <th width="20%" class="hide_link">Action</th> -->
+
+                  <!-- <th width="5%">Updated At</th> -->
+                </tr>
+              </thead>
+              <tbody id="myTable">
+                    <% if(report_list.data.length>0)
+                    {
+                       var i=0;k=1;
+                       report_list.data.forEach(function(each_data){
+                          %>
+                <tr>
+                   <td>
+                     <div>
+                       <p class=""><%=k%>.</p>
+                     </div>
+                   </td>
+                   <td>
+                     <div> 
+                       <p class="upper"><%=each_data.report_name%></p>
+                     </div>
+                   </td>
+                   <td>
+                    <p class="upper"><%=each_data.user_type%></p>
+
+                   
+                   </td>
+                   <td class="">
+                      <% 
+                      if(each_data.status=="active"){ %>
+                        
+                        <button type="button" value="<%-each_data.report_id%>" id="inactivebut"  class="btn  mr-2 btn-success_1 acvtive-id ">Active </button>
+                            
+                    <%  }else{ %>
+                        
+                      <button type="button" value="<%-each_data.report_id%>" id="activebut"  class="btn  btn-danger mr-2 inacvtive-id " >Inactive</button>
+            
+                    <%  }
+                      %>
+                    
+                   </td>
+                    <td>
+                     <p><%=moment(each_data.createdAt).format('MMM DD, YYYY')%></p>
+                   </td>
+                  
+                
+                </tr>
+                <%
+								i++;			k++;
+            });
+               }
+           %>
+             
+              </tbody>
+          </table>
+          </div>
+        <!--   <table class="paginate_table">
+              <div class="pagination-list for-ava">
+            <% if (report_list.totalPages> 0) { %>
+              
+              <ul class="pagination text-center">
+                <% if (report_list.currentPage == 1) { %>
+                  <li class="disabled"><a>First &nbsp;</a></li>
+                <% } else { %>
+                  <li><a href="/security-questions-list?page=1">First</a></li>
+                <% } %>
+                <% var i = (Number(report_list.currentPage) > 5 ? Number(report_list.currentPage) - 4 : 1) %>
+                <% if (i !== 1) { %>
+                  <li class="disabled"><a>...</a></li>
+                <% } %>
+                <% for (; i <= (Number(report_list.currentPage) + 4) && i < report_list.totalPages; i++) { %>
+                  <% if (i == report_list.currentPage) { %>
+                    
+                    <li class="active"><a><%= i %></a></li>
+                  <% } else { %>
+                    <li><a href="/security-questions-list?page=<%= i %>"><%= i %></a></li>
+                  <% } %>
+                  <% if (i == Number(report_list.currentPage) + 4 && i <= report_list.totalPages) { %>
+                    <li class="disabled"><a>...</a></li>
+                  <% } %>
+                <% } %>
+                <% if (report_list.currentPage ==report_list.totalPages) { %>
+                  <li class="disabled"><a>Next</a></li>
+                <% } else { %>
+                  <li><a href="/security-questions-list?page=<%= report_list.totalPages %>"> &gt;Next</a></li>
+                <% } %>
+              </ul>
+            <% } %>
+              </div>
+
+      </table> -->
+    		</div>
+    	</div>
+    </div>
+</div>
+
+
+<!--ADD Modal -->
+<div class="modal fade" id="newReport" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+        <div class="profile-form">
+                      
+                         
+                    <form action="/add-report" method="post" class="validate">
+
+                     <div class="form-group">
+                        <label>Report Name</label>
+                        <input type="text" class="form-control" name="report_name" id=""data-rule-required="true" data-msg-required="Please enter report name.">
+                      </div>
+                        <div class="form-group">
+                         <select class="form-control "name="type">
+                                          <option  >Select Type</option>
+                                         
+                                          <option class="" value="client">Client</option>
+                                         <option   class="" value="verifier">Verifier</option>
+                                          <option  class="" value="both">Both</option>
+
+                                        </select>
+                      </div>
+                      <!-- <div class="form-group">
+                        <label>Plan Price</label>
+                        <input type="text" class="form-control" name="plan_price" id="plan_price"data-rule-required="true" data-rule-number=”true” data-msg-required="Please enter price".>
+                      </div> -->
+                      
+                     
+     
+                   
+                      <div class="popup-btn text-center">
+                        <button class="btn btn-common bg-gradient-primary ">Save</button>
+                       
+                        <a href="/master-report" class="btn btn-common bg-gradient-primary ">Cancel</a>
+                      </div>
+                  
+                 </form> 
+               </div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+<!--EDIT Modal -->
+<% if(report_list.data.length>0)
+{
+   var i=0;
+   report_list.data.forEach(function(each_data){
+      %>
+<div class="modal fade" id="editQuestion<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+  
+          <div class="profile-form">
+                        
+                           
+                      <form action="/edit-report" method="post" id="validate1">
+  
+                       <div class="form-group">
+                          <label>Report Name</label>
+                          <input type="text" class="form-control"value="<%=each_data.report_name%>" name="report_name" id=""data-rule-required="true" data-msg-required="Please enter report.">
+                        </div>
+                        <!-- <div class="form-group">
+                          <label>Plan Price</label>
+                          <input type="text" class="form-control"value="<%=each_data.plan_price %>" name="plan_price" id="plan_price"data-rule-number=”true” data-rule-required="true" data-msg-required="Please enter price".>
+                        </div> -->
+                        
+                        <input type="hidden" class="form-control"value="<%=each_data.report_id%>" name="report_id" id="">
+
+       
+                     
+                          <div class="popup-btn text-center">
+                          <button class="btn btn-common bg-gradient-primary check ">Save</button>
+                         
+                          <a href="/master-report" class="btn btn-common bg-gradient-primary ">Cancel</a>
+                        </div>
+                    
+                   </form> 
+                 </div>
+  
+  
+  
+   
+        </div>
+      </div>
+    </div>
+  </div>
+  <%
+								i++;			
+            });
+               }
+           %>
+
+
+<%- include('footer'); -%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script>
+
+
+    function export_table(){
+        // alert('hhh')
+      // $('.hide_link').show();
+    
+        $("#myTable3").table2excel({
+          filename: "Security-question-list.xls",
+          exclude:'.hide_link',
+        });
+      //   $('.hide_link').show();
+      window.location.reload(true);
+    
+      };
+      
+      function print_table(){
+        $('.hide_link').hide();
+     
+     // $("#user_div").print();
+     var restorepage = $('body').html();
+  // $('.nodata').hide();
+   var printcontent = $('#myTable3').clone();
+   $('body').empty().html(printcontent);
+   window.print();
+   $('body').html(restorepage);
+ 
+   window.location.reload(true);
+  
+  
+    
+        }   
+   </script>
+<script type="text/javascript">
+
+// $('.d1').on('click', '.menu-for-id a', function() {
+
+	//    $('.d2').$(this).val(); 
+
+	// //   var lastID = $(this).html();
+	//    plan_status = $(this).find(".change_status").attr("value");
+	// 	// console.log("text", lastID); 
+
+
+  //  });
+//  $('.active_change').click(()=>{
+//   var plan_status= $('.change_status').val()
+//   var plan_id= $('.plan_id_1').val()
+
+//   alert(plan_status)
+//   alert(plan_id)
+
+//   $.ajax({
+// 			type: "post",
+// 			url: "/status-submit",
+// 			data:{plan_is:plan_id,plan_status:plan_status},
+// 			success: function (data) {
+				
+// 				location.reload();
+
+			
+// 			}
+// 		});
+//  })
+
+  $('.validate').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#submit_signup').attr('disabled',true);
+        form.submit();
+      }
+     });
+     $('#validate1').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#submit_signup').attr('disabled',true);
+        form.submit();
+      }
+     });
+ 
+     setTimeout(function() {
+    $('#success_message').fadeOut('fast');
+    }, 3000);
+    
+    setTimeout(function() {
+    $('#error_msg').fadeOut('fast');
+    }, 3000);
+  </script>
+
+<!-- <script>
+function switchUserType(value){
+
+var value1 = $(".switch_user").val();
+alert(value1)
+var plan_status;
+  // alert($("#switch_user").val())
+if(value1=="on"){
+  plan_status='active';
+  $(".switch_user").val("off");
+  $(".change").text("active");
+
+
+}
+if(value1=="off"){
+  plan_status='inactive';
+
+  $(".switch_user").val("on");
+  $(".change").text("inactive");
+
+}
+alert(plan_status)
+$.ajax({
+            type: "post",
+            url: "/change-plan-status",
+            data: { plan_status : plan_status},
+            success: function(data){
+            alert('ver')
+
+            //   $('#div_sidebar').html("");
+            // $('#div_sidebar').html(``);
+            location.reload()
+            }
+    });
+}
+
+
+
+</script> -->
+<script type="text/javascript">
+  
+  // function activestatuschnage(){
+    // alert($(this).find("button").val("value"))
+    $(".acvtive-id").click(function(evnt){
+         
+         var id = $(this).attr("value");
+    //       alert('active')
+    // // var id =$("#activebut").val()
+    // alert(id);
+     var checkstr =  confirm('Are You Sure You Want To Inactive?');
+       if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-report",
+                       data: { report_id: id,
+                         status:"inactive" },
+                       success:function(resp)
+                       {
+                        // alert('t')
+
+                        // alert(id);
+                       
+                         // $('#pro_img').hide();  
+                         // $('#inactivebut').hide(); 
+                         // $('#activebut').show(); 
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ 
+ 
+  
+  // function inactivestatuschnage(obj1){
+             // alert(obj1)
+             $(".inacvtive-id").click(function(evnt){
+         
+             var id = $(this).attr("value");
+            //  alert(id)
+            //  alert('inactive')
+             //  console.log($(".abc").find("button"))
+            // var preview_div=$(this).parent(".inabc").parent().attr('id');
+            //  var image_name = $(this).parent(".inabc").find('input').attr('value');
+    
+     
+     //var id =$("#inactivebut").val()
+          //alert("Are You Sure You Want To inctive");
+          var checkstr =  confirm('Are You Sure You Want To Active?');
+          if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-report",
+                       data: { report_id:id,
+                         status:"active" },
+                       success:function(resp)
+                       {
+                        //  alert(id);
+                         // alert(status);
+                         // $('#pro_img').hide(); 
+                         // $('#activebut').hide();  
+                         // $('#inactivebut').show(); 
+                        
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ </script>
+  <script>
+        $(document).ready(function(){
+          $("#myInput1").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+        });
+        </script>
+<script type="text/javascript">
+
+    $(".client-id").click(function(evnt){
+         var id = $(this).attr("value");
+         // alert('client'+id)
+
+         
+     var checkstr =  confirm('Are You Sure You Want To update user type client?');
+       if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-report-user_type",
+                       data: { report_id: id,
+                         user_type:"client" },
+                       success:function(resp)
+                       {
+                        // alert(resp)
+                         location.reload();
+
+                   
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+    $(".verifier-id").click(function(evnt){
+
+         var id = $(this).attr("value");
+         // alert('verifier'+id)
+
+   
+     var checkstr =  confirm('Are You Sure You Want To update user type verifier?');
+       if(checkstr == true){
+                 // alert('verifier'+id)
+
+            $.ajax({
+
+                       type : "POST",
+                       url  : "/change-status-report-user_type",
+                       data: { report_id: id,
+                         user_type:"verifier" },
+                       success:function(resp)
+                       {
+                                               // alert(resp)
+
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   }) 
+     $(".both-id").click(function(evnt){
+                  // alert('both')
+
+         var id = $(this).attr("value");
+
+         // alert(id)sssss
+
+     var checkstr =  confirm('Are You Sure You Want To update user type both?');
+       if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change-status-report-user_type",
+                       data: { report_id: id,
+                         user_type:"both" },
+                       success:function(resp)
+                       {
+                                                // alert(resp)
+
+                       
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+</script>
+
+<script>
+  $(document).ready(function(){
+
+        $("#myInput").on("keyup", function() {
+
+                var value = $(this).val().toLowerCase();
+                // alert(value)
+                   if(value)
+                   {
+                           
+                      $.ajax({
+                          type: "post",
+                          url: "/search-master-report",
+                          data:{query:value},
+                          success: function (data) {
+                            // alert(data);
+                            
+                              $('.div_data').html("");
+                              $('.div_data').html(data);
+                      
+                
+            
+              
+              }
+            })
+     }
+                else
+                {
+                  location.reload(true);
+                }
+      })
+})
+ </script>

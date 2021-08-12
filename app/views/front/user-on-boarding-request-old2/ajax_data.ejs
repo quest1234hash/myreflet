@@ -1,0 +1,73 @@
+<div class="personal-info-heading">
+                    <div class="row align-item-center">
+                        <div class="col-md-8">
+                            <h4 id="p_n_s_cat" class="purple-heading"></h4>
+                        </div>
+                    </div>
+                </div>
+<div  class="table-bdr-wrapper">
+    <div class="personal-info-box for-download-view-table table-responsive table-another-wrapper">
+                        <table class="table" id="myTable">
+                            <thead>
+                                <tr>
+                                    <th>Document Name</th>
+                                    <th>Self Certify</th>
+                                    <th>Certify</th>
+                                    <th>Sign</th>
+                                    <th>Complete</th>
+                                    <th><div class="tooltip fade" data-title="Record your video so that we can do the identity verification">
+                                        Video Proof
+                                        <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+                                    </div></th>
+                                </tr>
+                            <thead>
+                            <tbody>
+                                <tr>
+                                    <input type="hidden" id="man_doc_id" value="<%=final_doc[0].manage_doc_id%>">
+                                    <td><%=final_doc[0].document_name%></td>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" value="yes" id="self_certify" name="self_certify">
+                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                   
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" value="yes" id="certify" name="certify">
+                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" value="yes" id="sign" name="sign">
+                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" value="yes" id="complete" name="complete">
+                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" value="yes" id="video_proof" name="video_proof">
+                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+    </div>
+</div>

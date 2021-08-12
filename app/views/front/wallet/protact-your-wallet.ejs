@@ -1,0 +1,59 @@
+<%-include('../innerHeader')%>
+
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/createidentity-assets/protect.png">
+					<h4>Protect Your Wallet</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="setup-id-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="white-box">
+					<div class="row">
+						<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+							<div class="setup-inner-box for-protact">
+								<p>My Reflet protects your wallet and Ethereum address with a private key. You must remember this private key to unlock the wallet. It cannot be restored or reset. As My Reflet is not storing it so we cannot help you to recover the private key when lost.</p>
+
+								<div>
+									<a class="btn-common-new hide_btn"  href="/backup-private-key" onclick="click_loader()">I understand, there is no way to recover this Private key.</a>
+						            <span class="loader"><img src="../assets/images/loader-3.gif"height="42" width="62"></span>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+<%- include('../innerFooter')%>
+<script>
+		$(document).ready( function () {
+
+					$('.loader').hide();
+
+         })
+	function click_loader(){
+
+		$('.hide_btn').hide();
+
+		$('.loader').show();
+	}
+</script>
+
+
+ 

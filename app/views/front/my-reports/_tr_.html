@@ -1,0 +1,35 @@
+<tr> 
+    <%if(column_name_array.includes('complain_id')){%>
+        <th width="15%" scope="col">Complain Id</th>
+       <%}
+       if(user_type==='verifier'){
+        if(column_name_array.includes('verifier')){%> 
+            <th width="15%" scope="col">Client Code</th>
+            <%}
+        }
+        else
+        {
+            if(column_name_array.includes('verifier')){%> 
+                <th width="15%" scope="col">MyReflect Code</th>
+                <%}
+         }
+        }%>
+     
+       if(column_name_array.includes('complaint_message')){%> 
+        <th width="20%" scope="col">Complain Messsage</th>
+        <%}
+        if(user_type==='verifier'){%>
+            if(column_name_array.includes('verifier')){%> 
+                <th width="15%" scope="col">MyReflect Code</th>
+                <%}
+            }else
+            {
+                if(column_name_array.includes('reflect_code')){%> 
+                    <th width="15%" scope="col">MyReflect Code</th>
+                    <%}
+             }
+            }
+       if(column_name_array.includes('status')){%> 
+        <th width="10%" scope="col">Status</th>
+        <%}%>
+</tr>

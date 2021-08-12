@@ -1,0 +1,675 @@
+<%- include('./header'); -%>
+
+<div>
+   <div class="main-bredcrum-box">
+        <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            Accreditation Level
+          </li>
+        </ul>
+      </nav>
+    </div>
+	<div class="page-header">
+      <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+          <i class="mdi mdi-contacts"></i>
+        </span>Accreditation Level List</h3>
+            <div>
+                <a href="#" class="btn btn-common bg-gradient-primary text-center m-0" data-target="#allocate" data-toggle="modal">Allot Accreditation Level</a>
+            </div>
+    </div>
+    
+   
+    <div class="row align-bottom-flex">
+    <div class="col-md-2">
+        <div>
+          <div class="form-group">
+              <a href="javascript:void(0);" onclick="export_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-export"></i>
+                   </span> 
+                 </span>
+               </a>
+              <a href="javascript:void(0);" onclick="print_table();">
+                <span class="page-title">
+                   <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                     <i class="mdi mdi-printer"></i>
+                   </span> 
+                 </span>
+              </a>
+          </div>
+        </div>
+        
+      </div>
+    	
+    	<div class="col-md-2"> 
+    		<div>
+    			<!-- <div class="form-group">
+                    <label for="exampleInputUsername1">MyReflet ID</label>
+                    <select class="form-control form-control-sm" id="exampleFormControlSelect3">
+                        <option>All</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                  </div> -->
+    		</div>
+    	</div>
+    	<div class="col-md-3 offset-md-5">
+          <% if(err_msg!=undefined && err_msg !='' ){ %>
+            <div class="alert alert-danger text-center  flash_msg " id="error_msg">
+                <%= err_msg %>
+               </div>
+             
+            <% }%>
+          
+    		<div>
+    			<div class="form-group">
+              
+                      <div class="input-group search-input">
+                        <input type="text" class="form-control"id="myInput" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                          <button class="btn btn-sm" type="button"><i class=" mdi mdi-magnify"></i></button>
+                        </div>
+                      </div>
+                    </div>
+    		</div>
+    	</div>
+    </div>
+    <div class="row">
+    	<div class="col-md-12">
+    		<div class="table-responsive">
+          <% if(success_msg!=undefined && success_msg !='' ){ %>
+            <div class="alert alert-success text-center  flash_msg "id="success_message">
+            <%= success_msg %>
+           </div>
+          <% }%>
+          <table class="table tabel-virifier"id="myTable3">
+            <thead>
+              <tr>
+                <!-- <th width="15%">Document id</th> -->
+                <th width="20%">Accreditation Level</th>
+                <th width="20%"class="">Status</th>
+                <th width="20%">Created At</th>
+                <th width="20%"class="hide_link">Action</th>
+
+                <!-- <th width="5%">Updated At</th> -->
+              </tr>
+            </thead>
+            <tbody id="myTable">
+                  <% if(acc_data.length>0)
+                  {
+                     var i=0;
+                     acc_data.forEach(function(each_data){
+                        %>
+              <tr>
+                 
+                 <td>
+                   <div> 
+                     <p class="upper"><%=each_data.accreditation_level%></p>
+                   </div>
+                   
+                 </td>
+                 <td class="">
+                    <% 
+                    if(each_data.acc_rel_status=="active"){ %>
+                      
+                      <button type="button" value="<%-each_data.acc_rel_id%>" id="inactivebut"  class="btn  mr-2 btn-success_1 acvtive-id ">Active </button>
+                          
+                  <%  }else{ %>
+                      
+                    <button type="button" value="<%-each_data.acc_rel_id%>" id="activebut"  class="btn  btn-danger mr-2 inacvtive-id " >Inactive</button>
+          
+                  <%  }
+                    %>
+                  <!-- <div class="switch-option">
+                     <div class="inner-div ">
+                        <label class="switch ">
+                          <input type="checkbox"class="switch_user"  onchange="switchUserType(value)"> 
+                         
+                          <span class="slider round"></span>
+                        </label> 
+                     </div> 
+                  </div> -->
+  
+                 <!-- <p class="change"><%=each_data.status%></p> -->
+                 </td>
+                  <td>
+                   <p><%=moment(each_data.createdAt).format('MMM DD, YYYY')%></p>
+                 </td>
+                <td>
+                  <ul>
+        <%var j=0;acc_features.forEach(f_each_data=>{%>
+                      
+            <%if(each_data.acc_type==f_each_data.acc_type){%>
+
+                <%if(f_each_data.acc_rel_id){%>
+                    <li>
+                      <div class="for-flex-align">
+                        <div class="checkbox" >
+                            <label>
+                              <input type="checkbox" name="acc_feature_id" id='featureId<%=j%>' checked  onclick="saveFeatureRel('<%=j%>')" value="<%=f_each_data.acc_f_id%>-<%=each_data.accreditation_id%>">
+                              <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                              <span class="font-w-600 upper"><%=f_each_data.acc_feature%></span> 
+                            </label>
+                        </div>
+                      </div>
+                    </li>
+                 <%}else{%>
+                  <li>
+                    <div class="for-flex-align">
+                      <div class="checkbox" >
+                          <label>
+                            <input type="checkbox" name="acc_feature_id" id='featureId<%=j%>'  onclick="saveFeatureRel('<%=j%>')" value="<%=f_each_data.acc_f_id%>-<%=each_data.accreditation_id%>">
+                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                            <span class="font-w-600 upper"><%=f_each_data.acc_feature%></span> 
+                          </label>
+                      </div>
+                    </div>
+                  </li>
+                  <%}%>
+           <%}%>
+     <%j++;})%>
+                  
+                  </ul>
+                </td>
+                 
+              </tr>
+              
+              <%
+                              i++;			
+          });
+             }
+         %>
+           
+            </tbody>
+        </table>
+         
+    		</div>
+    	</div>
+    </div>
+</div>
+
+
+<!--ADD Modal -->
+<!-- <div class="modal fade" id="newPlan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+        <div class="profile-form">
+                      
+                         
+                    <form action="/add-plan" method="post" class="validate">
+
+                     <div class="form-group">
+                        <label>Plan Name</label>
+                        <input type="text" class="form-control" name="plan_name" id="plan_name"data-rule-required="true" data-msg-required="Please enter plan name.">
+                      </div>
+                      <div class="form-group">
+                        <label>Plan Price</label>
+                        <input type="text" class="form-control" name="plan_price" id="plan_price"data-rule-required="true" data-rule-number=”true” data-msg-required="Please enter price".>
+                      </div>
+                      
+                     
+     
+                   
+                      <div class="popup-btn text-center">
+                        <button class="btn btn-common bg-gradient-primary ">Save</button>
+                       
+                        <a href="/plan-list" class="btn btn-common bg-gradient-primary ">Cancel</a>
+                      </div>
+                  
+                 </form> 
+               </div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+</div> -->
+<!--EDIT Modal -->
+
+<!--Allocate Modal S-->
+<div class="modal field-edit-modal" id="allocate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+			<div class="alert alert-success text-center  flash_msg " id="success_div">
+				Accreditaion levels are allocated successfully.
+			 </div>
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<div>
+						<img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+					</div>
+				</div>
+				<div class="col-xl-10 col-lg-9 col-md-9">
+					<h5 class="heading-purple">Allot Accreditaion Levels</h5>
+				</div>
+			</div>
+			<div class="row m-top-30">
+				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					<div class="setup-inner-box for-protact pt-15">
+						<div class="create-rflet-id-form">
+						    <div class="form-group for-select-existing-doc">
+						    	<div class="input-group">
+								  <div class="dropdown keep-inside-clicks-open">
+									  <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									    Select Accreditaion Levels
+									  </button>
+									  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+										  <%if(acc_levels.length>0){%>
+										  <%acc_levels.forEach(levels=>{%>
+
+									
+									     <div class="for-doc-select">
+									    	<div class="checkbox"> 	
+									          <label>
+												<%=levels.accreditation_level%>
+									            <input type="checkbox" value="<%=levels.accreditation_id%>" name="acc_id">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									          </label>
+									        </div>	
+										 </div>
+										 <% })%>
+										 <%}%>
+									      <!-- <div class="for-doc-select">
+									    	<div class="checkbox"> 	
+									          <label>
+									          	Jess Bezo's - 258963
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									          </label>
+									        </div>	
+									     </div> -->
+									  </div>
+									</div>
+								  
+								</div>
+						    </div>
+						</div>
+						<div >
+                            <input type="hidden" value="<%=reflect_id%>" id="reflect_id" >
+							<button type="button" class="btn-common-new" onclick='alllotClient()'>Submit</button>
+							<!-- <a class="btn-common-new" href="javascript:">Submit</a> -->
+							<a class="btn-common-new" href="" data-dismiss="modal">Cancel</a>
+						</div>
+					</div>
+				</div>
+			 </div>
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+<!--Allocate Modal E-->
+
+
+<%- include('./footer'); -%>
+<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css"> -->
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css"> -->
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+<script>
+  $(document).ready( function () {
+	// $('.table').DataTable();
+  $("#success_div").hide()
+  // $('input[type="checkbox"]').click(function(){
+  //           if($(this).is(":checked")){
+  //               console.log("Checkbox is checked.");
+  //           }
+  //           else if($(this).is(":not(:checked)")){
+  //               console.log("Checkbox is unchecked.");
+  //           }
+  //       });
+
+} );
+</script>
+
+<script>
+
+
+    function export_table(){
+        // alert('hhh')
+      // $('.hide_link').show();
+    
+        $("#myTable3").table2excel({
+          filename: "Plan-list.xls",
+          exclude:'.hide_link',
+        });
+      //   $('.hide_link').show();
+      window.location.reload(true);
+    
+      };
+      
+      function print_table(){
+        $('.hide_link').hide();
+     
+       // $("#user_div").print();
+       var divToPrint=document.getElementById("myTable3");
+       newWin= window.open("");
+       newWin.document.write(divToPrint.outerHTML);
+       window.location.reload(true);
+    
+       newWin.print();
+       newWin.close();
+    
+        }   
+   </script>
+<script type="text/javascript">
+var plan_status;
+  // $('.d1').on('click', '.menu-for-id a', function() {
+
+	//    $('.d2').$(this).val(); 
+
+	// //   var lastID = $(this).html();
+	//    plan_status = $(this).find(".change_status").attr("value");
+	// 	// console.log("text", lastID); 
+
+
+  //  });
+ $('.active_change').click(()=>{
+  var plan_status= $('.change_status').val()
+  var plan_id= $('.plan_id_1').val()
+
+  alert(plan_status)
+  alert(plan_id)
+
+  $.ajax({
+			type: "post",
+			url: "/status-submit",
+			data:{plan_is:plan_id,plan_status:plan_status},
+			success: function (data) {
+				
+				location.reload();
+
+			
+			}
+		});
+ })
+
+  $('.validate').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#submit_signup').attr('disabled',true);
+        form.submit();
+      }
+     });
+     $('#validate1').validate({
+     onfocusout: function(element) {
+     this.element(element);
+     },
+     errorClass: 'error_validate',
+     errorElement:'span',
+     highlight: function(element, errorClass) {
+     $(element).removeClass(errorClass);
+     },
+     submitHandler:function(form)
+      {
+        $('#submit_signup').attr('disabled',true);
+        form.submit();
+      }
+     });
+ 
+     setTimeout(function() {
+    $('#success_message').fadeOut('fast');
+    }, 3000);
+    
+    setTimeout(function() {
+    $('#error_msg').fadeOut('fast');
+    }, 3000);
+  </script>
+
+<!-- <script>
+function switchUserType(value){
+
+var value1 = $(".switch_user").val();
+alert(value1)
+var plan_status;
+  // alert($("#switch_user").val())
+if(value1=="on"){
+  plan_status='active';
+  $(".switch_user").val("off");
+  $(".change").text("active");
+
+
+}
+if(value1=="off"){
+  plan_status='inactive';
+
+  $(".switch_user").val("on");
+  $(".change").text("inactive");
+
+}
+alert(plan_status)
+$.ajax({
+            type: "post",
+            url: "/change-plan-status",
+            data: { plan_status : plan_status},
+            success: function(data){
+            alert('ver')
+
+            //   $('#div_sidebar').html("");
+            // $('#div_sidebar').html(``);
+            location.reload()
+            }
+    });
+}
+
+
+
+</script> -->
+<script type="text/javascript">
+  
+  // function activestatuschnage(){
+    // alert($(this).find("button").val("value"))
+    $(".acvtive-id").click(function(evnt){
+         
+         var id = $(this).attr("value");
+    //       alert('active')
+    // // var id =$("#activebut").val()
+    // alert(id);
+    var reflect_id=  $('#reflect_id').val()
+     var checkstr =  confirm('Are You Sure You Want To Inactive?');
+       if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change_status_acc_level",
+                       data: { acc_rel_id: id,
+                         status:"inactive" ,
+                         reflect_id:reflect_id},
+                       success:function(resp)
+                       {
+                        // alert('t')
+
+                        // alert(id);
+                       
+                         // $('#pro_img').hide();  
+                         // $('#inactivebut').hide(); 
+                         // $('#activebut').show(); 
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ 
+ 
+  
+  // function inactivestatuschnage(obj1){
+             // alert(obj1)
+             $(".inacvtive-id").click(function(evnt){
+         
+             var id = $(this).attr("value");
+            //  alert(id)
+            //  alert('inactive')
+             //  console.log($(".abc").find("button"))
+            // var preview_div=$(this).parent(".inabc").parent().attr('id');
+            //  var image_name = $(this).parent(".inabc").find('input').attr('value');
+    
+     
+     //var id =$("#inactivebut").val()
+          //alert("Are You Sure You Want To inctive");
+          var reflect_id=  $('#reflect_id').val()
+          var checkstr =  confirm('Are You Sure You Want To Active?');
+          if(checkstr == true){
+            $.ajax({
+                       type : "POST",
+                       url  : "/change_status_acc_level",
+                       data: { acc_rel_id:id,
+                         status:"active",
+                         reflect_id:reflect_id },
+                       success:function(resp)
+                       {
+                        //  alert(id);
+                         // alert(status);
+                         // $('#pro_img').hide(); 
+                         // $('#activebut').hide();  
+                         // $('#inactivebut').show(); 
+                        
+                         location.reload();
+                         
+                       }           
+             });
+       }else{
+       return false;
+       }
+   })
+ </script>
+  <script>
+      $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $("#myTable tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        });
+      });
+      </script>
+<!-- <script>
+$('.check').click(function() {
+
+  var plan_id= $(".plan_id").html()
+  var plan_name= $('.plan_name').html()
+  var plan_price= $(".plan_price").html()
+
+	// if(plan_name==''&& plan_price=='')
+	// {
+	// 	window.location.reload(true);
+  //   false;
+	// }
+
+  alert(plan_name)
+  alert(plan_price)
+  alert(plan_id)
+
+	       
+})
+                
+
+</script> -->
+
+<script>
+	function alllotClient(){
+		var acc_ids = [];
+		$.each($("input[name='acc_id']:checked"), function(){
+			acc_ids.push($(this).val());
+            });
+            // var reflect_ids = [];
+            // reflect_ids[0]=  $('#reflect_id').val()
+		
+		// $.each($("input[name='reflect_id']:checked"), function(){
+		// 	reflect_ids.push($(this).val());
+		// 	});
+    var reflect_id=  $('#reflect_id').val()
+			console.log("acc_ids",acc_ids)
+			console.log("reflect_id",reflect_id)
+			$.ajax({
+                      type : 'POST',
+                      url  : '/indi_submit_acc_to_user',
+					  data: {
+              // reflect_ids:JSON.stringify(reflect_ids),
+              acc_ids:JSON.stringify(acc_ids),
+              reflect_id:reflect_id
+					        },
+					  
+						success: function(data) {
+							window.location=window.location.origin+'/view_acc_level/?reflect_id='+reflect_id
+              //                   $("#success_div").show()
+							// // window.location.reload(true);
+							// setTimeout(function(){
+							// 	// window.href.location
+              //                   $("#success_div").hide()
+              //                  $('#allocate').modal('toggle');
+							// },3000)
+							
+						}
+			})
+        
+
+	}
+</script>
+<script>
+  function saveFeatureRel(value){
+    var test =$(`#featureId${value}`).val()
+     var array =test.split('-')
+     var featureid=array[0]
+     var acc_id=array[1]
+     var reflectid ='<%=reflect_id%>'
+    //  alert(array[0])
+    //  alert(array[1])
+    //  alert('<%=reflect_id%>')
+     var checkOrNot ;
+    if ($(`#featureId${value}`).is( 
+                      ":checked")) { 
+                        checkOrNot="yes"
+                        alert("Check box in Checked"); 
+                    } else { 
+                      checkOrNot="no"
+                        alert("Check box is Unchecked"); 
+                    }
+     $.ajax({
+                      type : 'POST',
+                      url  : '/submit_acc_feature_rel',
+					           data: {
+                           reflectid:reflectid,
+                           acc_id:acc_id,
+                           featureid:featureid,
+                           checkOrNot:checkOrNot
+					                },
+					  
+						success: function(data) {
+              console.log("data save")
+            }
+						 
+			})
+                    
+  }
+</script>

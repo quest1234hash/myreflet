@@ -1,0 +1,62 @@
+  <table class="table tabel-virifier"id="myTable3">
+              <thead> 
+                <tr>
+                   <th>No.</th>
+                   <th>Company Name</th>
+                  <th>Type</th>
+                  <th class="hide_link">View Documents</th>
+
+                </tr>
+              </thead>
+              <tbody id="myTable" >
+                  <% if(count_verifier_list.length>0)
+                  { 
+                     var i=0;
+                     var j=1;
+                     count_verifier_list.forEach(function(each_data){
+                        %>
+              <tr>
+                 
+                 <td>
+                   <div>
+                     <p class=""><%=j%>.</p>
+                   </div>
+                 </td>
+                 <td>
+                   <div> 
+                     <p class="upper">
+                           <%if(each_data.entity_company_name){%>
+                                    <span class="font-w-600"> <%=each_data.entity_company_name%> </span>
+                                    <br><%=each_data.reflect_code%>
+                                <%}else{%>
+                                    <span class="font-w-600"> <%=each_data.reflect_code%></span>
+                                   
+                                <%}%>
+                    </p>
+                   </div>
+                  </td>
+                              
+                   <td>
+                          <div> 
+                            <p class="upper"><%=each_data.user_as%></p>
+                          </div>
+                   </td>
+
+
+                 
+                  
+                 
+              <td><a class="dropdown-item hide_link" href="/entity-client-verifier-report-view?reflect_id=<%=each_data.reflect_id%>&user_as=<%=each_data.user_as%>"><i class="fas fa-eye"></i></a></td>
+             
+                </tr>
+                <%
+                i++;  j++;    
+            });
+                }else{
+     %>
+                       <tr>
+            <td colspan="6"><center>No record found.</center> </td>
+             </tr>       <%}%>
+              </tbody>
+              <tbody class="status_table"></tbody>
+            </table>

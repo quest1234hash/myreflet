@@ -1,0 +1,97 @@
+<table class="table tabel-virifier"id="myTable3">
+                  <thead>
+                    <tr>
+                       <th width="5%">Sr.No.</th>
+                       <th width="5%">Wallet Id</th>
+                       <th width="15%">Wallet Address</th>
+    <!--                    <th width="15%">Reflet ID</th>
+     -->                  <th width="20%">User As</th>
+                     <!--  <th width="15%">Status</th> -->
+                          <th width="20%">Created At</th>
+
+    <!--                   <th width="5%"class="hide_link">Action</th>
+     -->                </tr>
+                  </thead>
+                  <tbody id="myTable" >
+                      <% if(wallet_list.length>0)
+                      { 
+                         var i=0;
+                         var j=1;k=1;
+                         wallet_list.forEach(function(each_data){
+                            %>
+                  <tr>
+                      <td>
+                       <div>
+                         <p class=""><%=k%>.</p>
+                       </div>
+                     </td>
+                     <td>
+                       <div>
+                         <p class="">WI-<%=each_data.wallet_id%></p>
+                       </div>
+                     </td>
+                     <td>
+                       <div> 
+                         <p class="upper"><%=each_data.wallet_address%></p>
+                       </div>
+                      </td>
+                     <!--  <td>
+                        <div> 
+             
+                                       <%if(each_data.rep_firstname){%>
+                                            <p class="upper"><%=each_data.rep_firstname%></p>
+                                            
+                                    <%}else if(each_data.entity_company_name){%>
+                                         <p class="upper"><%=each_data.entity_company_name%></p>
+
+                                    <%}else{%>
+                                     <p class="upper"><%=each_data.full_name%></p>
+                                      
+                                    <%}%>
+                                                     
+                           <p class="upper"><%=each_data.reflect_code%></p>
+                         </div>
+                       </td> -->
+                      <td>
+                              <div> 
+                                <p class="upper"><%=each_data.user_as%></p>
+                              </div>
+                      </td>
+
+            
+                     
+              <!--     <div> 
+                    <p class="upper"><%=each_data.status%></p>
+                  </div>
+                  -->
+                                    <td>
+                                                   
+                               <p class=""><%=moment(each_data.sub_createdAt).format('MMM DD, YYYY')%>
+                                    </p>
+               
+           </td>
+    <!--                    <td class="hide_link">
+     -->                     <!-- <div class="dropdown-menu-new">
+                            <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                              <i class="fas fa-ellipsis-v"></i>
+                            </a>
+                            <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                              <a class="dropdown-item" href="#"><i class="fas fa-cogs"></i> Manage MyReflet ID</a> -->
+                              <!-- <a class="dropdown-item" href="#"><i class="mdi mdi-close-box"></i> Reject</a> -->
+                              <!-- <a class="dropdown-item" href="#"><i class="mdi mdi-delete"></i> Delete</a>
+                              <a class="dropdown-item" href="#"><i class="mdi mdi-delete-forever"></i> Block</a>
+                            </div>
+                         </div> -->
+                         <!-- --
+                       </td> -->
+                    </tr>
+                    <%
+                    i++;  j++;    k++;
+                });
+                  }else{
+         %>
+                           <tr>
+                <td colspan="5"><center>No record found.</center> </td>
+                 </tr>       <%}%>
+                  </tbody>
+                </table>

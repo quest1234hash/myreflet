@@ -1,0 +1,121 @@
+<%- include('header'); -%>
+
+   <div class="page-header">
+      <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+          <i class="mdi mdi-account-edit"></i>
+        </span> My Profile </h3>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+           <div class="card-body">
+             <div class="row">
+               <div class="col-md-10 m-auto">
+                 <div>
+
+                   <div class="profile-form">
+                      <% if(err_msg!=undefined && err_msg !='' ){ %>
+                        <div class="alert alert-danger text-center  flash_msg " id="error_msg">
+                            <%= err_msg %>
+                           </div>
+                         
+                        <% }%>
+                         <% if(success_msg!=undefined && success_msg !='' ){ %>
+                          <div class="alert alert-success text-center  flash_msg "id="success_message">
+                          <%= success_msg %>
+                         </div>
+                        <% }%>
+                    <form action="/admin-profile-post" method="POST" id="validate">
+
+                     <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" class="form-control"name="first_name"value="<%=admin.first_name%>">
+                      </div>
+                      <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" class="form-control" name="last_name"value="<%=admin.last_name%>">
+                      </div>
+                      <div class="form-group">
+                          <!-- <label>Profile image</label> -->
+                          <!-- <span class="btn common-btn btn-file1"> -->
+<!-- 
+                          <input type="hidden" class="form-control" readonly=""  name="text_img_name" id="text_img_name" data-rule-required="true" data-msg-required="Please select your Id.">
+
+                          <input type="file" id="imgInp6" value="<%=admin.profile_pic%>" name="image" accept="image/*" onchange="readURL(this);" value="">
+                        
+                        </div> -->
+                        <div class="form-group">
+                            <label>Profile  upload</label>
+                            <input type="file" name="img[]" class="file-upload-default">
+                            <div class="input-group col-xs-12">
+                                <input type="hidden" class="form-control" readonly=""  name="text_img_name" id="text_img_name" data-rule-required="true" data-msg-required="Please select your Id.">
+                                <span class="input-group-append">
+                                <button class="file-upload-browse btn btn-gradient-primary" type="button">Upload</button>
+                              </span>
+                            </div>
+                          </div>
+     
+                      <div class="form-group">
+                        <label>Email ID</label>
+                        <input type="email" class="form-control" value="<%=admin.email%>"name="email" readonly>
+                       </div>
+                      <div class="popup-btn text-center">
+                        <button class="btn btn-common bg-gradient-primary">Save</button>
+                       
+                        <a href="/admin-dashboard" class="btn btn-common bg-gradient-primary ">Cancel</a>
+                      </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div> 
+        </div>
+      </div>
+    </div>
+
+
+    <%- include('footer'); -%>
+    <script src="admin-assets/js/file-upload.js"></script>
+
+    <script>
+     $('.cancel').click(()=>
+     {
+       location.reload(true);
+     })
+    </script>
+    <script type="text/javascript" > 
+      function readURL(input) {
+      if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+      
+        // alert(e.target.result);
+      
+      $('#text_img_name').val(e.target.result);
+      
+      $('#user_profile_image_preview')
+      .attr('src', e.target.result)
+      .width(200)
+      .height(150);
+      };
+      
+       reader.readAsDataURL(input.files[0]);
+      
+       
+      
+        
+      
+      }
+      var src = $('#imgInp6').val(); // "static/images/banner/blue.jpg"
+      var tarr = src.split('/');      // ["static","images","banner","blue.jpg"]
+      var file = tarr[tarr.length-1]; // "blue.jpg"
+      var data = file.split('.')[0];  // "blue"
+      
+      //alert(data);
+        //$('#text_img_name').val(src);
+      }
+      
+      </script>
+      
+      

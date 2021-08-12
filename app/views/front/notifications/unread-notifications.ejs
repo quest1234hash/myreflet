@@ -1,0 +1,83 @@
+ <%
+  if(unread_notifications.length>0)
+  {
+ %>
+ <li class="scrollable-container media-list w-100 ps-container ps-theme-dark">
+  <%
+    unread_notifications.forEach(function(each_notification){
+
+  %>
+  <a href="javascript:void(0)">
+    <div class="media">
+      <div class="media-left align-self-center">
+<!--          <img src="../assets/images/other/face1.jpg">
+ -->
+       <% if(each_notification.profile_img_name!=''||each_notification.profile_img_name!=null){
+                               %>
+                           <img  src=<%= "/getprofileimage1/"+session.profile_pic %>>
+
+                            <%}else{%>
+                                 <img src="../assets/images/other/face1.jpg">
+                           <%} %>
+      </div>
+      <div class="media-body">
+        <p class="notification-text">
+          
+         <span>
+              <% if(each_notification.notification_type==1 && session.user_type=='verifier'){%>
+                                <a href="/request_on_boarding">
+                        <%- decrypt(each_notification.notification_msg) %>
+                    </a>
+                  <%}else if(each_notification.notification_type==2 && session.user_type=='client'){%>
+                                <a href="/myrequest">
+                       <%- each_notification.notification_msg %>
+                    </a>
+                 <%}else if(each_notification.notification_type==3 && session.user_type=='client'){%>
+                                     <a href="/myrequest">
+                       <%- decrypt(each_notification.notification_msg) %>
+                    </a>
+                 <%}else if(each_notification.notification_type==4){%>
+                                        <a href="/manage-message-list">
+                       <%- decrypt(each_notification.notification_msg) %>
+                        </a>
+                 <%}else if(each_notification.notification_type==5){%>
+                                      <a href="/complaint-list">
+                     <%- decrypt(each_notification.notification_msg) %>
+                      </a>
+                  <%}else if(each_notification.notification_type==7  && session.user_type=='client'){%>
+                                    <a href="/document-list">
+                      <%- decrypt(each_notification.notification_msg) %>
+                    </a>
+                               <%}else{ %> 
+                                       <%- decrypt(each_notification.notification_msg) %>
+                                <%} %>
+               
+         </span>
+                 </p>
+                 <p>
+                   <small>
+                    <time class="media-meta text-muted">
+                      <time class="timeago" datetime="<%= JSON.stringify(each_notification.notification_date) %>"> </time>
+                    </small>
+                 </p>
+      </div>
+       <!-- <div class="media-right">
+        
+       </div> -->
+    </div>
+   </a>
+   <%
+    });
+   %>
+</li>
+<%
+ }
+%>
+           <script src="/assets/js/timeago.min.js"></script>
+
+<script>
+  $(document).ready(function(){
+      $("time.timeago").timeago();
+
+            });
+            </script>

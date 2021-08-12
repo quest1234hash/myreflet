@@ -1,0 +1,282 @@
+<%-include('../innerHeader')%>
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/wallet/ether.png">
+					<h4>Send Ether</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="setup-id-sec" id="show_form">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="white-box">
+					<div class="row">
+						<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+							<div class="setup-inner-box for-protact">
+								<div class="create-rflet-id-form">
+
+						<form name="ether-form" id="ether-form" method="post" action="javascript:void(0);" >
+							         <div class="form-group">
+										<div id="message">
+											<div class="success_msg"></div>
+											<% if(err_msg!=undefined && err_msg !='' ){ %>
+												<div class="alert alert-danger text-center  flash_msg ">
+														<%= err_msg %>
+													 </div>
+											   
+												<% }%>
+											</div>
+											<div id="message">
+											   <% if(success_msg!=undefined && success_msg !='' ){ %>
+												  <div class="alert alert-success text-center  flash_msg ">
+													  
+													<%= success_msg %>
+												 </div>
+												<% }%>
+											</div>
+<!-- 									<span  id="insufficient_error" class="error_validate"></span>
+ -->								<span class="success_message_span success_span"style="color:red"></span>
+
+							         	<label>Receiver's Wallet Address</label>
+							         	<div class="input-group">
+										  <input type="text" class="form-control" placeholder="Receiver Wallet Address "id="receiver_address" name="receiver_address" data-rule-required="true" data-msg-required="Please enter receiver address."/>
+										</div> 
+							         </div>
+									 <div class="form-group">
+							         	<label>Sender's Wallet Address</label>
+							         	<div class="input-group">
+										  <input type="text" class="form-control" placeholder="Sender Wallet Address" id="sender_address" name="sender_address" value="<%= wallet_result.wallet_address %>" readonly />
+										</div> 
+							         </div>
+									 <div class="form-group">
+							         	<label>Amount</label>
+							         	<div class="input-group mb-15">
+										  <input type="text" class="form-control" id="amount"name="amt" placeholder="" data-rule-required="true" data-rule-number="true"data-msg-required="Please enter amount." />
+										</div> 
+										<label class="text-right transaction-label">Transaction Fee : 0.042 ETH</label>
+							         </div>
+									<div class="private-key-copy-box">
+
+										<button type="submit" name="submit " id="submit" class="btn-common-new check_balance" >Send</button>
+										<!-- <a class="btn-common-new" href="wallet-page.php">Send</a> -->
+									</div>
+								</form>
+							  </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<%- include('../innerFooter')%>
+
+
+<div class="modal fade field-edit-modal" id="private-key-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box  for-share">
+			<div class="row align-item-center">
+				<div class="col-xl-2 col-lg-3 col-md-3">
+					<!-- <div>
+						<img src="../assets/images/icons/wallet/popup-share-icon.png">
+					</div> -->
+				</div>
+				<div class="col-xl-7 col-lg-7 col-md-7">
+					<!--Private key form start-->
+					<form name="submit-private-key" id="submit-private-key" method="post" action="/" >
+
+						<div class="form-group">
+				         	<label>Private key</label>
+				         	<div class="input-group">
+							  <input type="text" class="form-control" placeholder="Enter Private Key" id="private_key" name="private_key" value=""  autocomplete="off" />
+							</div> 
+							<span for="private_key" id="errr_msg" class="error_validate"></span>
+						</div>
+						<!-- <input type="hidden" class="form-control" placeholder="Receiver Wallet Address " name="receiver_address" data-rule-required="true" value="<%= wallet_result.receiver_address %>" data-msg-required="Please enter receiver address."/> -->
+						<input type="hidden" class="form-control" placeholder="Sender Wallet Address" id="sender_address" name="sender_address" value="<%= wallet_result.wallet_address %>" readonly />
+                       
+						<button type="button" onclick="check_private_key();"  class="btn-common-new btn_check hide_click" >Send</button>
+						<center><span class="loader"><img src="../assets/images/loader-3.gif"height="42" width="62"></span></center> 
+						<!-- <button type="submit"   class="btn-common-new btn_submit" >Send</button> -->
+                     <div class="receiver_address_1"></div>
+					</form>
+					<!--Private key form end-->
+				</div>
+			</div>
+			
+	 	  </div>
+       </div>
+    </div>
+  </div>
+</div>
+
+<!-- <script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+ --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script type="text/javascript">
+
+	$(document).ready(function(){
+						$('.loader').hide();
+
+		$('.btn_submit').hide()
+		$('.receiver_address_1').hide()
+
+		$('#ether-form').validate({
+		 onfocusout: function(element) {
+		 this.element(element);
+		 },
+		 errorClass: 'error_validate',
+		 errorElement:'span',
+		 highlight: function(element, errorClass) {
+		 $(element).removeClass(errorClass);
+		 },
+		 submitHandler:function(form)
+			{
+             check_wallet_balance();
+			  // $('#submit_pass').attr('disabled',true);
+			  // form.submit();
+			}
+         });
+
+	});
+
+	function check_private_key()
+	{
+		var receiver_address=$('#receiver_address').val();
+		var amount=$('#amount').val();
+
+		var private_key=$('#private_key').val();
+		var send_address=$('#sender_address').val();
+	   
+		// alert(receiver_address)
+       
+		if(private_key)
+		{
+			// alert(private_key)
+
+			$.ajax({
+				type : 'POST',
+				url:'/check-private-key', 
+				data:{private_key:private_key,send_address:send_address},
+				success:function(data)
+				{
+					// alert(data);
+				// 	$('.btn_check').hide()
+				// 	$('.btn_submit').show()
+				if(data==0)
+				{
+										
+					 setTimeout(function() {
+					    $('#errr_msg').fadeOut('fast');
+						}, 10);
+$                            ('.hide_click').hide();
+
+									$('.loader').show()
+
+					$.ajax({
+				type : 'POST',
+				url:'/send-ether-transfer', 
+				data:{receiver_address:receiver_address,amount:amount,sender_address:send_address,private_key:private_key},
+				success:function(data)
+				{
+					// alert('done');
+					// $('#private-key-Modal').hide()
+					$('#private-key-Modal').modal('hide');
+
+					// $('#show_form').show()
+
+					$('.success_msg').html("<h3 style=color:green>Your Transaction is done</h3>");
+					setTimeout(() => {
+						location.reload(true);
+					}, 3000);
+
+				}});
+			
+				  }
+				  else
+		           {
+		             	$('#errr_msg').html("Your private key is wrong");
+		           }
+			}
+  		    });
+		
+		}
+		else
+		{
+			$('#errr_msg').html("Please enter private key.");
+		}
+	}
+	
+</script>
+
+
+<script type="text/javascript">
+	 function check_wallet_balance()
+	{
+		var amount=parseInt($('#amount').val());
+		var send_address=$('#sender_address').val();
+	   		var receiver_address=$('#receiver_address').val();
+
+       var new_quantity=amount+0.042;
+
+		// alert(new_quantity)
+
+ if (/^0x[a-fA-F0-9]{40}$/.test(receiver_address))
+  {
+  	 $.ajax({
+				type : 'POST',
+				url:'/check-balance-ether', 
+				data:{new_quantity,send_address},
+				success:function(data)
+				{
+					// alert(data);
+				// 	$('.btn_check').hide()
+				// 	$('.btn_submit').show()
+				if(data>new_quantity)
+				{
+	                    setTimeout(function() {
+					    $('.success_message_span').fadeOut('fast');
+						}, 1000);
+				       $('#private-key-Modal').modal('show');
+
+				}
+				else
+		        {
+		             $('.success_span').html("You have insufficient balance");
+			           return false;
+		        }
+			}
+  		    });
+  }
+  else
+  {
+      alert("You have entered an invalid receiver address!")
+    return false;
+  }
+  
+
+
+
+			
+		
+	
+			// $('#errr_msg').html("Please enter private key.");
+		
+	  }
+</script>
+
+
+
+ 

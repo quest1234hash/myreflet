@@ -1,0 +1,19 @@
+<!-- <button id="btn-stop-recording">Load Recording</button> -->
+
+<video controls autoplay playsinline id="video"></video>
+<form action="/video/entry/load" method="POST">
+
+    <input type="text" name="blob" id="blob" value="<%- videoURL %>" >
+
+    <input type="submit" value="Load">
+</form>
+
+<script>
+
+    var getBlob = document.getElementById('blob').value;
+    console.log(getBlob);
+    
+    var video = document.getElementById("video");
+    video.src = getBlob;
+
+</script>

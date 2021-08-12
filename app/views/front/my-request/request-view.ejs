@@ -1,0 +1,1267 @@
+<%-include('../innerHeader')%>
+
+<div class="container">
+    <section class="m-bottom-50 m-top-30">
+        <h4 class="purple-heading m-bottom-30">Details</h4>
+        <div class="white-box">
+            <ul class="request-details">
+                <li>Request ID <span> <%=tbl_client_re_data[0].request_code%></span></li>
+                <li>Requested By <span> <%=decrypt(clientData.full_name)%></span></li>
+                <li>Requested On <span><%=moment(clientData.createdAt).format('MMM DD, YYYY')%></span></li>
+                <li>Status(request Status)
+                  <%if(tbl_client_re_data[0].request_status=="pending"){%>
+                  <span class="pending-status">Pending</span>
+                  <%}else if(tbl_client_re_data[0].request_status=="accept"){%>
+                    <span class="clr-green">Accepted</span>
+                    <%}else{%>
+                      <span class="cancel-status">Rejected</span>
+                      <%}%>
+                </li>
+            </ul>   
+        </div>
+    </section>
+    <section>
+        <h4 class="purple-heading m-bottom-30">Requested Document</h4>
+        <div id="accordion" class="accordianWrapper">
+            <% var h=0;RequestData.forEach(requestDoc=>{%>
+                <div id="headingOne">
+                      <div class="tabWrapper white-box">
+                            <div>
+                                <h3 class="subTitle"><%=requestDoc.document_name%></h3>
+                            </div>
+                            
+                            <%for(let requested of update_request_data){var user_d_id = requested.user_doc_id;%>
+                              <%var version = requested.version_count;%>
+                              <%if(user_d_id==requestDoc.user_doc_id && version==requestDoc.version_count){%>
+                              <div class="tab-btn-wrapper"><a href="#update_prm<%=h%>" data-toggle="modal" data-target="#update_prm<%=h%>" data-dismiss="modal"><i class="fas fa-lightbulb"></i></a></div>
+                              <%}}%>
+
+                            <div class="tab-btn-wrapper">
+                                <a href="" class="btn-common-new btn-width-190" data-toggle="modal" data-target="#upload<%=h%>">Upload</a>
+                                <a class="btn-common-new btn-arrow" data-toggle="collapse" data-target="#collapseOne<%=h%>" aria-expanded="false" aria-controls="collapseOne">
+                                    <i class="fas fa-sort-down"></i>
+                               </a>
+                            </div>
+                           
+                        </div>
+                        <div id="collapseOne<%=h%>" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="personal-info-box for-download-view-table table-responsive table-another-wrapper">
+                                <table class="table dataTable no-footer">
+                                    <tr>
+                                        <th>Description</th>
+                                        <th>Self Certify</th>
+                                        <th>Certify</th>
+                                        <th>Sign</th>
+                                        <th>Complete</th>
+                                        <th>
+                                            <div class="tooltip fade" data-title="Record your video so that we can do the identity verification">
+                                                Video Proof
+                                                <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td>Please send a scanned copy of <%=requestDoc.document_name%>.
+                                        </td>
+
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                        <%if(requestDoc.self_assested=="yes"){%>
+                                                            <input type="checkbox" value="" checked disabled>
+                                                        <%}else{%>      
+                                                            <input type="checkbox" value="" disabled>
+                    
+                                                        <%}%>
+                                                    <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                </label>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                        <%if(requestDoc.certified=="yes"){%>
+                                                            <input type="checkbox" value="" checked disabled>
+                                                        <%}else{%>      
+                                                            <input type="checkbox" value="" disabled>
+                    
+                                                        <%}%>
+                                                    <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                </label>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                        <%if(requestDoc.sign =="yes"){%>
+                                                            <input type="checkbox" value="" checked disabled>
+                                                        <%}else{%>      
+                                                            <input type="checkbox" value="" disabled>
+                    
+                                                        <%}%>
+                                                    <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                </label>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                  <%if(requestDoc.complete =="yes"){%>
+                                                    <input type="checkbox" value="" checked disabled>
+                                                <%}else{%>      
+                                                    <input type="checkbox" value="" disabled>
+            
+                                                <%}%>
+                                                    <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                </label>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                  <%if(requestDoc.video_proof == 'yes'){%>
+                                                    <input type="checkbox" value="" checked disabled>
+                                                <%}else{%>      
+                                                    <input type="checkbox" value="" disabled>
+            
+                                                <%}%>
+                                                    <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                </label>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                </table>
+                                <table class="table dataTable no-footer another-table2">
+
+                           
+                                    <tr>
+                                        <th>Version</th>
+                                        <th>Document</th>
+                                        <th>Date</th>
+                                        <th>Document Number</th>
+                                        <th>Nature of Request</th>
+                                        <th>Note</th>
+                                        <th>Status</th>
+                                        <th>Reason</th>
+                                    </tr>
+                                    <%//console.log("from ejs",requestDoc)%>
+                                    <%requestDoc.requset_doc_data.forEach(docfiledata=>{%>
+
+                                    <tr>
+                                        <td><%=requestDoc.document_name%> <%=docfiledata.version%></td>
+                                        <td>
+                                          <%docfiledata.request_doc_file.forEach(hashImage=>{%>
+                                            <%if ( hashImage.doc_type == "image" ) {%> 
+                                                  <a  data-toggle="modal" data-target="#doc-img-Modal" onclick="sendhash('<%=hashImage.doc_data_url%>','image')"> 
+                                                    <!-- <img width="220" height="250"  src="https://ipfs.io/ipfs/<%=hashImage%>"/>   -->
+                                                    
+                                                     <img src="../assets/images/icons/dashboard-assets/doc.png" >
+                                                   </a>
+                                              
+                                              <% } else  if(hashImage.doc_type == "pdf"){%>
+                                               
+                                                <a   onclick="sendhash('<%=hashImage.doc_data_url%>','pdf')"> 
+
+                                                   <img src="../assets/images/icons/dashboard-assets/doc.png" >
+                                                </a>
+
+                                              <% } else  {%>
+                                               
+                                                <a   onclick="sendhash('<%=hashImage.doc_data_url%>','video')"> 
+
+                                                  <video width="22" height="20" controls>
+                                                           
+                                                  </video>
+                                                </a>
+
+                                                <% } %>                                             
+  
+                                          <%})%>
+                                      </td>
+                                    
+                                        <td><%= moment(docfiledata.createdAt).format('MMM DD,YYYY')%></td>
+                                        <td><%=requestDoc.doc_unique_code%></td>
+                                        <td>Certification</td>
+                                   
+                                        <td><%=requestDoc.message!=null ? requestDoc.message :'--' %></td>
+                                       
+                                      <% if(docfiledata.docfile_status=="reject"){%>
+                                        <td><div class="cancel-status">Rejected</div></td>
+                                        <%}%>
+                                     <%  if(docfiledata.docfile_status=="accept"){%>
+                                        <td><div class="clr-green">Accepted</div></td>
+                                        <%}%>
+                                      <% if(docfiledata.docfile_status=="pending"){%>
+                                        <td><div class="pending-status">Pending</div></td>
+                                       <%}%>
+                                        
+
+                                        <td><%=docfiledata.reason%></td>
+                                    </tr>
+                                    <%})%>
+                                    <!-- <tr>
+                                        <td>Driving Licence 1</td>
+                                        <td><img src="../assets/images/icons/dashboard-assets/doc.png" alt=""></td>
+                                        <td>Jun 20, 2020</td>
+                                        <td>DL-1254</td>
+                                        <td>Certification</td>
+                                        <td>Lorem ipsume</td>
+                                        <td><span class="clr-green">Approved</span></td>
+                                        <td>-</td>
+                                    </tr> -->
+                                </table>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+            <%h++;})%>
+            
+            <!-- section End -->
+            <%if(verifier_requestData.length>0){
+            var j=0;
+             for(let v_req_doc of verifier_requestData){
+            %>
+
+            <div id="headingTwo">
+                <div class="tabWrapper white-box m-top-30">
+                    <div>
+                        <h3 class="subTitle"><%=v_req_doc.document_name%></h3>
+                        
+                    </div>
+                    <div class="tab-btn-wrapper">
+                        <!-- <a href="" class="btn-common-new btn-width-190">Download</a> -->
+                        <input type="hidden" name="request_id<%=j%>" id="request_id<%=j%>" value="<%=v_req_doc.request_id%>">
+                        <input type="hidden" name="doc_id<%=j%>" id="doc_id<%=j%>" value="<%=v_req_doc.doc_id%>">
+                        <a id="check_modal<%=j%>" class="btn-common-new btn-width-190" onclick="check_doc('<%=j%>')" data-toggle="modal" data-dismiss="modal" href="">Upload</a>
+                        <a class="btn-common-new btn-arrow" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseOne">
+                            <i class="fas fa-sort-down"></i>
+                       </a>
+                    </div>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                     <div class="personal-info-box for-download-view-table table-responsive table-another-wrapper">
+                        <table class="table dataTable no-footer">
+                            <tr>
+                                <th>Description</th>
+                                <th>Self Certify</th>
+                                <th>Certify</th>
+                                <th>Sign</th>
+                                <th>Complete</th>
+                                <th>
+                                    <div class="tooltip fade" data-title="Record your video so that we can do the identity verification">
+                                        Video Proof
+                                        <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td><%=v_req_doc.descriptions%></td>
+                                <td>
+                                    
+                                    <div class="checkbox">
+                                        <label>
+                                            <%if(v_req_doc.self_certified=="yes"){%>
+                                            <input type="checkbox" value="" checked="true">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                            <%}else{%>
+                                            <input type="checkbox" value="">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                            <%}%>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="checkbox">
+                                        <label>
+                                            <%if(v_req_doc.certified=="yes"){%>
+                                            <input type="checkbox" value="" checked="true">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                            <%}else{%>
+                                            <input type="checkbox" value="">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                            <%}%>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="checkbox">
+                                        <label>
+                                            <%if(v_req_doc.sign=="yes"){%>
+                                            <input type="checkbox" value="" checked="true">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                            <%}else{%>
+                                            <input type="checkbox" value="">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                            <%}%>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="checkbox">
+                                        <label>
+                                            <%if(v_req_doc.complete=="yes"){%>
+                                            <input type="checkbox" value="" checked="true">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                            <%}else{%>
+                                            <input type="checkbox" value="">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                            <%}%>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="checkbox">
+                                        <label>
+                                            <%if(v_req_doc.video_proof=="yes"){%>
+                                            <input type="checkbox" value="" checked="true">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                            <%}else{%>
+                                            <input type="checkbox" value="">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                            <%}%>
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- <table class="table dataTable no-footer another-table2">
+                            <tr>
+                                <th>Version</th>
+                                <th>Document</th>
+                                <th>Date</th>
+                                <th>ID Code</th>
+                                <th>Nature of Request</th>
+                                <th>Message</th>
+                                <th>Status</th>
+                                <th>Reason</th>
+                            </tr>
+                            <tr>
+                                <td>Driving Licence 1</td>
+                                <td><img src="../assets/images/icons/dashboard-assets/doc.png" alt=""></td>
+                                <td>Jun 20, 2020</td>
+                                <td>DL-1254</td>
+                                <td>Certification</td>
+                                <td>Lorem ipsume</td>
+                                <td><div class="cancel-status">Rejected</div></td>
+                                <td>The Picture was not clear</td>
+                            </tr>
+                            <tr>
+                                <td>Driving Licence 1</td>
+                                <td><img src="../assets/images/icons/dashboard-assets/doc.png" alt=""></td>
+                                <td>Jun 20, 2020</td>
+                                <td>DL-1254</td>
+                                <td>Certification</td>
+                                <td>Lorem ipsume</td>
+                                <td><span class="clr-green">Approved</span></td>
+                                <td>-</td>
+                            </tr>
+                        </table> -->
+                    </div>
+                </div>
+                
+            </div>
+            <%j++; }}%>
+        </div>
+
+    </section>
+</div>
+<!-- Modal S -->
+<% var h=0;RequestData.forEach(requestDoc=>{%>
+
+<div class="modal fade field-edit-modal" id="upload<%=h%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<form action="/upload_version_request_doc" method="POST" enctype="multipart/form-data" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close hide_btn" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+            <div class="row align-item-center">
+                <div class="col-xl-2 col-lg-3 col-md-3">
+                    <div>
+                        <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+                    </div>
+                </div>
+                <div class="col-xl-7 col-lg-7 col-md-7">
+                    <h5 class="heading-purple">Upload</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+                    <div class="setup-inner-box for-protact pt-15">
+                        <div class="create-rflet-id-form">
+                         <span class="span_error" style="color:red"></span>
+
+                            <div class="form-group for-select-existing-doc m-top-40">
+                                <div class="input-group">
+                                  <div class="dropdown keep-inside-clicks-open">
+                                      <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <%=requestDoc.document_name%>
+                                       
+                                      </button>
+                                      <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                         <div class="for-doc-select">
+                                            <div class="checkbox">  
+                                              <label>
+                                                Dirving License
+                                                <input type="checkbox" value="">
+                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                              </label>
+                                            </div>  
+                                         </div>
+                                          <div class="for-doc-select">
+                                            <div class="checkbox">  
+                                              <label>
+                                                Passport
+                                                <input type="checkbox" value="">
+                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                              </label>
+                                            </div>  
+                                         </div>
+                                          <div class="for-doc-select">
+                                            <div class="checkbox">  
+                                              <label>
+                                                Form 3
+                                                <input type="checkbox" value="">
+                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                              </label>
+                                            </div>  
+                                         </div>
+                                          <div class="for-doc-select">
+                                            <div class="checkbox">  
+                                              <label>
+                                                Utility bill
+                                                <input type="checkbox" value="">
+                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                              </label>
+                                            </div>  
+                                         </div>
+                                      </div> -->
+                                    </div>
+                                  
+                                </div>
+                            </div> 
+                            <div class="form-group master_doc">
+                                      <div class="input-group">
+                                        
+                                            <select class="form-control disabled_class_exist" name="user_doc_id"  onchange="get_exist_value(this.value)"id="existing_file<%=h%>" >
+                                                    <option value="">Select from existing documents</option>
+                                                <%if(reflect_id_data.length>0 && reflect_id_data!=undefined){
+                                                for(let document of reflect_id_data){
+                                                if(document.document_name === requestDoc.document_name){
+                                                %>
+                                                        
+                                            <option  value="<%=document.user_doc_id%>" ><%=document.document_name%></option>
+                                             <% } }}%>
+                                            </select>
+                                      </div>
+                                  </div>  
+                            <div class="or-text">
+                                or
+                            </div>
+                            
+                            <div class="form-group browse-file-section">
+                                  <input type="file" name="staff_image" class="file dis_file" id="file_id<%=h%>"onchange="get_file_value(this.value)"multiple>
+                                  <div class="input-group col-xs-12">
+                                    <span class="input-group-btn">
+                                      <button class="browse btn btn-primary input-lg disabled_class_file" type="button"> Choose a file</button>
+                                    </span>
+                                    <input type="text" class="form-control" readonly="" placeholder="">
+                                  </div>
+                              </div>
+
+                            <div class="personal-info-box for-download-view-table table-responsive">
+                                <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Label</th>
+                                      <th scope="col">Download</th>
+                                      <th scope="col">View</th>
+                                      <th scope="col">self-certify</th>
+                                      <th scope="col">Certify</th>
+                                      <th scope="col">sign</th>
+                                      <th scope="col">complete</th>
+                                      <th scope="col">video proof</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <th scope="row">
+                                        <div class="for-flex-align">
+                                             <img src="../assets/images/icons/dashboard-assets/drivinglicense.png">
+                                             <%=requestDoc.document_name%>
+                                        </div>
+                                      </th>
+                                      <td>
+                                        <div class="checkbox ">
+                                          <label>
+                                            <input class="dis_file" type="checkbox" value="">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                          </label>
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <div class="checkbox ">
+                                          <label>
+                                            <input class="dis_file" type="checkbox" value="">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                          </label>
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <div class="checkbox ">
+                                          <label>
+                                            <input class="dis_file" type="checkbox" value="">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                          </label>
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <div class="checkbox ">
+                                          <label>
+                                            <input class="dis_file" type="checkbox" value="">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                          </label>
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <div class="checkbox">
+                                          <label>
+                                            <input class="dis_file" type="checkbox" value="">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                          </label>
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <div class="checkbox">
+                                          <label>
+                                            <input class="dis_file" type="checkbox" value="">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                          </label>
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <div class="checkbox">
+                                          <label>
+                                            <input class="dis_file" type="checkbox" value="">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                          </label>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div >
+                             <input type="hidden" name="type_attr" class="type_attr" value="">
+                            <input type="hidden" name="request_doc_id" value="<%=requestDoc.request_doc_id%>">
+                            <input type="hidden" name="" value="">
+                            <button class="btn-common-new  hide_btn" type="submit" id="sub_btn" onClick="return check_validations('<%=h%>')">Submit</button>
+                            <!-- <a class="btn-common-new" href="">Submit</a> -->
+                            <a class="btn-common-new hide_btn" href="">Cancel</a>
+                            <center><span class="loader"><img src="../assets/images/loader-3.gif"height="32" width="52"></span></center> 
+                        </div>
+                    </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+  </div>
+</form>
+</div>
+<%h++})%>
+
+<% var h=0;RequestData.forEach(requestDoc=>{
+  for(let requested of update_request_data){
+    var user_d_id = requested.user_doc_id;
+    var version = requested.version_count;
+    if(user_d_id==requestDoc.user_doc_id && version==requestDoc.version_count){
+  %>
+
+  <div class="modal fade field-edit-modal" id="update_prm<%=h%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="close hide_click" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="create-wallet-box">
+              <div class="row align-item-center">
+                  <div class="col-xl-2 col-lg-3 col-md-3">
+                      <div>
+                          <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+                      </div>
+                  </div>
+                  <div class="col-xl-7 col-lg-7 col-md-7">
+                      <h5 class="heading-purple">Update Permissions</h5>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+                      <div class="setup-inner-box for-protact pt-15">
+                          <div class="create-rflet-id-form">
+                              <div class="form-group for-select-existing-doc m-top-40">
+                                  <div class="input-group">
+                                    <div class="dropdown keep-inside-clicks-open">
+                                        <input type="hidden" name="update_req_id<%=h%>" id="update_req_id<%=h%>" value="<%=requested.update_req_id%>">
+                                        <input type="hidden" name="request_id_up<%=h%>" id="request_id_up<%=h%>" value="<%=requested.request_id%>">
+                                        <input type="hidden" name="user_doc_id_up<%=h%>" id="user_doc_id_up<%=h%>" value="<%=requested.user_doc_id%>">
+                                          <%=requestDoc.document_name%>
+                                         
+                                        
+                                      </div>
+                                    
+                                  </div>
+                                </div>
+  
+                              <div class="personal-info-box for-download-view-table table-responsive">
+                                  <table class="table">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">Label</th>
+                                        <th scope="col">Download</th>
+                                        <th scope="col">View</th>
+                                        <th scope="col">Certify</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <th scope="row">
+                                          <div class="for-flex-align">
+                                               <img src="../assets/images/icons/dashboard-assets/drivinglicense.png">
+                                               <%=requestDoc.document_name%>
+                                          </div>
+                                        </th>
+                                        <td>
+                                          
+                                          <div class="checkbox">
+                                            <label>
+                                              <% if(requested.download_status=="yes"){%>
+                                              <input type="checkbox" name="update_download<%=h%>" id="update_download<%=h%>" value="yes" readonly checked>
+                                              <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                              <%}else{%>
+                                                <input type="checkbox" name="update_download<%=h%>" id="update_download<%=h%>" readonly value="no">
+                                              <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                              <%}%>
+                                            </label>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div class="checkbox">
+                                            <label>
+                                              <% if(requested.view_status=="yes"){%>
+                                                <input type="checkbox" name="update_view<%=h%>" id="update_view<%=h%>" value="yes" readonly checked>
+                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                <%}else{%>
+                                                  <input type="checkbox" name="update_view<%=h%>" id="update_view<%=h%>" readonly value="no">
+                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                <%}%>
+                                            </label>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div class="checkbox">
+                                            <label>
+                                              <% if(requested.certify_status=="yes"){%>
+                                                <input type="checkbox" value="yes" name="update_certify<%=h%>" id="update_certify<%=h%>" readonly checked>
+                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                <%}else{%>
+                                                  <input type="checkbox" name="update_certify<%=h%>" id="update_certify<%=h%>" value="no" readonly>
+                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                <%}%>
+                                            </label>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                          <div >
+                              <button class="btn-common-new hide_click" onclick="confirm_update('<%=h%>')" type="button" id="sub_btn">Confirm</button>
+                               <center><span class="loader"><img src="../assets/images/loader-3.gif"height="42" width="62"></span></center> 
+                              <button class="btn-common-new hide_click" onclick="reject_update('<%=h%>')" type="button">Reject</button>
+                          </div>
+                      </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+    </div>
+
+  </div>
+  <% }} 
+  h++; })%>
+
+
+<%if(verifier_requestData.length>0){
+    var k=0;
+    for(let v_req_doc of verifier_requestData){
+%>
+<div class="modal fade field-edit-modal" id="upload_ver_doc<%=k%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<form action="/upload-ver-req-doc-file" id="upload_ver_doc_form" method="POST" enctype="multipart/form-data">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+            <div class="row align-item-center">
+                <div class="col-xl-2 col-lg-3 col-md-3">
+                    <div>
+                        <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+                    </div>
+                </div>
+                <div class="col-xl-7 col-lg-7 col-md-7">
+                    <h5 class="heading-purple">Upload</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+                    <div class="setup-inner-box for-protact pt-15">
+                        <div class="create-rflet-id-form">
+                            <div id="upload_doc_file<%=k%>">
+                            </div>
+
+                            <!-- <div class="or-text">
+                                or
+                            </div> -->
+                            <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Document ID" name="unique_id" id="unique_id" value="" data-rule-required="true" data-msg-required="Please enter document ID.">
+                            </div>
+                            <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Expiry Date" name="expiry_date" id="expiry_date" value="" data-rule-required="true" data-msg-required="Please select expiry date.">
+                            </div>
+
+                            <div class="personal-info-box for-download-view-table table-responsive">
+                                <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Label</th>
+                                      <th scope="col">Download</th>
+                                      <th scope="col">View</th>
+                                      <th scope="col">Certify</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <th scope="row">
+                                        <div class="for-flex-align">
+                                             <img src="../assets/images/icons/dashboard-assets/drivinglicense.png">
+                                        <%=v_req_doc.document_name%>
+                                        </div>
+                                      </th>
+                                      <td>
+                                        <div class="checkbox">
+                                          <label>
+                                            <input type="checkbox" value="yes" name="down_check_new">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                          </label>
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <div class="checkbox">
+                                          <label>
+                                            <input type="checkbox" value="yes" name="view_check_new">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                          </label>
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <div class="checkbox">
+                                          <label>
+                                            <input type="checkbox" value="yes" name="certify_check_new">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                          </label>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div >
+                            
+                            <input type="hidden" name="request_id" id="request_id" value="<%=v_req_doc.request_id%>">
+                            <!-- <input type="hidden" name="" value=""> -->
+                            <button class="btn-common-new" type="submit" id="sub_btn1">Submit</button>
+                            <!-- <a class="btn-common-new" href="">Submit</a> -->
+                            <a class="btn-common-new" href="">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+  </div>
+</form>
+</div>
+ <%k++; }}%>
+
+ <%if(verifier_requestData.length>0){
+    var k=0;
+    for(let v_req_doc of verifier_requestData){
+%>
+<div class="modal fade field-edit-modal" id="already_upload_ver_doc<%=k%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<form action="/upload-ver-req-doc" method="POST" id="already_upload_ver_doc_form">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+            <div class="row align-item-center">
+                <div class="col-xl-2 col-lg-3 col-md-3">
+                    <div>
+                        <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+                    </div>
+                </div>
+                <div class="col-xl-7 col-lg-7 col-md-7">
+                    <h5 class="heading-purple">Upload</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+                    <div class="setup-inner-box for-protact pt-15">
+                        <div class="create-rflet-id-form">
+                            <div id="doc_file<%=k%>">
+                            </div>
+
+                            <!-- <div class="or-text">
+                                or
+                            </div> -->
+                            
+                            
+
+                            <div class="personal-info-box for-download-view-table table-responsive">
+                                <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Label</th>
+                                      <th scope="col">Download</th>
+                                      <th scope="col">View</th>
+                                      <th scope="col">Certify</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <th scope="row">
+                                        <div class="for-flex-align">
+                                             <img src="../assets/images/icons/dashboard-assets/drivinglicense.png">
+                                        <%=v_req_doc.document_name%>
+                                        </div>
+                                      </th>
+                                      <td>
+                                        <div class="checkbox">
+                                          <label>
+                                            <input type="checkbox" value="yes" name="down_check">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                          </label>
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <div class="checkbox">
+                                          <label>
+                                            <input type="checkbox" value="yes" name="view_check">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                          </label>
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <div class="checkbox">
+                                          <label>
+                                            <input type="checkbox" value="yes" name="certify_check">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                          </label>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div >
+                            
+                            <input type="hidden" name="request_id" id="request_id" value="<%=v_req_doc.request_id%>">
+                            <input type="hidden" name="" value="">
+                            <button class="btn-common-new" type="submit" id="sub_btn">Submit</button>
+                            <!-- <a class="btn-common-new" href="">Submit</a> -->
+                            <a class="btn-common-new" href="">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+  </div>
+</form>
+</div>
+ <%k++; }}%>
+
+ <div class="modal fade field-edit-modal" id="doc-img-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-body">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      </button>
+     
+      <div id="img_modal" class="modal-img-big">
+        <img src="" id="showImgID" alt="dsgsdfgfsd">
+      </div>
+     
+           
+     </div>
+    </div>
+  </div>
+  </div>
+  <div class="modal fade field-edit-modal" id="doc-video-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+       
+        <div id="doc_video_Modal" class="modal-img-big">
+          
+        </div>
+       
+        
+        
+       </div>
+      </div>
+    </div>
+    </div>
+
+<div class="modal fade field-edit-modal" id="doc-pdf-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+       
+        <div id="doc_pdf_Modal" class="modal-img-big">
+          
+        </div>
+       
+        
+        
+       </div>
+      </div>
+    </div>
+    </div>
+<%- include('../innerFooter')%>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+
+<script>
+    $(document).ready( function () {
+      $('.loader').hide()
+
+          })
+         $(window).on('load',function(){
+        //  $('#collapseOne0').modal("toggle");
+        //  $('#collapseOne1').modal('toggle');
+    });
+</script>
+<script type="text/javascript">
+    $('#upload_ver_doc_form').validate({
+         onfocusout: function(element) {
+         this.element(element);
+         },
+         errorClass: 'error_validate',
+         errorElement:'span',
+         highlight: function(element, errorClass) {
+         $(element).removeClass(errorClass);
+         },
+         submitHandler:function(form)
+            {
+        $('.hide_btn').hide();
+
+        $('.loader').show();
+              $('#sub_btn1').attr('disabled',true);
+              form.submit();
+            }
+         });
+</script>
+<script type="text/javascript">
+    $('#already_upload_ver_doc_form').validate({
+         onfocusout: function(element) {
+         this.element(element);
+         },
+         errorClass: 'error_validate',
+         errorElement:'span',
+         highlight: function(element, errorClass) {
+         $(element).removeClass(errorClass);
+         },
+         submitHandler:function(form)
+            {
+        $('.hide_btn').hide();
+
+         $('.loader').show();
+              $('#sub_btn').attr('disabled',true);
+              form.submit();
+            }
+         });
+</script>
+<script>
+      $(document).ready( function () {
+        $('.loader').hide();
+      // var RequestData = `<%=RequestData%>`
+      // for(var i=0; i<RequestData.length;i++){
+
+        //  $('#collapseOne0').modal("toggle");
+        //  $('#collapseOne1').modal('toggle');
+
+      // }
+      
+
+} );
+
+
+</script>
+<script>
+     $("#expiry_date").datepicker();
+    $(document).on('click', '.browse', function(){
+   var file = $(this).parent().parent().parent().find('.file');
+   file.trigger('click');
+ });
+ $(document).on('change', '.file', function(){
+   $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i,''));
+ }); 
+</script>
+
+<script type="text/javascript">
+    function sendhash(hash,doc_type){
+  // alert(doc_type)
+  // alert(hash)
+
+    //showImgID
+$('.doc_pdf_Modal').html('')
+$('.doc_video_Modal').html('')
+
+    if(doc_type=='image'){
+
+      $('#doc-img-Modal').modal('show');
+    $('#showImgID').attr("src",hash);
+
+    }else if(doc_type=='video'){
+
+      $('#doc_video_Modal').html(`<video id="vid_modal1" width="400" height="400" controls>
+        <source src="https://ipfs.io/ipfs/${hash}" type="video/mp4"></video>`);
+                   
+      $('#doc-video-Modal').modal('show');
+      // $('#showImgID').attr("src",hash);
+    }else if(doc_type=='pdf'){
+     // alert(doc_type)
+      
+      $('#doc_pdf_Modal').html(`<object id="pdf_tag" class="PDFdoc" width="100%" height="500px" type="application/pdf" data="https://ipfs.io/ipfs/${hash}"></object>
+        `);
+                   
+      $('#doc-pdf-Modal').modal('show');
+      // $('#showImgID').attr("src",hash);
+    }
+  
+    }
+</script>
+
+<script>
+    function check_doc(m_value){
+        var request_id = $('#request_id'+m_value).val();
+        var doc_id = $('#doc_id'+m_value).val();
+        // alert("request_id "+request_id);
+        $.ajax({
+                    type:"post",
+                    url:"/check-user-doc-id",
+                    data:{doc_id,request_id},
+                    success:function(data) {
+                         // $('#check_modal'+m_value).attr("href","");
+                        // alert(data.doc_data);
+                        console.log(data.doc_data);
+                        if(data.doc_data!="fail"){
+
+                            // $('#check_modal'+m_value).attr("href","#already_upload_ver_doc"+m_value);
+                            $('#doc_file'+m_value).html(`<div class="form-group for-select-existing-doc m-top-40">
+                                <div class="input-group">
+                                  <div class="dropdown keep-inside-clicks-open">
+                                      <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <input type="hidden" name="user_doc_id" value="${data.doc_data[0].user_doc_id}">
+                                        ${data.doc_data[0].document_name}
+                                       
+                                      </button>
+                                    </div>
+                                  
+                                </div>
+                            </div>`)
+                            
+                            $('#already_upload_ver_doc'+m_value).modal("show");
+                        }else{
+                            // $('#check_modal'+m_value).attr("href","#upload_ver_doc"+m_value);
+                            $('#upload_doc_file'+m_value).html(`<div class="form-group browse-file-section">
+                                <input type="hidden" name="doc_id_new" value="${doc_id}">
+                                  <input type="file" name="staff_image" class="file"  multiple>
+                                  <div class="input-group col-xs-12">
+                                    <span class="input-group-btn">
+                                      <button class="browse btn btn-primary input-lg" type="button"> Choose a file</button>
+                                    </span>
+                                    <input type="text" class="form-control" readonly="" placeholder="" data-rule-required="true" data-msg-required="Please select file.">
+                                  </div>
+                              </div>`);
+
+                             $('#upload_ver_doc'+m_value).modal("show");
+                        }
+                      // $('#upload_ver_doc'+m_value).show();  
+                    }
+        });
+       
+    }
+</script>
+
+<script>
+  function confirm_update(up_value){
+                $('.hide_click').hide();
+
+            $('.loader').show();
+
+    var update_req_id = $('#update_req_id'+up_value).val();
+    var request_id= $('#request_id_up'+up_value).val();
+    var user_doc_id = $('#user_doc_id_up'+up_value).val();
+    var download = $('#update_download'+up_value).val();
+    var view = $('#update_view'+up_value).val();
+    var certify = $('#update_certify'+up_value).val();
+    // alert("update_req_id "+update_req_id);
+    // alert("request_id "+request_id);
+    // alert("user_doc_id "+user_doc_id);
+    // alert("download "+download);
+    // alert("view "+view);
+    // alert("certify "+certify);
+    $.ajax({
+          type:"post",
+          url:"/update-request",
+          data:{update_req_id,request_id,user_doc_id,download,view,certify},
+          success:function(data) {
+                   location.reload();      
+          }
+        });
+  }
+
+  function reject_update(up_value){
+    var update_req_id = $('#update_req_id'+up_value).val();
+    var request_id= $('#request_id_up'+up_value).val();
+    var user_doc_id = $('#user_doc_id_up'+up_value).val();
+
+    $.ajax({
+          type:"post",
+          url:"/update-request-rejected",
+          data:{update_req_id,request_id,user_doc_id},
+          success:function(data) {
+                   location.reload();      
+          }
+        });
+  }
+</script>
+<script type="text/javascript">
+    $('.upload_file').click(()=>{
+        
+        $('.hide_btn').hide();
+
+        $('.loader').show();
+
+    })
+     setTimeout(function() {
+                            $('.flash_msg').fadeOut('fast');
+                            }, 3000);
+
+     var existing_file,type;
+
+     function get_exist_value(value){
+
+        alert(value)
+
+      existing_file =value
+      
+     if(value){
+        $(".disabled_class_file").prop("disabled","true");
+
+                $(".dis_file").prop("disabled","true");
+      type = 'exist'
+
+    }else{
+        // alert(value)
+
+        $(".disabled_class_file").removeAttr("disabled");
+
+                $(".dis_file").removeAttr("disabled");
+
+
+    }
+              // 
+     
+
+     }
+
+      var upload_file;
+
+     function get_file_value(value){
+
+      upload_file = value;
+              //
+       if(value){
+            // alert(value)
+            $(".disabled_class_exist").prop("disabled","true");
+            type = 'not_exist'
+
+
+       }else{
+          // alert('else : ',value)
+            $(".disabled_class_exist").removeAttr("disabled");
+
+       }
+
+            // alert(value)++++++++++++++++++++++++++++++++++++++++++-********
+
+     }
+     function check_validations(h_val){
+            
+
+       // alert(existing_file+' ==== '+upload_file)
+
+        if (existing_file || upload_file) {
+
+                         $(".type_attr").attr("value",type);
+
+             setTimeout(function() {
+                            $('.span_error').fadeOut('fast');
+                            }, 100);
+               return true;
+        }else{
+                          $('.span_error').html('*Please select atleast upload document or existing file.')
+
+             return false;
+
+        }
+
+     }
+     // function get_exist_value(value){
+
+
+     // }
+
+</script>

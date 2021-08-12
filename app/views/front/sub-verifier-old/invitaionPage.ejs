@@ -1,0 +1,98 @@
+<%-include('../partials/header.ejs')%>
+
+<style>
+	.container {
+    max-width: 1140px;
+}
+.invitation-section{
+	background-color: #274794;
+	display: flex;
+	align-items: center;
+	height: 100vh;
+justify-content: center;
+}
+.inner-box-invite{
+	text-align: center;
+}
+.inner-box-invite ul{
+	padding-left: 0;
+	margin-bottom: 0;
+}
+.inner-box-invite h1 {
+    color: #fff;
+    font-size: 110px;
+    font-weight: 700;
+}
+.inner-box-invite p {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 40px;
+    line-height: 30px;
+}
+.inner-box-invite ul li{
+	display: inline-block;
+}
+.white-btn{
+	cursor: pointer;
+    background-color: #fff;
+    color: #274794  !important;
+    text-decoration: none !important;
+    padding: 12px 32px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+    border-radius: 10px;
+    border: 0;
+}
+
+@media  (max-width: 768px){
+
+.inner-box-invite h1 {
+    font-size: 55px;
+}
+.inner-box-invite p {
+    font-size: 16px;
+}
+.inner-box-invite .white-btn{
+	margin: 10px 0;
+}
+}
+
+
+
+</style>
+
+<section class="invitation-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 m-auto">
+				<div class="inner-box-invite">
+					<% if(err_msg!=undefined && err_msg !='' ){ %>
+					    <div class="alert alert-danger text-center  flash_msg ">
+					            <%= err_msg %>
+					         </div>
+					   
+					    <% }%>
+					   <% if(success_msg!=undefined && success_msg !='' ){ %>
+					      <div class="alert alert-success text-center  flash_msg ">
+					        <%= success_msg %>
+					     </div>
+					    <% }%>
+					<h1>Join Us</h1>
+					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+
+					<ul>
+						<li><a class="white-btn" href="http://165.22.209.72:3001/signup">Register</a></li>
+						<li><a class="white-btn" href="/submit_sub_verfier_invitation?ref_id=<%=reflect_id%>&email=<%=email%>&status=accept">accept</a></li>
+						<li><a class="white-btn" href="/submit_sub_verfier_invitation?ref_id=<%=reflect_id%>&email=<%=email%>&status=reject">reject</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+<%- include('../partials/footer.ejs')%>

@@ -1,0 +1,607 @@
+<%-include('../innerHeader')%>
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-6 col-md-6 col-sm-6">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/verifier-home-assets/manage-sub-verifiers.png">
+					<h4>Client List</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section>
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="row personal-info-heading mt-0 mb-0 align-items-end">
+					<div class="col-xl-6  col-lg-12 col-md-12 col-sm-12">
+					  <div class="custom-space-btw for-flex-remove  another-drop-down  align-items-end">
+						<div class="for-two-select-in-one mb-0">  
+							<div class="for-select-existing-doc">
+							    <div class="input-group">
+									<div class="dropdown keep-inside-clicks-open">
+										<h3 class="small-title">Status</h3>
+										<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											All
+										</button>
+										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+											<div class="for-doc-select">
+												<div class="checkbox"> 	
+													<label>
+														  All
+														<input type="checkbox" name="checkstatus" class="checkbox2" value="All">
+														<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													  </label>
+												</div>	
+											</div>
+											<div class="for-doc-select">
+												<div class="checkbox"> 	
+													 <label>
+														  Active
+														<input type="checkbox" class="checkbox2" name="checkstatus" value="'active'">
+														<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													  </label>
+												</div>	
+											</div>
+											<div class="for-doc-select">
+												<div class="checkbox"> 	
+													 <label>
+													  Deactive
+														<input type="checkbox" class="checkbox2"  name="checkstatus" value="'inactive'">
+														<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													  </label>
+												</div>	
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="for-select-existing-doc">
+							    <div class="input-group">
+									<div class="dropdown keep-inside-clicks-open">
+										<h3 class="small-title">My Reflet ID</h3>
+										<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										    All
+										</button>
+										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start">
+										    <div class="for-doc-select">
+										    	<div class="checkbox"> 	
+										        	<label>
+										          		All
+										            	<input type="checkbox" name="check" class="checkbox2" value="All">
+										            	<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+										          	</label>
+										        </div>	
+											</div>
+											<%
+											var filtered = myreflectId.reduce((filtered, item) => {
+												if( !filtered.some(filteredItem => JSON.stringify(filteredItem.p_r_code) == JSON.stringify(item.p_r_code)) )
+												  filtered.push(item)
+												return filtered
+											  }, [])
+											  
+										
+		
+											
+											 %>
+											 <%filtered.forEach(myreflectId=>{%>
+
+											 
+										    <div class="for-doc-select">
+										    	<div class="checkbox"> 	
+										         	<label>
+														 <%=myreflectId.p_r_code%>
+														  <input type="checkbox" value="<%=myreflectId.p_r_code%>" class="checkbox2" name="check">
+														  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+										          	</label>
+										        </div>	
+											</div>
+											<%})%>
+										    <!-- <div class="for-doc-select">
+										    	<div class="checkbox"> 	
+										         	<label>
+											          	Quest Glt - 1235556
+											            <input type="checkbox" value="">
+											            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+										          	</label>
+										        </div>	
+										    </div> -->
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					  </div>
+					</div>
+					<div class="col-xl-6  col-lg-12 col-md-12 col-sm-12 custom-flex-row for-mobile-search">
+						<form class=" response-search"> 
+		                     <div class="input-group search-address-book">
+		                        <input type="text" class="form-control autocomplete" id="myInput" placeholder="Search" onkeyup="globalSearch(value);">
+		                        <div class="input-group-append">
+		                            <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+		                        </div>
+		                    </div>
+	                  	</form>
+						<div class="text-right">
+							<a href="javascript:void(0)" onclick="downloadpenlist()">
+								<div class="icon-for-dwnload">
+									<div class="tooltip fade" data-title="Export Data">
+										<img src="../assets/images/icons/dashboard-assets/export.png">
+										 <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+									</div>
+									
+								</div>
+							</a>
+							<a class="nodata" id="" onclick="printpendiv()">
+								<div class="icon-for-dwnload">
+									<div class="tooltip fade" data-title="Print Data">
+										<img src="../assets/images/icons/dashboard-assets/print.png">
+										<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+
+				
+				<!-- Button E -->
+				<div class="personal-info-box table-responsive mt-30 table-dash" id="filterTbleDiv">
+					<table class="table" id="myTable3">
+						<thead>
+					    	<tr>
+						      	<th width="10%" scope="col">Type</th>
+						      	<th width="10%" scope="col">Client</th>
+						      	<th width="20%" scope="col">Email</th>
+						      	<th width="15%" scope="col">MyReflet ID</th>
+						      	<th width="10%" scope="col">Country</th>
+						      	<th width="20%" scope="col">Verified Status</th>
+						      	<th width="10%" scope="col">Status</th>
+						      	<th width="5%" scope="col">Action</th>
+					    	</tr>
+					  	</thead>
+						<tbody id="tble1">
+							<%if(clientOfSubVer.data.length>0){%>
+								<%clientOfSubVer.data.forEach(client=>{%>
+                           <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="<%=client.request_id%>">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table for-square-img" src="../assets/images/icons/repersentative.png">
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+						      		<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600"><%=client.full_name%></span> <br>
+							      		     	<%=client.reflect_code%>
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td><%=client.email%></td>
+								<td><%=client.p_r_code%></td>
+								
+							    <td>
+									<%if(client.country_name==null){%>
+									-
+									<%}else{%>
+								<%=client.country_name%>
+										<%}%>
+								</td>
+							    <td>
+							    	<div>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verified.png">
+											Email
+										</span>
+										<!-- <span>
+											<img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+											Phone
+										</span> -->
+									</div>
+							    </td>
+							    
+							    <td>
+									<%if(client.sub_client_status=="inactive"){%>
+										<div class="cancel-status">
+											Deactive
+										</div>
+									<%}else{%>
+							    	<div class="approved-status">
+							    		Active
+									</div>
+									<%}%>
+							    </td>
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="/sub_client_info_view?request_id=<%=client.request_id%>" >
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> View
+				                            </a>
+											<a class="dropdown-item" href="/delete_sub_ver_client?status=deactive&sub_client_id=<%=client.sub_client_id%>&invite_sub_id=<%=invite_sub_id%>">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Deactivate
+											</a>
+											<a class="dropdown-item" href="/delete_sub_ver_client?status=delete&sub_client_id=<%=client.sub_client_id%>&invite_sub_id=<%=invite_sub_id%>">
+												<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+											</a>	
+				                        </div>
+				                    </div>
+						      	</td>
+						    </tr>
+						
+							
+							<%})%>
+							<%}%>
+						    <!-- <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table for-square-img" src="../assets/images/icons/repersentative.png">
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+						      		<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600">Jack Ma</span> <br>
+							      		     		25102
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td>questglt@gmail.com</td>
+							    <td>6464646894</td>
+							    <td>China</td>
+							    <td>
+							    	<div>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verified.png">
+											Email
+										</span>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+											Phone
+										</span>
+									</div>
+							    </td>
+							   
+							    <td>
+							    	<div class="cancel-status">
+							    		Rejected
+							    	</div>
+							    </td>
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="client-info-view.php" >
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> View
+				                            </a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Deactivate
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+											</a>	
+				                        </div>
+				                    </div>
+						      	</td>
+						    </tr> -->
+						    <!-- <tr>
+						      	<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+									            <img class="profile-table for-square-img" src="../assets/images/icons/entity.png">
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+						      		<th scope="row">
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600">Jack Ma</span> <br>
+							      		     		25102
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</th>
+							    <td>questglt@gmail.com</td>
+							    <td>6464646894</td>
+							    <td>China</td>
+							    <td>
+							    	<div>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verified.png">
+											Email
+										</span>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+											Phone
+										</span>
+									</div>
+							    </td>
+							    
+							    <td>
+							    	<div class="approved-status">
+							    		Approved
+							    	</div>
+							    </td>
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="client-info-view.php" >
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> View
+				                            </a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Deactivate
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+											</a>	
+				                        </div>
+				                    </div>
+						      	</td>
+						    </tr> -->
+						</tbody>
+					</table>
+					<div class="pagination-list for-user">
+          
+						<% if (clientOfSubVer.totalPages > 0) { %>
+					   <ul class="pagination text-center">
+						   <% if (clientOfSubVer.currentPage == 1) { %>
+							   <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+						   <% } else { %>
+							   <li class="page-item"><a class="page-link" href="/sub_verifier_client?invite_sub_id=<%=invite_sub_id%>&page=1">&lt;</a></li>
+						   <% } %>
+					
+					
+					
+						   <% var i = (Number(clientOfSubVer.currentPage) > 5 ? Number(clientOfSubVer.currentPage) - 4 : 1) %>
+						   <% if (i !== 1) { %>
+							   <!-- <li class="disabled"><a>...</a></li> -->
+							   <li class="page-item disabled"><a class="page-link" >...</a></li>
+						   <% } %>
+						   <% for (; i <= (Number(clientOfSubVer.currentPage) + 4) && i <= clientOfSubVer.totalPages; i++) { %>
+							   <% if (i == clientOfSubVer.currentPage) { %>
+								   <!-- <li class="active"><a><%= i %></a></li> -->
+								   <li class="page-item active">
+									 <a class="page-link" href="#"><%= i %><span class="sr-only">(clientOfSubVer.currentPage)</span></a>
+								   </li>
+							   <% } else { %>
+								   <li class="page-item"><a class="page-link" href="/sub_verifier_client?invite_sub_id=<%=invite_sub_id%>&page=<%= i %>"><%= i %></a></li>
+							   <% } %>
+							   <% if (i == Number(clientOfSubVer.currentPage) + 4 && i < clientOfSubVer.totalPages) { %>
+								   <!-- <li class="disabled"><a>...</a></li> -->
+								   <li class="page-item disabled"><a class="page-link" >...</a></li>
+							   <% } %>
+						   <% } %>
+					
+					
+						   <% if (clientOfSubVer.currentPage == clientOfSubVer.totalPages) { %>                       
+							   <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+						   <% } else { %>
+							   <li><a class="page-link" href="/sub_verifier_client?invite_sub_id=<%=invite_sub_id%>&page=<%= clientOfSubVer.totalPages %>">&gt;</a></li>
+						   <% } %>
+					
+					   </ul>
+					<% } %>
+					
+					 </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+
+
+
+
+<%- include('../innerFooter')%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script>
+$(document).ready( function () {
+	$('.table').DataTable();
+} );
+</script>
+<script>
+	$(document).on('click.bs.dropdown.data-api', '.dropdown.keep-inside-clicks-open', function (e) {
+	  e.stopPropagation();
+	});
+</script> 
+<script>
+	
+	// ************** Search by client verfier code **********************
+$('.checkbox2').click(function() {
+		var invite_sub_id1 = "<%=invite_sub_id%>"
+		// alert(invite_sub_id1)
+		$('#table_id').html(" ")
+
+    var reflect_code_list = $('input[name=check]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+	var status_list = $('input[name=checkstatus]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+	console.log("status list",status_list)
+	if(reflect_code_list[0]=='All')
+	{
+		window.location.reload(true);
+
+	}
+	if(status_list[0]=='All')
+	{
+		window.location.reload(true);
+
+	}
+	console.log("check box select value : ",reflect_code_list) 
+	
+
+	$.ajax({
+                      type : 'POST',
+                      url  : '/sub_client_list_filter',
+					  data: {reflect_code_list:JSON.stringify(reflect_code_list),
+						status_list: JSON.stringify(status_list),
+						invite_sub_id:invite_sub_id1
+						   },
+					  
+                        success: function(ClientVerificationModelData) {
+						
+						if(!ClientVerificationModelData)
+					    {
+                            $('#tble1').append(`<td>No record found</td>`);
+
+					     }
+					   else{
+						   
+		
+					$("#filterTbleDiv").html("")
+					$("#filterTbleDiv").html(ClientVerificationModelData)
+
+
+
+	} 
+	
+			}                                                    
+           
+})
+})
+</script>
+<script>
+	// $('.checkbox2').click(function() {
+	function globalSearch(value2){
+		var invite_sub_id1 = "<%=invite_sub_id%>"
+		// alert(value2)
+		var value1=value2
+	$.ajax({
+                      type : 'POST',
+                      url  : '/sub_client_list_search_filter',
+					  data: {searchvalue:value1,
+					  invite_sub_id:invite_sub_id1
+						   },
+					  
+                        success: function(data) {
+						
+						if(!data)
+					    {
+							$("#tble1").html("")
+
+                            $('#tble1').append(`<td>No record found</td>`);
+
+					     }
+					   else{
+						   
+					// alert(data)
+
+					$("#filterTbleDiv").html("")
+					$("#filterTbleDiv").html(data)
+
+	                       } 
+	
+			    }                                                    
+           
+            })
+ }
+</script>
+ <script type="text/javascript">
+            $(".extra-info-slider").slick({
+                dots: true,
+                autoplay: true,
+                autoplaySpeed: 2000,
+                infinite: true,
+                arrows: false,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                responsive: [
+                  {
+                    breakpoint: 768,
+                    settings: {
+                      arrows: false,
+                      centerMode: false,
+                      centerPadding: '40px',
+                      slidesToShow: 1,
+                      slidesToScroll: 1
+                    }
+                  },
+                  {
+                    breakpoint: 480,
+                    settings: {
+                      arrows: false,
+                      centerMode: false,
+                      centerPadding: '40px',
+                      slidesToShow: 1,
+                      slidesToScroll: 1
+                    }
+                  }
+                  ]
+              });
+           
+        </script>
+
+<script>
+	var reflect_id = "List";
+function downloadpenlist(){
+   html2canvas(document.getElementById('myTable3')).then(function(canvas) {
+   var img = canvas.toDataURL("image/png");
+   var doc = new jsPDF();
+   doc.text(2,5, reflect_id);
+   doc.addImage(img,'JPEG',-10,10);
+   doc.save('verifier_desboard_list.pdf');
+   });
+ }
+ function printpendiv(){
+   
+   var restorepage = $('body').html();
+	 $('.nodata').hide();
+	var printcontent = $('#myTable3').clone();
+	$('body').empty().html(printcontent);
+	window.print();
+	$('body').html(restorepage);
+  
+ 
+ }
+</script>

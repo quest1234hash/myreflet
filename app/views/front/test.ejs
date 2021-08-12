@@ -1,0 +1,29 @@
+<h1>Hello Naveen</h1>
+<% var displayPass=crypto.randomBytes(512).toString('base64');%>
+<div>
+<h1>Display password:</h1>	<%= displayPass %>
+</div>
+<% let p=encrypt1(displayPass) %>
+	<div>
+		<h1>Encryptessssssss:</h1>	<%= p %>
+		 </div>
+		 <form action="/save-password" method="POST">
+			 <input type="text" value="<%= displayPass %>" name="pass">
+            <button type="submit" onclick="savePasswordIntoSystem()">Save your password</button>
+		 </form>
+   
+	
+	<!-- <% function savePasswordIntoSystem(){ %>
+               
+		       <% fs.writeFileSync('myreflectpassword.txt',displayPass) %>
+			
+		<% } %> -->
+	<script>
+		var fs=require('fs');
+		function savePasswordIntoSystem(){
+			console.log("fs",fs)
+           console.log("Downloaddddddddddddddddinggggggggg");
+		    fs.writeFileSync('myreflectpassword.txt',displayPass);
+		 console.log("Done write")
+		}
+	</script>

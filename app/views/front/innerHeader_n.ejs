@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+     <title>My Reflet User</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+  <!-- Bootstrap Core CSS -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../assets/css/bootstrap-dropdownhover.min.css" rel="stylesheet"/>
+  <!-- Animate CSS -->
+    <link href="../assets/css/animate.css" rel="stylesheet"/>
+    <!-- hover-min CSS -->
+    <link href="../assets/css/hover-min.css" rel="stylesheet"/>
+    <!-- yamm css -->
+    <link href="../assets/css/yamm.css" rel="stylesheet"/>
+    <!-- Font-awesome web fonts with css -->
+    <link href="../assets/css/fontawesome-all.css" rel="stylesheet" type="text/css"/>
+    <!-- Font-awesome web fonts with css -->
+    <!-- loader css -->
+    <link href="../assets/css/loader.css" rel="stylesheet"/>
+     <!-- slick CSS -->
+    <link href="../assets/css/slick.css" rel="stylesheet"/>
+    <link href="../assets/css/slick-theme.css" rel="stylesheet"/>
+  <!-- Custom CSS -->
+    <link href="../assets/css/custom.css" rel="stylesheet"/>
+    <link href="../assets/css/custom-new.css" rel="stylesheet"/>
+
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+    <script src="https://kit.fontawesome.com/186b0513a1.js" crossorigin="anonymous"></script>
+     <link rel="stylesheet" href="../assets/css/jquery-ui.css">
+<style>
+.error_validate{
+  color: red;
+}
+.upper {
+  text-transform: capitalize;
+}
+</style>
+<style>
+    
+    .dis-able-btn {
+    color: currentColor;
+    pointer-events: none;
+        cursor: default;
+        text-decoration: none;
+  /* / color: black; / */
+        opacity: 0.5;
+        text-decoration: none;
+        /* cursor: not-allowed;
+    background: #dddddd; */
+    }
+ 
+
+    .active {
+        text-decoration-color: yellow;
+    }
+
+    .resend-lint-count {
+        color: #ffb15a;
+        font-weight: 500;
+        margin-right: 6px;
+        text-decoration: none;
+        background-color: transparent;
+        border: none;
+    }
+
+    .count-no {
+        font-size: 20px;
+        margin: 0 20px;
+        color: #000;
+    }
+    </style>
+
+
+
+<style>
+  .btn-common-new{
+    position: relative;
+  }
+.btn-common-new .loader {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0px;
+    bottom: 0;
+    margin: 0 auto;
+    text-align: center;
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 10px;
+}
+  .btn-common-new .loader img {
+    height: 30px;
+    margin: 8px 0;
+}
+.btn-common-new .loader_update {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0px;
+    bottom: 0;
+    margin: 0 auto;
+    text-align: center;
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 10px;
+}
+  .btn-common-new .loader_update img {
+    height: 30px;
+    margin: 8px 0;
+}
+.btn-common-new .loader_save {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0px;
+    bottom: 0;
+    margin: 0 auto;
+    text-align: center;
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 10px;
+}
+  .btn-common-new .loader_save img {
+    height: 30px;
+    margin: 8px 0;
+}
+
+
+  .edit-filter-new-change .setup-inner-box {
+    padding: 25px 0;
+    width: 100%;
+}
+.edit-filter-new-change .create-rflet-id-form .input-group {
+    margin-bottom: 0px;
+}
+.edit-filter-new-change .show-me-filter{
+  border: none !important;
+}
+.edit-filter-new-change{
+  display: block;
+}
+</style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+
+<div id="warpper" class="side-menu mobile-menu">
+<!-- Header html -->
+
+<!-- Header html end -->
+
+
+
+
+  
+<div id="mySidenav" class="sidenav">
+  
+  <div class="media nav-profile">
+
+    <%
+     if(Userprofile())
+     { var userdata = Userprofile()
+       var imageName = userdata.profile_pic;
+       var username  = userdata.full_name
+       
+       %>
+
+       <%if(!imageName){%>
+         <img class="align-self-center" src="../assets/images/other/face1.jpg" >
+         <div class="media-body align-self-center">
+           <h5 class="mt-0"></h5>
+           <p>
+             
+   
+             <%-username.charAt(0).toUpperCase()+ username.slice(1);%>
+   
+           </p>
+         <%}else{%>
+           <img class="align-self-center" src="<%- imageName %>" >
+           <div class="media-body align-self-center">
+             <h5 class="mt-0"></h5>
+             <p>
+               
+     
+               <%-username.charAt(0).toUpperCase()+ username.slice(1);%>
+     
+             </p>
+         <%}%>
+
+       <%}%>
+     
+  
+    
+      
+     
+     </div>
+   </div>
+  
+     <div id="div_sidebar">
+       <%if(session.user_type=="client"){%>
+                  <%-include('client-side-bar')%>
+       <%}else{%>
+               <%-include('i_am_verfier-side-bar')%>
+     <%}%>
+   </div>
+
+</div>
+
+
+
+
+<div id="main">
+  <header class="header-main dashboard-header" id="dash-head">
+    <div class="upper-strip">
+      <%if(session.user_type=="client"){%>
+        MyReflet : Client View
+<%}else{%>
+  MyReflet : Verifier View
+<%}%>
+      
+    </div>
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <%if(session.user_type=="verifier"){%>
+            <a class="navbar-brand" href="/verifier"><img src="../assets/images/logo-white.png" align="horse chain logo"></a>
+                      <%}else{%>
+                         <a class="navbar-brand" href="/cilent_deshboard"><img src="../assets/images/logo-white.png" align="horse chain logo"></a>
+                      <%}%>
+
+             <a class="nav-link menu-toggler for-desktop" href="javascript:void(0);"><span id="menuToggle" style="font-size:16px;cursor:pointer" >&#9776;</span></a>
+             <form class="form-inline my-2 my-lg-0">
+                      <div class="input-group search">
+                          <input type="text" class="form-control autocomplete" id="myInput" placeholder="Search" onkeypress="autoSearch(this);">
+                          <div class="input-group-append">
+                              <button class="btn btn-search" type="button"><img src="../assets/images/icons/search.png"></button>
+                          </div>
+                      </div>
+                  </form>
+
+               <ul class="navbar-nav ml-auto">
+                    <li class="nav-item switch-option">
+                       <div class="inner-div">
+                         <span class="text" id="switchtext"></span>
+                          <label class="switch">
+                            <input type="checkbox" id="switch_user" onchange="switchUserType(value)">
+                            <span class="slider round"></span>
+                          </label>
+                       </div>
+                    </li>
+                    <li class="nav-item dropdown notification-icon">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="../assets/images/icons/bell.png" alt="notify">
+                        <span  id="notification_count"></span>
+                        </a>
+                       <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
+                          <li class="dropdown-menu-header">
+                            <h6 class="dropdown-header m-0"><span class="grey darken-2">Notifications</span><span id="notification_count_inner" class="notification-tag badge badge-default badge-danger float-right m-0">5 New</span></h6>
+                          </li>
+                             <div id="unread_not_div"></div>
+                             <li class="dropdown-menu-footer"><a class="dropdown-item read-mor-link text-muted text-center" href="/notification-list">Read all notifications</a></li>
+                        </ul>
+                    </li>
+                     <li class="nav-item dropdown user-dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <!-- <img src="../assets/images/other/face1.jpg" align="user"> -->
+                        <%
+                        if(Userprofile())
+                        { var userdata = Userprofile()
+                          var imageName = userdata.profile_pic;
+                          var username  = userdata.full_name
+                         
+                          %>
+                  
+                          <%if(!imageName){%>
+                            <img  src="../assets/images/other/face1.jpg" >
+                            
+                                
+                      
+                            <span><%-username.charAt(0).toUpperCase()+ username.slice(1);%></span> 
+                      
+                              
+                            <%}else{%>
+                              <img  src="<%- imageName %>" >
+                              
+                                  
+                              
+                                 <span><%-username.charAt(0).toUpperCase()+ username.slice(1);%></span> 
+                        
+                            <%}%>
+                  
+                          <%}%>
+                        <i class="fas fa-caret-down"></i>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                            <a class="dropdown-item" href="/profile"><img src="../assets/images/icons/9.png"> Profile</a>
+                            <a class="dropdown-item" href="/get-change-pass"><img src="../assets/images/icons/10.png"> Change Password</a>
+                            <a class="dropdown-item" href="/get-change-pin"><img src="../assets/images/icons/10.png"> Change Pin</a>
+                            <a class="dropdown-item" href="/logout"><img src="../assets/images/icons/12.png"> Logout</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                       <a class="nav-link menu-toggler for-mobile" style="display: none;" href="javascript:void(0);"><span id="menuToggle1" style="font-size:16px;cursor:pointer;" >&#9776;</span></a>
+                    </li>
+                   
+                </ul>
+        </nav>
+    </div>
+</header>
+
+
+<script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+
+ <script>
+ $(function(){
+  //  alert(`<%=session.user_type%>`)
+if(`<%=session.user_type%>`=="client"){
+$("#switchtext").text("Switch to Verifier view ")
+// $("#switch_user").val("off");
+}else{
+  $("#switchtext").text("Switch to client view ")
+  $("#switch_user").val("off");
+  $("#switch_user").attr("checked","test");
+
+}
+
+ })
+ </script>
+
+<script>
+function switchUserType(value){
+var value1 = $("#switch_user").val();
+  // alert($("#switch_user").val())
+if(value1=="on"){
+  $("#switch_user").val("off");
+
+
+
+$.ajax({
+            type: "post",
+            url: "/dashboard/changeUesrType",
+            data: { usertype : "verifier"},
+            success: function(data){
+            // alert('ver'+data);
+
+              $('#div_sidebar').html(data);
+
+            window.location.href=window.location.origin+"/dashboard";
+            }
+    });
+}
+if(value1=="off"){
+  $("#switch_user").val("on");
+
+
+$.ajax({
+            type: "post",
+            url: "/dashboard/changeUesrType",
+            data: { usertype : "client"},
+            success: function(data){
+           
+              $('#div_sidebar').html(data);
+             window.location.href=window.location.origin+"/dashboard";
+
+            }
+    });
+
+}
+
+
+
+}
+
+</script>
+
+
+
+
+
+        
+      

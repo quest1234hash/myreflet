@@ -1,0 +1,1285 @@
+<%-include('../innerHeader')%>
+<style>
+	.dis-able-btn {
+			color: currentColor;
+			pointer-events: none;
+			cursor: default;
+			text-decoration: none;
+	  /* color: black; */
+			opacity: 0.5;
+			text-decoration: none;
+			/* cursor: not-allowed;
+			background: #dddddd; */
+		}
+			.personal-info-box .dataTables_filter {
+     display: block; 
+}
+.dataTables_filter input {
+    padding: 5px 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #000;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    background-color: transparent;
+}
+	</style>
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/verifier-home-assets/user-on-boarding-requests.png">
+					<h4>User On-Boarding Requests</h4>
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+				<div class="text-right">
+					<a class="btn-common-new " data-target="#Invitation" data-toggle="modal">
+                        <i class="mdi mdi-email "></i> Invite Client 
+					  </a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section>
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="personal-info-heading">
+					<div class="row align-item-center">
+						<div class="col-md-8">
+							<h4 class="purple-heading">Pending Requests</h4>
+						</div>
+						<div class="col-md-4">
+							<div class="text-right">
+								<a href="javascript:void(0)" onclick="downloadpenlist()">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Export Data">
+											<img src="../assets/images/icons/dashboard-assets/export.png">
+									     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+										
+									</div>
+								</a>
+								<a class="nodata" id="" onclick="printpendiv()">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Print Data">
+											<img src="../assets/images/icons/dashboard-assets/print.png">
+										    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+
+				<!-- Button S-->
+				<!-- <div class=" custom-space-btw for-flex-remove client-btn  another-drop-down m-top-30 align-items-end">
+					<div class="for-two-select-in-one">
+					<div class="for-select-existing-doc">
+					    <div class="input-group">
+							<div class="dropdown keep-inside-clicks-open">
+								<h3 class="small-title">MyReflet ID</h3>
+								<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    All
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" >
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								        	<label>
+								          		All
+								            	<input type="checkbox" value="">
+								            	<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+								    </div>
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								         	<label>
+									          	John Doe - 1235556
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+								    </div>
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								         	<label>
+									          	Quest Glt - 1235556
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+								    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+					</div>
+					<div class="btn-all-dwnload">
+						<a href=""><img src="../assets/images/icons/dashboard-assets/icon_eye_pur.png"> View</a>
+						<a href="javascript:checkedChangeStatus('accept')"><img src="../assets/images/icons/verifier-home-assets/requestdoc.png"> Accept</a>
+						<a href="javascript:checkedChangeStatus('reject')"><img src="../assets/images/icons/verifier-home-assets/reject.png"> Reject </a>
+					</div>
+				</div> -->
+				<div class="custom-space-btw another-drop-down m-top-30 align-items-end">
+					<div class="for-select-existing-doc">
+					    <div class="input-group">
+							<div class="dropdown keep-inside-clicks-open">
+								<h3 class="small-title">MyReflet ID</h3>
+								<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    All
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 20px, 0px);">
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								        	<label>
+								          		All
+								            	<input type="checkbox" value="" class="all_check">
+								            	<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+									</div>
+									
+									<%
+									
+
+									var filtered = RequsetOnBoardingPending.data.reduce((filtered, item) => {
+										if( !filtered.some(filteredItem => JSON.stringify(filteredItem.v_r_code) == JSON.stringify(item.v_r_code)) )
+										  filtered.push(item)
+										return filtered
+									  }, [])
+									  
+									 // console.log("ejs ejs",filtered)
+
+									%>
+					
+									
+					 
+					 <%filtered.forEach(modelData=>{%>
+
+
+
+										
+											<div class="for-doc-select">
+
+											<div class="checkbox"> 	
+													<label>
+															<%if(modelData.v_reflectid_by=="entity"){ %>
+												
+																<%=modelData.v_entity_company_name%>
+														
+																  <%}else{%>
+															
+																	<%=modelData.v_rep_username%>
+														
+																	<%}%> - <%=modelData.v_r_code%>
+
+													   <input type="checkbox" value="<%=modelData.v_r_code%>" class="checkbox2" name="check">
+													   <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													 </label>
+											   </div>	
+										   </div>
+										
+								    
+									<%})%>
+
+								    <!-- <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								         	<label>
+									          	Quest Glt - 1235556
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+								    </div> -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- <div>
+						<a href="#" class="btn-common-new text-center m-0">Create New Request</a>
+					</div> -->
+					<div>
+					<form class="response-search"> 
+	                     <div class="input-group search-address-book">
+	                                <input type="text" id="searchPending" class="form-control autocomplete" placeholder="Search">
+	                        <div class="input-group-append">
+	                            <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+	                        </div>
+	                    </div>
+                  	</form>
+				</div> 
+				</div>
+				<!-- Button E -->
+				<div class="personal-info-box table-responsive mt-30 table-dash pending_table_append" id="tble_filter">
+					<table class="table" id="pendingTable">
+						<thead>
+					    	<tr>
+					    		<th  style="display: none;">S. No.</th>
+								  <th width="25%" scope="col">Date | Time</th>
+								  <th width="10%" scope="col">Request ID</th>
+						      	<th width="10%" scope="col">Client</th>
+						      	<th width="20%" scope="col">Email</th>
+						      	<th width="15%" scope="col">MyReflet ID</th>
+						      	<th width="20%" scope="col">Verified Status</th>
+						      	<th width="5%" scope="col" class="hide_link">Action</th>
+					    	</tr>
+					  	</thead>
+						<tbody id="tableIDofData" >
+						    <%if(RequsetOnBoardingPending.data.length>0){%>
+							<%RequsetOnBoardingPending.data.forEach(modaldata=>{%>
+                    
+						    <tr>
+						    	<td style="display: none;">1</td>
+						      	<td>
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" name="pen_Req_checkbox" value="<%=modaldata.request_id%>">
+												<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+											
+
+
+                                                <%=moment(modaldata.request_createdAt).format('MMM DD, YYYY')%> | <%=moment(modaldata.request_createdAt).format('hh:mm A')%>
+												
+							      		     	<!-- July 18, 2019 | 3:00 PM -->
+								         	 </label>
+								        </div>
+									</div>
+								  </td>
+								  <td><%=modaldata.request_code%></td>
+						      		<td>
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+							      		     	<p class="line-hgt">
+												   <%if(modaldata.reflectid_by=="entity"){ %>
+												
+																<span class="font-w-600"><%=modaldata.entity_company_name%></span>
+														
+																  <%}else{%>
+
+																	<%if(modaldata.reflectid_by=="representative"){ %>
+																		<span class="font-w-600">
+																		<%=modaldata.rep_username%>
+																		</span>
+														  <%}else{%>
+																		<span class="font-w-600">
+																			<%=modaldata.wallet_name%>
+																			</span>
+															
+														         <%}%>
+																	<%}%> -
+													   
+													    <br>
+														<%=modaldata.reflect_code%>
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</td>
+								<td><%=decrypt(modaldata.email)%></td>
+								
+							    <td>
+
+								 <%if(modaldata.v_reflectid_by=="entity"){ %>
+												
+																<span class="font-w-600"><%=modaldata.v_entity_company_name%></span>
+														
+																  <%}else{%>
+															
+																	<span class="font-w-600"><%=modaldata.v_rep_username%></span>
+														
+																	<%}%> -
+													   
+													    <br>
+														<%=modaldata.v_r_code%>
+									
+								</td>
+							    <td>
+							    	<div>
+										
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verified.png">
+											Email
+										</span>
+										<!-- <span>
+											<img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+											Phone
+										</span> -->
+									</div>
+							    </td>
+							   
+							    <td class="hide_link">
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item click_eye" href="pen_request_view_client_info?request_id=<%=modaldata.request_id%>" >
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> View
+				                            </a>
+											<a class="dropdown-item" href="/request_status_change?status=accept&request_id=<%=modaldata.request_id%>">
+												<img src="../assets/images/icons/verifier-home-assets/requestdoc-grey.png"> Accept
+											</a>
+											<!-- <a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage messages
+											</a> -->
+											<a class="dropdown-item " href="/request_status_change?status=reject&request_id=<%=modaldata.request_id%>">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Reject
+											</a>
+											<!-- <a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+											</a> -->
+
+				                        </div>
+				                    </div>
+						      	</td>
+							</tr>
+                             
+							<%})%>
+							 <%}%>  
+						  	 <!-- <tr>
+						      	<td>
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							      		     	July 18, 2019 | 3:00 PM
+								         	 </label>
+								        </div>
+									</div>
+						      	</td>
+						      		<td>
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600">Jack Ma</span> <br>
+							      		     		25102
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</td>
+							    <td>questglt@gmail.com</td>
+							    <td>6464646894</td>
+							    <td>
+							    	<div>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verified.png">
+											Email
+										</span>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+											Phone
+										</span>
+									</div>
+							    </td>
+							   
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="" >
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> Manage Requests
+				                            </a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/requestdoc-grey.png"> Request documents
+											</a>
+											<a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage messages
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Reject
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+											</a>
+
+				                        </div>
+				                    </div>
+						      	</td>
+						    </tr>					   -->
+						</tbody>
+					</table>
+					
+                   <div class="pagination-list for-user">
+
+			            <% if (RequsetOnBoardingPending.totalPages > 0) { %>
+			             <ul class="pagination text-center">
+			               <% if (RequsetOnBoardingPending.currentPage == 1) { %>
+			                 <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+			               <% } else { %>
+			                 <li class="page-item"><a class="page-link" href="/request_on_boarding?page=1">&lt;</a></li>
+			               <% } %>
+			          
+			          
+			          
+			               <% var i = (Number(RequsetOnBoardingPending.currentPage) > 5 ? Number(RequsetOnBoardingPending.currentPage) - 4 : 1) %>
+			               <% if (i !== 1) { %>
+			                 <!-- <li class="disabled"><a>...</a></li> -->
+			                 <li class="page-item disabled"><a class="page-link" >...</a></li>
+			               <% } %>
+			               <% for (; i <= (Number(RequsetOnBoardingPending.currentPage) + 4) && i <= RequsetOnBoardingPending.totalPages; i++) { %>
+			                 <% if (i == RequsetOnBoardingPending.currentPage) { %>
+			                   <!-- <li class="active"><a><%= i %></a></li> -->
+			                   <li class="page-item active">
+			                   <a class="page-link" href="#"><%= i %><span class="sr-only">(RequsetOnBoardingPending.currentPage)</span></a>
+			                   </li>
+			                 <% } else { %>
+			                   <li class="page-item"><a class="page-link" href="/request_on_boarding?page=<%= i %>"><%= i %></a></li>
+			                 <% } %>
+			                 <% if (i == Number(RequsetOnBoardingPending.currentPage) + 4 && i < RequsetOnBoardingPending.totalPages) { %>
+			                   <!-- <li class="disabled"><a>...</a></li> -->
+			                   <li class="page-item disabled"><a class="page-link" >...</a></li>
+			                 <% } %>
+			               <% } %>
+			          
+			          
+			               <% if (RequsetOnBoardingPending.currentPage == RequsetOnBoardingPending.totalPages) { %>                       
+			                 <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+			               <% } else { %>
+			                 <li><a class="page-link" href="/request_on_boarding?page=<%= RequsetOnBoardingPending.totalPages %>">&gt;</a></li>
+			               <% } %>
+			          
+			             </ul>
+			          <% } %>
+          
+           </div>
+				</div>
+
+
+
+				<div class="personal-info-heading mb-0">
+					<div class="row align-item-center">
+						<div class="col-md-8">
+							<h4 class="purple-heading">Accepted Requests</h4>
+						</div>
+						<div class="col-md-4">
+							<div class="text-right">
+								<a href="javascript:void(0)" onclick="downloadAcclist()">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Export Data">
+											<img src="../assets/images/icons/dashboard-assets/export.png">
+									     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+										
+									</div>
+								</a>
+								<a class="nodata" id="" onclick="printAccdiv()">
+									<div class="icon-for-dwnload">
+										<div class="tooltip fade" data-title="Print Data">
+											<img src="../assets/images/icons/dashboard-assets/print.png">
+										    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+
+				<!-- Button S-->
+			 	<div class=" custom-space-btw  client-btn  another-drop-down  align-items-end">
+					<div>
+					<form class="response-search mt-20"> 
+	                     <div class="input-group search-address-book">
+	                                <input type="text"id="searchAccept" class="form-control autocomplete" placeholder="Search">
+	                        <div class="input-group-append">
+	                            <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+	                        </div>
+	                    </div>
+                  	</form>
+				</div> 
+					<div class="for-two-select-in-one">
+					
+					</div>
+					<div class="btn-all-dwnload mb-0">
+						<a href="javascript:void(0)" onclick="go_to_request_doc()" id="disable_request_btn"><img src="../assets/images/icons/dashboard-assets/icon_eye_pur.png"> Request documents</a>
+						<a onclick="remove_request()"><img src="../assets/images/icons/verifier-home-assets/reject.png"> Remove </a>
+					</div>
+				</div>
+				<!-- Button E -->
+				<div class="personal-info-box table-responsive mt-30 table-dash accept_table_append">
+					<table class="table" id="acceptedTable">
+						<thead>
+					    	<tr>
+								  <th width="25%" scope="col">Date | Time</th>
+								  <th width="10%" scope="col">Request ID</th>
+
+						      	<th width="10%" scope="col">Client</th>
+						      	<th width="20%" scope="col">Email</th>
+						      	<th width="15%" scope="col">MyReflet ID</th>
+						      	<th width="20%" scope="col">Verified Status</th>
+						      	<th width="5%" scope="col" class="hide_link" >Action</th>
+					    	</tr>
+					  	</thead>
+						<tbody>
+						<%if(RequsetOnBoardingACCEPT.data.length>0){
+						%>
+						    	<%var b=0; RequsetOnBoardingACCEPT.data.forEach(modaldata=>{%>
+									
+										<tr>
+											  <td>
+												  <div class="for-flex-align">
+													  <div class="checkbox">
+														  <label>
+															<input type="checkbox" name="check_data" onclick="checkSelect()" value="<%=b%>">
+															<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+												
+
+
+                                                <%=moment(modaldata.request_createdAt).format('MMM DD, YYYY')%> | <%=moment(modaldata.request_createdAt).format('hh:mm A')%>
+														  </label>
+													</div>
+												</div>
+											  </td>
+											  <td><%=modaldata.request_code%></td>
+												  <td>
+												  <div class="for-flex-align">
+													  <div class="checkbox">
+														  <label>
+															   <p class="line-hgt">
+															   	<%console.log("modaldatahide.entity_company_name ::: ",modaldata.entity_company_name)%>
+																   <%if(modaldata.reflectid_by=="entity"){ %>
+												
+																<span class="font-w-600"><%=modaldata.entity_company_name%></span>
+														
+																  <%}else{%>
+															
+																	<%if(modaldata.reflectid_by=="representative"){ %>
+																		<span class="font-w-600">
+																		<%=modaldata.rep_username%>
+																		</span>
+														  <%}else{%>
+																		<span class="font-w-600">
+																			<%=modaldata.wallet_name%>
+																			</span>
+															
+														         <%}%>
+																	<%}%> -
+													   
+													    <br>
+														<%=modaldata.reflect_code%>
+															   </p>
+														  </label>
+													</div>
+												</div>
+											  </td>
+											<td><%=decrypt(modaldata.email)%></td>
+											
+											<td>
+												<% var verifier_name;%>
+												<%if(modaldata.v_reflectid_by=="entity"){ 
+                                               verifier_name=modaldata.v_entity_company_name;
+												%>
+												
+																<span class="font-w-600"><%=modaldata.v_entity_company_name%></span>
+														
+																  <%}else{
+                                                                   verifier_name=modaldata.v_rep_username;
+																  %>
+															
+																	<span class="font-w-600"><%=modaldata.v_rep_username%></span>
+														
+																	<%}%> -
+													   
+													    <br>
+											
+														<%=modaldata.v_r_code%>
+											</td>
+											<td>
+												<div>
+													
+													<span>
+														<img src="../assets/images/icons/dashboard-assets/verified.png">
+														Email
+													</span>
+													<!-- <span>
+														<img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+														Phone
+													</span> -->
+												</div>
+											</td>
+										   
+											<td class="hide_link">
+												  <div class="dropdown-menu-new">
+													<a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+													  <div class="doc-img">
+															  <img src="../assets/images/icons/dashboard-assets/menu.png">
+														  </div>
+													</a>
+													<div class="dropdown-menu" aria-labelledby="profileDropdown">
+														<!-- <a class="dropdown-item click_eye" href="/pen_request_view_client_info?request_id=<%=modaldata.request_id%>&verifier_name=<%=verifier_name%>" >
+															<img src="../assets/images/icons/dashboard-assets/view.png"> Manage Requests
+														</a> -->
+														<%if (!modaldata.allocated) {%>
+															<a class="dropdown-item click_eye" href="/pen_request_view_client_info?request_id=<%=modaldata.request_id%>&verifier_name=<%=verifier_name%>" >
+																<img src="../assets/images/icons/dashboard-assets/view.png"> Manage Requests
+															</a>
+															<%} else {%>
+																<a class="dropdown-item click_eye" href="/pen_request_view_client_info?request_id=<%=modaldata.request_id%>&verifier_name=<%=verifier_name%>&sub_verifier_reflect_id=<%=modaldata.allocated.sub_ver_my_reflect_id%>" >
+																	<img src="../assets/images/icons/dashboard-assets/view.png"> Manage Requests
+																</a>
+																<%}%>
+														<input type="hidden" id="request_id_for_req<%=b%>" value="<%=modaldata.request_id%>">
+														<a class="dropdown-item click_eye" href="/ver-req-doc?request_id=<%=modaldata.request_id%>">
+															<img src="../assets/images/icons/verifier-home-assets/requestdoc-grey.png"> Request documents
+														</a>
+														<!-- <a class="dropdown-item" href="/message-market?reflect_id=<%=modaldata.reflect_id%>"><img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage messages
+														</a> -->
+														<a class="dropdown-item click_eye" href="/manage-message-list"><img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage messages
+														</a>
+														<!-- <a class="dropdown-item" href="">
+															<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Reject
+														</a>
+														<a class="dropdown-item" href="">
+															<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+														</a> -->
+			
+													</div>
+												</div>
+											  </td>
+										</tr>
+									       
+										<%b++; })%>
+										<%}%> 
+						  	<!-- <tr>
+						      	<td>
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+							      		     	July 18, 2019 | 3:00 PM
+								         	 </label>
+								        </div>
+									</div>
+						      	</td>
+						      		<td>
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600">Jack Ma</span> <br>
+							      		     		25102
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</td>
+							    <td>questglt@gmail.com</td>
+							    <td>6464646894</td>
+							    <td>
+							    	<div>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verified.png">
+											Email
+										</span>
+										<span>
+											<img src="../assets/images/icons/dashboard-assets/verificationpending.png">
+											Phone
+										</span>
+									</div>
+							    </td>
+							   
+							    <td>
+							      	<div class="dropdown-menu-new">
+				                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+				                          <div class="doc-img">
+									      		<img src="../assets/images/icons/dashboard-assets/menu.png">
+									      	</div>
+				                        </a>
+				                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+				                            <a class="dropdown-item" href="" >
+				                            	<img src="../assets/images/icons/dashboard-assets/view.png"> Manage Requests
+				                            </a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/requestdoc-grey.png"> Request documents
+											</a>
+											<a class="dropdown-item" href=""><img src="../assets/images/icons/dashboard-assets/icon_message1.png"> Manage messages
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/reject-grey.png"> Reject
+											</a>
+											<a class="dropdown-item" href="">
+												<img src="../assets/images/icons/verifier-home-assets/delete-grey.png"> Delete
+											</a>
+
+				                        </div>
+				                    </div>
+						      	</td>
+						    </tr>					  -->
+						</tbody>
+					</table>
+					  <div class="pagination-list for-user">
+          
+			            <% if (RequsetOnBoardingACCEPT.totalPages > 0) { %>
+			             <ul class="pagination text-center">
+			               <% if (RequsetOnBoardingACCEPT.currentPage == 1) { %>
+			                 <li class="disabled page-item"><a class="page-link">&lt;</a></li>
+			               <% } else { %>
+			                 <li class="page-item"><a class="page-link" href="/request_on_boarding?page_accept=1">&lt;</a></li>
+			               <% } %>
+			          
+			          
+			          
+			               <% var i = (Number(RequsetOnBoardingACCEPT.currentPage) > 5 ? Number(RequsetOnBoardingACCEPT.currentPage) - 4 : 1) %>
+			               <% if (i !== 1) { %>
+			                 <!-- <li class="disabled"><a>...</a></li> -->
+			                 <li class="page-item disabled"><a class="page-link" >...</a></li>
+			               <% } %>
+			               <% for (; i <= (Number(RequsetOnBoardingACCEPT.currentPage) + 4) && i <= RequsetOnBoardingACCEPT.totalPages; i++) { %>
+			                 <% if (i == RequsetOnBoardingACCEPT.currentPage) { %>
+			                   <!-- <li class="active"><a><%= i %></a></li> -->
+			                   <li class="page-item active">
+			                   <a class="page-link" href="#"><%= i %><span class="sr-only">(RequsetOnBoardingACCEPT.currentPage)</span></a>
+			                   </li>
+			                 <% } else { %>
+			                   <li class="page-item"><a class="page-link" href="/request_on_boarding?page_accept=<%= i %>"><%= i %></a></li>
+			                 <% } %>
+			                 <% if (i == Number(RequsetOnBoardingACCEPT.currentPage) + 4 && i < RequsetOnBoardingACCEPT.totalPages) { %>
+			                   <!-- <li class="disabled"><a>...</a></li> -->
+			                   <li class="page-item disabled"><a class="page-link" >...</a></li>
+			                 <% } %>
+			               <% } %>
+			          
+			          
+			               <% if (RequsetOnBoardingACCEPT.currentPage == RequsetOnBoardingACCEPT.totalPages) { %>                       
+			                 <li class="disabled page-item"><a class="page-link">&gt;</a></li>
+			               <% } else { %>
+			                 <li><a class="page-link" href="/request_on_boarding?page_accept=<%= RequsetOnBoardingACCEPT.totalPages %>">&gt;</a></li>
+			               <% } %>
+			          
+			             </ul>
+			          <% } %>
+          
+           </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<div class="modal field-edit-modal show" id="Invitation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">×</span>
+		  </button>
+		  <div class="create-wallet-box">
+		<div class="row align-item-center">
+		  <div class="col-xl-2 col-lg-3 col-md-3">
+			<div>
+			  <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
+			</div>
+		  </div>
+		  <div class="col-xl-10 col-lg-9 col-md-9">
+			<h5 class="heading-purple">Invite Client</h5>
+		  </div>
+		</div>
+  
+		<div class="row m-top-30">
+		  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+			<div class="setup-inner-box for-protact pt-15">
+			  <form action="/invite-client-by-refletid" method="post" >
+  
+			  <div class="create-rflet-id-form">
+			  
+				 <span class="error_span"style="color:red"></span>
+				  <div class="form-group">
+					  <Label>Client Reflet-Code</Label>
+					<div class="input-group">
+						  <select class="form-control  client_reflet_select" name="receiver_reflect_id">
+							  <option value="empty">Select Client Reflet-Code</option>
+
+							  <%if(allClients){
+									  for(let reflet_data of allClients){%>
+										<%if(reflet_data.rep_firstname){%>
+
+											<option value="<%=reflet_data.reflect_id%>" ><%=reflet_data.rep_firstname%> - <%=reflet_data.reflect_code%>
+											</option>
+											
+											<%}else if(reflet_data.entity_company_name){%>
+
+											<option value="<%=reflet_data.reflect_id%>" ><%=reflet_data.entity_company_name%> - <%=reflet_data.reflect_code%>
+											</option>
+
+											<%}else{%>
+
+											<option value="<%=reflet_data.reflect_id%>" ><%=reflet_data.full_name%> - <%=reflet_data.reflect_code%></option>
+											<%}%>
+
+							  
+							  <%}}%>
+					  </select>
+					</div>
+			</div>  
+            <div class="form-group">
+				<Label>Your Reflet-Code</Label>
+					<div class="input-group">
+						  <select class="form-control  verifier_reflet_select" name="sender_reflect_id">
+							  <option value="empty">Select Your Reflet-Code</option>
+
+							  <%if(myVerifiers){
+									  for(let reflet_data of myVerifiers){%>
+										<%if(reflet_data.rep_firstname){%>
+
+											<option value="<%=reflet_data.reflect_id%>" ><%=reflet_data.rep_firstname%> - <%=reflet_data.reflect_code%>
+											</option>
+											
+											<%}else if(reflet_data.entity_company_name){%>
+
+											<option value="<%=reflet_data.reflect_id%>" ><%=reflet_data.entity_company_name%> - <%=reflet_data.reflect_code%>
+											</option>
+
+											<%}else{%>
+
+											<option value="<%=reflet_data.reflect_id%>" ><%=reflet_data.full_name%> - <%=reflet_data.reflect_code%></option>
+							                <%}%>
+
+							  
+							  <%}}%>
+					  </select>
+					</div>
+			    </div>  
+			  <div class="form-group">
+				<Label>Message</Label>
+				<div class="input-group">
+				  <textarea name="message" id="message"rows="5" class="form-control" value=""data-rule-required="true" data-msg-required="Please enter message."placeholder="Wrtie your message..."></textarea>
+				</div>
+			</div>
+			  <div>
+				<button class="btn-common-new hide_btn check_validations">Save</button>
+				<a class="btn-common-new hide_btn" href="">Cancel</a>
+				<center><span class="loader"><img src="../assets/images/loader-3.gif"height="22" width="52"></span></center> 
+			  </div>
+			  </form>
+			</div>
+		  </div>
+		 </div>
+		</div>
+		 </div>
+	  </div>
+	</div>
+	
+  </div>
+
+<%- include('../innerFooter')%>
+
+
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+ <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script>
+$(document).ready( function () {
+	$('.loader').hide();
+	$('.loader-box').hide();
+
+	 $('.table').DataTable({
+	 "order": [[ 2, "desc" ]]
+	"aaSorting": [[ 1, "desc" ]]
+
+	 });
+
+} );
+</script>
+
+<script>
+	var reflect_id = "List";
+	function downloadpenlist(){
+		$("#pendingTable").table2excel({
+												filename: "pending_request_list",
+												exclude:'.hide_link',
+												exclude_img:true,
+												exclude_inputs:true,
+												fileext:".xls",
+
+										});
+	  }
+	  function printpendiv(){
+		
+		var restorepage = $('body').html();
+		  $('.nodata').hide();
+		 var printcontent = $('#pendingTable').clone();
+		 $('body').empty().html(printcontent);
+		 window.print();
+		 $('body').html(restorepage);
+	   
+	  
+	  }
+	  function printAccdiv(){
+		
+		var restorepage = $('body').html();
+		  $('.nodata').hide();
+		 var printcontent = $('#acceptedTable').clone();
+		 $('body').empty().html(printcontent);
+		 window.print();
+		 $('body').html(restorepage);
+	   
+	  
+	  }
+	  function downloadAcclist(){
+		$("#acceptedTable").table2excel({
+												filename: "accept_request_list",
+												exclude:'.hide_link',
+												exclude_img:true,
+												exclude_inputs:true,
+												fileext:".xls",
+
+										});
+	  }
+	</script>
+
+	<script>
+	function checkedChangeStatus(value){
+		var request_ids = [];
+		$.each($("input[name='pen_Req_checkbox']:checked"), function(){
+			request_ids.push($(this).val());
+			});
+			console.log("request_ids",request_ids)
+			alert(value)
+			
+			
+
+			$.ajax({
+                      type : 'POST',
+                      url  : '/accep_reject_request_check',
+					  data: {
+						     request_ids:JSON.stringify(request_ids),
+							 status     :value
+					        },
+					  
+						success: function(data) {
+							
+						}
+			})
+        
+
+	}
+	</script>
+
+<script>
+	
+	// ************** Search by client verfier code **********************
+$('.checkbox2').click(function() {
+		// var userid = `${ userid}`
+		$('#tableIDofData').html(" ")
+
+    var reflect_code_list = $('input[name=check]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+	if(reflect_code_list=='')
+	{
+		window.location.reload(true);
+
+	}
+	// console.log("check box select value : ",reflect_code_list) 
+	
+
+	$.ajax({
+                      type : 'POST',
+                      url  : '/request_on_boarding_filter',
+					  data: {reflect_code_list:JSON.stringify(reflect_code_list)},
+					  
+                        success: function(data) {
+							// alert(data)
+							// if(!data){
+							// 	$("#tableIDofData").html("")
+							// }
+                            //    else{
+								   $("#tble_filter").html("")
+								   $("#tble_filter").html(data)
+								   $('.table').DataTable();
+							//    }	
+						}						
+// 						   var complaints=data
+// 						   var moment=data.moment
+// 							// $("#all").hide();
+// 						if(!data)
+// 					    {
+//                             $('#tableIDofData').append(`<td>No record found</td>`);
+
+// 					     }
+// 					   else{
+						   
+
+				
+// 					var i=1;
+// 					data.forEach(modelData=>{
+							  
+						
+// 	           console.log("check box select value : ",modelData.verifer_my_reflect_id_Data.tbl_user_registration.profile_pic.data);
+
+// 						var v_or_c_name;
+// 						var type;
+
+//                                   if(modelData.MyReflectIData.reflectid_by=="entity"){ 
+									
+// 									v_or_c_name = modelData.MyReflectIData.entity_company_name
+							
+// 									  }else{
+										
+// 										v_or_c_name = modelData.MyReflectIData.rep_username
+									
+// 										}
+									 
+
+// 								if(modelData.ClientVerificationData.verifier_id==modelData.session_user_id){ 
+// 									type='Requested to me'
+// 								}else{
+// 									type="Requested by me"
+
+// 									}
+					    
+// 					$('#tableIDofData').append(`<tr>
+// 	<td>${i}</td>
+// 	  <td>
+// 		  <div class="for-flex-align">
+// 			  <div class="checkbox">
+// 				  <label>
+// 						<img class="profile-table" src="${modelData.verifer_my_reflect_id_Data.tbl_user_registration.profile_pic.data}">
+// 					   <p class="line-hgt">
+// 						   <span class="font-w-600">${modelData.verifer_my_reflect_id_Data.rep_username}</span> <br>
+// 						   ${modelData.verifer_my_reflect_id_Data.reflect_code}
+// 					   </p>
+// 				  </label>
+// 			</div>
+// 		</div>
+// 	  </td>
+// 	  <td>${v_or_c_name}<br> ${modelData.MyReflectIData.reflect_code}</td>
+
+// 	 <td>${type}</td>
+
+// 		<td>
+	
+// 		${modelData.ClientVerificationData.createdAt}
+// 	</td>
+// 	<td>30 jan, 2020</td>
+// 	<td class="text-center"> <span class="pending-status">${modelData.ClientVerificationData.request_status}</span></td>
+// 	<td>
+// 		  <a href="/myrequest_view?clientId=${modelData.ClientVerificationData.client_id}" class="view-link">View</a>
+// 	  </td>
+// </tr>`);
+
+
+// 				i++	  
+// 			});
+
+
+// 	} 
+	
+// 			}                                                    
+           
+   })
+})
+	</script>
+
+
+<!-- // <div class="loader-box">
+//   <img src="../assets/images/loader-3.gif">
+//  </div> -->
+<!-- //  <script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script> -->
+ 
+ <script>
+//  $( document ).ready(function() {
+//   //  alert('hey');
+ 
+//      $('.loader-box').hide();
+ 
+//  });
+//  $('.reject_click').click(function()
+//  {
+//   $('.loader-box').show();
+//  })
+ </script> 
+
+<script type="text/javascript">
+	function go_to_request_doc(){
+		// alert("hello");
+		var i = $("input[name='check_data']:checked").val();
+			
+				var request_id = $('#request_id_for_req'+i).val();
+				
+				
+					location.href = window.location.origin+'/ver-req-doc?request_id='+request_id;
+				
+		
+			
+	}
+
+	function remove_request(){
+		// alert("hello");
+		var request_id_list=[];
+		$.each($("input[name='check_data']:checked"), function(){
+				var i = $(this).val();
+				var request_id = $('#request_id_for_req'+i).val();
+				request_id_list.push(request_id);
+				});
+				// alert(request_id_list);
+				$.ajax({
+    				type: "post",
+					url:"/remove-requests",
+					data:{request_id_list:JSON.stringify(request_id_list)},
+    				success:function(data) {
+        	            location.reload();
+					}	
+				})	
+			
+	}
+</script>
+
+<script>
+	function checkSelect(value) {
+		
+			var check_data = [];
+			$.each($("input[name='check_data']:checked"), function(){
+				check_data.push($(this).val());
+				});
+				// alert(value)
+				// console.log("request_ids",invite_client_id)
+				if(check_data.length>1){
+					$("#disable_request_btn").addClass('dis-able-btn')
+				// 	$("#m_doc").addClass('dis-able-btn')
+				// 	$("#m_msg").addClass('dis-able-btn')
+				}else{
+					$("#disable_request_btn").removeClass('dis-able-btn')
+					// $("#m_doc").removeClass('dis-able-btn')
+					// $("#m_msg").removeClass('dis-able-btn')
+	
+	
+				}
+	
+	}
+</script>
+<script>
+	  var client_option_val;
+	    $('.client_reflet_select').click(function() {
+   
+  client_option_val = $(this).children("option:selected").val();
+  // alert(option_val)
+
+ });
+ var verifier_option_val;
+	    $('.verifier_reflet_select').click(function() {
+   
+  verifier_option_val = $(this).children("option:selected").val();
+  // alert(option_val)
+
+ });
+ $('.check_validations').click(function() {
+
+// alert(global_i)
+var message=$.trim($("#message").val());
+//   alert(message)
+//   alert(client_option_val)
+//   alert(verifier_option_val)
+
+  if(!message||!client_option_val||!verifier_option_val)
+   {
+  // alert(message)
+   
+	 $('.error_span').html('Please fill all the fields.');
+     return false;
+
+   }
+   else{
+	$('.hide_btn').hide();
+
+      $('.loader').show();
+	 setTimeout(function() {
+			  $('.error_span').fadeOut('fast');
+			}, 100);
+     return true;
+
+   }
+})
+</script>
+<script>
+	$('.click_eye').click(()=>{
+					   // $('.hide_btn').hide();
+
+					   $('.loader-box').show();
+
+   })
+</script>
+
+ <script>
+        $(document).ready(function(){
+
+			          $("#searchAccept").on("keyup", function() {
+
+			            var value = $(this).val().toLowerCase();
+			            // alert(value)
+			            if(value)
+			            {
+			                   $.ajax({
+			                      type: "post",
+			                      url: "/search-accept-onboarding",
+			                      data:{query:value},
+			                      success: function (data) {
+			                        // alert(data);
+			                        
+			                             $('.accept_table_append').html("");
+			                                      $('.accept_table_append').html(data);
+			                              
+			                        
+			                    
+			                      
+			                      }
+			                    })
+
+			            }
+			            else
+			            {
+			              location.reload(true);
+			            }
+           
+                   })
+			         $("#searchPending").on("keyup", function() {
+
+			            var value = $(this).val().toLowerCase();
+			            // alert(value)
+			            if(value)
+			            {
+			                   $.ajax({
+			                      type: "post",
+			                      url: "/search-pending-onboarding",
+			                      data:{query:value},
+			                      success: function (data) {
+			                        // alert(data);
+			                        
+			                             $('.pending_table_append').html("");
+			                                      $('.pending_table_append').html(data);
+			                              
+			                        
+			                    
+			                      
+			                      }
+			                    })
+
+			            }
+			            else
+			            {
+			              location.reload(true);
+			            }
+           
+                   })
+        });
+        </script>

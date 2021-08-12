@@ -1,0 +1,109 @@
+<%-include('../innerHeader')%>
+
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/createidentity-assets/success.png">
+					<h4>Import Your Wallet</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="setup-id-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="white-box">
+					<div class="row">
+						<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+							<% if(err_msg!=undefined && err_msg !='' ){ %>
+								<div class="alert alert-danger text-center  flash_msg "id="success_message">
+								<%= err_msg %>
+							   </div>
+							  <% }%>
+							<form action="/import-btc-wallet-address" method="POST" id="form_import_wallet">
+							<div class="setup-inner-box for-protact">
+								<div class="create-rflet-id-form">
+									<p>Please enter your private key below to import your wallet.</p>
+									<p>Key must be the BTC wallet key.</p>
+								     <div class="input-group">
+									  <input type="text" class="form-control" placeholder="Enter Private Key" name="private_key" data-rule-required="true" data-msg-required="Please enter Private Key."  id="pk">
+									 </div>
+									 <span id="span_error"style="color:red"></span>
+								</div>
+								<div class="private-key-copy-box for-success-box">
+									<button type="submit" id="submit_key" class="btn-common-new">Continue</button>
+									<!-- <a class="skip" href="/create-wallet">Create new wallet</a> -->
+								</div>
+							</div>
+						</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<%- include('../innerFooter')%>
+
+<script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script type="text/javascript">
+	$('#form_import_wallet').validate({
+		 onfocusout: function(element) {
+		 this.element(element);
+		 },
+		 errorClass: 'error_validate',
+		 errorElement:'span',
+		 highlight: function(element, errorClass) {
+		 $(element).removeClass(errorClass);
+		 },
+		 submitHandler:function(form)
+			{
+			  $('#submit_key').attr('disabled',true);
+	form.submit();
+
+			//   check_wallet_balance();
+
+			}
+		 });
+</script>
+<script>
+        setTimeout(function() {
+        $('#message').fadeOut('fast');
+		}, 3000);
+		setTimeout(function() {
+    $('#success_message').fadeOut('fast');
+    }, 3000);
+        </script>
+ <script type="text/javascript">
+	function check_wallet_balance()
+   {
+	   var pk=$('#pk').val();
+
+
+	   alert(pk)
+
+if (/[a-fA-F0-9]{52}$/.test(pk))
+ {
+	form.submit();
+
+ }
+ else
+ {
+	             $('#span_error').html("You have entered an invalid key");
+
+   return false;
+ }
+ 
+
+
+	   
+	 }
+</script>

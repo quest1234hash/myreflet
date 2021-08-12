@@ -1,0 +1,60 @@
+<table class="table tabel-virifier"id="myTable3">
+              <thead>
+                <tr>
+                  <th scope="col">No.</th>
+
+                  <th scope="col">Label</th>
+                 <th scope="col">Reflet Code</th>
+                  <!-- <th scope="col">Content</th> -->
+                  <th scope="col">ID Number</th>
+                  <th scope="col">Expiry Date</th>
+                  <th scope="col">Create Date</th>
+                  <!-- <th width="5%">Updated At</th> -->
+                </tr>
+              </thead>
+              <tbody id="myTable"class="div_data">
+                    <% if(document_list.length>0)
+                    {
+                       var i=0,j=1;
+
+                       document_list.forEach(function(each_data){
+                          %>
+                <tr>
+                   <td>
+                     <div>
+                       <p class=""><%=j%>.</p>
+                     </div>
+                   </td>
+                   <td>
+                     <div> 
+                       <p class="upper"><%=each_data.document_name%></p>
+                     </div>
+                   </td>
+                       <td><%if(each_data.rep_firstname){%>
+                                            <%=each_data.rep_firstname%> 
+
+                                      <%}else if(each_data.entity_company_name){%>
+                                         <%=each_data.entity_company_name%> 
+
+                                  <%}else{%>
+                                         <%=each_data.full_name%> 
+
+                                                    <%}%> <br><%=each_data.reflect_code%>
+                  </td>
+                  <td><%=each_data.doc_unique_code%></td>
+                  <td><%=moment(each_data.expire_date).format('MMM DD, YYYY')%></td>
+                  <td><%=moment(each_data.doc_create_date).format('MMM DD, YYYY')%></td>
+                  
+                  
+                </tr>
+                <%
+                i++;  j++;    
+            });
+              }else{
+     %>
+                       <tr>
+            <td colspan="6"><center>No record found.</center> </td>
+             </tr>       <%}%>
+             
+              </tbody>
+          </table>

@@ -1,0 +1,411 @@
+<%-include('innerHeader')%>
+<script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+
+<style>
+    .editor-input a{
+   min-width: auto;
+    }
+    .cke_chrome{
+        width: 100%;
+    }
+    .for-link-space{
+        margin: 0 2px;
+    }
+</style>
+
+
+<section class="heading-sec">
+    <div class="container">
+        <div class="row align-item-center">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="main-heading-dash">
+                    <img src="../assets/images/icons/home-assets/mydocuments.png">
+                    <h4>My Verifiers</h4>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="text-right">
+                    <a class="btn-common-new" href="" data-toggle="modal" data-target="#add-new-doc-Modal">Add New Terms & Conditions</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section>
+    <div class="container">
+        <div class="row align-item-center">
+            <div class="col-lg-12">
+                <div class="custom-space-btw another-drop-down for-search-document align-items-end">
+                    <div class="for-select-existing-doc">
+                        <div class="input-group">
+                            <div class="dropdown keep-inside-clicks-open">
+                                <h3 class="small-title">MyReflet ID</h3>
+                                <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    All
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start">
+                                    <div class="for-doc-select">
+                                        <div class="checkbox">  
+                                            <label>
+                                                All
+                                                <input type="checkbox" value="">
+                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                            </label>
+                                        </div>  
+                                    </div>
+                                    <div class="for-doc-select">
+                                        <div class="checkbox">  
+                                            <label>
+                                                John Doe - 1235556
+                                                <input type="checkbox" value="">
+                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                            </label>
+                                        </div>  
+                                    </div>
+                                    <div class="for-doc-select">
+                                        <div class="checkbox">  
+                                            <label>
+                                                Quest Glt - 1235556
+                                                <input type="checkbox" value="">
+                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                            </label>
+                                        </div>  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="custom-flex-row">
+                        <form class=" response-search"> 
+                             <div class="input-group search-address-book">
+                                <input type="text" class="form-control autocomplete" id="myInput" placeholder="Search" onkeypress="autoSearch(this);">
+                                <div class="input-group-append">
+                                    <button class="btn btn-search" type="button"><img src="../assets/images/icons/search-black.png"></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="personal-info-heading">
+                    <div class="text-right">
+                        <a href="">
+                            <div class="icon-for-dwnload">
+                                <div class="tooltip fade" data-title="Export Data">
+                                    <img src="../assets/images/icons/dashboard-assets/export.png">
+                                    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+                                </div>
+                            </div>
+                        </a>
+                        <a href="">
+                            <div class="icon-for-dwnload">
+                                <div class="tooltip fade" data-title="Print Data">
+                                    <img src="../assets/images/icons/dashboard-assets/print.png">
+                                    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="personal-info-box table-responsive another-table">
+                    <table class="table" id="myTable3">
+                        <thead>
+                            <tr> 
+                                <th scope="col">Sr.No.</th>
+                                <th scope="col">Verifier Name</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Creation Date</th>
+                                <th scope="col">Updated On</th>
+                                <th scope="col">View</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                    <% if(all_data.data.length>0)
+                       { 
+                       var i=0;k=1;
+                       all_data.data.forEach(function(each_data){
+                          %>
+                            <tr>
+                                <td><%=k%>.</td>
+                                 <td class="upper">
+                                            <%if(each_data.rep_firstname){%>
+                                                <span class="font-w-600"><%=each_data.rep_firstname%></span>
+                                                <br><%=each_data.reflect_code%>
+                                         <%}else if(each_data.entity_company_name){%>
+                                            <span class="font-w-600"> <%=each_data.entity_company_name%> </span>
+                                            <br><%=each_data.reflect_code%>
+                                         <%}%>
+                                </td>
+                               
+                                <td class="upper"><%=each_data.reflectid_by%></td>
+                                <td><%=moment(each_data.term_created_date).format('MMM DD, YYYY')%></td>
+                                <td><%=moment(each_data.term_updated_date).format('MMM DD, YYYY')%></td>
+                                <td>
+                                    <div class="dropdown-menu-new">
+                                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                                          <div class="doc-img">
+                                                <img src="../assets/images/icons/dashboard-assets/menu.png">
+                                            </div>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="profileDropdown" x-placement="bottom-start">
+                                            <a class="dropdown-item" href="my-doc-license.php">
+                                                <img src="../assets/images/icons/dashboard-assets/view.png"> View
+                                            </a>
+                                           <!--  <a class="dropdown-item" href="#edit-new-doc-Modal">
+                                                <img src="../assets/images/icons/dashboard-assets/edit.png"> Edit
+                                            </a> -->
+                                           <a class="dropdown-item" href="#edit-new-doc-Modal<%=i%>" data-toggle="modal">
+                                                <img src="../assets/images/icons/dashboard-assets/edit.png"> Edit
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                             </tr>
+                            <%
+                                                i++;    k++;        
+                            });
+                               }else{
+                           %>
+                       <tr>
+                        <td colspan="6"><center>No record found.</center> </td>
+                       </tr>             <%}%>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade field-edit-modal" id="add-new-doc-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+            <div class="row align-item-center">
+                <div class="col-xl-2 col-lg-3 col-md-3">
+                    <div>
+                        <img src="../assets/images/icons/createidentity-assets/popup-upload-icon.png">
+                    </div>
+                </div>
+                <div class="col-xl-7 col-lg-7 col-md-7">
+                    <h5 class="heading-purple">Add New Terms & Conditions</h5>
+                </div>
+            </div>
+            <!-- <form action="/submt-terms-and-condition" method="POST"> -->
+            <span class="success_span success_message_span"></span>
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+                        <div class="setup-inner-box for-protact pt-15">
+                        <div class="create-rflet-id-form">
+                            <div class="form-group for-select-existing-doc">
+                                <div class="input-group">
+                                  <div class="dropdown keep-inside-clicks-open">
+                                      <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Select Verifier
+                                      </button>
+                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <%for(let verifier_type of verifier_data){%>
+                                         <div class="for-doc-select">
+                                            <div class="checkbox">  
+                                              <label>
+                                                 <%if(verifier_type.rep_firstname){%>
+
+                                                      <p class="upper"><%=verifier_type.rep_firstname%>-<%=verifier_type.reflect_code%></p> 
+                                      
+                                                    <%}else if(verifier_type.entity_company_name){%>
+
+                                                       <p class="upper"><%=verifier_type.entity_company_name%>-<%=verifier_type.reflect_code%></p>  
+
+                                                    <%}%>
+                                                <input type="checkbox" name="type_checkbox" value="<%=verifier_type.reflect_id%>">
+                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                              </label>
+                                            </div>  
+                                         </div>
+                                          <%}%>
+                                      </div>
+                                    </div>
+                                  
+                                </div>
+                            </div>
+
+                                <div class="form-group">
+                                    <div class="input-group editor-input">
+                                      
+                                            <textarea name="editor1"id="terms_data"></textarea>
+                                            <script>
+                                                    CKEDITOR.replace( 'editor1' );
+                                            </script>
+                                    </div>
+                                </div>  
+                            </div>
+                            <div >
+                                <a class="btn-common-new add-verifier-terms">Save</button>
+                                <a class="btn-common-new" href="">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+              </div>
+          <!-- </form> -->
+       </div>
+    </div>
+  </div>
+</div>
+ <% if(all_data.data.length>0)
+                       { 
+                       var i=0;k=1;
+                       all_data.data.forEach(function(each_data){
+                          %>
+<div class="modal fade field-edit-modal" id="edit-new-doc-Modal<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="create-wallet-box">
+            <div class="row align-item-center">
+                <div class="col-xl-2 col-lg-3 col-md-3">
+                    <div>
+                        <img src="../assets/images/icons/createidentity-assets/popup-upload-icon.png">
+                    </div>
+                </div>
+                <div class="col-xl-7 col-lg-7 col-md-7">
+                    <h5 class="heading-purple">Add New Terms & Conditions</h5>
+                </div>
+            </div>
+            <!-- <form action="/submt-terms-and-condition" method="POST"> -->
+            <span class="success_span success_message_span"></span>
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+                        <div class="setup-inner-box for-protact pt-15">
+                        <div class="create-rflet-id-form">
+                            
+                                <div class="form-group">
+                                    <div class="input-group editor-input">
+                                            
+                                            <textarea name="editor1"id="terms_data_show<%=i%>"></textarea>
+
+                                            <script>
+                                                    CKEDITOR.replace( 'editor1' );
+                                                    
+                                                    $(document).ready(function () {
+  
+                                                    // CKEDITOR.replace('editor1');
+                                                    CKEDITOR.instances['terms_data_show'].setData(`<%=each_data.terms_and_condition%>`);
+                                                    });
+                                            </script>
+                                    </div>
+                                </div>  
+                            </div>
+                            <div >
+                                <a class="btn-common-new add-verifier-terms">Save</button>
+                                <a class="btn-common-new" href="">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+              </div>
+          <!-- </form> -->
+       </div>
+    </div>
+  </div>
+</div>
+
+<%  i++;    k++;     
+                             
+        });
+           }
+       %>
+<%- include('innerFooter')%>
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script>
+$(document).ready( function () {
+    $('.table').DataTable();
+} );
+</script>
+<script>
+    $(document).on('click.bs.dropdown.data-api', '.dropdown.keep-inside-clicks-open', function (e) {
+      e.stopPropagation();
+    });
+</script> 
+
+ <script>
+    $("#datepicker").datepicker();
+ </script>
+ <script>
+     $(document).on('click', '.browse', function(){
+    var file = $(this).parent().parent().parent().find('.file');
+    file.trigger('click');
+  });
+  $(document).on('change', '.file', function(){
+    $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i,''));
+  }); 
+</script>
+<script type="text/javascript">
+
+ $('.add-verifier-terms').click(()=>
+   {
+        alert('option_val')
+
+       var terms_data =  CKEDITOR.instances['terms_data'].getData();
+
+       // var terms_data = $.trim($("#terms_data").val());
+       
+       // var value = CKEDITOR.instances['terms_data'].getData();
+
+       var reflect_id = $('input[name=type_checkbox]:checked').map(function(_, el) {
+        return $(el).val();
+         }).get();
+
+         alert(reflect_id)
+
+                  alert(terms_data)
+
+            if(reflect_id===''||terms_data==='')
+                {
+                
+                $('.success_span').html('Please fill all the fields');
+                  
+                 return false;
+
+            }
+    
+           else{
+                  setTimeout(function() {
+                    $('.success_message_span').fadeOut('fast');
+                    }, 100);
+
+                             $.ajax({
+                                    type: "post",
+                                    url: "/submit-terms-and-condition",
+                                    data:{reflect_id:JSON.stringify(reflect_id),terms_data},
+                                    success: function (data) {
+                                        // alert(data);
+                                         $('.success_span').html('successfully! create terms & conditions.');
+                                            
+                                                             setTimeout(function() {
+                                                                $('.success_message_span').fadeOut('fast');
+                                                                }, 3000);
+                                                               window.location.reload(true);
+                                    
+                                    }
+                                })  
+
+
+     
+                
+                 
+            }
+       })
+   </script>

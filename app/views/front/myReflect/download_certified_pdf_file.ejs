@@ -1,0 +1,37 @@
+<html>
+<head>
+<style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+  background-color:#88beda ;
+  color: white;
+}
+</style>
+</head>
+<body>
+  <div style="font-family: sans-serif;color: #274794;    ">
+    <h3 style="margin: 10px 0;font-weight: 500;">Document Name : <%=doc_name%></h3>
+
+    <h3 style="margin: 10px 0;font-weight: 500;"><%=moment().format('MMM DD, YYYY')%>
+    </h3>
+  </div>
+    <div class="personal-info-box table-responsive another-table" style="font-family: sans-serif;">
+             <img  src="<%=data_uri%>">
+
+
+       
+       
+    </div>
+</body>
+</html>

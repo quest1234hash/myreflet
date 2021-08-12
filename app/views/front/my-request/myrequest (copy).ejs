@@ -1,0 +1,340 @@
+<%-include('../innerHeader')%>
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/home-assets/myrequests.png">
+					<h4>My Requests</h4>
+				</div>
+				<div class="custom-space-btw another-drop-down m-top-30 align-items-end">
+					<div class="for-select-existing-doc">
+					    <div class="input-group">
+							<div class="dropdown keep-inside-clicks-open">
+								<h3 class="small-title">MyReflet ID</h3>
+								<button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    All
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 20px, 0px);">
+								    <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								        	<label>
+								          		All
+								            	<input type="checkbox" value="">
+								            	<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+								    </div>
+					 <%ClientVerificationModelData.forEach(modelData=>{%>
+
+										<%if(modelData.ClientVerificationData.client_id==session.user_id){%>
+											<div class="for-doc-select">
+
+											<div class="checkbox"> 	
+													<label>
+															<%if(modelData.MyReflectIData.reflectid_by=="entity"){ %>
+												
+																<%=modelData.MyReflectIData.entity_company_name%>
+														
+																  <%}else{%>
+															
+																	<%=modelData.MyReflectIData.rep_username%>
+														
+																	<%}%> - <%=modelData.MyReflectIData.reflect_code%>
+
+													   <input type="checkbox" value="<%=modelData.MyReflectIData.reflect_code%>" class="checkbox2" name="check">
+													   <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+													 </label>
+											   </div>	
+										   </div>
+										<%}%>
+								    
+									<%})%>
+
+								    <!-- <div class="for-doc-select">
+								    	<div class="checkbox"> 	
+								         	<label>
+									          	Quest Glt - 1235556
+									            <input type="checkbox" value="">
+									            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+								          	</label>
+								        </div>	
+								    </div> -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<div>
+						<a href="#" class="btn-common-new text-center m-0">Create New Request</a>
+					</div>
+				</div>
+				<div class="personal-info-heading">
+					<div class="text-right">
+						<a href="javascript:void(0)" onclick="downloaddoclist()">
+							<div class="icon-for-dwnload">
+								<div class="tooltip fade" data-title="Export Data">
+									<img src="../assets/images/icons/dashboard-assets/export.png">
+							     	<img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+								</div>
+							</div>
+						</a>
+						<a class="nodata" id="" onclick="printDocdiv()">
+							<div class="icon-for-dwnload">
+								<div class="tooltip fade" data-title="Print Data">
+									<img src="../assets/images/icons/dashboard-assets/print.png">
+								    <img class="info-icon" src="../assets/images/icons/dashboard-assets/info-icon.png">
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12" id="list_div">
+				<div class="personal-info-box table-responsive another-table">
+					<table class="table" id="myTable3">
+						<thead>
+					    	<tr> 
+						      	<th scope="col" class="width-72">Request ID</th>
+						      	<th scope="col" class="width-188">Requested By/From Verifier</th>
+						      	<th scope="col" class="width-80">MyReflet ID</th>
+						      	<th scope="col">Type</th>
+						      	<th scope="col"class="width-95">Requested On</th>
+						      	<th scope="col">Due Date</th>
+						      	<th scope="col">Status</th>
+						      	<th scope="col">Action</th>
+					    	</tr>
+					  	</thead>
+						<tbody>
+    <% var i=1;ClientVerificationModelData.forEach(modelData=>{%>
+
+						    <tr>
+						    	<td><%=i%></td>
+						      	<td>
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <img class="profile-table" src="<%=modelData.verifer_my_reflect_id_Data.tbl_user_registration.dataValues.profile_pic%>">
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600"><%=modelData.verifer_my_reflect_id_Data.rep_username%></span> <br>
+							      		     		<%=modelData.verifer_my_reflect_id_Data.reflect_code%>
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</td>
+							    <td>
+                                  <%if(modelData.MyReflectIData.reflectid_by=="entity"){ %>
+									<span class="font-w-600"></span>
+									<%=modelData.MyReflectIData.entity_company_name%>
+								</span>
+									  <%}else{%>
+										<span class="font-w-600"></span>
+										<%=modelData.MyReflectIData.rep_username%>
+									</span>
+										<%}%>
+									 
+
+								 <br> <%=modelData.MyReflectIData.reflect_code%></td>
+								 <%if(modelData.ClientVerificationData.verifier_id==session.user_id){ %>
+									<td>Requested to me</td>
+
+								<%}else{%>
+									<td>Requested by me</td>
+
+									<%}%>
+								<td>
+									<%=moment(modelData.ClientVerificationData.createdAt).format('MMM DD, YYYY')%>
+								</td>
+							    <td>30 jan, 2020</td>
+							    <td class="text-center"> <span class="pending-status"><%=modelData.ClientVerificationData.request_status%></span></td>
+							    <td>
+							      	<a href="/myrequest_view?clientId=<%=modelData.ClientVerificationData.client_id%>" class="view-link">View</a>
+						      	</td>
+							</tr>
+							<% i++;})
+							console.log("from ejs",i)%>
+
+						     <!-- <tr>
+						    	<td>350052</td>
+						      	<td>
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <img class="profile-table" src="../assets/images/other/img_user1.png">
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600">Jack Ma</span> <br>
+							      		     		25102
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</td>
+							    <td><span class="font-w-600">John Doe </span> <br> 132556</td>
+							    <td>Requested by me</td>
+							    <td>20 jan, 2020</td>
+							    <td>30 jan, 2020</td>
+							    <td class="text-center"> <span class="pending-status">Pending</span></td>
+							    <td>
+							      	<a href="requested-by-verifier.php" class="view-link">View</a>
+						      	</td>
+						    </tr> -->
+						     <!-- <tr>
+						    	<td>350052</td>
+						      	<td>
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <img class="profile-table" src="../assets/images/other/img_user1.png">
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600">Jack Ma</span> <br>
+							      		     		25102
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</td>
+							    <td><span class="font-w-600">John Doe </span> <br> 132556</td>
+							    <td>Requested by me</td>
+							    <td>20 jan, 2020</td>
+							    <td>30 jan, 2020</td>
+							    <td class="text-center"> <span class="pending-status">Pending</span></td>
+							    <td>
+							      	<a href="requested-by-verifier.php" class="view-link">View</a>
+						      	</td>
+						    </tr>
+						     <tr>
+						    	<td>350052</td>
+						      	<td>
+							      	<div class="for-flex-align">
+							      		<div class="checkbox">
+								          	<label>
+									            <img class="profile-table" src="../assets/images/other/img_user1.png">
+							      		     	<p class="line-hgt">
+							      		     		<span class="font-w-600">Jack Ma</span> <br>
+							      		     		25102
+							      		     	</p>
+								         	 </label>
+								        </div>
+									</div>
+						      	</td>
+							    <td><span class="font-w-600">John Doe </span> <br> 132556</td>
+							    <td>Requested by me</td>
+							    <td>20 jan, 2020</td>
+							    <td>30 jan, 2020</td>
+							    <td class="text-center"> <span class="pending-status">Pending</span></td>
+							    <td>
+							      	<a href="requested-by-verifier.php" class="view-link">View</a>
+						      	</td>
+						    </tr> -->
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<%- include('../innerFooter')%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script>
+$(document).ready( function () {
+	$('.table').DataTable();
+} );
+</script>
+<script>
+	$(document).on('click.bs.dropdown.data-api', '.dropdown.keep-inside-clicks-open', function (e) {
+	  e.stopPropagation();
+	});
+</script> 
+
+<script>
+	var reflect_id = "List";
+	function downloaddoclist(){
+		html2canvas(document.getElementById('list_div')).then(function(canvas) {
+		var img = canvas.toDataURL("image/png");
+		var doc = new jsPDF();
+		doc.text(2,5, reflect_id);
+		doc.addImage(img,'JPEG',-10,10);
+		doc.save('doc-list.pdf');
+		});
+	  }
+	  function printDocdiv(){
+		
+		var restorepage = $('body').html();
+		  $('.nodata').hide();
+		 var printcontent = $('#list_div').clone();
+		 $('body').empty().html(printcontent);
+		 window.print();
+		 $('body').html(restorepage);
+	   
+	  
+	  }
+	</script>
+
+	<script>
+	
+	// ************** Search by client verfier code **********************
+$('.checkbox2').click(function() {
+		// var userid = `${ userid}`
+		$('.complaints_by_reflect_codes').html(" ")
+
+    var reflect_code_list = $('input[name=check]:checked').map(function(_, el) {
+        return $(el).val();
+	}).get();
+	if(reflect_code_list=='')
+	{
+		window.location.reload(true);
+
+	}
+    console.log("check box select value : ",reflect_code_list) 
+	$.ajax({
+                      type : 'POST',
+                      url  : '/show-complaints-by-reflect-code',
+					  data: {reflect_code_list:JSON.stringify(reflect_code_list)},
+					  
+                        success: function(data) {
+							console.log(data)
+						   var complaints=data.result_code_array
+						   var moment=data.moment
+							// $("#all").hide();
+						if(!data)
+					    {
+                            $(".complaints_by_reflect_codes").append(`<td>No record found</td>`);
+
+					     }
+					   else{
+						   
+
+						console.log("ajax success data : ",complaints)	
+						$(".all_list").hide();
+					$(".complaints_by_status_list").hide();
+					$(".complaints_by_reflect_codes").show();
+					$(".complaints_by_complain_id").hide();
+
+					for(var i=0;i<complaints.length;i++)
+                   {            console.log("data lll : ",complaints[i].complain_id)
+					  
+					    
+						$(".complaints_by_reflect_codes").append(`<tr class="content_search">
+						    	<td>C-${complaints[i].complain_id}</td>
+						      	<td>${complaints[i].created_at}</td>
+							    <td><span class="font-w-600">${complaints[i].rep_firstname}</span> <br>${complaints[i].reflect_code}</td>
+							    <td>${complaints[i].complain_message}</td>
+							    <td><span class="font-w-600">${complaints[i].rep_username}</span> <br> ${complaints[i].client_reflect_code}</td>
+							    <td> <span class="clr-purple">${complaints[i].complaint_status}</span></td>
+							    <td>
+							      	<a href="complaint-details.php" class="view-img"><img class="hide_link" src="../assets/images/icons/dashboard-assets/icon_view.png" alt="eye"></a>
+						      	</td>
+						    </tr>`);
+
+					   }
+
+
+	} 
+			}                                                    
+           
+})
+})
+	</script>
