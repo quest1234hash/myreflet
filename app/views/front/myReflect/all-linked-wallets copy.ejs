@@ -1,85 +1,21 @@
 <%- include('../innerHeader.ejs')%>
 <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 <style>
-.button-switch {
-    font-size: 1.5em;
-    height: 1.875em;
-    margin-bottom: 0;
-    position: relative;
-    width: 4.5em;
-    margin-top: 10px;
+	/* .toggle.btn {
+    min-width: 6.7rem;
+    min-height: 2.15rem;
 }
-.button-switch .lbl-off, .button-switch .lbl-on {
-    cursor: pointer;
-    display: block;
-    font-size: 14px;
-    /* font-weight: bold; */
-    line-height: 22px;
-    position: absolute;
-    top: 3px;
-    transition: opacity 0.25s ease-out 0.1s;
-    /* text-transform: uppercase; */
-    color: #fff;
+.btn-light .toggle-off {
+    color: #ffffff;
+    background-color: #ff0000;
+    border-color: #ff0000;
 }
-.button-switch .lbl-off {
-    right: 30px;
-}
-.button-switch .lbl-on {
-    color: #fefefe;
-    opacity: 0;
-    left: 8px;
-}
-.button-switch .switch {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  height: 0;
-  font-size: 1em;
-  left: 0;
-  line-height: 0;
-  outline: none;
-  position: absolute;
-  top: 0;
-  width: 0;
-}
-.button-switch .switch:before, .button-switch .switch:after {
-  content: "";
-  font-size: 1em;
-  position: absolute;
-}
-.button-switch .switch:before {
-    border-radius: 10px;
-    background: #274794;
-    height: 36px;
-    left: -0.25em;
-    top: -0.1875em;
-    transition: background-color 0.25s ease-out 0.1s;
-    width: 100px;
-}
-.button-switch .switch:after {
-    box-shadow: 0 0.0625em 0.375em 0 #666;
-    border-radius: 6px;
-    background: #fefefe;
-    height: 27px;
-    transform: translate(0, 0);
-    transition: transform 0.25s ease-out 0.1s;
-    width: 15px;
-}
-.button-switch .switch:checked:after {
-    transform: translate(3em, 0);
-}
-.button-switch .switch:checked ~ .lbl-off {
-  opacity: 0;
-}
-.button-switch .switch:checked ~ .lbl-on {
-  opacity: 1;
-}
-.button-switch .switch:checked:before {
-    background: red;
-}
-/*.button-switch .switch#switch-blue:checked:before {
-  background: #3498db;
-}*/
+.btn-primary  .toggle-on {
+    color: #ffffff;
+    background-color: #274794;
+    border-color: #274794;
+} */
+/* new css */
 
 </style>
 <!-- upper div part -->
@@ -277,22 +213,11 @@
 														<p><%= sharedArr[i].date %> | <%= sharedArr[i].time %></p>
 													</div>
 												</div>
-
-												<div class="button-switch">
-													<% if(sharedArr[i].block_status=='yes') {%>
-														<% console.log("please unblock")%>
-												  <input type="checkbox"  id="btn-block<%=i %>" class="switch"  onchange="blockAndUnblock(`<%=sharedArr[i].block_status %>`,`<%=i %>`,'<%= reflet_obj.reflet_id %>')"/>
-												  <% }else{ %>
-													<input type="checkbox" checked  id="btn-block<%=i %>" class="switch" onchange="blockAndUnblock(`<%=sharedArr[i].block_status %>`,`<%=i %>`,'<%= reflet_obj.reflet_id %>')"/>
-													<% console.log("please block")%>
-													<% } %>
-												  <label for="btn-block<%=i %>" class="lbl-off">Unblock</label>
-												  <label for="btn-block<%=i %>" class="lbl-on">block</label>
-												</div>
-
-												
-													
-												
+												<% if(sharedArr[i].block_status=='yes') {%>
+													<input id="btn-block<%=i %>" type="checkbox" data-toggle="toggle" style="color: white;background-color:#274794 !important;" data-on="Blocked" data-off="Unblock" onchange="blockAndUnblock(`<%=sharedArr[i].block_status %>`,`<%=i %>`,'<%= reflet_obj.reflet_id %>')">
+													 <% }else{ %>
+														<input id="btn-block<%=i %>" type="checkbox" data-toggle="toggle" style="color: white;background-color:#ff0000 !important;" data-on="Unblock" data-off="Blocked" onchange="blockAndUnblock(`<%=sharedArr[i].block_status %>`,`<%=i %>`,'<%= reflet_obj.reflet_id %>')">
+														<% } %>
 												 
 												</div>
 												
@@ -402,5 +327,3 @@
 		 //console.log("bbbbbbbbbbb:",val);
 	}
 </script>
-
-

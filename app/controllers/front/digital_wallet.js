@@ -28,44 +28,51 @@ var web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/v
 
 /** get_qr Get MEthod End **/
 
+//get all digital wallets
+
+
 /** my-wallets Get MEthod Start **/
 exports.show_digital_wallet=async(req,res,next) =>{
 
     var user_id=req.session.user_id;
     var user_type=req.session.user_type;
     try{
-        let digitals=await DigitalWalletRelsModel.findAll({where:{reg_user_id:user_id,status:'active'},order: sequelize.literal('dig_wallet_rel DESC')});
-        let digitalArr=[];
-        if(digitals.length>0){
-            let linkingStatus='';
-                 for(let i=0;i<digitals.length;i++){
-                     if(digitals[i].parent_reflect_id==null){
-                       linkingStatus='no',
-                       digitals[i].parent_reflect_id=''
-                     }else{
-                       linkingStatus='yes'
-                     }
-                     if(digitals[i].balance==null){
-                       digitals[i].balance='0'
-                     }
+    try{
+        var digitals=await DigitalWalletRelsModel.findAll({where:{reg_user_id:user_id,status:'active'},order: sequelize.literal('dig_wallet_rel DESC')});
+    }catch(err){
+      console.log(err);
+    }
+    let digitalArr=[];
+    var cryptoWallet=[];
+    let refletArr=[];
+    if(digitals.length>0){
+      let linkingStatus='';
+           for(let i=0;i<digitals.length;i++){
+               if(digitals[i].parent_reflect_id==null){
+                 linkingStatus='no',
+                 digitals[i].parent_reflect_id=''
+               }else{
+                 linkingStatus='yes'
+               }
+               if(digitals[i].balance==null){
+                 digitals[i].balance='0'
+               }
 
-                    let digitalObj={
-                        walletAddress:digitals[i].wallet_address,
-                        walletId:digitals[i].dig_wallet_rel.toString(),
-                        balance:digitals[i].balance,
-                        refletid:digitals[i].parent_reflect_id,
-                        isLinked:linkingStatus,
-                        digital_type:digitals[i].digital_type,
-                        wallet_name:''
-                    }
-                    digitalArr[i]=digitalObj;
-                 }
+              let digitalObj={
+                  walletAddress:digitals[i].wallet_address,
+                  walletId:digitals[i].dig_wallet_rel.toString(),
+                  balance:digitals[i].balance,
+                  refletid:digitals[i].parent_reflect_id,
+                  isLinked:linkingStatus,
+                  wallet_type:digitals[i].digital_type,
+                  wallet_name:''
+              }
+              digitalArr[i]=digitalObj;
+            }
+        }
 
-                 res.render('front/digital_wallet/digital-wallets',{ web3,digitalArr,session:req.session,qr_func,base64encode })
-                }else{
-                    res.render('front/digital_wallet/digital-wallets',{ web3,digitalArr,session:req.session,qr_func,base64encode })
-                }
 
+                 res.render('front/digital_wallet/digital-wallets',{ web3,digitalArr,session:req.session,qr_func,base64encode, encrypt });
     }catch(err){
         console.log(err);
         throw err;

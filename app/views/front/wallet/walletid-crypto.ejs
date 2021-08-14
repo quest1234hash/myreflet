@@ -40,20 +40,29 @@
 }
 </style>
 
-
 <section class="heading-sec">
 	<div class="container">
 		<div class="row align-item-center">
 			<div class="col-lg-12 col-md-12 col-sm-12">
 				<div class="main-heading-dash">
 					<img src="../assets/images/icons/createidentity-assets/setup.png">
-					<h4>Backup Your Private Key</h4>
+					<h4>Backup Your RefletID Address</h4>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
-
+<% if(err_msg!=undefined && err_msg !='' ){ %>
+	<div class="alert alert-danger text-center  flash_msg " id="error_msg">
+		<%= err_msg %>
+	   </div>
+	 
+	<% }%>
+	 <% if(success_msg!=undefined && success_msg !='' ){ %>
+	  <div class="alert alert-success text-center  flash_msg "id="success_message">
+	  <%= success_msg %>
+	 </div>
+	<% }%>
 <section class="setup-id-sec">
 	<div class="container">
 		<div class="row">
@@ -62,26 +71,31 @@
 					<div class="row">
 						<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
 							<div class="setup-inner-box for-protact">
-								<p>Your private key is used to authorize transactions for sending Ether or tokens on your Ethereum address. Do not share this with anyone, as this will give them full access to move your assets somewhere else. You can print a copy to make an offline backup.</p>
-
+								<p>Your wallet ID is a unique address on the `<%=wallet_type %>` Blockchain. Think of it like a bank account number that you own, used to send and receive `<%=wallet_type %>` and tokens. The ability to authenticate transactions on this address is encrypted by the private key you just created. Download a backup and save this address in a convenient location.</p>
+                                <form action="generate-pvt-key-crypto" method="POST">
 								<div class="private-key-copy-box">
 									<div class="form-group">
-										<label>Your Private Key</label>
+										<label>Your Wallet ID</label>
 										<div class="input-group mb-3">
-										  <input type="text" class="form-control" id="private_key" name="private_key" value="<%=private_key%>" readonly="readonly">
+										  <input type="text" class="form-control" id="wallet_address" value="<%=wallet_id%>" readonly="readonly" name="wallet_address">
+										  <input type="hidden" value="<%=privateKey %>" name="pvtKey" readonly>
+										  <input type="hidden" value="<%=wallet_type %>" name="wallet_type" readonly>
 										  <div class="input-group-append">
-										  	<span class="tooltip">
+										  	<!-- <a class="btn-copy" href="javascript:void(0);" onclick="myFunction()"><img src="../assets/images/icons/createidentity-assets/copy.png"></a> -->
+
+										  		<span class="tooltip">
 										  		<a class="btn-copy " href="javascript:void(0);" onclick="myFunction1()" onmouseout="outFunc()"><img src="../assets/images/icons/createidentity-assets/copy.png">
 										  		<span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
-										  	</a>
+										   	    </a>
 											</span>
-							  	<a class="btn-copy" href="javascript:void(0);" id="download" download="Myreflet_pvt.txt"><img src="../assets/images/icons/createidentity-assets/download.png"></a>
-							 
+										  	<a class="btn-copy" href="javascript:void(0);" id="download" download="wallet-address.txt"><img src="../assets/images/icons/createidentity-assets/download.png"></a>
+										 
 										  </div>
 										</div>
 									</div>
-									<a class="btn-common-new" href="wallet-created-successfully">my private key is backed up, continue</a>
+									<button  type="submit" class="btn-common-new">my address is backed up, continue</button>
 								</div>
+							</form>
 							</div>
 						</div>
 					</div>
@@ -93,14 +107,42 @@
 
 
 
-
-
 <%- include('../innerFooter')%>
 
+<script type="text/javascript">
+	function myFunction() {
+	  var copyText = document.getElementById("wallet_address");
+	  if($('#wallet_address').val() !="")
+	  {
+	  copyText.select();
+	  document.execCommand("copy");
+	  alert("Wallet address is copied.");
+	  }  
+	}  
+</script>
+<script type="text/javascript">
+	(function () {
+	var textFile = null,
+	  makeTextFile = function (text) {
+		var data = new Blob([text], {type: 'text/plain'});
+		if (textFile !== null) {
+		  window.URL.revokeObjectURL(textFile);
+		}
+		textFile = window.URL.createObjectURL(data);
+		return textFile;
+	  };
+	  var create = document.getElementById('download'),
+		textbox = document.getElementById('wallet_address');
+	  create.addEventListener('click', function () {
+		var link = document.getElementById('download');
+		link.href = makeTextFile(textbox.value);
+	  }, false);
+	})();
+	</script>
 
 <script>
 function myFunction1() {
-  var copyText = document.getElementById("private_key");
+  var copyText = document.getElementById("wallet_address");
   copyText.select();
   copyText.setSelectionRange(0, 99999);
   document.execCommand("copy");
@@ -116,38 +158,4 @@ function outFunc() {
   tooltip.innerHTML = "Copy to clipboard";
 }
 </script>
-
-
-<!-- <script type="text/javascript">
-	function myFunction() {
-	  var copyText = document.getElementById("private_key");
-	  if($('#private_key').val() !="")
-	  {
-	  copyText.select();
-	  document.execCommand("copy");
-	  alert("Private key is copied.");
-    
-	  }  
-	}  
-</script> -->
-<script type="text/javascript">
-	(function () {
-	var textFile = null,
-	  makeTextFile = function (text) {
-		var data = new Blob([text], {type: 'text/plain'});
-		if (textFile !== null) {
-		  window.URL.revokeObjectURL(textFile);
-		}
-		textFile = window.URL.createObjectURL(data);
-		return textFile;
-	  };
-	  var create = document.getElementById('download'),
-		textbox = document.getElementById('private_key');
-	  create.addEventListener('click', function () {
-		var link = document.getElementById('download');
-		link.href = makeTextFile(textbox.value);
-	  }, false);
-	})();
-	</script>
-
  

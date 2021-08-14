@@ -38,6 +38,41 @@
   visibility: visible;
   opacity: 1;
 }
+
+
+.client-dash-sec .wallet-box{
+        position: relative;
+        
+    }
+    
+    .balance-value.alert.alert-warning {
+        padding: 2px 10px;
+        border-radius: 5px !important;
+        color: #fff;
+        position: absolute;
+        right: 0;
+        top: -16px;
+    }
+    .alert-warning {
+        color: #856404;
+        background-color: #28a745  !important;
+        border-color: #28a745  !important;
+    }
+    
+    .balance-value2.alert.alert-warning2 {
+        padding: 3px 10px;
+        border-radius: 5px !important;
+        color: #fff;
+        position: absolute;
+        right: 0;
+        top: -16px;
+    }
+    .alert-warning2 {
+        color: #856404;
+        background-color: #f2081e  !important;
+        border-color: #f2081e  !important;
+    }
+    
 </style>
 <section class="heading-sec">
 	<div class="container">
@@ -50,8 +85,8 @@
 			</div>
 			<div class="col-lg-8 col-md-8 col-sm-8">
 				<div class="text-right">
-					<a class="btn-common-new" href="/get-create-wallet">Add New Wallet</a>
-					<a class="btn-common-new" href="/import-wallet">Import Wallet</a>
+					<!-- <a class="btn-common-new" href="/get-create-wallet">Add New Wallet</a> -->
+					<a class="btn-common-new" href="/create-wallets">Add New Wallet</a>
 				</div>
 			</div>
 		</div>
@@ -61,210 +96,104 @@
 <section class="id-code-box-sec">
 	<div class="container">
 		<div class="row">
-
-			<%
-			    var i=1;
-				if(digitalArr.length>0)
-				{
-
-					
-			%>
-			<% digitalArr.forEach(function(each_wallet) { %>
-			<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-				<div class="white-box full-box wallet-box">
-					<div class="row align-item-center">
-					   <div class="col-xl-6 col-lg-12 col-md-12">
-					   	  <div class="id-code-represent-heading"> 
-						
-							
-				<span><%#- (each_wallet.reflectid_by == 'digitalWallet') ? 'Digital Wallet' : each_wallet.reflectid_by %></span>
-				
- 						  </div> 
-					   </div>
-					   <div class="col-xl-6 col-lg-12 col-md-12">
-					   	 <h5 class="mb-0 balance-value">Balance :<%= each_wallet.balance %>ETH</h5>
-					   </div>
-					 
-					</div>
-					<div>
-						<div class="row inner-box-id-code">
-							<div class="col-md-4 p-0">
-								<div class="for-flex-align">
-									<img src="../assets/images/icons/home-assets/user.png">
-									<p>MyReflet ID </p>
-								</div>
-							</div>
-							<div class="col-md-6 dubble-dot-after p-0">
-								<%# if(session.user_type!="client"){%>
-									
-										<a href="/myreflect-verifier-view?id=<%=each_wallet.reflect_code%>"><p><%#= each_wallet.refletid %></p></a>
-									
-									
-								<%#}else{%>
-									<%# if(each_wallet.reflectid_by=="entity"){%>
-
-										<a chref="#private-key-accept-Modal<%=i%>" class="" data-toggle="modal"><p>
-											<%= each_wallet.refletid %></p></a>
-									<%#}else{%>
-									<a href="#private-key-accept-Modal<%=i%>" class="" data-toggle="modal"><p><%#= each_wallet.refletid %></p></a>
-									<%#}%>
-								<%#}%>
-
-								
-							</div>
-						</div>
-						<div class="row inner-box-id-code">
-							<div class="col-md-4 p-0">
-								<div class="for-flex-align">
-									<img src="../assets/images/icons/home-assets/user.png">
-									<p>Wallet Name </p>
-								</div>
-							</div>
-							<div class="col-md-6 dubble-dot-after p-0">
-							
-								<%if(each_wallet.wallet_name){%>
-                      	<a href="#private-key-accept-Modal<%=i%>" class="" data-toggle="modal"><p><%= each_wallet.wallet_name %></p></a>
-								<%}else{%>
-                                 <p>NA</p>  
-								<%}%>
-							</div>
-							
-						</div>
-						<div class="row inner-box-id-code">
-							<div class="col-md-4 p-0">
-								<div class="for-flex-align">
-									<img src="../assets/images/icons/home-assets/user.png">
-									<p>Wallet ID </p>
-								</div>
-							</div>
-							<div class="col-md-6 dubble-dot-after p-0">
-							
-						<%= each_wallet.walletId %>
-							
-							</div>
-							
-						</div>
-
-						
-						<div class="private-key-copy-box mt-15">
-							<div class="form-group">
-								<label>Your Wallet Address</label>
-								<div class="input-group mb-3">
-								  <input type="text" class="form-control"  value="<%- each_wallet.walletAddress %>" id="wallet_addr<%=i %>"readonly>
-								  <div class="input-group-append">
-								  	<!-- <a class="btn-copy" href="javascript:void(0);" onclick="copy_address('<%=i %>')"><img src="../assets/images/icons/createidentity-assets/copy.png"></a> -->
-
-								  		<span class="tooltip">
-										  		<a class="btn-copy " href="javascript:void(0);" onclick="myFunction1('<%=i %>')" onmouseout="outFunc('<%=i %>')"><img src="../assets/images/icons/createidentity-assets/copy.png">
-										  		<span class="tooltiptext" id="myTooltip<%=i%>">Copy to clipboard</span>
-										   	    </a>
-											</span>
-								  </div>
-								</div>
-							</div>
-						</div>
+			<div class="col-md-12"> 
+				<div class="white-box client-dash-sec">
+					<div class="tab-content" id="myTabContent">
+						<!-- digital wallets -->
+					  <div class="tab-pane fade show active" id="dashtab1" role="tabpanel" aria-labelledby="dash-tab">
+						 <% if(digitalArr.length>0){  %>
 						<div class="row">
-							<div class="col-md-3">
-								<div id="qrcode<%= i %>" class="qrcode" ></div>
-								
-							</div>
-							<div class="col-md-9">
-								<h4 class="purple-heading">Just scan the wallet address</h4>
-								<p>You can share this QR code with friends to receive ether or tokens in your wallet.</p>
-								<div class="row mt-15">
-									<div class="col-xl-6 col-lg-12 col-md-12">
-										<a class="btn-common-new single-color-btn" href="/send-ether?ied=<%= base64encode(each_wallet.walletId) %>"><img src="../assets/images/icons/wallet/send.png">Send</a>
-									</div>
-									<div class="col-xl-6 col-lg-12 col-md-12">
-									    <a class="btn-common-new border-btn" href="javascript:void(0);" onclick="show_share_modal('<%= each_wallet.walletAddress %>','<%= i %>')" ><img src="../assets/images/icons/wallet/share.png"> Share</a>
+							<%  for(let i=0;i<digitalArr.length;i++){  %>
+							<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+								<div class="white-box full-box wallet-box">
+									<div class="row align-item-center">
+									   <div class="col-xl-6 col-lg-12 col-md-12">
 
+									   </div>
+									   
+										   <% if(digitalArr[i].isLinked=='yes'){ %>
+											<div class="col-xl-12 col-lg-12 col-md-12 text-right">
+											<label class="mb-0 balance-value ml-auto alert alert-warning" >Linked</label>
+										</div>
+											<% }else{ %>
+												<div class="col-xl-12 col-lg-12 col-md-12 text-right">
+													<label class="mb-0 balance-value2 ml-auto alert alert-warning2" >Not Linked</label>
+											</div>
+												<%  }%>
+									
 									</div>
+									<div>
+									<div class="row inner-box-id-code">
+											<div class="col-md-4 p-0">
+												<div class="for-flex-align">
+													<img src="../assets/images/icons/home-assets/user.png">
+													<p>Wallet ID</p>
+												</div>
+											</div>
+											<div class="col-md-6 dubble-dot-after p-0">
+												<p><%= digitalArr[i].walletId %></p>
+											</div>
+										</div>
+										<div class="private-key-copy-box mt-15">
+											<div class="form-group">
+												<label>Public key</label>
+												<div class="input-group mb-3">
+													<input type="text" class="form-control" value="<%= digitalArr[i].walletAddress %>" id="wallet_addr<%=i %>" readonly>
+												  <div class="input-group-append">
+													<span class="tooltip">
+													  <a class="btn-copy" href="javascript:void(0);"  onclick="myFunction1('<%=i %>')" onmouseout="outFunc('<%=i %>')"><img src="../assets/images/icons/createidentity-assets/copy.png">
+														<span class="tooltiptext" id="myTooltip<%=i%>">Copy to clipboard</span>
+													</a>
+													</span>
+												  </div>
+												</div>
+											</div>
+										</div>
+										<div class="row inner-box-id-code">
+											<div class="col-md-4 p-0">
+												<div class="for-flex-align">
+													<img src="../assets/images/icons/home-assets/user.png">
+													<p>MyReflet ID</p>
+												</div>
+											</div>
+											<div class="col-md-6 dubble-dot-after p-0">
+												<p><%= digitalArr[i].refletid %></p>
+											</div>
+										</div>
+										<div class="row inner-box-id-code">
+											<div class="col-md-4 p-0">
+												<div class="for-flex-align">
+													<img src="../assets/images/icons/wallet/ethereum.svg">
+													<p>ETH Balance</p>
+												</div>
+											</div>
+											<div class="col-md-6 dubble-dot-after p-0">
+												<p>0 ETH</p>
+											</div>
+										</div>
+										<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+											<a href="get_trans_history" onclick="location.href=this.href+'?wallet_type='+ `<%=encrypt(digitalArr[i].wallet_type) %>`+'&wallet_id='+`<%=encrypt(digitalArr[i].walletId) %>`;
+												return false" class="btn-common-new"  style="padding: 4px 9px 3px 9px;"><i class="fas fa-eye"></i></a>
+											</div>
+									 </div>
 								</div>
 							</div>
-						</div>
-			         </div>
-			    </div>
-            </div>
-            <% 
 
-            i++;
+							<% } %>
+						  
+						 </div>
+						 <% } %>
 
-        }); %>
-            <%}else{%>
-				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-					<div class="white-box create-wallet-box">
-						<div class="row align-item-center">
-		
-							<div class="col-xl-12 col-lg-12 col-md-12">
-								<!-- <h5 class="heading-purple">Create a New Wallet</h5> -->
-								<p><center>Currently, No wallet available.</center></p>
-							</div>
-						</div>
+						
+						 
+					  </div>
 					</div>
 				</div>
-			
-			<%}%>
-            
-		 </div>
+			</div>
+		</div>
 	</div>
 </section>
-<%
-			    var i=1;
-				if(digitalArr.length>0)
-				{
 
-					digitalArr.forEach(function(each_wallet) { %>
-<div class="modal fade field-edit-modal" id="private-key-accept-Modal<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-    <div class="modal-body">
-      <button type="button" class="close hide_click" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-      </button>
-      <div class="create-wallet-box">
-        <div class="row align-item-center">
-          <div class="col-xl-2 col-lg-3 col-md-3">
-            <div class="for-icon-bg">
-              <img src="../assets/images/icons/createidentity-assets/popup-mobile-icon.png">
-            </div>
-          </div>
-          <div class="col-xl-10 col-lg-10 col-md-10">
-            <h5 class="heading-purple">Please enter your private key.</h5>
-            <!-- <p>Verify your phone number by entering the OTP sent to your registered email address.</p> -->
-            <div id="error_message"><span class="error_validate" id="accept_error<%=i%>"></span></div>
-
-          </div>
-        </div>
-         <div class="login-form-main phone-otp">
-           <div class="form-group">
-            <label>Private Key</label>
-            
-              <input type="text" id="private_key_accept<%=i%>" name="private_key_accept" class="form-control text-center">
-              
-           
-          </div>
-            <input type="hidden" id="wallet_address<%=i%>" value="<%=each_wallet.wallet_address %>">
-            <input type="hidden" id="reflect_code<%=i%>" value="<%=each_wallet.reflect_code%>">
-
-          <div class="private-key-copy-box">
-            <button class="btn-common-new check hide_click" onclick="accept_request('<%=i%>')">Continue</button>
-<!--                         <button class="btn-common-new check hide_click" onclick="formsubmit()">Continue</button>
- -->
-          <center><span class="loader"><img src="../assets/images/loader-3.gif"></span></center>
-
-          </div>
-        </div>
-       </div>
-     </div>
-    </div>
-  </div>
-  </div>
-<%
-			i++;    })
-			}
-
-					
-			%>
 <!-- <a onclick="shareit1()">Share on facebook</a>
  -->
 <script type="text/javascript">
@@ -557,59 +486,7 @@ function dataURItoBlob(dataURI) {
   window.open( facebookShareUrl, "","top=" + alignTop + ",left=" + alignLeft + ",width=" + windowWidth +",height=" + windowHeight);
 }
 </script>
-<div class="modal fade field-edit-modal" id="share-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <div class="create-wallet-box  for-share">
-			<div class="row align-item-center">
-				<div class="col-xl-2 col-lg-3 col-md-3">
-					<div>
-						<img src="../assets/images/icons/wallet/popup-share-icon.png">
-					</div>
-				</div>
-				<div class="col-xl-7 col-lg-7 col-md-7">
-					<h5 class="heading-purple">Share</h5>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xl-4 col-lg-4 col-md-4 m-auto">
-					<div  id="wallet-qrcode">
-						<!-- <img src="../assets/images/icons/wallet/qrcode.png" id="wallet-qrcode" class="img-fluid"> -->
-					</div>
-			    </div>
-				<div class="col-xl-8 col-lg-8 col-md-8 m-auto">
-					<div class="setup-inner-box for-protact">
-						<div class="create-rflet-id-form">
-						   <h6>Share to</h6>
-						   <div class="share-links">
-						   	  <a href="" target="blank" id="whatsup-url" >
-						   	  	<img src="../assets/images/icons/wallet/whatsapp.png" >
-						   	  </a>
-						   	  <a href="javascript:void(0);" onclick="shareit()" id="">
-						   	  	<img src="../assets/images/icons/wallet/fb.png">
-						   	  </a >
-						   	  <a href="" target="blank" id="instagram-url">
-						   	  	<img src="../assets/images/icons/wallet/instagram.png">
-						   	  </a>
 
-						   </div>
-						</div>
-						<div >
-							<!-- <a class="btn-common-new" href="">Share</a> -->
-							<a class="btn-common-new" href="">Cancel</a>
-						</div>
-					</div>
-				</div>
-			 </div>
-	 	  </div>
-       </div>
-    </div>
-  </div>
-</div>
 
 
 <script type="text/javascript">
@@ -643,6 +520,8 @@ function dataURItoBlob(dataURI) {
 	  }  
 	}  
 </script>
+
+
  <script>
 function myFunction1(i_val) {
   var copyText = document.getElementById("wallet_addr"+i_val);
@@ -652,7 +531,7 @@ function myFunction1(i_val) {
   
   var tooltip = document.getElementById("myTooltip"+i_val);
   tooltip.innerHTML = "Copied";
-    // tooltip.innerHTML = "Copied: " + copyText.value;
+	// tooltip.innerHTML = "Copied: " + copyText.value;
 
 }
 
@@ -660,95 +539,4 @@ function outFunc(i_val) {
   var tooltip = document.getElementById("myTooltip"+i_val);
   tooltip.innerHTML = "Copy to clipboard";
 }
-</script>
-<script type="text/javascript">
-
-	  function accept_request(i_val){
-
-    var private_key = $('#private_key_accept'+i_val).val();
-    var wallet_address = $('#wallet_address'+i_val).val();
-    var reflect_code = $('#reflect_code'+i_val).val();
-
-
-    // alert(reflect_code)
-
-    // alert(private_key)
-    //     alert(wallet_address)
-
-    if(private_key!=""){
-
-      if(private_key.length<64){
-        $('#accept_error'+i_val).html("");
-        $('#accept_error'+i_val).html("Please enter valid private key.");
-      }else if( private_key.length>66){
-        $('#accept_error'+i_val).html("");
-        $('#accept_error'+i_val).html("Please enter valid private key.");
-      }else{
-              $('.hide_click').hide();
-
-                $('.loader').show()
-
-
-// alert(validatore_id)
-// alert(validatore_name)
-// alert(validator_type)
-
-      $.ajax({
-          type:"post",
-          url:"/check-private-key-for-digital-wallet",
-          data:{private_key,wallet_address,reflect_code},
-          success:function(data) {
-            // alert(data)
-              // setTimeout(function(){
-                // alert('data : '+data.fail);
-                //                 alert('data : '+data.success);
-
-        //       },
-        // 5000);
-
-           if(data.fail=='true' && data.success=='true'){
-
-                   // alert('data'+data)
-           //         if(type==='entity')
-           //         { 
-           //          		var view_url="entity?reflect_id="+reflect_id
-
-           //         }else{
-		         //            var view_url="/view-reflect-id?id"+reflect_code
-
-           //         }
-           window.location="/view-reflect-id?id="+reflect_code
-
-
-	         	// $(".append_link").attr("href", view_url)
-
-						    }else
-						    {
-						    	              $('.hide_click').show();
-
-                                                   $('.loader').hide()
-
-						                  $('#accept_error'+i_val).html("");
-                                         $('#accept_error'+i_val).html("Your private key is not match with this wallet-address.");
-
-						    }
-    }
-  });
-      } 
-      }else{
-                      // $('.hide_click').hide();
-
-      $('#accept_error'+i_val).html("");
-      $('#accept_error'+i_val).html("Please enter your private key.");
-    }
-  }
-
-</script>
-<script>
-	$('.click_eye').click(()=>{
-					   // $('.hide_btn').hide();
-
-					   $('.loader-box').show();
-
-   })
 </script>

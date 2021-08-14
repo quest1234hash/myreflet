@@ -1,0 +1,65 @@
+<%-include('../innerHeader')%>
+
+
+<section class="heading-sec">
+	<div class="container">
+		<div class="row align-item-center">
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="main-heading-dash">
+					<img src="../assets/images/icons/createidentity-assets/success.png">
+					<h4>Import <%=wallet_type  %> Wallet</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+	<!-- message -->
+	<% if(err_msg!=undefined && err_msg !='' ){ %>
+		<div class="alert alert-danger text-center  flash_msg " id="error_msg">
+			<%= err_msg %>
+		   </div>
+		 
+		<% }%>
+		 <% if(success_msg!=undefined && success_msg !='' ){ %>
+		  <div class="alert alert-success text-center  flash_msg "id="success_message">
+		  <%= success_msg %>
+		 </div>
+		<% }%>
+<section class="setup-id-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="white-box">
+					<div class="row">
+						<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+							<form action="import-crypto-wallet" method="POST">
+							<div class="setup-inner-box for-protact">
+								<div class="create-rflet-id-form">
+									<h4>Import <%= wallet_type %> Wallet</h4>
+									<p>Please enter your private key below to import your wallet.</p>
+								     <div class="input-group">
+									  <input type="text" class="form-control" name="pvt_key" placeholder="Enter Private Key">
+									  <input type="hidden" class="form-control" name="wallet_type" value="<%= wallet_type %>" placeholder="Enter Private Key">
+									 </div>
+								</div>
+								<div class="private-key-copy-box for-success-box">
+									<button type="submit" class="btn-common-new" href="#">Continue</button>
+								</div>
+							</div>
+							</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+<%- include('../innerFooter')%>
+
+
+
+ 

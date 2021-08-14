@@ -13,6 +13,27 @@ var { CryptoWalletModel}=require('../../models/crypto_wallet');
 const {DigitalWalletRelsModel}=require('../../models/wallet_digital_rels');
 const {CryptoTransHistoryModel}=require('../../models/crypto_transaction_his');
 const {DocumentTransactionModel}=require('../../models/document_trans_his');
+const {pushnotification,updateNotification,btcbalance}=require('../apies/btc_apies');
+//btc wallet details
+var bitcoin = require("bitcoinjs-lib");
+const TESTNET = bitcoin.networks.testnet;
+const MAINNET = bitcoin.networks.bitcoin;
+//btc wallet details end
+//..............................................
+//eth wallet detaisl
+const Tx = require('ethereumjs-tx')
+let priceOfCrypto = require('crypto-price');
+const Web3 = require('web3');
+var EthUtil = require('ethereumjs-util');
+var bip39 = require('bip39');
+let eth_wallet=require('ethereumjs-wallet');
+const { hdkey } = require('ethereumjs-wallet');
+var etherHDkey=hdkey;
+const web3jsAcc = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/fa42c8837a7b4155ba2ab5ba6fac9bd1"));
+
+
+//eth end
+
 var {
   MarketPlaceMsg
 }=require('../../models/market_place')
@@ -25,13 +46,12 @@ var QRCode = require('qrcode');
 
 const Op = require('sequelize').Op
 var stb = require("satoshi-bitcoin");
-const Tx = require('ethereumjs-tx')
-const Web3 = require('web3');
+
 // var web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/eda1216d6a374b3b861bf65556944cdb"));
 // var web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/f8a10cc5a2684f61b0de4bf632dd4f4b"));
 //var web3 = new Web3(new Web3.providers.HttpProvider("http://13.233.173.250:8501"));
 var web3 = new Web3(new Web3.providers.HttpProvider("http://128.199.31.153:8501"));
-const web3jsAcc = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/fa42c8837a7b4155ba2ab5ba6fac9bd1"));
+
 const nodemailer = require("nodemailer");
 var db = require('../../services/database');
 var sequelize = require('sequelize');
@@ -499,34 +519,36 @@ for(var i=0; i<request_ids.length; i++){
 
 
 //btc balance
-const btcbalance=async function(address){
-  //  var address="mhJhQGa5gecXjBMSyGuhWTg1ZTAWSqjmCE";
-   // var data = JSON.stringify({ "address": address });
-    //console.log("param ", data)
+// const btcbalance=async function(address){
+//   //  var address="mhJhQGa5gecXjBMSyGuhWTg1ZTAWSqjmCE";
+//    // var data = JSON.stringify({ "address": address });
+//     //console.log("param ", data)
     
-    var config = {
-      method: 'get',
-      url: `https://api.blockcypher.com/v1/btc/test3/addrs/${address}`,
-      headers: {
-       'Content-Type': 'application/json',
-      },
-    };
-    return axios(config)
-       .then(function (response) {
+//     var config = {
+//       method: 'get',
+//       url: `https://api.blockcypher.com/v1/btc/test3/addrs/${address}`,
+//       headers: {
+//        'Content-Type': 'application/json',
+//       },
+//     };
+//     return axios(config)
+//        .then(function (response) {
    
-       //  console.log("BBBBBBBBBBBBBBBBBBBBBBB",response);
-         let balance=response.data.balance;
-         let actuaLBtc=stb.toBitcoin(balance);
-         console.log("BBBBBBBBBBBBBBBBBBBBBBB",actuaLBtc);
-         return actuaLBtc;
-       }) 
-     }
+//        //  console.log("BBBBBBBBBBBBBBBBBBBBBBB",response);
+//          let balance=response.data.balance;
+//          let actuaLBtc=stb.toBitcoin(balance);
+//          console.log("BBBBBBBBBBBBBBBBBBBBBBB",actuaLBtc);
+//          return actuaLBtc;
+//        }) 
+//      }
 
 //fetch transaction history page
 exports.getTransactionHistoryForIndividual=async function(req,res){
   console.log("******************Transaction history page******************************************************");
   var user_type = req.session.user_type;
   var user_id=req.session.user_id;
+  success_msg = req.flash('success_msg');
+  err_msg = req.flash('err_msg');
   let wallet_address=decrypt(req.query.wallet_id);
   let wallet_type=decrypt(req.query.wallet_type);
   console.log("wallet addresss:",wallet_address);
@@ -600,7 +622,9 @@ exports.getTransactionHistoryForIndividual=async function(req,res){
                   user_id,
                   public_key,
                   balance,
-                  reflet_id
+                  reflet_id,
+                  success_msg,
+                  err_msg
                   })
          }else{
           console.log("ready to render crypto history:",cryptoTransArr);
@@ -611,7 +635,9 @@ exports.getTransactionHistoryForIndividual=async function(req,res){
             user_id,
             public_key,
             balance,
-            reflet_id
+            reflet_id,
+            success_msg,
+            err_msg
 })
          }
      }else{
@@ -655,7 +681,9 @@ exports.getTransactionHistoryForIndividual=async function(req,res){
               user_id,
               public_key,
               balance,
-              reflet_id
+              reflet_id,
+              success_msg,
+              err_msg
   })
               }else{
                 res.render('front/transaction_history',{        
@@ -665,7 +693,9 @@ exports.getTransactionHistoryForIndividual=async function(req,res){
                   user_id,
                   public_key,
                   balance,
-                  reflet_id
+                  reflet_id,
+                  success_msg,
+                  err_msg
       })
               }
            }     
@@ -1195,7 +1225,7 @@ exports.getAllWallets=async function(req,res){
             }
               
             try{
-              var allCypto =await CryptoWalletModel.findAll({where:{reg_user_id:user_id},limit:10,order: sequelize.literal('wallet_id DESC')})
+              var allCypto =await CryptoWalletModel.findAll({where:{reg_user_id:user_id},order: sequelize.literal('wallet_id DESC')})
               }catch(err){
               // res.json({ status: 0, msg: "Something went wrong", data: { err_msg: 'Failed'} });
               console.log(err);
@@ -1549,6 +1579,846 @@ exports.generatePvtKeyForDigitalWallet=async function(req,res){
 exports.getSuccessdigital=async function(req,res){
   try{
          res.render('front/digital_wallet/digital-wallet-success.ejs');
+  }catch(err){
+    throw err;
+  }
+}
+
+
+//create crypto wallet -generate walletd id=walleted address
+exports.generateWalletIDForCrypto=async function(req,res){
+  let wallet_type=req.query.wallet_type;
+  let user_id=req.session.user_id;
+  success_msg = req.flash('success');
+  err_msg= req.flash('err_msg'); 
+  try{
+           if(wallet_type=='BTC'){
+            var keyPair = bitcoin.ECPair.makeRandom({ network: TESTNET });
+            var pkey = keyPair.toWIF();
+         const { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey, network: TESTNET});
+         const privkey = keyPair.privateKey.toString('hex');
+         const pubkey = keyPair.publicKey.toString('hex');
+         console.log("public key",pubkey);
+          let isCreatedBtcWallet =await CryptoWalletModel.create({
+             public_key:encrypt1(pubkey),
+             reg_user_id:user_id,
+             wallet_type:encrypt1('BTC'),
+             reflectid_by:encrypt1('representive'),
+             wallet_address:encrypt1(address)
+           })
+           //console.log("Created:::::::::::",isCreatedBtcWallet);
+           if(isCreatedBtcWallet){
+            //  res.json({
+            //    status: 1, msg: "Successfully Created btc wallet", data: {
+            //      publicKey:pubkey,
+            //      user_id:user_id,
+            //      privateKey:privkey,
+            //      balance:isCreatedBtcWallet.balance.toString(),
+            //      wallet_type:'BTC',
+            //      wallet_id:address
+            //    }})
+
+            res.render('front/wallet/walletid-crypto',{
+              wallet_id:address,
+              wallet_type:'BTC',
+              privateKey:privkey,
+              balance:0
+            })
+              }else{
+                req.flash('err_msg', 'Something went worng, please try again');
+                  res.redirect('/crypto-wallet-selection')
+              }
+
+
+           }else if(wallet_type="ETH"){
+                 var mnemonic = bip39.generateMnemonic();
+     var seed = await bip39.mnemonicToSeed(mnemonic);
+     var HDwallet = etherHDkey.fromMasterSeed(seed);
+     var zeroWallet = HDwallet.derivePath("m/44'/60'/0'/0/0").getWallet();
+     var addres = zeroWallet.getAddressString();
+     console.log("Adressssssssssssssssssssssssssss:",addres)
+     var privatekey = zeroWallet.getPrivateKeyString();
+     console.log("Private keyyyyyyyyyyyyyyyyy:",privatekey);
+    var publickey = zeroWallet.getPublicKeyString();
+    console.log("public keyyyyyyyyyyyyy",publickey);
+         let isCreated= await CryptoWalletModel.create({
+             public_key:encrypt1(publickey),
+             wallet_address:encrypt1(addres),
+             reg_user_id:user_id,
+             wallet_type:encrypt1('ethereum'),
+             reflectid_by:encrypt1("Representative")
+            })
+            if(isCreated){
+            //  res.json({ status: 1, msg: "wallet created successfully", data: {         
+            //    address:addres,
+            //    privateKey:privatekey,
+            //    publicKey:publickey,
+            //    passphrase:mnemonic} });
+            res.render('front/wallet/walletid-crypto',{
+              wallet_id:addres,
+              wallet_type:'ETH',
+              privateKey:privatekey,
+              balance:0
+            })
+
+            }else{
+            req.flash('err_msg', 'Something went worng, please try again');
+                  res.redirect('/crypto-wallet-selection')
+            }
+ 
+           }else{
+            req.flash('err_msg', 'Please select one of the listed wallet');
+            res.redirect('/crypto-wallet-selection')
+           }
+  }catch(err){
+    throw err;
+  }
+}
+
+
+//generate pvt key for crypto wallets
+exports.getPvtKeyForCryptoPage=async function(req,res){
+  let pvtKey=req.body.pvtKey;
+  let wallet_type=req.body.wallet_type;
+  res.render('front/wallet/pvt-key-crypto',{
+    private_key:pvtKey,
+    wallet_type:wallet_type
+  })
+}
+
+//get page of enter pvt key for import wallet
+exports.getImportCryptoPage=async function(req,res){
+  success_msg = req.flash('success');
+  err_msg= req.flash('err_msg');
+  let user_id=req.session.user_id;
+  let wallet_type=req.query.wallet_type;
+  if(wallet_type=="BTC"||wallet_type=="ETH"){
+    req.session.crypto_type=wallet_type;
+    res.render('front/wallet/import-crypto',{
+      wallet_type:wallet_type,
+      success_msg:success_msg,
+      err_msg:err_msg
+    })
+  }else{
+    req.flash('err_msg',"Please select one of the listed wallet");
+    res.redirect('/import-wallet-selection')
+  }
+ 
+}
+
+exports.importCryptoWallet=async function(req,res){
+  success_msg = req.flash('success');
+  err_msg= req.flash('err_msg');
+  //let wallet_type=req.body.wallet_type;
+  let wallet_type=req.session.crypto_type;
+  console.log("wallet type:::::::::",wallet_type);
+  let pvtKey=req.body.pvt_key;
+  let user_id=req.session.user_id;
+  try{
+            if(wallet_type=='BTC'){
+              try{
+                let private_key=pvtKey;
+                var privkey = private_key.split(" ");
+                const ecPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(privkey[0], 'hex'), { network: bitcoin.networks.testnet })
+                
+                var pkey = ecPair.toWIF();
+                const keyPair = bitcoin.ECPair.fromWIF(pkey, TESTNET);
+                //var user_id = req.session.user_id;
+                var { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey, network: TESTNET });
+                console.log("keypair:::", keyPair)
+                var pubkey = keyPair.publicKey.toString("hex");
+                console.log("address:::::::::::::::::: : ", address)
+                console.log("pubkey :::::::::::::::::::: ", pubkey)
+                }catch(err){
+                  console.log("err1:",err);
+                 // res.json({ status: 0, msg: "Invalid private key", data: { err_msg: 'Failed'} });
+                 req.flash('err_msg',"Invalid private key");
+                res.redirect('/import-crypto'+'?wallet_type=BTC')
+                }
+                /////,,,,,,,,,,,,,,,,,,,,,,,,,
+                //..............................
+                let isPresentWallet=await CryptoWalletModel.findOne({where:{reg_user_id:user_id,wallet_address:encrypt1(address)}});
+              if(isPresentWallet){
+                console.log("already present btc")
+                //res.json({ status: 0, msg: "This  Wallet address is already imported", data: { err_msg: 'Failed'} });
+                req.flash('err_msg',"This  Wallet address is already imported");
+                res.redirect('/import-crypto'+'?wallet_type=BTC')
+              }else{
+                 let isCreated= await CryptoWalletModel.create({
+                        public_key:encrypt1(pubkey),
+                        reg_user_id:user_id,
+                        wallet_type:encrypt1('BTC'),
+                        reflectid_by:encrypt1('representative'),
+                        wallet_address:encrypt1(address)
+                       })
+                       if(isCreated){
+                        //res.json({ status: 1, msg: "BTC wallet imported successfully", data: { success_msg: 'success'} });
+                        res.render('front/wallet/import-crypto-successfull',{
+                          wallet_type:"BTC"
+                        })
+                       }else{
+                        //res.json({ status: 0, msg: "Failed to import", data: { err_msg: 'Failed'} });
+                        req.flash('err_msg',"Failed to import");
+                        res.redirect('/import-crypto'+'?wallet_type=BTC')
+                       }
+              }
+
+
+            }else if(wallet_type=="ETH"){
+              try{
+              let privateKey=pvtKey;
+              var buffPr=EthUtil.toBuffer(privateKey,"utf-8");
+              try{
+             var wallet=eth_wallet.default.fromPrivateKey(buffPr);
+              }catch(err){
+                console.log("indjj",err);
+                req.flash('err_msg',"Invalid private key");
+                res.redirect('/import-crypto'+"?wallet_type=ETH")
+           //  res.json({ status: 0, msg: "Invalid private key!!", data: { err_msg: 'Failed'} });
+              }
+             var publicKey=wallet.getPublicKeyString();
+             console.log("pkkkkkkkkkkkkkkkk",publicKey);
+             var wallet_address=wallet.getAddressString();
+             console.log("waaaaaaaaaaaaaaaaaaa",wallet_address);
+             //balance
+             let balanceObj=await web3jsAcc.eth.getBalance(wallet_address);
+             let balance_eth= web3jsAcc.utils.fromWei(balanceObj, "ether");
+             //creating crypto into db
+                 var isPresent= await CryptoWalletModel.findOne({where:{reg_user_id:parseInt(user_id),wallet_address:encrypt1(wallet_address)}});
+                if(isPresent){
+                  console.log("already present")
+                // res.json({ status: 0, msg: "This wallet is already present!!", data: { err_msg: 'Failed'} });
+                req.flash('err_msg',"This  Wallet address is already imported");
+                res.redirect('/import-crypto'+"?wallet_type=ETH")
+                }else{
+                 let isCreated=await CryptoWalletModel.create({
+                   public_key:encrypt1(publicKey),
+                   wallet_address:encrypt1(wallet_address),
+                   reg_user_id:parseInt(user_id),
+                   balance:balance_eth,
+                   wallet_type:encrypt1('ethereum'),
+                    })
+                    if(isCreated){
+                      res.render('front/wallet/import-crypto-successfull',{
+                        wallet_type:"ETH"
+                      })
+                  //  res.json({ status: 1, msg: "Successfully imported ethereum wallet", data: { success_msg: 'Success'} });
+                    }else{
+                      req.flash('err_msg',"Failed to import");
+                      res.redirect('/import-crypto'+"?wallet_type=ETH")
+                 //  res.json({ status: 0, msg: "Failed to import wallet, please try again", data: { err_msg: 'Failed'} });
+                    }
+                   }
+                  }catch(err){
+                    req.flash('err_msg',"Invalid private key!");
+                      res.redirect('/import-crypto'+"?wallet_type=ETH")
+                  }
+            }else{
+              req.flash('err_msg',"Please select one of the listed wallet");
+              res.redirect('/import-wallet-selection')
+            }
+  }catch(err){
+    req.flash('err_msg',"OOps something went worng");
+    res.redirect('/import-wallet-selection')
+  }
+}
+
+
+//send crypto
+exports.sendCrypto=async function(req,res){
+  let wallet_type=req.body.wallet_type;
+  let pvtKey=req.body.pvtKey;
+  let sender_user_id=req.session.user_id;
+  let receiver_wallet_address=req.body.rec_wallet_id;
+  let ammount=req.body.amount;
+  let sender_wallet_address=req.body.sender_wallet_id;
+  success_msg = req.flash('success');
+  err_msg= req.flash('err_msg');
+  try{
+      if(wallet_type=="BTC"){
+        try{
+          var receiver_user_id="";
+  var receiver_reflet_id='';
+  var receiver_name="";
+  var sender_name='';
+    let amount=ammount;
+          //fetch receiver info
+          var receiver_info=await CryptoWalletModel.findOne({where:{wallet_address:encrypt1(receiver_wallet_address)}});
+          if(receiver_info){
+            console.log("Feteching receiverrrrrrrrrrrrrrrrrrrrrrrrr");
+            receiver_user_id=receiver_info.reg_user_id;
+            console.log("Recccccccccccccc id",receiver_user_id);
+             var rec_det=await UserModel.findOne({where:{reg_user_id:receiver_user_id}});
+            if(rec_det){
+             receiver_name=decrypt(rec_det.full_name);
+            }else{
+             receiver_name='';
+            }
+            
+               
+             
+             
+             console.log("Recccccccccccccc name",receiver_name);
+          var rec_info=await MyReflectIdModel.findOne({where:{reg_user_id:receiver_user_id,reflectid_by:'representative',idCreated:'true'}});
+          if(rec_info){
+           receiver_reflet_id=rec_info.reflect_code;
+          }else{
+           receiver_reflet_id='';
+          }
+         }
+       
+         //sender infooooooooo
+         try{
+           var senderDet=await UserModel.findOne({where:{reg_user_id:sender_user_id}});
+           sender_name=decrypt(senderDet.full_name);
+          var senderInfo=await MyReflectIdModel.findOne({where:{reg_user_id:sender_user_id,reflectid_by:'representative',idCreated:'true'}})
+          console.log("sender infffffffffffffffffffff",senderInfo);
+          var sender_reflet_id=senderInfo.reflect_code;
+          }catch(err){
+            console.log(err);
+          }
+       
+           var privateKey = Buffer.from(pvtKey,'hex');
+            var privKeyWIF = wif.encode(239,privateKey,true);
+           //var privKeyWIF = wif.encode(128,privateKey,true);
+               let balanceInBTC= await btcbalance(sender_wallet_address);
+       
+              console.log("balance:::::::::::::::::::::::::;;",balanceInBTC);
+       
+             if(balanceInBTC<=amount)
+             {
+             //	let trans_msg={success:0,msg:"You do not have enough in your wallet to send that much."};
+              //	res.json({trans_msg);
+             // res.json({ status: 0, msg: "You do not have enough in your wallet to send that much.", data: { err_msg: 'Failed'} });
+             req.flash('err_msg',"You do not have enough in your wallet to send that much.");
+           res.redirect('get_trans_history'+"?wallet_type="+encrypt(wallet_type)+"&wallet_id="+encrypt(sender_wallet_address));
+             }
+             else
+             {
+           var btc_trans=await bitcoinTransaction.sendTransaction({
+             from: sender_wallet_address,
+             to: receiver_wallet_address,
+             privKeyWIF:privKeyWIF,
+             btc:amount,
+             network: "testnet"
+           }).catch((err) =>{
+       
+             console.log("error catch",err);
+       
+             let trans_msg={success:0,msg:err};
+              
+           //  res.json({ status: 0, msg: "Transaction failed", data: { err_msg: 'Failed'} });
+           req.flash('err_msg',"Transaction failed");
+           res.redirect('get_trans_history'+"?wallet_type="+encrypt(wallet_type)+"&wallet_id="+encrypt(sender_wallet_address));
+            
+           }).then( async (result)  => {
+       
+         // console.log("body",res.body);
+         // console.log("---------------------------------------------------------");
+         // console.log("Hash: ",res.body.tx.hash,"fees",res.body.tx.fees);
+       
+           if(result)
+           {
+       
+            // console.log("result::::::::::::::::::::::::",result);
+             console.log("-------*** transactionnnnnnnnnnn ",result.body.tx)
+             console.log("-------*** transaction hashhhhhhhhhhhhhhhh",result.body.tx.hash)
+       
+             var haash=JSON.stringify(result);
+       
+             var dataString = '{"tx":'+haash+'}';
+       
+             var options = {
+                // url: 'https://api.blockcypher.com/v1/btc/main/txs/push?token=b5310fa6b2464f5fac9947fb9e82a283',
+               //  url:'https://api.blockcypher.com/v1/btc/main/txs/push?token=8454213607a34a1a90f7c9993d3de833',
+                 url:'https://api.blockcypher.com/v1/btc/test3/txs/push?token=8454213607a34a1a90f7c9993d3de833',
+                 method: 'POST',
+                 body: dataString
+             };
+       
+            async function callback(error, response, body) {
+                    // console.log("func response",body);
+       
+                    
+       
+                 if (!error) {
+                   // console.log("body::::::::::::::::::::::",body);
+                    //console.log("stringggggggggggggggggggggggg",JSON.stringify(body));
+       console.log("brodcastingggggggggggggg")
+                   var result_data=JSON.parse(body);
+                 
+                   // console.log("result::::::::::::::::::::::::::",result_data);
+       
+                    console.log("feeeeeeeeeeeees",result.body.tx.fees);
+                    var bitcoin_salt_mult=Math.pow(10,8);
+                 //  console.log("hash",result.body.tx.fees);
+                //   let trans_fees=result.body.tx.fees;
+                   let rec_amount_in_satoshi=result.body.tx.outputs[0].value;
+                    let rec_am_btc=rec_amount_in_satoshi/bitcoin_salt_mult;
+                  console.log("receiver will received amountttttttttttttttttttt",rec_am_btc);
+                    
+                 //  var fees_btc=result_data.tx.fees/bitcoin_salt_mult;
+       //             // console.log("feeeeeeeeeeeeeeeeeeeesssssssssssss",fees_btc);
+       
+       // //amount in dollar
+        let currentPriceInUsd=await priceOfCrypto.getCryptoPrice('USD','BTC');
+       
+       var senderAmountInDollar=(parseFloat(amount)*parseFloat(currentPriceInUsd.price)).toFixed(8);
+       senderAmountInDollar= senderAmountInDollar.toString();
+       
+       var receiverAmountInDollar=(rec_am_btc*parseFloat(currentPriceInUsd.price)).toFixed(8);
+       receiverAmountInDollar=receiverAmountInDollar.toString();
+       
+       
+       //   //add to transaction history for sender
+         await CryptoTransHistoryModel.create({
+           sender_wallet_id:encrypt1(sender_wallet_address),
+           sender_reg_user_id:sender_user_id,
+           transaction_hash:result.body.tx.hash,
+           sender_reflet_id:sender_reflet_id,
+           receiver_wallet_id:encrypt1(receiver_wallet_address),
+           receiver_reg_user_id:receiver_user_id,
+           receiver_reflect_id:receiver_reflet_id,
+           amount:amount,
+           wallet_type:"BTC",
+           status:"Success",
+           reg_user_id:sender_user_id,
+           operation:"sent",
+           amountIndollar:senderAmountInDollar
+          })
+       
+          
+       //    //add transaction history for receiver
+          await CryptoTransHistoryModel.create({
+           sender_wallet_id:encrypt1(sender_wallet_address),
+           sender_reg_user_id:sender_user_id,
+           transaction_hash:result.body.tx.hash,
+           sender_reflet_id:sender_reflet_id,
+           receiver_wallet_id:encrypt1(receiver_wallet_address),
+           receiver_reg_user_id:receiver_user_id,
+           receiver_reflect_id:receiver_reflet_id,
+           amount:rec_am_btc.toString(),
+           wallet_type:"BTC",
+           status:"Success",
+           reg_user_id:receiver_user_id,
+           operation:"received",
+           amountInDollar:receiverAmountInDollar
+          })
+       
+       
+       //          //send main notifcation for success(sender)
+                if(receiver_name==''){
+                 receiver_name=receiver_wallet_address
+                }
+                let mesg1=`Successfully sent ${amount} BTC to ${receiver_name}`
+                
+                await updateNotification(sender_user_id,sender_user_id,encrypt(mesg1),'BTC transaction',senderDet.profile_img_name)
+                //push for transaction success(sender)
+                pushnotification(sender_user_id,'BTC Transaction',mesg1);
+                //push for debited(sender)
+                let msg2=`${amount} BTC has been debited from your wallet ID ${sender_wallet_address}`;
+                pushnotification(sender_user_id,'BTC Transaction',msg2);
+                
+                 //receiver notification
+                 if(receiver_user_id!=''){
+                   var msg3=`You have received amount ${rec_am_btc} BTC from ${sender_name}.`
+                   await updateNotification(sender_user_id,receiver_user_id,encrypt(msg3),'BTC received',senderDet.profile_img_name);
+                   pushnotification(receiver_user_id,'BTC received',msg3);
+                 }
+       
+                 //   let trans_msg={success:1,msg:"Transaction done successfully.",txHash:result_data.tx.hash,fees:fees_btc};
+                 //   res.json({status:1,msg:'Transaction done successfully',data:{}});
+                 req.flash('success_msg',"Your transaction is done successfully.");
+                 res.redirect('get_trans_history'+"?wallet_type="+encrypt(wallet_type)+"&wallet_id="+encrypt(sender_wallet_address));
+
+      
+                 }
+                 else
+                 {
+                   console.log("error tran",error);
+       
+                   //  let trans_msg={success:0,msg:error};
+                    // res.json({ status: 0, msg: "Transaction failed", data: { err_msg: 'Failed' } });
+                    req.flash('err_msg',"Transaction failed");
+                    res.redirect('get_trans_history'+"?wallet_type="+encrypt(wallet_type)+"&wallet_id="+encrypt(sender_wallet_address));
+                    
+                 }
+             }
+       
+            await request(options, callback);
+           }
+         });
+       
+           }
+                 
+         }catch(err){
+           console.log(err);
+          // res.json({ status: 0, msg: "Something went wrong try again.", data: { err_msg: 'Failed', err } });
+          req.flash('err_msg',"Transaction failed");
+          res.redirect('get_trans_history'+"?wallet_type="+encrypt(wallet_type)+"&wallet_id="+encrypt(sender_wallet_address));
+         }
+
+
+
+      }else{
+  var receiver_user_id="";
+  var receiver_reflet_id='';
+  var receiver_name="";
+  var sender_name='';
+            try{
+              try{
+                console.log("private key:::::::::::::",pvtKey);
+                console.log("rec addresss:",receiver_wallet_address);
+                console.log("sender addressssssssssss",sender_wallet_address);
+                var senderDet=await UserModel.findOne({where:{reg_user_id:sender_user_id}});
+                sender_name=decrypt(senderDet.full_name);
+               var senderInfo=await MyReflectIdModel.findOne({where:{reg_user_id:sender_user_id,reflectid_by:'representative',idCreated:true}})
+               var sender_reflet_id=senderInfo.reflect_code;
+               }catch(err){
+                 console.log(err);
+               }
+               var buffPr=EthUtil.toBuffer(pvtKey,"utf-8");
+               console.log("buffffffffffffffff",buffPr);
+               try{
+              var wallet=eth_wallet.default.fromPrivateKey(buffPr);
+              console.log("wallllllllllllllllll",wallet);
+               }catch(err){
+                 console.log(err);
+                 req.flash('err_msg',"Invalid private key");
+                  res.redirect('get_trans_history'+"?wallet_type="+encrypt(wallet_type)+"&wallet_id="+encrypt(sender_wallet_address));
+               }
+              var wallet_address=wallet.getAddressString();
+              console.log("wallllet addddddddddddd",wallet_address);
+              if(wallet_address!==sender_wallet_address){
+                req.flash('err_msg',"Invalid private key");
+                res.redirect('get_trans_history'+"?wallet_type="+encrypt(wallet_type)+"&wallet_id="+encrypt(sender_wallet_address));
+              }
+           
+           
+           //fetching receiver reg_user_id
+                 
+                 var receiver_info=await CryptoWalletModel.findOne({where:{wallet_address:encrypt1(receiver_wallet_address)}});
+                  if(receiver_info){
+                    console.log("Feteching receiverrrrrrrrrrrrrrrrrrrrrrrrr");
+                    receiver_user_id=receiver_info.reg_user_id;
+                    console.log("Recccccccccccccc id",receiver_user_id);
+                     var rec_det=await UserModel.findOne({where:{reg_user_id:receiver_user_id}});
+                     receiver_name=decrypt(rec_det.full_name);
+                     console.log("Recccccccccccccc name",receiver_name);
+                  var rec_info=await MyReflectIdModel.findOne({where:{reg_user_id:receiver_user_id,reflectid_by:'representative',idCreated:'true'}})
+                   receiver_reflet_id=rec_info.reflect_code;
+                 }
+                 console.log("Transaction starttttttttttttttttttttt")
+           
+              //transactionnnnnnnnnnnnn
+             await  web3jsAcc.eth.getTransactionCount(sender_wallet_address, 'pending', async (err, txCount) => {
+               if(err){
+                 console.log(err);
+               }
+                 console.log("Counting strtttttttttttttttt");
+                       var estimates_gas = await web3jsAcc.eth.estimateGas({ from: sender_wallet_address, to: receiver_wallet_address, amount: web3jsAcc.utils.toWei(ammount, 'ether') })
+                             console.log("gass priceeeeeeeeeeeeeeeeeeeeee");
+                       console.log("estimateedddddddd gas",estimates_gas);
+                 
+                                 // var gasPrice=web3js.utils.toHex(web3js.utils.toWei('50','gwei'));
+                                 var gasPrice_bal = await web3jsAcc.eth.getGasPrice();
+                                 var gasPrice = web3jsAcc.utils.toHex(gasPrice_bal);
+                 
+                                 console.log("gasPrice", gasPrice);
+                                 var gasLimit = web3jsAcc.utils.toHex(estimates_gas * 2);
+                                  console.log("Gas limitttttttt",gasLimit);
+                                 var transactionFee_wei = gasPrice * gasLimit;
+                                 var transactionFee = web3jsAcc.utils.fromWei(web3jsAcc.utils.toBN(transactionFee_wei), 'ether');
+                                 console.log("Transaction feeeeeeeeeee",transactionFee);
+                                 var nonce = web3jsAcc.utils.toHex(txCount)
+                                 var nonceHex = web3.utils.toHex(nonce);
+                                 var receiver_get_amount=parseFloat(ammount)-parseFloat(transactionFee);
+                                 
+           //amount in dollar
+           let currentPriceInUsd=await priceOfCrypto.getCryptoPrice('USD','ETH');
+           
+           var senderAmountInDollar=parseFloat(ammount)*parseFloat(currentPriceInUsd.price).toFixed(8);
+           senderAmountInDollar= senderAmountInDollar.toString();
+           var receiverAmountInDollar=receiver_get_amount*parseFloat(currentPriceInUsd.price).toFixed(8);
+           receiverAmountInDollar=receiverAmountInDollar.toString();
+           receiver_get_amount=receiver_get_amount.toFixed(8);
+                                 const txObject = {
+                                     nonce: nonceHex,
+                                     to: receiver_wallet_address,
+                                     value: web3jsAcc.utils.toHex(web3jsAcc.utils.toWei(ammount, 'ether')),
+                                     gasLimit: gasLimit,
+                                     gasPrice: gasPrice
+                                 }
+                 
+                                 //  const tx = new Tx(txObject,{chain:'ropsten', hardfork: 'petersburg'});
+                                 pvtKey=pvtKey.substring(2);
+                                 const tx = new Tx(txObject, { chain: 'ropsten'});
+                                 console.log("Private key::::::",pvtKey);
+                                 pvtKey = Buffer.from(pvtKey,'hex');
+                                 tx.sign(pvtKey)
+                 
+                                 const serializedTx = tx.serialize();
+                                 const raw = '0x' + serializedTx.toString('hex');
+                 
+                                 serializedTx.toString('hex')
+                 
+                                 // Broadcast the transaction
+                                 web3jsAcc.eth.sendSignedTransaction(raw, async (err, txHash) => {
+                                   console.log("Signedddddddddddddddd transaction starteddddddddddddddddd");
+                                   
+                                     if (err) {
+                                         console.log("err", err);
+                                        await CryptoTransHistoryModel.create({
+                                         sender_wallet_id:encrypt1(sender_wallet_address),
+                                         sender_reg_user_id:sender_user_id,
+                                         sender_reflet_id:sender_reflet_id,
+                                         receiver_wallet_id:receiver_wallet_address,
+                                         receiver_reg_user_id:receiver_reg_user_id,
+                                         receiver_reflect_id:receiver_reflet_id,
+                                         amount:ammount,
+                                         wallet_type:"ETH",
+                                         status:"Failed",
+                                         reg_user_id:sender_user_id,
+                                         operation:"sent",
+                                         amountIndollar:senderAmountInDollar
+                                        })
+                                        //send main notification for failed 
+                                        let msg=`Your transaction failed for amount ${ammount} eth`;
+                                        await updateNotification(sender_user_id,sender_user_id,encrypt(msg),"ETH Transaction",senderDet.profile_img_name);
+                                       //send push notification for failed
+                                          pushnotification(sender_user_id,'ETH transaction',msg);
+                                        // res.json({ status: 0, msg: "Transaction failed,insufficient balance", data: { err_msg: 'Failed'} });
+                                        req.flash('err_msg',"Transaction failed,insufficient balance");
+                                        res.redirect('get_trans_history'+"?wallet_type="+encrypt(wallet_type)+"&wallet_id="+encrypt(sender_wallet_address));
+                                     }
+                                     else {
+                                         console.log('txHash:', txHash, 'transfess', transactionFee);
+                                                //update balance of sender
+                                         let balanceObjsend=await web3jsAcc.eth.getBalance(sender_wallet_address);
+                                         var balance_eth_send= web3jsAcc.utils.fromWei(balanceObjsend, "ether");   
+                                         await CryptoWalletModel.update({balance:balance_eth_send},{where:{wallet_address:encrypt1(sender_wallet_address)}});
+                                          //update balance of receiver
+                                          let balanceObjrec=await web3jsAcc.eth.getBalance(receiver_wallet_address);
+                                          var balance_eth_rec= web3jsAcc.utils.fromWei(balanceObjrec, "ether");   
+                                          await CryptoWalletModel.update({balance:balance_eth_rec},{where:{wallet_address:encrypt1(receiver_wallet_address)}});
+                                        
+                                          //add to transaction history for sender
+                                          await CryptoTransHistoryModel.create({
+                                           sender_wallet_id:encrypt1(sender_wallet_address),
+                                           sender_reg_user_id:sender_user_id,
+                                           transaction_hash:txHash,
+                                           sender_reflet_id:sender_reflet_id,
+                                           receiver_wallet_id:encrypt1(receiver_wallet_address),
+                                           receiver_reg_user_id:receiver_user_id,
+                                           receiver_reflect_id:receiver_reflet_id,
+                                           amount:ammount,
+                                           wallet_type:"ETH",
+                                           status:"Success",
+                                           reg_user_id:sender_user_id,
+                                           operation:"sent",
+                                           amountIndollar:senderAmountInDollar
+                                          })
+                                          //add transaction history for receiver
+                                          await CryptoTransHistoryModel.create({
+                                           sender_wallet_id:encrypt1(sender_wallet_address),
+                                           sender_reg_user_id:sender_user_id,
+                                           transaction_hash:txHash,
+                                           sender_reflet_id:sender_reflet_id,
+                                           receiver_wallet_id:encrypt1(receiver_wallet_address),
+                                           receiver_reg_user_id:receiver_user_id,
+                                           receiver_reflect_id:receiver_reflet_id,
+                                           amount:receiver_get_amount.toString(),
+                                           wallet_type:"ETH",
+                                           status:"Success",
+                                           reg_user_id:receiver_user_id,
+                                           operation:"received",
+                                           amountInDollar:receiverAmountInDollar
+                                          })
+           
+                                          //send main notifcation for success(sender)
+                                          if(receiver_name==''){
+                                           receiver_name=receiver_wallet_address
+                                          }
+                                          let mesg1=`Successfully sent ${ammount} ETH to ${receiver_name}`
+                                          
+                                          await updateNotification(sender_user_id,sender_user_id,encrypt(mesg1),'ETH transaction',senderDet.profile_img_name)
+                                          //push for transaction success(sender)
+                                          pushnotification(sender_user_id,'ETH Transaction',mesg1);
+                                          //push for debited(sender)
+                                          let msg2=`${ammount} ETH has been debited from your wallet ID ${sender_wallet_address}`;
+                                          pushnotification(sender_user_id,'ETH Transaction',msg2);
+                                          
+                                           //receiver notification
+                                           if(receiver_user_id!=''){
+                                             var msg3=`You have received amount ${receiver_get_amount} ETH from ${sender_name}.`
+                                             await updateNotification(sender_user_id,receiver_user_id,encrypt(msg3),'ETH received',senderDet.profile_img_name);
+                                             pushnotification(receiver_user_id,'ETH received',msg3);
+                                           }
+                                           
+           
+           
+                                        // res.json({ status: 1, msg: 'Your transaction is done successfully.',data:{ txHash: txHash, transactionFee: transactionFee }});
+                                        req.flash('success_msg',"Your transaction is done successfully.");
+                                        res.redirect('get_trans_history'+"?wallet_type="+encrypt(wallet_type)+"&wallet_id="+encrypt(sender_wallet_address));
+                                     }
+                                     // Now go check etherscan to see the transaction!
+                                 })
+                             })       
+           
+
+
+            }catch(err){
+              throw err;
+            }
+
+      }
+  }catch(err){
+    throw err;
+  }
+}
+
+exports.validatePvt=async function(req,res){
+  let pvtKey=req.body.pvtkey;
+  let sender_address=req.body.sender_add;
+  let wallet_type=req.body.wallet_type;
+  try{
+        if(wallet_type=='BTC'){
+          try{
+          let private_key=pvtKey;
+          var privkey = private_key.split(" ");
+          const ecPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(privkey[0], 'hex'), { network: bitcoin.networks.testnet })
+          
+          var pkey = ecPair.toWIF();
+          const keyPair = bitcoin.ECPair.fromWIF(pkey, TESTNET);
+          //var user_id = req.session.user_id;
+          var { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey, network: TESTNET });
+          if(address!==sender_address){
+            res.end("Invalid private key!")
+          }
+          }catch(err){
+            res.end("Invalid private key!")
+          }
+        }else{
+          try{
+            let privateKey=pvtKey;
+            var buffPr=EthUtil.toBuffer(privateKey,"utf-8");
+            try{
+           var wallet=eth_wallet.default.fromPrivateKey(buffPr);
+            }catch(err){
+              console.log("indjj",err);
+              res.end("Invalid private key!")
+         //  res.json({ status: 0, msg: "Invalid private key!!", data: { err_msg: 'Failed'} });
+            }
+           var wallet_address=wallet.getAddressString();
+           if(wallet_address!=sender_address){
+             res.end("Invalied private key!");
+           }
+          }catch(err){
+            res.end("Invalid private key!")
+          }
+        }
+
+  }catch(err){
+    throw err;
+  }
+}
+
+//transaction fee
+exports.cryptoTransactionFee=async function(req,res){
+  console.log("fetchinggggggggggggggggggggggg transaction feeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+  let sender_wallet_address=req.body.sender_wallet_id;
+  let receiver_wallet_address=req.body.receiver_wallet_id;
+  let amount=req.body.amount;
+  let wallet_type=req.body.wallet_type;
+  let rec_amount=parseFloat(req.body.rec_amount);
+  let trans_fee=parseFloat(req.body.trans_fee);
+  success_msg = req.flash('success');
+  err_msg= req.flash('err_msg');
+  try{
+    if(wallet_type.toLowerCase()=='ethereum'){
+      //check balance
+      let balanceObj=await web3jsAcc.eth.getBalance(sender_wallet_address);
+      let balance_eth= web3jsAcc.utils.fromWei(balanceObj, "ether");
+      balance_eth=parseFloat(balance_eth);
+     if(amount>balance_eth){
+       res.end("3")//insufficient balance!
+     }
+      
+    var estimates_gas = await web3jsAcc.eth.estimateGas({ from: sender_wallet_address, to: receiver_wallet_address, amount: web3jsAcc.utils.toWei(amount, 'ether') })
+    var gasPrice_bal = await web3jsAcc.eth.getGasPrice();
+    var gasPrice = web3jsAcc.utils.toHex(gasPrice_bal);
+
+    console.log("gasPrice", gasPrice);
+    var gasLimit = web3jsAcc.utils.toHex(estimates_gas * 2);
+     console.log("Gas limitttttttt",gasLimit);
+    var transactionFee_wei = gasPrice * gasLimit;
+    var transactionFee = web3jsAcc.utils.fromWei(web3jsAcc.utils.toBN(transactionFee_wei), 'ether');
+    transactionFee=parseFloat(transactionFee).toFixed(8);
+    console.log("Transaction feeeeeeeeeee",transactionFee);
+    let afterFeeAmount=parseFloat(amount)-parseFloat(transactionFee);
+    afterFeeAmount=afterFeeAmount.toFixed(8);
+    if(afterFeeAmount>0){
+    //res.json({ status: 1, msg: "Transaction fee", data: {transactionFee:transactionFee.toString(),receivingAmount:afterFeeAmount.toString()} });
+         let respObj={
+          transactionFee:transactionFee.toString(),
+          receivingAmount:afterFeeAmount.toString()
+         }
+    let respStrg=JSON.stringify(respObj);
+    res.end(respStrg);
+    }else{
+      let msg="1";//1 : Amount should be more than transaction fees!
+      res.end(msg);
+      //res.json({ status: 0, msg: "You entered very less amount!", data: {err_msg:'Failed'} });
+    }
+  }else{
+
+    //for btc transaction feesssssssssssssss
+    await bitcoinTransaction.getBalance(sender_wallet_address,{ network:"testnet"}).then(async (balanceInBTC)  => {
+
+      if(balanceInBTC<=amount)
+      {
+       var fee_rate=await bitcoinTransaction.getFees(bitcoinTransaction.providers.fees.mainnet.default,'hour');
+       console.log("fee rate",fee_rate);
+       var inputs=1;
+       var outputs=2;
+       var fee = bitcoinTransaction.getTransactionSize(inputs,outputs)*fee_rate;
+      console.log("fees",fee);
+       var bitcoin_salt_mult=Math.pow(10,8);
+       var accurate_fees=fee/bitcoin_salt_mult;
+        res.end("3")//insufficient balance!
+    //res.json({ status: 0, msg: "Amount should be more than transaction fees!", data: {err_msg:'Failed'} });;
+      }
+      else
+      {
+       var btc_fees=await bitcoinTransaction.feeTransaction({
+        from: sender_wallet_address,
+        btc:amount,
+        network: "testnet"
+      });
+
+        var bitcoin_salt_mult=Math.pow(10,8);
+        var accurate_fees=btc_fees/bitcoin_salt_mult;
+       var afterFeeAmount=parseFloat(amount)-parseFloat(accurate_fees);
+       afterFeeAmount=afterFeeAmount.toFixed(8);
+       accurate_fees=accurate_fees.toFixed(8);
+       if(afterFeeAmount<=0){
+      //  res.json({ status: 1, msg: "Amount should be more than transaction fees!", data: {transactionFee:accurate_fees,receivingAmount:'0'} });
+      let msg1="2"  //Amount should be more than transaction fees!;
+    res.end(msg1);
+       }else{
+        //res.json({ status: 1, msg: "Transaction fee", data: {transactionFee:accurate_fees,receivingAmount:afterFeeAmount.toString()} });
+        let respObj={
+          transactionFee:accurate_fees.toString(),
+          receivingAmount:afterFeeAmount.toString()
+         }
+    let respStrg=JSON.stringify(respObj);
+    res.end(respStrg);
+       }
+    //   let fees_msg={success:1,msg:"Success.",fees:accurate_fees };
+    
+      }
+      });
+  }
   }catch(err){
     throw err;
   }

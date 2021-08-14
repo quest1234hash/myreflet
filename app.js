@@ -41,7 +41,7 @@ const { stringify } = require('qs');
 
 // app.use(express.json())
 app.use(flash());
-console.log("d");
+
 app.use(bodyParser.json({limit: "50mb"}));
 app.use(bodyParser.urlencoded({limit: "50mb", extended: false , parameterLimit:50000,keepExtensions: true}))
 // app.use(express.json())

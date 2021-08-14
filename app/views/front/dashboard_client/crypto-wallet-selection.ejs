@@ -36,7 +36,7 @@
 <h4 class="small-heading text-center">Select Category to continue creating new wallet</h4>
 	<div class="container" style=" padding-left: 325px;">
 		<div class="row">
-			<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 active-check ">
+			<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 active-check " onclick="selectedMe(1)">
 				<div class="white-box">
 					<div class="market-place-inner-box">
 					    <div class="id-code-represent-heading"> 
@@ -47,7 +47,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 active-check">
+			<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 active-check" onclick="selectedMe(2)">
 				<div class="white-box">
 					<div class="market-place-inner-box">
 					    <div class="id-code-represent-heading"> 
@@ -61,7 +61,9 @@
 			<div class="col-lg-6 col-md-6 col-sm-6" style="margin-left: 135px !important;">
 				<div>
 				<a class="btn-common-new" href="create-wallets">Back</a>
-					<a class="btn-common-new" href="#">Continue</a>
+				     
+					<a class="btn-common-new" href="create-crypto" value='' id="continue-id"  onclick="location.href=this.href+'?wallet_type='+this.value;
+					return false">Continue</a>
 				</div>
 
 					  </div>
@@ -82,4 +84,12 @@
 	});
 	});
 </script>
- 
+ <script>
+	 function selectedMe(i){
+		 if(i==1){
+    document.getElementById('continue-id').value="BTC";
+		 }else if(i==2){
+			document.getElementById('continue-id').value="ETH";
+		 }
+	 }
+ </script>

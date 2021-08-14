@@ -737,6 +737,15 @@ router.get('/crypto-wallet-selection',isUser,DeshboardController.getCryptoWallet
 router.get('/import-wallet-selection',isUser,DeshboardController.getImportWalletSelection);
 router.get('/digital-public-key',isUser, DeshboardController.generatePublicKeyForDigitalWallet);
 router.post('/digital-pvt-key',isUser,DeshboardController.generatePvtKeyForDigitalWallet);
-router.get('/digital-created-successfully',isUser,DeshboardController.getSuccessdigital);
+router.get('/wallet-created-successfully',isUser,DeshboardController.getSuccessdigital);
 router.get('/get-public-key',isUser,DeshboardController.getPublickeyPage);
+
+//generate wallet id for crypto wallets
+router.get('/create-crypto',isUser,DeshboardController.generateWalletIDForCrypto);
+router.post('/generate-pvt-key-crypto',isUser,DeshboardController.getPvtKeyForCryptoPage);
+router.get('/import-crypto',isUser,DeshboardController.getImportCryptoPage);
+router.post('/import-crypto-wallet',isUser,DeshboardController.importCryptoWallet);
+router.post('/crypto-transaction-fee',isUser,DeshboardController.cryptoTransactionFee);
+router.post('/send-crypto',isUser,DeshboardController.sendCrypto);
+router.post('/check-pvt-key',isUser,DeshboardController.validatePvt);
 module.exports = router; 
