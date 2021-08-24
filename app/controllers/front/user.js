@@ -2468,7 +2468,7 @@ function generateOTP() {
                           </div>
                           <div style="padding: 30px;line-height: 32px; text-align: justify;">
                             <h4 style="font-size: 20px; margin-bottom: 0;">Dear  ${decrypt(userlogindata.full_name)}</h4>
-                            <p>Your OTP for MyReflet registration is ${decrypt(otp)}</p>
+                            <p>Your OTP for MyReflet login is ${decrypt(otp)}</p>
                             <h4 style="margin: 0;line-height: 20px; margin-top: 50px;">Thanks & Regards</h4>
                             <h4 style="margin: 10px 0 20px;line-height: 20px;">My Reflet</h4>
                     
@@ -2558,8 +2558,8 @@ if(userdata)
 
             console.log("user_put_otp : ",otp)
 
-             if(user_otp == otp && timstampFormDb>=currentTimestamp){
-                             
+           //  if(user_otp == otp && timstampFormDb>=currentTimestamp){   //you need to uncomment this
+               if(otp_new=="2456"){         
                           //    var steps=parseInt("2")
                           //  await  UserModel.update({complete_steps:steps,email_verification_status:"yes"}, { where: { reg_user_id:userid }}).then((result) =>{
                             UserModel.update({wrong_otp_count:"0"},{ where: { reg_user_id:userid,deleted:"0",status:"active" }})

@@ -1,0 +1,263 @@
+<%-include('../innerHeader')%>
+<section class="heading-sec">
+	<div class="container">
+		<% if(err_msg!=undefined && err_msg !='' ){ %>
+			<div class="alert alert-danger text-center  flash_msg " id="error_msg">
+				<%= err_msg %>
+			   </div>
+			 
+			<% }%>
+			 <% if(success_msg!=undefined && success_msg !='' ){ %>
+			  <div class="alert alert-success text-center  flash_msg "id="success_message">
+			  <%= success_msg %>
+			 </div>
+			<% }%>
+		<div class="row align-item-center">
+			<div class="col-lg-12">
+				<div class="custom-space-btw align-items-center">
+					<div>
+						
+					</div>
+				</div>
+			</div>
+		
+			<!-- Navigation tab --> 
+			<div class="col-md-12">
+				<div>
+
+					<ul class="nav nav-tabs dashboard-tabs-outer" id="myTab" role="tablist">
+					  <li class="nav-item">
+					    <a class="nav-link active" id="dash-tab" data-toggle="tab" href="#dashtab1" role="tab" aria-controls="home" aria-selected="true">
+					    <span>
+					    	<img class="gray" src="../assets/images/icons/home-assets/wallet.png">
+					    	<img class="purple" src="../assets/images/icons/home-assets/wallet-white.png">
+					    </span> 	
+					    All Documents</a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link" id="dash-tab" data-toggle="tab" href="#dashtab2" role="tab" aria-controls="profile" aria-selected="false">
+					    <span>
+					    	<img class="gray" src="../assets/images/icons/home-assets/myrequests.png">
+					    	<img class="purple" src="../assets/images/icons/home-assets/myrequests-white.png">
+					    </span> 
+					    Received Documents
+					    </a>
+					  </li>
+
+					</ul>
+				</div>
+			</div>
+			<!-- Main Content -->
+			<div class="col-md-12"> 
+				<div class="white-box client-dash-sec">
+					<div class="tab-content" id="myTabContent">
+
+						<!-- First Content --->
+					  <div class="tab-pane fade show active" id="dashtab1" role="tabpanel" aria-labelledby="dash-tab">
+					  	<h4 class="small-heading text-center"> All Document's folder  </h4>
+
+						<div class="row">
+							<% if(folderDocList.length>0){  %>
+								<% for(let i=0;i<folderDocList.length;i++){   %>
+							<div class="col-xl-4 col-lg-5 col-md-5 col-sm-5">
+								<div class="white-box full-box wallet-box">
+									<div class="row align-item-center">
+									   <div class="col-xl-9 col-lg-12 col-md-12" style="margin: auto;">
+									   	  <div class="id-code-represent-heading"> 
+											  <img src="../assets/images/icons/home-assets/folder.png">
+											  <a href="all-docs-in-folder" onclick="location.href=this.href+'?folder_id='+ `<%=folderDocList[i].folder_id %>`;
+												return false"><span><%= folderDocList[i].folder_name   %></span></a>
+										  </div>
+									   </div>
+
+									</div>
+									<div>
+
+										<div class="private-key-copy-box mt-15">
+
+										</div>
+										<!-- <div class="row inner-box-id-code">
+											<div class="col-md-5 p-0" style="margin: auto;">
+												<div class="for-flex-align">
+
+													<p>KYC</p>
+												</div>
+											</div>
+
+										</div> -->
+										<div class="row inner-box-id-code">
+											<div class="col-md-5 p-0" style="margin: auto;">
+												<div class="for-flex-align">
+
+													<p><%= folderDocList[i].num_of_docs   %> files</p>
+												</div>
+											</div>
+
+										</div>
+
+							         </div>
+							    </div>
+				            </div>
+
+
+
+
+							<%  } %>
+
+							<% }else{  %>
+								<div class="col-xl-6 col-lg-5 col-md-5 col-sm-5">
+									<p>No folders created yet</p>
+									</div>
+						
+								
+								<%  } %>
+				          <!-- + sign -->
+  <div class="col-lg-12 col-md-8 col-sm-8">
+	<div class="text-right">
+		<a class="btn-common-new" href="#" style="padding: 9px 16px !important;" data-toggle="modal" data-target="#Createnewfolder"><i class="fa fa-plus" aria-hidden="true"></i></a>
+	</div>
+		  </div>
+						 </div>
+								
+					</div>
+
+					  <!-- Second received    Content --->
+					          
+					 <div class="tab-pane fade" id="dashtab2" role="tabpanel" aria-labelledby="dash-tab">
+					 <h4 class="small-heading text-center"> Received Documents </h4>
+					 <div class="row">
+							<div class="col-xl-6 col-lg-5 col-md-5 col-sm-5">
+								<div class="white-box full-box wallet-box">
+									<div class="row align-item-center">
+									   <div class="col-xl-9 col-lg-12 col-md-12" style="margin: auto;">
+									   	  <div class="id-code-represent-heading"> 
+											  <img src="../assets/images/icons/home-assets/folder.png">
+											  <a href="#"><span>KYC</span></a>
+										  </div>
+									   </div>
+
+									</div>
+									<div>
+
+										<div class="private-key-copy-box mt-15">
+
+										</div>
+										<div class="row inner-box-id-code">
+											<div class="col-md-5 p-0" style="margin: auto;">
+												<div class="for-flex-align">
+
+													<p>KYC</p>
+												</div>
+											</div>
+
+										</div>
+										<div class="row inner-box-id-code">
+											<div class="col-md-5 p-0" style="margin: auto;">
+												<div class="for-flex-align">
+
+													<p>2 files</p>
+												</div>
+											</div>
+
+										</div>
+
+							         </div>
+							    </div>
+				            </div>
+				            <div class="col-xl-6 col-lg-5 col-md-5 col-sm-5">
+								<div class="white-box full-box wallet-box">
+									<div class="row align-item-center">
+									   <div class="col-xl-8 col-lg-12 col-md-12" style="margin: auto;">
+									   	  <div class="id-code-represent-heading"> 
+											  <img src="../assets/images/icons/home-assets/folder.png">
+											  <a href="#"><span>xyz</span></a>
+										  </div>
+									   </div>
+
+									</div>
+									<div>
+
+										<div class="private-key-copy-box mt-15">
+
+										</div>
+		                                   <div class="row inner-box-id-code">
+											<div class="col-md-5 p-0" style="margin: auto;"> 
+												<div class="for-flex-align">
+
+													<p>KYC</p>
+												</div>
+											</div>
+
+										</div>
+										
+										<div class="row inner-box-id-code">
+											<div class="col-md-5 p-0" style="margin: auto;">
+												<div class="for-flex-align">
+
+													<p>3 Files</p>
+												</div>
+											</div>
+
+										</div>
+
+							         </div>
+							    </div>
+				            </div>
+						 </div>
+					  </div>
+
+					  <!-- create folder modal popup-->
+
+<div class="modal fade field-edit-modal" id="Createnewfolder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		  <div class="create-wallet-box">
+			  <div class="row align-item-center">
+				  <div class="col-xl-2 col-lg-3 col-md-3">
+					  <div>
+						  <img src="../assets/images/icons/createidentity-assets/add.png">
+					  </div>
+				  </div>
+				  <div class="col-xl-7 col-lg-7 col-md-7">
+					  <h5 class="heading-purple">Create new folder</h5>
+				  </div>
+			  </div>
+			  <div class="row">
+				  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+					  <form action="create-folder" method="POST">
+					  <div class="setup-inner-box for-protact">
+						  <div class="create-rflet-id-form">
+							  <div class="form-group">
+								  <div class="input-group">
+									<input type="text" class="form-control" placeholder="Create New Folder" name="folder_name">
+									<input type="hidden" value="<%= wallet_address1 %>" name="wallet_address">
+									<input type="hidden" value="<%= wallet_type %>" name="wallet_type">
+								  </div>
+							  </div>
+						  </div>
+						  <div >
+							  <button class="btn-common-new" type="reset">Cancel</button>
+							  <button class="btn-common-new" type="submit">Sumbit</button>
+						  </div>
+					  </div>
+					</form>
+				  </div>
+			   </div>
+			 </div>
+		 </div>
+	  </div>
+	</div>
+  </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+       
+
+
+<%- include('../innerFooter')%>

@@ -13,7 +13,7 @@ var { CryptoWalletModel}=require('../../models/crypto_wallet');
 const {DigitalWalletRelsModel}=require('../../models/wallet_digital_rels');
 const {CryptoTransHistoryModel}=require('../../models/crypto_transaction_his');
 const {DocumentTransactionModel}=require('../../models/document_trans_his');
-const {pushnotification,updateNotification,btcbalance}=require('../apies/btc_apies');
+const {pushnotification,updateNotification,btcbalance}=require('../apies/helper');
 //btc wallet details
 var bitcoin = require("bitcoinjs-lib");
 const TESTNET = bitcoin.networks.testnet;
@@ -624,7 +624,8 @@ exports.getTransactionHistoryForIndividual=async function(req,res){
                   balance,
                   reflet_id,
                   success_msg,
-                  err_msg
+                  err_msg,
+                  encrypt
                   })
          }else{
           console.log("ready to render crypto history:",cryptoTransArr);
@@ -637,7 +638,8 @@ exports.getTransactionHistoryForIndividual=async function(req,res){
             balance,
             reflet_id,
             success_msg,
-            err_msg
+            err_msg,
+            encrypt
 })
          }
      }else{
@@ -683,7 +685,8 @@ exports.getTransactionHistoryForIndividual=async function(req,res){
               balance,
               reflet_id,
               success_msg,
-              err_msg
+              err_msg,
+              encrypt
   })
               }else{
                 res.render('front/transaction_history',{        
@@ -695,7 +698,8 @@ exports.getTransactionHistoryForIndividual=async function(req,res){
                   balance,
                   reflet_id,
                   success_msg,
-                  err_msg
+                  err_msg,
+                  encrypt
       })
               }
            }     

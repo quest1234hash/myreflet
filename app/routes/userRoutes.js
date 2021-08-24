@@ -748,4 +748,13 @@ router.post('/import-crypto-wallet',isUser,DeshboardController.importCryptoWalle
 router.post('/crypto-transaction-fee',isUser,DeshboardController.cryptoTransactionFee);
 router.post('/send-crypto',isUser,DeshboardController.sendCrypto);
 router.post('/check-pvt-key',isUser,DeshboardController.validatePvt);
+router.get('/all-docs-folder',isUser,DocumentController.getAllDocsFolder);
+router.post('/create-folder',isUser,DocumentController.createFolder);
+router.get('/all-docs-in-folder',isUser,DocumentController.getAllDocsFromFolder);
+router.post('/show-doc',isUser,DocumentController.showDocuments);
+router.post('/delete-doc',isUser,DocumentController.deleteDocs);
+router.post('/upload-doc',isUser,DocumentController.uploadDocument);
+router.post('/send-to-verifier',isUser,DocumentController.sendDocToVerifier);
+router.post('/share-doc',isUser,DocumentController.shareDocuments);
+
 module.exports = router; 

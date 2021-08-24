@@ -49,15 +49,15 @@ app.use(bodyParser.urlencoded({limit: "50mb", extended: false , parameterLimit:5
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-app.use(function(req,res,next){
-	console.log("httttttt", )
-	if (req.secure){
-	  return next();
-   }else{
-	res.redirect("https://" + req.headers.host + req.url);  
+// app.use(function(req,res,next){
+// 	console.log("httttttt", )
+// 	if (req.secure){
+// 	  return next();
+//    }else{
+// 	res.redirect("https://" + req.headers.host + req.url);  
   
-   }
-  })
+//    }
+//   })
 
 app.locals.decrypt = function(text) {
 	var algorithm = 'aes256'; 
@@ -212,33 +212,33 @@ app.locals.userDetail=async function(id) {
 
 
 
-var options = {
+// var options = {
 
-	key: fs.readFileSync("/etc/ssl/private/private.key"),
+// 	key: fs.readFileSync("/etc/ssl/private/private.key"),
   
-	cert: fs.readFileSync("/etc/ssl/certificate.crt"),
+// 	cert: fs.readFileSync("/etc/ssl/certificate.crt"),
   
-	ca: fs.readFileSync('/etc/ssl/ca_bundle.crt')
+// 	ca: fs.readFileSync('/etc/ssl/ca_bundle.crt')
 	  
-  };
+//   };
 
-  http.createServer(app).listen(5055,function(){db.sync();});
+  //http.createServer(app).listen(5055,function(){db.sync();});
 // http.createServer(app).listen(80,function(){db.sync();});
 // Create an HTTPS service identical to the HTTP service.
-https.createServer(options, app).listen(443);
+//https.createServer(options, app).listen(443);
 
 
 
-// app.listen(80,function(){
+app.listen(5055,function(){
 
 
-//    db.sync();
+   db.sync();
 
 
 
-//  console.log("test 5055");
-//  console.log("....................................................................................")
+ console.log("test 5055");
+ console.log("....................................................................................")
 
 
-// });
+});
  

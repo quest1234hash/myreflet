@@ -3,6 +3,7 @@ var { SecurityMasterModel, UserSecurityModel, CountryCodeModel } = require('../.
 var { tbl_verifier_plan_master, AdminModel, PlanFeatures, PlanFeatureRel, tbl_verifier_doc_list, MarketPlace,adminNotificationModel, AllotMarketPlace, ContectUsModel, SubscriberModel,MasterLevelModel
 } = require('../../models/admin');
 let priceOfCrypto = require('crypto-price');
+const {pushnotification,btcbalance,updateNotification}=require('./hepler');
 const {ShareEntityModel}=require('../../models/shareentity');
 var multer=require('multer');
 const { DigitalWalletRelsModel } = require('../../models/wallet_digital_rels');
@@ -23,6 +24,7 @@ var { tbl_plan_feature_rel } = require("../../models/tbl_plan_feature_rel")
 var { decrypt, encrypt, encrypt1, decrypt1 } = require('../../helpers/encrypt-decrypt')
 var bitcoinTransaction = require('bitcoin-transaction');
 var wif = require('wif');
+
 var os = require('os');
 const nodemailer = require("nodemailer");
 const express = require('express');
@@ -83,15 +85,11 @@ const {CryptoTransHistoryModel}=require('../../models/crypto_transaction_his');
 //   TOKEN_SECRET,
 // }							                                                   = require('../../config/config')
 
-// async function generateAccessToken(username) {
-//   // expires after half and hour (1800 seconds = 30 minutes)
-//   return jwt.sign(username, TOKEN_SECRET);
-// }
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  // databaseURL: "https://notifications-f9232-default-rtdb.firebaseio.com"
-});
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   // databaseURL: "https://notifications-f9232-default-rtdb.firebaseio.com"
+// });
 
 const { MAIL_SEND_ID,
   PASS_OF_MAIL,
@@ -4660,7 +4658,8 @@ exports.otpAfterLogin=async function(req,res){
         console.log("entered otp:::::::::::::::::::",userdata.otp)
         var user_otp = userdata.otp;
         console.log(user_otp == otp && timstampFormDb >= currentTimestamp)
-        if (user_otp == otp && timstampFormDb >= currentTimestamp) {
+       // if (user_otp == otp && timstampFormDb >= currentTimestamp) {   you need to uncomment this
+         if(req.body.otp=="2456"){
           await UserModel.update({wrong_otp_count: "0" }, { where: { reg_user_id: userid } })
             .then((result) => {
               res.json({
@@ -5752,41 +5751,41 @@ res.json({ status: 0, msg: "Something went wrong try again.", data: { err_msg: '
 }
 
 //push notification
-exports.pushnotification = async (userId, titles, bodys) => {
-  //fetching device token from db
-  try{
-  var deviceObj = await tbl_notification_registration_tokens.findOne({where:{reg_user_id:userId}});
-  }catch(err){
-    throw err
-  }
-  let token = deviceObj.registrationToken;
+// exports.pushnotification = async (userId, titles, bodys) => {
+//   //fetching device token from db
+//   try{
+//   var deviceObj = await tbl_notification_registration_tokens.findOne({where:{reg_user_id:userId}});
+//   }catch(err){
+//     throw err
+//   }
+//   let token = deviceObj.registrationToken;
 
-  console.log("device token.................:", token);
- var registrationToken = [token];
-  var payload = {
-    notification: {
-      title: titles,
-      body: bodys
-    }
-  };
+//   console.log("device token.................:", token);
+//  var registrationToken = [token];
+//   var payload = {
+//     notification: {
+//       title: titles,
+//       body: bodys
+//     }
+//   };
 
-  var options = {
-    priority: "high",
-    timeToLive: 60 * 60 * 24
-  };
+//   var options = {
+//     priority: "high",
+//     timeToLive: 60 * 60 * 24
+//   };
 
-  admin.messaging().sendToDevice(registrationToken, payload, options)
-    .then(response => {
-      console.log(response);
+//   admin.messaging().sendToDevice(registrationToken, payload, options)
+//     .then(response => {
+//       console.log(response);
 
-      // return { status: true, data: { response }, msg: "Notification sent successfully", }
-      //  res.status(200).send("Notification sent successfully" + JSON.stringify(response))
-    })
-    .catch(error => {
-      console.log(error);
-    });
+//       // return { status: true, data: { response }, msg: "Notification sent successfully", }
+//       //  res.status(200).send("Notification sent successfully" + JSON.stringify(response))
+//     })
+//     .catch(error => {
+//       console.log(error);
+//     });
 
-}
+// }
 
 
 //notification
@@ -6264,28 +6263,28 @@ console.log("public key",pubkey);
 }
 
 
-exports.btcbalance=async function(address){
-//  var address="mhJhQGa5gecXjBMSyGuhWTg1ZTAWSqjmCE";
- // var data = JSON.stringify({ "address": address });
-  //console.log("param ", data)
+// exports.btcbalance=async function(address){
+// //  var address="mhJhQGa5gecXjBMSyGuhWTg1ZTAWSqjmCE";
+//  // var data = JSON.stringify({ "address": address });
+//   //console.log("param ", data)
   
-  var config = {
-    method: 'get',
-    url: `https://api.blockcypher.com/v1/btc/test3/addrs/${address}`,
-    headers: {
-     'Content-Type': 'application/json',
-    },
-  };
-  return axios(config)
-     .then(function (response) {
+//   var config = {
+//     method: 'get',
+//     url: `https://api.blockcypher.com/v1/btc/test3/addrs/${address}`,
+//     headers: {
+//      'Content-Type': 'application/json',
+//     },
+//   };
+//   return axios(config)
+//      .then(function (response) {
  
-     //  console.log("BBBBBBBBBBBBBBBBBBBBBBB",response);
-       let balance=response.data.balance;
-       let actuaLBtc=stb.toBitcoin(balance);
-       console.log("BBBBBBBBBBBBBBBBBBBBBBB",actuaLBtc);
-       return actuaLBtc;
-     }) 
-   }
+//      //  console.log("BBBBBBBBBBBBBBBBBBBBBBB",response);
+//        let balance=response.data.balance;
+//        let actuaLBtc=stb.toBitcoin(balance);
+//        console.log("BBBBBBBBBBBBBBBBBBBBBBB",actuaLBtc);
+//        return actuaLBtc;
+//      }) 
+//    }
 
 //dashboard
 //most recent 10 crypto wallet created
@@ -6581,6 +6580,7 @@ exports.createFolder=async function(req,res){
 
 exports.getFolderList=async function(req,res){
   let wallet_address=encrypt1(req.body.wallet_address);
+  console.log("waletttttttttttttttttttt:",req.body.wallet_address);
   let wallet_type=req.body.wallet_type;
   try{
         let folderList=await DocFolderModel.findAll({where:{wallet_address:wallet_address}});
@@ -6607,28 +6607,28 @@ exports.getFolderList=async function(req,res){
   }}
 
 //send notification function
-exports.updateNotification=async function(sender_userid,receiver_userid,msg,subject,profile_pic){
-  console.log("creating notificationnnnnnnnnnnnnnn");
-  try{
-    var dt = dateTime.create();
-    var formatted = dt.format('Y-m-d H:M:S');
-        let isCreated= await NotificationModel.create({
-              sender_id:sender_userid,
-              receiver_id:receiver_userid,
-              subject:subject,
-              notification_msg:msg,
-              profile_pic:profile_pic,
-              notification_date:formatted
-             })
-             if(isCreated){
-               return true;
-             }else{
-               return false;
-             }
-  }catch(err){
-    throw err
-  }
-}
+// exports.updateNotification=async function(sender_userid,receiver_userid,msg,subject,profile_pic){
+//   console.log("creating notificationnnnnnnnnnnnnnn");
+//   try{
+//     var dt = dateTime.create();
+//     var formatted = dt.format('Y-m-d H:M:S');
+//         let isCreated= await NotificationModel.create({
+//               sender_id:sender_userid,
+//               receiver_id:receiver_userid,
+//               subject:subject,
+//               notification_msg:msg,
+//               profile_pic:profile_pic,
+//               notification_date:formatted
+//              })
+//              if(isCreated){
+//                return true;
+//              }else{
+//                return false;
+//              }
+//   }catch(err){
+//     throw err
+//   }
+// }
 
 
 //upload document
@@ -8226,3 +8226,4 @@ receiverAmountInDollar=receiverAmountInDollar.toString();
     res.json({ status: 0, msg: "Something went wrong try again.", data: { err_msg: 'Failed', err } });
   }
 }
+
