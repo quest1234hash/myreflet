@@ -391,6 +391,8 @@ exports.getDecryptPass=async function(req,res){
 exports.savePasswordSubmit=async function(req,res){
   let password=req.body.password;
   let user_id=req.body.user_id;
+  success_msg  = req.flash('success_msg');
+  err_msg      = req.flash('err_msg');
   console.log("Useriddddddddddddddd",user_id);
 try{
 console.log("passsssssssssssssssssss",password);
@@ -402,10 +404,11 @@ password=encrypt1(password);
 password=encrypt(password);
 console.log("after hashing passworddddddddddddddd and encryption:",password);
 serverSalt=encrypt(serverSalt);
-
-let isSavedPassword=await UserModel.update({password:password,server_salt:serverSalt},{where:{reg_user_id:user_id}});
+let steps=3;
+let isSavedPassword=await UserModel.update({password:password,server_salt:serverSalt,complete_steps:steps},{where:{reg_user_id:user_id}});
 if(isSavedPassword){
-  res.redirect(`/set_pin/?userid=${user_id}`)
+  res.redirect(`/re-enter-password/?userId=${user_id}`)
+
 }else{
   res.redirect(`/save-password/?userId=${user_id}`);
 }
@@ -413,6 +416,46 @@ if(isSavedPassword){
     throw err;
   }
 }
+
+//re-enter password get method
+exports.getReenterPassword=async function(req,res){
+  let user_id=req.query.userId;
+  try{
+    res.render('front/re-enter-password',{
+      success_msg,
+       err_msg,
+       user_id
+  });
+  }catch(err){
+    throw err;
+  }
+}
+
+//re-enter password
+exports.reEnterPassword=async function(req,res){
+  let password=req.body.password;
+  let user_id=req.body.user_id;
+  try{
+    let userDet=await UserModel.findOne({where:{reg_user_id:user_id}});
+    let salt=userDet.client_salt;
+    password=crypto.pbkdf2Sync(password, salt,  1000, 128, 'SHA512').toString(`hex`);
+ let steps=4;
+     let serverSalt=decrypt(userDet.server_salt);
+     password=password+serverSalt;
+     password=crypto.createHash('sha256').update(password).digest('hex');
+     password=encrypt1(password);
+     password=encrypt(password);
+     if(userDet.password==password){
+      await UserModel.update({complete_steps:steps},{where:{reg_user_id:user_id}});
+      res.redirect(`/set_pin/?userid=${user_id}`)
+     }else{
+      res.redirect(`/save-password/?userId=${user_id}`);
+     }
+  }catch(err){
+    throw err;
+  }
+}
+
 //miidleware for checking email verification
 exports.checkEmailVerification=async function(req,res,next){
         let user_id=  req.query.userId;
@@ -474,7 +517,7 @@ exports.submitQuestionAns = (req,res,next )=> {
               .catch(err=>console.log(err))
  
     }
-    var steps=parseInt("3")
+    var steps=parseInt("4")
 
     UserModel.update({complete_steps:steps}, { where: { reg_user_id:userID }})
     .then((result) =>{
@@ -488,7 +531,7 @@ exports.submitQuestionAns = (req,res,next )=> {
 
 /**set_pin Get Method Start**/
  exports.setPinGet = (req,res,next )=> {
-
+let user_id=req.query.userid;
     success_msg = req.flash('success_msg');
     err_msg     = req.flash('err_msg');
 
@@ -509,7 +552,7 @@ exports.submitSetPin = (req,res,next )=> {
     var otp2 =req.body.otp2
     var otp3 =req.body.otp3
     var otp4 =req.body.otp4
-    var steps=parseInt("4")
+    var steps=parseInt("5")
  
     var otp = otp1+otp2+otp3+otp4
 
@@ -546,7 +589,7 @@ exports.termsAndCondition =async (req,res,next )=> {
 /**terms-and-conditions-submit Post Method Start**/
  exports.termsAndConditionSubmit = (req,res,next )=> {
 
-     var steps=parseInt("5")
+     var steps=parseInt("6")
      var userid=req.body.user_id
      var userID =parseInt(userid);
 

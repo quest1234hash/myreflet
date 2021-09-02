@@ -21,7 +21,7 @@ function encrypt(text) {
 
 //with cryptojs
 function encrypt1(text){
-        let key= 'p2g0MlAv4m0CBNgau14AMipdjMnvoifd';
+    let key=process.env.KEY;
       //  console.log("key:::::",key.toString('hex'))
       var decodeKey = crypto.createHash('sha256').update(key, 'utf-8').digest();
      let cipherText=crypto.createCipheriv('aes-256-cbc', decodeKey, iv);
@@ -40,7 +40,7 @@ function decrypt(text) {
 }
 //decrypt for password
 function decrypt1(text) {
-        let key="p2g0MlAv4m0CBNgau14AMipdjMnvoifd";
+        let key=process.env.KEY;
         var decodeKey = crypto.createHash('sha256').update(key, 'utf-8').digest();
           var cipher = crypto.createDecipheriv('aes-256-cbc', decodeKey, iv);
           var decrypted= cipher.update(text,'base64', 'utf8') + cipher.final('utf8');

@@ -63,6 +63,8 @@ exports.my_reflect_code_id= async(req,res,next) =>{
     var success_msg = req.flash('success_msg');
     var err_msg= req.flash('err_msg'); 
     var all_reflect_id=[]
+    let refletArr=[];
+    let client_salt;
     if(user_id)
     { 
         let allData=await MyReflectIdModel.findAll({where:{reg_user_id:user_id,idCreated:'true'}});
@@ -126,12 +128,12 @@ exports.my_reflect_code_id= async(req,res,next) =>{
 
 //fetch all shared entity with user
 let userData=await UserModel.findOne({where:{reg_user_id:user_id}});
-let client_salt=userData.client_salt;
+client_salt=userData.client_salt;
 let sharedEntity=await ShareEntityModel.findAll({where:{receiver_id:user_id,isBlock:'no'}});
 //console.log("Shared   dddddddddddddddddddddddddd",sharedEntity);
 
 if(sharedEntity.length>0){
- let refletArr=[];
+
  let j=0;
   for(let i=0;i<sharedEntity.length;i++){
   
@@ -183,18 +185,19 @@ if(sharedEntity.length>0){
         client_salt,
         encrypt
 });
-}else{
-    res.render('front/myReflect/my-reflet-id-code',{
-        success_msg,
-        err_msg,
-        session:req.session,
-        all_reflect_id,
-        refletArr,
-        crypto,
-        client_salt,
-        encrypt
-});
 }
+// else{
+//     res.render('front/myReflect/my-reflet-id-code',{
+//         success_msg,
+//         err_msg,
+//         session:req.session,
+//         all_reflect_id,
+//         refletArr,
+//         crypto,
+//         client_salt,
+//         encrypt
+// });
+// }
         }else{
             res.render('front/myReflect/my-reflet-id-code',{
                 success_msg,

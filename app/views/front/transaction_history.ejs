@@ -38,7 +38,7 @@
 	}
 
 
-/* new css for popup */
+/* new css for loader */
 
 
 
@@ -291,10 +291,104 @@
 													<td> <span class="pending-status" style="color: green;"><%= cryptoTransArr[i].amount %></span></td>
 													<% } %>
 											    <td>
-											      	<a href="requested-by-verifier.php" class="view-link"  data-toggle="modal" data-target="#details">View Recipt</a>
+											      	<a href="#" class="view-link" id="rec-id<%=i %>" data-toggle="modal" data-target="" onclick="showReceipt(`<%= cryptoTransArr[i].transaction_id %>`,`<%= wallet_type  %>`,`<%=i %>`)">View Recipt</a>
 										      	</td>
 												 
 										    </tr>
+											  <!--modal transaction rceipt-->
+			<div class="modal fade field-edit-modal" id="details<%=i %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+				  <div class="modal-content">
+					<div class="modal-body">
+					  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					  </button>
+					  <div class="create-wallet-box" style="    padding: 1px 35px;">
+						  <div class="row align-item-center">
+							  <div class="col-xl-2 col-lg-3 col-md-3">
+								  <div>
+									  <img src="../assets/images/icons/createidentity-assets/receipt.png">
+								  </div>
+							  </div>
+							  <div class="col-xl-7 col-lg-7 col-md-7">
+								  <h5 class="heading-purple">Receipt</h5>
+							  </div>
+						  </div>
+						  <div class="row">
+							  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
+								  <div class="setup-inner-box for-protact" style="padding: 14px 0 10px;">
+									  <div class="create-rflet-id-form">
+										  <div class="form-group">
+											  <label>From wallet address</label>
+											  <div class="input-group">
+												<input type="text" class="form-control" readonly id="from-id<%=i %>" value="" >
+											  </div>
+										  </div>
+										  <div class="form-group">
+											  <label>To wallet address</label>
+											  <div class="input-group">
+												<input type="text" class="form-control" readonly id="to-id<%=i %>" value="">
+											  </div>
+										  </div>
+										  <div class="form-group">
+											  <label>Name</label>
+											  <div class="input-group">
+												<input type="text" class="form-control" readonly  id="rec-name-id<%=i %>" value="">
+											  </div>
+										  </div>
+										  <div class="form-group">
+											  <label>Address</label>
+											  <div class="input-group">
+												<input type="text" class="form-control" readonly id="rec-add-id<%=i %>" value="">
+											  </div>
+										  </div>
+										  <div class="form-group">
+											  <label>My reflet ID</label>
+											  <div class="input-group">
+												<input type="text" class="form-control" readonly id="ref-id<%=i %>" value="">
+											  </div>
+										  </div>
+										  <div class="form-group">
+											  <label>Document Sent</label>
+											  <div class="input-group">
+												<input type="text" class="form-control" readonly id="doc-name-id<%=i %>" value="">
+											  </div>
+										  </div>
+										  <div class="form-group">
+											  <label>Address Proof</label>
+											  <div class="input-group">
+												<input type="text" class="form-control" readonly id="rec-addp-id<%=i %>" value="">
+											  </div>
+										  </div>
+										  <div class="form-group">
+											  <label>Date & Time</label>
+											  <div class="input-group">
+												<input type="text" class="form-control" readonly id="time-id<%=i %>" value="">
+											  </div>
+										  </div>
+										  <div class="form-group">
+											  <label>Transaction Hash</label>
+											  <div class="input-group">
+												<input type="text" class="form-control" readonly id='hash-id<%=i %>' value="">
+											  </div>
+										  </div>
+										  <div class="form-group">
+											  <label>Amount</label>
+											  <div class="input-group">
+												<input type="text" class="form-control" readonly id="amount-id<%=i %>" value="">
+											  </div>
+										  </div>
+										  <img src="../assets/images/approve.png" alt="Accepted" style="margin-top: -14px;">
+									  </div>
+									 
+								  </div>
+							  </div>
+						   </div>
+						 </div>
+					 </div>
+				  </div>
+				</div>
+			  </div>
 											<% } %>
 										  
 										</tbody>
@@ -707,103 +801,7 @@
 </section>
 
 
-            <!--modal transaction rceipt-->
-			<div class="modal fade field-edit-modal" id="details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog" role="document">
-				  <div class="modal-content">
-					<div class="modal-body">
-					  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					  </button>
-					  <div class="create-wallet-box" style="    padding: 1px 35px;">
-						  <div class="row align-item-center">
-							  <div class="col-xl-2 col-lg-3 col-md-3">
-								  <div>
-									  <img src="../assets/images/icons/createidentity-assets/receipt.png">
-								  </div>
-							  </div>
-							  <div class="col-xl-7 col-lg-7 col-md-7">
-								  <h5 class="heading-purple">Recipt</h5>
-							  </div>
-						  </div>
-						  <div class="row">
-							  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
-								  <div class="setup-inner-box for-protact" style="padding: 14px 0 10px;">
-									  <div class="create-rflet-id-form">
-										  <div class="form-group">
-											  <label>From wallet address</label>
-											  <div class="input-group">
-												<input type="text" class="form-control" readonly placeholder="1262576278898" value="1262576278898">
-											  </div>
-										  </div>
-										  <div class="form-group">
-											  <label>To wallet address</label>
-											  <div class="input-group">
-												<input type="text" class="form-control" readonly placeholder="1262576277777" value="1262576277777">
-											  </div>
-										  </div>
-										  <div class="form-group">
-											  <label>Name</label>
-											  <div class="input-group">
-												<input type="text" class="form-control" readonly placeholder="John" value="John">
-											  </div>
-										  </div>
-										  <div class="form-group">
-											  <label>Address</label>
-											  <div class="input-group">
-												<input type="text" class="form-control" readonly placeholder="Unit 3 Windhilly Rd.Limavady, BT49 0RA" value="Unit 3 Windhilly Rd.Limavady, BT49 0RA">
-											  </div>
-										  </div>
-										  <div class="form-group">
-											  <label>My reflet ID</label>
-											  <div class="input-group">
-												<input type="text" class="form-control" readonly placeholder="3D1326" value="3D1326">
-											  </div>
-										  </div>
-										  <div class="form-group">
-											  <label>Document Sent</label>
-											  <div class="input-group">
-												<input type="text" class="form-control" readonly placeholder="Driving license" value="Driving license">
-											  </div>
-										  </div>
-										  <div class="form-group">
-											  <label>Address Proof</label>
-											  <div class="input-group">
-												<input type="text" class="form-control" readonly placeholder="Untility Bill" value="Untility Bill">
-											  </div>
-										  </div>
-										  <div class="form-group">
-											  <label>Date & Time</label>
-											  <div class="input-group">
-												<input type="text" class="form-control" readonly placeholder="26 Apr, 2021 12:55:41" value="26 Apr, 2021 12:55:41">
-											  </div>
-										  </div>
-										  <div class="form-group">
-											  <label>Transaction Made</label>
-											  <div class="input-group">
-												<input type="text" class="form-control" readonly placeholder="30" value="30">
-											  </div>
-										  </div>
-										  <div class="form-group">
-											  <label>Address(BTC)</label>
-											  <div class="input-group">
-												<input type="text" class="form-control" readonly placeholder="5.2602256" value="5.2602256">
-											  </div>
-										  </div>
-										  <img src="../assets/images/approve.png" alt="Accepted" style="margin-top: -14px;">
-									  </div>
-									  <div >
-										  <a class="btn-common-new" href="">Save</a>
-										  <a class="btn-common-new" href="">Cancel</a>
-									  </div>
-								  </div>
-							  </div>
-						   </div>
-						 </div>
-					 </div>
-				  </div>
-				</div>
-			  </div>
+          
 
             <!-- modal crypto  transaction -->
 			<div class="modal fade field-edit-modal" id="Send" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -957,5 +955,34 @@ function removeLabel(){
 	document.getElementById('msg').innerHTML='';
 	document.getElementById('err_msg').innerHTML=""
 }
+	
+//get receipt
+function showReceipt(transaction_id,wallet_type,i){
+	
+	$.ajax({
+           type: "post",
+           url: "/view-receipt",
+           data:{transaction_id:transaction_id,wallet_type:wallet_type},
+           success: function (data) {
+        console.log(data);
+		 let dataInJson=JSON.parse(data);
+		
+		 document.getElementById('from-id'+i).value=dataInJson.sender_wallet_addr;
+		 document.getElementById('to-id'+i).value=dataInJson.receiver_wallet_addr;
+		 document.getElementById('rec-name-id'+i).value=dataInJson.name;
+		 document.getElementById('rec-add-id'+i).value=dataInJson.address;
+		 document.getElementById('ref-id'+i).value=dataInJson.reflet_id;
+		 document.getElementById('hash-id'+i).value=dataInJson.transaction_hash;
+		 document.getElementById('amount-id'+i).value=dataInJson.amount;
+		// document.getElementById('amount-id').value=dataInJson.amountInDollar;
+		 document.getElementById('time-id'+i).value=dataInJson.date+" "+dataInJson.time;
+		 document.getElementById('doc-name-id'+i).value=dataInJson.document_sent;
+		 document.getElementById('rec-addp-id'+i).value=dataInJson.address_proof;
+		 document.getElementById("rec-id"+i).dataset.target="#details"+i;
+		     
+    }
+  })
+}	
+	
 	</script>
 	

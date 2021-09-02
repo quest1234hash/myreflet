@@ -1,4 +1,5 @@
 var {UserModel,LogDetailsModel}=require('../../models/user');
+var {KycModel}=require('../../models/kyc-verification');
 var {SecurityMasterModel,UserSecurityModel}=require('../../models/securityMaster');
 var{ WalletModel,WalletModelImport } = require('../../models/wallets');
 var {MyReflectIdModel, DocumentReflectIdModel,FilesDocModel} = require('../../models/reflect');
@@ -711,8 +712,182 @@ exports.getTransactionHistoryForIndividual=async function(req,res){
   }
 }
 
+//get reciept transaction
+exports.getTransactionRecieptForWallet=async function(req,res){
+  let transaction_id=req.body.transaction_id;
+  let wallet_type=req.body.wallet_type;
+  try{
+    if(wallet_type.toLowerCase()=='btc'||wallet_type.toLowerCase()=='ethereum'){
+         let transHist=await CryptoTransHistoryModel.findOne({where:{transaction_id:transaction_id}});
+       
+       //  let receiver_info_wallet=await CryptoWalletModel({where:{wallet_address:transDet.receiver_wallet_id}});
+      //   let sender_info_wallet=await CryptoWalletModel({where:{wallet_address:transDet.}})
+          let rec_name=''
+          let receiver_address='';
+          let receiver_reflet_id='';
+          let kyc_doc='';
+          let document_sent='';
 
-/**********************************************************client deshboard start****************************************************************************/
+          if(transHist.operation=='sent'){
+          if(transHist.receiver_reg_user_id!=null||transHist.receiver_reg_user_id!=''){
+               console.log("recccccccccccc id ",transHist.receiver_reg_user_id);
+               let rec_info=await UserModel.findOne({where:{reg_user_id:transHist.receiver_reg_user_id}});
+                let rec_ref= await MyReflectIdModel.findOne({where:{reg_user_id:transHist.receiver_reg_user_id,reflectid_by:'representative',idCreated:'true'}});
+                let kycDet=await KycModel.findOne({where:{reg_user_id:transHist.receiver_reg_user_id}});
+                if(kycDet){
+                  kyc_doc=decrypt1(kycDet.doc_name);
+                }else{
+                  kyc_doc="Not uploaded";
+                }
+                if(rec_info){
+            rec_name=decrypt(rec_info.full_name);
+            receiver_address=decrypt(rec_info.birthplace);
+                }
+                if(rec_ref){
+            receiver_reflet_id=rec_ref.reflect_code;
+                }
+          }else{
+            rec_name='Unknown'
+          }
+        }else{
+          if(transHist.sender_reg_user_id!=null||transHist.sender_reg_user_id!=''){
+            let rec_info=await UserModel.findOne({where:{reg_user_id:transHist.sender_reg_user_id}});
+            let kycDet=await KycModel.findOne({where:{reg_user_id:transHist.sender_reg_user_id}});
+            if(kycDet){
+              kyc_doc=decrypt1(kycDet.doc_name);
+            }else{
+              kyc_doc="Not uploaded";
+            }
+           
+            receiver_reflet_id=transHist.sender_reflet_id;
+            receiver_address=decrypt(rec_info.birthplace);
+            receiver_reflet_id=transHist.sender_reflet_id;
+            rec_name=decrypt(rec_info.full_name);
+          }else{
+            rec_name='Unknown'
+          }
+          
+        }
+         var respObj={
+          sender_wallet_addr:decrypt1(transHist.sender_wallet_id),
+          receiver_wallet_addr:decrypt1(transHist.receiver_wallet_id),
+          name:rec_name,
+          address:receiver_address,
+          reflet_id:receiver_reflet_id,
+          transaction_hash:transHist.transaction_hash,
+          amount:transHist.amount,
+          amountInDollar:transHist.amountIndollar,
+          date:'',
+          time:'',
+          operation:transHist.operation,
+          document_sent:document_sent,
+          address_proof:kyc_doc
+        }
+        if(transHist.amount==null){
+          respObj.amount='0'
+        }else{
+          respObj.amount= parseFloat(respObj.amount).toFixed(8);
+        }
+        var dt = dateTime.create(transHist.createdAt);
+        var formatted = dt.format('m/d/Y');
+        var tim=dt.format('H:M:S');
+        respObj.date=formatted;
+        respObj.time=tim;
+       let respo=JSON.stringify(respObj);
+       res.end(respo);
+      //  res.json({ status: 1, msg: "Doc receipt", data:respObj });
+    }else{
+        let transDet=await DocumentTransactionModel.findOne({where:{transaction_id:transaction_id}});
+        let rec_name=''
+        let receiver_address='';
+        let receiver_reflet_id='';
+        let kyc_doc='';
+        let document_sent='';
+        if(transDet.action=='shared'){
+          console.log("RECCCCCCCCCCCCCCCCCCCC NAMEEEEEEEEEEE",transDet.receiver_name);
+          if(transDet.receiver_name!=null){
+            try{
+            rec_name=decrypt(transDet.receiver_name);
+            }catch(err){
+              rec_name='';
+              console.log(err);
+            }
+          }else{
+            rec_name='';
+          }
+          
+          receiver_address=decrypt1(transDet.receiver_birth_address);
+          receiver_reflet_id= transDet.receiver_refletid;
+          let kycDet=await KycModel.findOne({where:{reg_user_id:transDet.reg_user_id}});
+          if(kycDet){
+            kyc_doc=decrypt1(kycDet.doc_name);
+            
+          }else{
+            kyc_doc="Not uploaded";
+          }
+          let file_det=await FilesDocModel.findOne({where:{file_id:transDet.file_id}});
+          document_sent=decrypt1(file_det.doc_name);
+        }else{
+              let digi_send_info=await DigitalWalletRelsModel.findOne({where:{wallet_address:decrypt1(transDet.sender_wallet_pubKey)}});  
+              
+              let sender_user_id=digi_send_info.reg_user_id;
+                  let ref_id_info=await MyReflectIdModel.findOne({where:{reg_user_id:sender_user_id,reflectid_by:'representative',idCreated:'true'}});
+                  let sender_info=await UserModel.findOne({where:{reg_user_id:sender_user_id}});
+                  rec_name=decrypt(sender_info.full_name);
+                  receiver_address=decrypt(sender_info.birthplace);
+                  receiver_reflet_id=ref_id_info.reflect_code;
+                  let kycDet=await KycModel.findOne({where:{reg_user_id:transDet.reg_user_id}});
+                  if(kycDet){
+                    kyc_doc=decrypt1(kycDet.doc_name);
+                    
+                  }else{
+                    kyc_doc="Not uploaded";
+                  }
+                 
+                  let file_det=await FilesDocModel.findOne({where:{file_id:transDet.file_id}});
+                  document_sent=decrypt1(file_det.doc_name);
+            }
+        var respObj2={
+          sender_wallet_addr:decrypt1(transDet.sender_wallet_pubKey),
+          receiver_wallet_addr:decrypt1(transDet.receiver_wallet_pubKey),
+           name:rec_name,
+           address:receiver_address,
+          reflet_id:receiver_reflet_id,
+          transaction_hash:decrypt1(transDet.transaction_hash),
+          amount:transDet.amount,
+          date:'',
+          time:'',
+          action:transDet.action,
+          document_sent:document_sent,
+          address_proof:kyc_doc,
+          operation:transDet.action
+
+        }
+        if(transDet.amount==null){
+          respObj2.amount='0'
+        }else{
+          respObj2.amount= parseFloat(respObj2.amount).toFixed(8);
+        }
+        var dt = dateTime.create(transDet.createdAt);
+        var formatted = dt.format('m/d/Y');
+        var tim=dt.format('H:M:S');
+        respObj2.date=formatted;
+        respObj2.time=tim;
+        let respo2=JSON.stringify(respObj2);
+       res.end(respo2);
+        //res.json({ status: 1, msg: "Doc receipt", data:respObj2 });
+      }
+      
+  }catch(err){
+    console.log(err);
+    //res.json({ status: 0, msg: "Something went wrong try again.", data: { err_msg: 'Failed', err } });
+  }
+}
+
+
+
+/***************
+ * *******************************************client deshboard start****************************************************************************/
 exports.clientDeshboard= async(req,res,next )=>{
   console.log("******************cleint dashboard start******************************************************");
   console.log("Helooooooooooooooooooooooooooooooooooooooooooooooooo");

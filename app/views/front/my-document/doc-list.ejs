@@ -48,9 +48,9 @@
 				<input type="checkbox" value="">
 				<span class="cr"><i class="cr-icon fa fa-check"></i></span>
 
-				<a href="#"><img src="../assets/images/icons/dashboard-assets/download-purple.png"> Download</a>
+				<a href="#" onclick="activeDownloadFunction(`<%=folder_id%>`)"><img src="../assets/images/icons/dashboard-assets/download-purple.png" id="down_id" > Download</a>
 				<a href="#"data-toggle="modal" onclick="activeSendFunction()" data-target="" id="send_id"><img src="../assets/images/icons/dashboard-assets/send-to-verifier.png"> Send </a>
-				<a href="#" data-toggle="modal" data-target="" onclick="activeShareFunction()" id="share_id"><img src="../assets/images/icons/dashboard-assets/upload-purple.png"> Share</a>
+				<a href="#" data-toggle="modal"  onclick="activeShareFunction()" data-target="" id="share_id"><img src="../assets/images/icons/dashboard-assets/upload-purple.png"> Share</a>
 				<a href="#" onclick="activeDeleteFunction()"><img src="../assets/images/icons/dashboard-assets/trash_per.png"> delete</a>
 				<!-- <a href="#" data-toggle="modal" data-target="#SendDocuments" style="display: none;" id="send_id"></a> -->
 			</label>
@@ -156,7 +156,7 @@
 					<h5 class="heading-purple">Add Documents</h5>
 				</div>
 			</div>
-			<form action="upload-doc" method="POST" enctype="multipart/form-data"></form>
+			<form action="upload-doc" method="POST" enctype="multipart/form-data">
 			<div class="row">
 				
 				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
@@ -200,8 +200,8 @@
                             </div>
 						</div>
 						<div >
-							<button type="reset" class="btn-common-new" href="">Cancel</button>
-							<button type="submit" class="btn-common-new" href="">Sumbit</button>
+							<button type="reset" class="btn-common-new" >Cancel</button>
+							<button type="submit" class="btn-common-new">Sumbit</button>
 						</div>
 					</div>
 				</div>
@@ -283,8 +283,6 @@
 </div>
 
 
-
-
            <!--modal3  share documents--> 
 
 <div class="modal fade field-edit-modal" id="Share" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -312,20 +310,20 @@
 						<div class="create-rflet-id-form">
 						    <div class="form-group">
 						    	<div class="input-group">
-								  <input type="text" class="form-control" placeholder="Enter receiver's MyReflet ID">
+								  <input type="text" class="form-control" name="receiver_refletid" placeholder="Enter receiver's MyReflet ID">
 								  <input type="hidden" id="upload-id" value="" name="uploaded_id">
 								  <input type="hidden" value="<%=folder_id %>" name="folder_id">
 								</div>
 						    </div>
 						    <div class="form-group">
 								<div class="input-group">
-								  <input type="text" class="form-control" placeholder="Enter Private Key of this digital wallet">
+								  <input type="text" class="form-control" name="sender_pvt_key" placeholder="Enter Private Key of this digital wallet">
 								</div>
 							</div>
 						</div>
 						<div >
-							<a class="btn-common-new" href="">Cancel</a>
-							<a class="btn-common-new" href="">Sumbit</a>
+							<button class="btn-common-new" type="reset">Cancel</button>
+							<button class="btn-common-new" type="submit">Sumbit</button>
 						</div>
 					</div>
 				</div>
@@ -385,7 +383,6 @@ for(let i=0;i<elems.length;i++){
 console.log("arrrrrrrrr",dataArr);
 document.getElementById('uplodid').value=dataArr;
  document.getElementById('subt-btn').click();
-
 }
 
 //send function
@@ -412,7 +409,7 @@ if(dataArr.length<1){
 }else if(dataArr.length>1){
 	alert("Please select only one document at a time in order to send to verifier");
 }else{
-	document.getElementById("doc_name_id").value=docNameArr[0];
+	//document.getElementById("doc_name_id").value=docNameArr[0];
 	document.getElementById('upl-id').value=clicked_value;
     document.getElementById("send_id").dataset.target="#SendDocuments";
 	
@@ -440,13 +437,14 @@ for(let i=0;i<elems.length;i++){
 		  k++;
 	}
 }
+console.log("dataArr",dataArr);
 if(dataArr.length<1){
 	alert("Please select one of the listed documents");
 }else if(dataArr.length>1){
 	alert("Please select only one document at a time in order to send to verifier");
 }else{
 	document.getElementById("doc_name_id").value=docNameArr[0];
-	document.getElementById('uploaded_id').value=clicked_value;
+	document.getElementById('upload-id').value=clicked_value;
     document.getElementById("share_id").dataset.target="#Share";
 }
 }
@@ -454,6 +452,47 @@ if(dataArr.length<1){
 
 function getVerifierReflet(ver_name,ref_id){
 	document.getElementById('ref-id').value=ref_id;
+}
+
+
+//download docs
+function activeDownloadFunction(folder_id){
+let elems=document.getElementsByClassName('upd');
+let dataArr=[];
+let docNameArr=[];
+let k=0;
+let clicked_value='';
+let docname_elms=document.getElementsByClassName('docNameClass');
+console.log("vvvvvvvvvvvvvvvv:",docname_elms[0].value)
+for(let i=0;i<elems.length;i++){
+	console.log("checking checked:",elems[i].checked);
+	if(elems[i].checked==true){
+		docNameArr[k]=docname_elms[i].value;
+		clicked_value=elems[i].value;
+          dataArr[k]=elems[i].value;
+		  k++;
+	}
+}
+console.log("dataArr",dataArr);
+if(dataArr.length<1){
+	alert("Please select one of the listed documents");
+}else if(dataArr.length>1){
+	alert("Please select only one document at a time in order to download document");
+}else{
+	let uploaded_id=dataArr[0];
+	$.ajax({
+           type: "post",
+           url: "/download-doc",
+           data:{uploaded_id:uploaded_id,folder_id:folder_id},
+           success: function (data) {
+        console.log(data);
+		var a = document.createElement("a"); //Create <a>
+    a.href = "data:image/png;base64," + data; //Image Base64 Goes here
+    a.download = docNameArr[0]+".png"; //File name Here
+    a.click(); //Downloaded file                
+    }
+  })
+}
 }
 
 </script>

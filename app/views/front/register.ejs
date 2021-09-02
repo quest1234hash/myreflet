@@ -322,15 +322,19 @@
 						
 									}
 					if(data.steps==2){
-						window.location.href = url+"sequrity_question/?userid="+data.userid
+						window.location.href = url+"save-password?userId="+data.userid
+						
 									}
 					if(data.steps==3){
-						window.location.href = url+"set_pin/?userid="+data.userid
+						window.location.href = url+"re-enter-password?userId="+data.userid
 									}
 					if(data.steps==4){
-						window.location.href = url+"terms-and-conditions?userId="+data.userid
+						window.location.href = url+"set_pin/?userid="+data.userid
 									}
 					if(data.steps==5){
+						window.location.href = url+"terms-and-conditions?userId="+data.userid
+									}
+						if(data.steps==6){
 						window.location.href = url+"login"
 									}
 												

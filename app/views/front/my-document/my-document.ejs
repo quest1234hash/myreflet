@@ -19,12 +19,12 @@
 				</div>
 			</div>
 			<div class="col-lg-12 col-md-12 col-sm-12">
-				<div class="text-right">
+				<!-- <div class="text-right">
                     <a href="javascript:void(0)" onclick="getVerifierList()" id="setpermissionbtn" class="btn-common-new hide_click" data-toggle="modal" >Send to verifier</a>
 					<a class="btn-common-new" href="" data-toggle="modal" data-target="#add-new-doc-Modal">Add New Document</a>
 					<a class="btn-common-new" href="" data-toggle="modal" data-target="#add-new-request">Request For Document</a>
 
-				</div>
+				</div> -->
 
 			</div>
 			
@@ -54,40 +54,20 @@
 								            	<span class="cr"><i class="cr-icon fa fa-check"></i></span>
 											  </label>
 										</div>
-										<%
-										if(unique_reflect_code.length>0)
-										{
-										
-                                            for(var i=0;i< unique_reflect_code.length;i++ ){
-												if(unique_reflect_code[i].user_as=='client')
-												{
-											  %>
+									
 										<div class="checkbox" >
 											<label>
 											 <div class="upper">
-											 	     <%if(unique_reflect_code[i].rep_firstname){%>
-
-											 	<%= unique_reflect_code[i].rep_firstname %> - <%= unique_reflect_code[i].reflect_code %>
-
-											 		<%}else if(unique_reflect_code[i].entity_company_name){%>
-											 		<%= unique_reflect_code[i].entity_company_name %> - <%= unique_reflect_code[i].reflect_code %>
-
-											 		<%}else{%>
-                                                 <%= decrypt(unique_reflect_code[i].full_name) %> - <%= unique_reflect_code[i].reflect_code %>
-									<%}%>
+											
 
 											 	</div>
-											  <input type="checkbox" value="<%= unique_reflect_code[i].reflect_code %>"class="checkbox2">
+											 
 
-											  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+											
 											</label>
                                        
 										</div>	
-										<%
-									}}
-					  
-									  }
-								  %>
+								
 
 								    </div>
 								    
@@ -138,167 +118,53 @@
 					    	<tr> 
 								
                                 <th scope="col">No.</th>
-						      	<th scope="col">Name/Type</th>
-						      	<th scope="col">MyReflet Id</th>
-						      	<th scope="col">Send To</th>
-						      	<th scope="col">Verifier Status</th>
-						      	<th scope="col">Certified</th>
-						      	<th scope="col">Self Certified</th>
+						      	<th scope="col">Document Name</th>
+								<th scope="col">My RefletID</th>
+						      	<th scope="col">Document ID</th>
+						      	<th scope="col">Transaction Hash</th>
+						      	<th scope="col">Action</th>
+						      	<!-- <th scope="col">Self Certified</th>
 						      	<th scope="col">Creation Date</th>
-						      	<th scope="col" class="hide_link">Action</th>
+						      	<th scope="col" class="hide_link">Action</th> -->
 					    	</tr>
 					  	</thead>
 						<tbody id="div_data">
 						   
-								<%
-				if(reflect_code_array.data.length>0)
-				{
-                    var k=1;
-					reflect_code_array.data.forEach(function(each_data){
-					  %>
-					  <input type="hidden" id="userid" name="userid" value="<%= each_data.reg_user_id %>">
+								
+			<% if(transArr.length>0){ %>
+				<%for(let i=0;i<transArr.length;i++){   %>
 					   <tr class="content_search">
+						   <%var k=i+1;  %>
 					   	<td><%=k%></td>
-						    	<td><%= each_data.document_name %>
+						    	<td><%= transArr[i].doc_name %>
 								</td>
 						      	<td>
-							      	<div class="for-flex-align">
-							      		<div class="checkbox">
-								          	<label>
-											
-                                  <%if(each_data.profile_pic){
-                                                          %>
-															<img class="profile-table hide_link" src="<%= each_data.profile_pic%>">
-                                                                            <%}else{%>
-                                                <img  class="profile-table"src="/admin-assets/images/user-icon.jpg">
-
-                                                    <%}%>
-							      		     
-
-                                  <%if(each_data.rep_firstname){
-                                                          %>
-																<p class="line-hgt">
-							      		     		<span class="font-w-600 upper"><%= each_data.rep_firstname %></span> <br>
-													   <%= each_data.reflect_code %>
-
-							      		     	</p>
-  <%}else if(each_data.entity_company_name){%>
-                                        <p class="line-hgt">
-                                <span class="font-w-600 upper"><%= each_data.entity_company_name %></span> <br>
-                             <%= each_data.reflect_code %>
-
-                              </p>
-                                                    <%}else{%>
-  <p class="line-hgt">
-                                <span class="font-w-600 upper"><%= decrypt(each_data.full_name) %></span> <br>
-                             <%= each_data.reflect_code %>
-
-                              </p>
-                                                    <%}%>
-								         	 </label>
-								        </div>
-									</div>
+									<%= transArr[i].reflet_id %>
 						      	</td>
 
-							    <!-- <td><%=moment(each_data.expire_date).format('MMM DD, YYYY')%></td> -->
+								  <%= transArr[i].doc_id_num %>
 							    <td>  
-							    	<%if(each_data.request_data=='undefined'){%>
-                                                     <p class="upper"style="color: red"> Request not sent yet! </p>
-                                         <%}else{%> 
-                                                <%if(each_data.request_data[0].rep_firstname){%>
-
-                                                     <p class="upper"><%=each_data.request_data[0].rep_firstname%> -  <%=each_data.request_data[0].reflect_code%></p>
-
-                                                <%}else if(each_data.request_data[0].entity_company_name){%> 
-                                                     <p class="upper"><%=each_data.request_data[0].entity_company_name%> - <%=each_data.request_data[0].reflect_code%></p>
-                                               
-                                         <%}}%> 
+							    	<%= transArr[i].transaction_hash %>
                                 </td>
                                  <td>  
-							    	<%if(each_data.request_data=='undefined'){%>
-                                                     <p class="upper"style="color: red"> Request not sent yet! </p>
-                                         <%}else{%> 
-                                                <%if(each_data.request_data[0].approve_status=='pending'){%>
-
-                                                     <p class="upper"style="color: green">Pending</p>
-
-                                                <%}else if(each_data.request_data[0].approve_status=='approved'){%> 
-                                                     <p class="upper"style="color: blue">Approved</p>
-                                                <%}else  if(each_data.request_data[0].approve_status=='rejected'){%>
-                                                     <p class="upper"style="color: red">Rejected</p> 
-                                         <%}}%> 
+							    	<%= transArr[i].action %>
                                 </td>
-
-							    <td class="upper"><%= each_data.certified_status %>
-								</td>
-							    <td class="upper"><%= each_data.self_assested %>
-								</td>
-							    <td><%=moment(each_data.created_doc).format('MMM DD, YYYY')%>
-								</td>
-							    <td >
-							      	<a href="/my-doc-license?id=<%= each_data.doc_id%>&reflect_id=<%= each_data.reflect_id%>" class="view-link hide_link">View</a>
-						      	</td>
 						     </tr>
-						     <%k++;
-			  });
-
-				}else
-				{
-			%>
+						   
+		<% }}else{  %>
 		           	<tr>
 		 				<td colspan="8"><center>No record found.</center> </td>
 					   </tr>
+					   <%  }%>
 
-              <%}%>
+       
 						</tbody>
 					
 						   
 							
 					</table>
 				
-								<div class="pagination-list for-user">
-          
-						<% if (reflect_code_array.totalPages > 0) { %>
-					   <ul class="pagination text-center">
-						   <% if (reflect_code_array.currentPage == 1) { %>
-							   <li class="disabled page-item"><a class="page-link">&lt;</a></li>
-						   <% } else { %>
-							   <li class="page-item"><a class="page-link" href="/document-list?page=1">&lt;</a></li>
-						   <% } %>
 					
-					
-					
-						   <% var i = (Number(reflect_code_array.currentPage) > 5 ? Number(reflect_code_array.currentPage) - 4 : 1) %>
-						   <% if (i !== 1) { %>
-							   <!-- <li class="disabled"><a>...</a></li> -->
-							   <li class="page-item disabled"><a class="page-link" >...</a></li>
-						   <% } %>
-						   <% for (; i <= (Number(reflect_code_array.currentPage) + 4) && i <= reflect_code_array.totalPages; i++) { %>
-							   <% if (i == reflect_code_array.currentPage) { %>
-								   <!-- <li class="active"><a><%= i %></a></li> -->
-								   <li class="page-item active">
-									 <a class="page-link" href="#"><%= i %><span class="sr-only">(reflect_code_array.currentPage)</span></a>
-								   </li>
-							   <% } else { %>
-								   <li class="page-item"><a class="page-link" href="/document-list?page=<%= i %>"><%= i %></a></li>
-							   <% } %>
-							   <% if (i == Number(reflect_code_array.currentPage) + 4 && i < reflect_code_array.totalPages) { %>
-								   <!-- <li class="disabled"><a>...</a></li> -->
-								   <li class="page-item disabled"><a class="page-link" >...</a></li>
-							   <% } %>
-						   <% } %>
-					
-					
-						   <% if (reflect_code_array.currentPage == reflect_code_array.totalPages) { %>                       
-							   <li class="disabled page-item"><a class="page-link">&gt;</a></li>
-						   <% } else { %>
-							   <li><a class="page-link" href="/document-list?page=<%= reflect_code_array.totalPages %>">&gt;</a></li>
-						   <% } %>
-					
-					   </ul>
-					<% } %>
-					
-					 </div>
 				</div>
 			</div>
 		</div>
@@ -407,178 +273,18 @@
 							</div>
 							<center><span class="span_text"style="color:red"></span></center>
 
-							<div class="form-group for-warning choose-pin-radio">
-								<label>Choose Document Type</label>
-								<div class="row">
-									<div class="col-md-4">
-										<div class="radio">
-										  <label>
-											<input type="radio" value="master" name="request_type" class="form-control choose_doc_type" data-rule-required="true" data-msg-required="Please choose any value ."  />
-											<span class="cr"><i class="cr-icon fa fa-circle"></i></span>
-											Master
-										  </label>
-										</div>
-									</div>
-									<div class="col-md-4">
-										  <div class="radio">
-											  <label>
-												<input type="radio" value="other" name="request_type" class="form-control choose_doc_type"  data-rule-required="true" data-msg-required="Please choose any value." />
-												<span class="cr"><i class="cr-icon fa fa-circle"></i></span>
-												Other
-											  </label>
-											</div>
-									</div>
-								</div>
 
-							  </div>
-
-								<%if(allDocs){
-									for(let docu of allDocs){if(docu.document_name !== 'Other'){%>
 							
-							<input type="hidden" id="doc<%=docu.doc_id%>" value="<%=docu.document_name%>"/>
-							<%}}}%>
-								<div class="form-group master_doc">
-								  <div class="input-group">
-										<select class="form-control slect_doc_type select_document select_document_list" onchange="get_select_value(this.value)" name="document_id" data-rule-required="true" data-msg-required="Please select document type. ">
-											<option value="select">Select document</option>
+							
 
-											<%if(allDocs){
-													for(let docu of allDocs){if(docu.document_name !== 'Other'){%>
-														
-											<option value="<%=docu.doc_id%>" ><%=docu.document_name%></option>
-											<%}}}%>
-									</select>
-								  </div>
-							  </div>  
-							      <div class="form-group user_defined_document_name">
-									  <Label>Document Name</Label>
-									<div class="input-group">
-									  <input type="text"  class="form-control" name="document_name" placeholder="Document Name" autocomplete="off"data-rule-required="true" data-msg-required="Please enter document name.">
-									</div>
-							     </div>
-							  <div class="form-group">
-								<Label>Expiry Date</Label>
-								  <div class="input-group">
-									<input type="text" id="datepicker2" class="form-control" name="expiry_date" placeholder="Expiry Date" data-rule-required="true" data-msg-required="Please select expiry date." autocomplete="off">
-								  </div>
-                              </div>
-                                <div class="form-group special_class">
-									<Label>Issue Place</Label>
-									<div class="input-group">
-									  <input type="text"  class="form-control" name="issue_place" placeholder="Issue Place" autocomplete="off">
-									</div>
-								</div>
-						     	<!-- 	 <div class="form-group">
-									<div class="input-group">
-									  <input type="textarea"  class="form-control" name="proof_of_address" placeholder="Proof of address" autocomplete="off">
-									</div>
-								</div> -->
-								 <div class="form-group proof_of_address_class ">
-									<Label>Proof of Address</Label>
-				                    <div class="input-group">
-				                      <textarea name="proof_of_address" id="" cols="30" rows="6" class="form-control" placeholder="Proof of address"data-rule-required="true" data-msg-required="Please enter proof of address."></textarea>  
-				                    </div>
-				                </div>
-
-								  <div class="form-group  ">
-									<Label>Issue Place</Label>
-									<div class="input-group">
-									  <input type="text" id="datepicker3" class="form-control" name="issue_date" placeholder="Issue Date"  autocomplete="off">
-									</div>
-								</div>
-								  <div class="form-group">
-									<Label>ID Number</Label>
-								  <div class="input-group">
-									<input type="text" class="form-control" name="id_number" placeholder="ID Number" >
-								  </div>
-							  </div>
-
-                              <div class="form-group select-verifier-box  m-top-40">
-							  <center><span class="span_client_text"style="color:red"></span></center>
-
-                                <div class="input-group">
-                                 <div class="dropdown d1">
-                                     <button class="dropbtn dropbtn_1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Select Client Via Code
-                                     </button>
-                                     <div class="dropdown-menu menu-for-id dropbtn2" aria-labelledby="dropdownMenuButton">
-
-                                       <%	if(all_reflect_codes.length>0)
-                                       {
-                                            
-                                           for(var i=0;i< all_reflect_codes.length;i++ ){
-                                             %>
-                                       <a class="dropdown-item" href="#">
-                                           <div class="for-verify-box-inner for-pending"id="">
-                                               
-                                               <%	if(all_reflect_codes[i].user_as=='client'){%>
-                                               <i class="fas fa-check"></i>
-                                               <span class="user-img-verify">
-                                                 
-												   <%if(all_reflect_codes[i].profile_pic){
-                                                          %>
-														  <img id="" src="<%= all_reflect_codes[i].profile_pic %>" class="m-t-5" >
-                                                                            <%}else{%>
-                                                <img  class="profile-table"src="/admin-assets/images/user-icon.jpg">
-
-                                                    <%}%>
-                                               </span>
-                                             <%if(all_reflect_codes[i].rep_firstname){
-                                                          %>
-																<span class="upper"><%=all_reflect_codes[i].rep_firstname %>-<%=all_reflect_codes[i].reflect_code %></span>
-                                        
-													  
-                                         <%}else if(all_reflect_codes[i].entity_company_name){%>
-		                                
-							      		     	<span class="upper"><%=all_reflect_codes[i].entity_company_name %>-<%=all_reflect_codes[i].reflect_code %></span>
-							      		     
-													   
-                                                    <%}else{%>
-                                                    <span class="upper"><%=decrypt(all_reflect_codes[i].full_name)%>-<%=all_reflect_codes[i].reflect_code %></span>
-                                                  
-													    
-                                              <%}%>
-                                              <!-- <input type="hidden"class="get_name"value="<%=all_reflect_codes[i].rep_firstname %>"> -->
-
-                                             <input type="hidden"name=""class="getId2_doc"value="<%=all_reflect_codes[i].reflect_id %>">
-                                            
-
-                                           <%
-                                   
-                                       }
-                         
-                                         
-                                     %>
-                                       
-                                   </div>
-                               </a>
-                               <%
-                           }
-                
-                             }
-                         %>
-                                       
-                           </div>  
-                                   </div>
-                                   </div>
-                               </div>
+                            
                            </div>
 							
 
 						  </div>
-						  <div>
-						  	 <div class="reflect_id_jquery">
-                                              
-                                     </div>
-						  	<center>
-								<button class="btn-common-new hide_click show_hide hide_btn " id="form_add_doc_btn" type="submit">Save</button>
-
-								<span class="loader"><img src="../assets/images/loader-3.gif"height="42" width="62"></span>
-								<a class="btn-common-new hide_click show_hide hide_btn"  data-dismiss="modal" href="">Cancel</a>
-						  </center>
-						  </div>
+					
 					  </div>
-					</form>
+				
 				  </div>
 			   </div>
 			 </div>
@@ -604,130 +310,7 @@
 					  <h5 class="heading-purple">Add New Request</h5>
 				  </div>
 			  </div>
-			  <div class="row">
-				  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
-					  <form method="POST" action="/add-new-document-request" enctype="multipart/form-data" id="form_add_request_doc">
-					  <div class="setup-inner-box for-protact">
-						  <div class="create-rflet-id-form">
-						   <div class="form-group browse-file-section">
-		                    <input type="file" name="icon" class="file" style="visibility: hidden;position: absolute;" accept="image/x-png,image/jpeg,application/pdf">
-		                    <div class="input-group col-xs-12">
-		                        <span class="input-group-btn">
-		                          <button class="browse btn btn-primary input-lg" type="button"> Choose a file</button>
-		                        </span>
-		                        <input type="text" class="form-control" readonly="" placeholder=""data-rule-required="true" data-msg-required="Please choose file.">
-		                    </div>
-		                </div>
-				            <div class="form-group ">
-								<Label>Document Name</Label>
-									<div class="input-group">
-									  <input type="text"  class="form-control" name="document_name" placeholder="Document Name" autocomplete="off"data-rule-required="true" data-msg-required="Please enter document name.">
-									</div>
-							</div>
-							<div class="form-group">
-								<Label>Description</Label>
-				                    <div class="input-group">
-				                      <textarea name="descriptions" id="" cols="30" rows="6" class="form-control" placeholder="Descriptions"data-rule-required="true" data-msg-required="Please enter descriptions."></textarea>  
-				                    </div>
-				              </div>
-                              <div class="form-group select-verifier-box  m-top-40">
-								<Label>Verifier Code</Label>
-                                <div class="input-group">
-                                 <div class="dropdown d1">
-                                     <button class="dropbtn dropbtn_1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Select Client Via Code
-                                     </button>
-                                     <div class="dropdown-menu menu-for-id dropbtn2" aria-labelledby="dropdownMenuButton">
-
-                                       <%	if(all_reflect_codes.length>0)
-                                       {
-                                            
-                                           for(var i=0;i< all_reflect_codes.length;i++ ){
-                                             %>
-                                       <a class="dropdown-item" href="#">
-                                           <div class="for-verify-box-inner for-pending"id="">
-                                               
-                                               <%	if(all_reflect_codes[i].user_as=='client'){%>
-                                               <i class="fas fa-check"></i>
-                                               <span class="user-img-verify">
-                                                 
-												   <%if(all_reflect_codes[i].profile_pic){
-                                                          %>
-														  <img id="" src="<%= all_reflect_codes[i].profile_pic %>" class="m-t-5" >
-                                                                            <%}else{%>
-                                                <img  class="profile-table"src="/admin-assets/images/user-icon.jpg">
-
-                                                    <%}%>
-                                               </span>
-                                             <%if(all_reflect_codes[i].rep_firstname){
-                                                          %>
-																<span class="upper"><%=all_reflect_codes[i].rep_firstname %>-<%=all_reflect_codes[i].reflect_code %></span>
-                                        
-													  
-                                         <%}else if(all_reflect_codes[i].entity_company_name){%>
-		                                
-							      		     	<span class="upper"><%=all_reflect_codes[i].entity_company_name %>-<%=all_reflect_codes[i].reflect_code %></span>
-							      		     
-													   
-                                                    <%}else{%>
-                                                    <span class="upper"><%=decrypt(all_reflect_codes[i].full_name)%>-<%=all_reflect_codes[i].reflect_code %></span>
-                                                  
-													    
-                                              <%}%>
-                                              <!-- <input type="hidden"class="get_name"value="<%=all_reflect_codes[i].rep_firstname %>"> -->
-                                             <input type="hidden"name=""class="getId2"value="<%=all_reflect_codes[i].reflect_id %>">
-
-                                            
-
-                                           <%
-                                   
-                                       }
-                         
-                                         
-                                     %>
-                                       
-                                   </div>
-                               </a>
-                               <%
-                           }
-                
-                             }
-                         %>
-                                       
-                           </div>  
-                                   </div>
-                                   </div>
-                               </div>
-                           </div>
-                            
-                           <!--  <div class="form-group">
-										  <div class="input-group">
-											<input type="text" class="form-control" name="id_number" placeholder="ID Number" data-rule-required="true" data-msg-required="Please enter id number.">
-										  </div>
-								</div>
-							  <div class="form-group">
-								  <div class="input-group">
-									<input type="text" class="form-control" name="id_number" placeholder="ID Number" data-rule-required="true" data-msg-required="Please enter ID number.">
-								  </div>
-							  </div> -->
-            <div class="reflect_id_jquery">
-                                              
-                                     </div>
-						  </div>
-						  <div>
-						  	<!--  <div class="reflect_id_jquery">
-                                              
-                             </div> -->
-						  	<center>
-								<button class="btn-common-new  hide_btn" id="form_add_request_btn" type="submit">Save</button>
-
-								<span class="loader"><img src="../assets/images/loader-3.gif"height="42" width="62"></span>
-								<a class="btn-common-new hide_click hide_btn"  data-dismiss="modal" href="">Cancel</a>
-								</center>
-						  </div>
-					  </div>
-					</form>
-				  </div>
+			
 			   </div>
 			 </div>
 		 </div>
@@ -736,246 +319,6 @@
 
 
 <!-- ............................................................................................................................................. -->
-<div class="modal  field-edit-modal" id="set-all-permission-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-body">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <div class="create-wallet-box">
-              <div class="row align-item-center">
-                  <div class="col-xl-2 col-lg-3 col-md-3">
-                      <div>
-                          <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
-                      </div>
-                  </div>
-                  <div class="col-xl-7 col-lg-7 col-md-7">
-                      <h5 class="heading-purple">Document Permission</h5>
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col-xl-12 col-lg-12 col-md-12 m-auto">
-                      <div class="setup-inner-box for-protact pt-15">
-                          <div class="create-rflet-id-form">
-                                                      
-                               <div class="form-group select-verifier-box">
-								   <Label>Verifier Code</Label>
-                                  <div class="input-group">
-                                    <div class="dropdown">
-                                        <button class="dropbtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                          Select Verifiers Via Code
-                                        </button>
-                                        <div class="dropdown-menu menu-for-id" id="verifierDropdown" aria-labelledby="dropdownMenuButton">
-                                            
-                                        </div>
-                                      </div>
-                                    
-                                  </div>
-                              </div>
-                              <div class="info-line-blue">
-                                  <img src="../assets/images/icons/dashboard-assets/info-icon.png"> On boarding request will be sent when you send this documents.
-                              </div>
-                              <div id="category_list" class="form-group">
-                                  
-                              </div>
-                              <div id="sub_category_list" class="form-group">
-                                  
-                              </div>
-  
-                              <div id="category_docs" class="form-group">
-                                  
-                              </div>
-  
-                              <div class="input-group hide_sub ">
-                                <select onchange="get_doc_by_myrefletids(this.value)" class="form-control valid" name="my_reflet_for_req" data-rule-required="true" data-msg-required="Please select sub-category." aria-invalid="false">
-                                
-                                    <option>Select MyReflet Id</option>
-                                    <% if(myids.length>0){
-                                        for(var j=0;j<myids.length;j++){
-                                            %>
-                                            <%if(myids[j].reflectid_by=="entity"){%>
-                                    <option value="<%=myids[j].reflect_id%>"><%=myids[j].reflect_code%>-<%=myids[j].entity_company_name%></option>
-                                <%}else{%>
-                                    <option value="<%=myids[j].reflect_id%>"><%=myids[j].reflect_code%>-<%=myids[j].rep_username%></option>
-                            
-                                    <%}}}%>
-                                
-                                </select>
-                            </div>
-                            <div id="myreflect_doc"></div>
-  
-                              <!--  <div class="form-group for-select-existing-doc">
-                                  <div class="input-group">
-                                    <div class="dropdown keep-inside-clicks-open">
-                                        <button class="dropdwn-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                          Select from existing documents
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="myreflect_doc">
-
-
-
-                                           
-                                        </div>
-                                      </div>
-                                    
-                                  </div>
-                              </div> -->
-  
-                              
-  
-                              <div class="personal-info-box for-download-view-table table-responsive for-perticuler-box">
-                                  <table class="table" id="myTable">
-                                    <thead>
-                                      <tr>
-										<th width="16%" scope="col">Label</th>
-										<th width="12%" scope="col">Self Certify</th>
-										<th width="12%" scope="col">Sign</th>
-										<th width="12%" scope="col">Certify</th>
-										<th width="12%" scope="col">Complete</th>
-										<th width="12%" scope="col">Video proof</th>
-										<th width="12%" scope="col">Download</th>
-										<th width="12%" scope="col">View</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody id="doc_data">
-                                      
-                                    </tbody>
-                                  </table>
-                                  <span id="prm_error_span" class="error_validate"></span>
-
-                                  <div class="form-group">
-									  	<div class="input-group">
-									  		<input type="text" class="form-control" placeholder="Note" id="note" name="note" maxlength="20">
-									  	</div> 
-									  </div>
-                                 
-                              </div>
-                          </div>
-                          <div >
-                                  <input type="hidden" name="p_cat_id" id="p_cat_id">
-                                  <input type="hidden" name="sub_cat_id" id="sub_cat_id">
-                                  <input type="hidden" name="doc_reflect_id" id="doc_reflect_id" value="doc_reflect_id">
-                                  <button class="btn-common-new" type="button" id="subPerm" onclick="submit_all_perm()">Save</button>
-                                  <a class="btn-common-new"  data-dismiss="modal" href="#">Cancel</a>
-                          </div>
-                      </div>
-                  </div>
-               </div>
-             </div>
-         </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal field-edit-modal" id="doc-permission-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-body">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <div class="create-wallet-box">
-              <div class="row align-item-center">
-                  <div class="col-xl-2 col-lg-3 col-md-3">
-                      <div class="for-icon-bg">
-                          <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
-                      </div>
-                  </div>
-                  <div class="col-xl-10 col-lg-10 col-md-10">
-                      <h5 class="heading-purple">Document Permission</h5>
-                      
-                  </div>
-              </div>
-              <div class="setup-inner-box for-protact mt-30 p-0">
-                   <p>Are you sure you want to give document permission? click yes to continue.</p>
-                          <div>
-                              <a class="btn-common-new" href="" data-toggle="modal" data-target="#validate-pin-Modal" data-dismiss="modal">Yes</a>
-                              <a class="btn-common-new" href="">No</a>
-                          </div>
-                      </div>
-             </div>
-         </div>
-      </div>
-    </div>
-  </div>
-  	  <!--pin modal start-->
-        <div class="modal field-edit-modal" id="validate-pin-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-			  <div class="modal-content">
-				<div class="modal-body">
-				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				  </button>
-				  <div class="create-wallet-box">
-					  <div class="row align-item-center">
-						  <div class="col-xl-2 col-lg-3 col-md-3">
-							  <div class="for-icon-bg">
-								  <img src="../assets/images/icons/createidentity-assets/popup-set-doc-permission-icon.png">
-							  </div>
-						  </div>
-						  <div class="col-xl-10 col-lg-10 col-md-10">
-							  <h5 class="heading-purple">Validate Pin</h5>
-							  <p>Enter Your PIN to Continue</p>
-						  </div>
-					  </div>
-						 <div class="login-form-main phone-otp mt-15">
-						   <div class="form-group mb-0">
-							  <label>PIN</label>
-							  <div class="otp-box digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
-								  <input type="text" id="otp1" name="otp1" class="form-control text-center" placeholder="-" maxlength="1" data-next="otp2">
-								  <input type="text" id="otp2" name="otp2" class="form-control" placeholder="-" maxlength="1" data-next="otp3" data-previous="otp1">
-								  <input type="text" id="otp3" name="otp3" class="form-control" placeholder="-" maxlength="1" data-next="otp4" data-previous="otp2">
-								  <input type="text" id="otp4" name="otp4" class="form-control" placeholder="-" maxlength="1" data-previous="otp3">
-							  </div>
-							</div>
-					  </div>
-					  <span class="error_validate" id="req_err_prm"></span>
-					  <div class="setup-inner-box for-protact pt-15">
-						  <div>
-							  <a class="btn-common-new hide_click" href="javascript:void(0)" onclick="pin_for_prm()" id="pin_prm_btn">Confirm</a>
-							 <span class="loader "><img src="../assets/images/loader-3.gif"height="42" width="62"></span>
-							  <a class="btn-common-new hide_click" href="">Cancel</a>
-						  </div>
-					  </div>
-					 </div>
-				 </div>
-			  </div>
-			</div>
-		  </div>
-          <!--pin modal end-->
-          <div class="modal  field-edit-modal" id="dsuccess-doc-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-			  <div class="modal-content">
-				<div class="modal-body">
-				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				  </button>
-				  <div class="create-wallet-box">
-					  <div class="row align-item-center">
-						  <div class="col-xl-2 col-lg-3 col-md-3">
-							  <div class="for-icon-bg">
-								  <img src="../assets/images/icons/createidentity-assets/popup-success-icon.png">
-							  </div>
-						  </div>
-						  <div class="col-xl-10 col-lg-10 col-md-10">
-							  <h5 class="heading-purple">Document Sent Successfully</h5>
-							  
-						  </div>
-					  </div>
-					  <div class="setup-inner-box for-protact mt-30 p-0">
-						   <p>Your Document has been successfully sent to the verifier. Your document will be verified shortly and you'll ve notified in regards that.</p>
-					  </div>
-					  <div class="setup-inner-box for-protact pt-15">
-						<div>
-							<a href="" class="btn-common-new">OK!</a>
-						</div>
-						</div>
-					 </div>
-				 </div>
-			  </div>
-			</div>
-		  </div>
 
 <!-- .............................................................................................................................................. -->
 <%- include('../innerFooter')%>

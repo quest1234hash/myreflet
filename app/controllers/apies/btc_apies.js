@@ -3,7 +3,7 @@ var { SecurityMasterModel, UserSecurityModel, CountryCodeModel } = require('../.
 var { tbl_verifier_plan_master, AdminModel, PlanFeatures, PlanFeatureRel, tbl_verifier_doc_list, MarketPlace,adminNotificationModel, AllotMarketPlace, ContectUsModel, SubscriberModel,MasterLevelModel
 } = require('../../models/admin');
 let priceOfCrypto = require('crypto-price');
-const {pushnotification,btcbalance,updateNotification}=require('./hepler');
+const {pushnotification,btcbalance,updateNotification}=require('./helper');
 const {ShareEntityModel}=require('../../models/shareentity');
 var multer=require('multer');
 const { DigitalWalletRelsModel } = require('../../models/wallet_digital_rels');

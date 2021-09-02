@@ -883,6 +883,7 @@ exports.deleteDocs=async function(req,res){
 exports.uploadDocument=async function(req,res){
   success_msg = req.flash('success_msg');
   err_msg = req.flash('err_msg'); 
+  console.log("uploading doccccccccccccccccc");
   try{
   const form = formidable({ multiples: true });
     form.parse(req, async (err, fields, files) => {
@@ -891,6 +892,7 @@ exports.uploadDocument=async function(req,res){
       }
       var user_id=req.session.user_id;
       var doc_id=fields.id_number;
+      console.log("doc iddddddddd",doc_id);
       var doc_name=encrypt1(fields.document_name);
       var doc_folder=fields.folder_id;
       var exp_date = fields.exp_date;
@@ -1017,7 +1019,7 @@ exports.uploadDocument=async function(req,res){
     })
  
   }catch(err){
-    console.log(err);
+    console.log("errrrrrrrrrrrrrrrrrrrrrrr",err);
     throw err;
     //res.json({ status: 0, msg: "Something went wrong try again.", data: { err_msg: 'Failed', err } });
   }
@@ -1211,6 +1213,8 @@ exports.shareDocuments=async function(req,res){
   let folder_id=req.body.folder_id;
  //uploaded_id=JSON.parse(uploaded_id);
  let senders_pvt=req.body.sender_pvt_key;
+ success_msg = req.flash('success_msg');
+ err_msg = req.flash('err_msg'); 
 // let senders_pvt="0x75accf5af81d589302e90d652553a3a4b17cbb65cf9b2d73336959f9e21cbfda";
  let senders_pvt_key=senders_pvt.substring(2);
   console.log("Sender private key",senders_pvt_key);
@@ -1386,6 +1390,7 @@ console.log("Processinggggggggggggggggg",txCount);
     
     
 }else{
+  console.log("myreflet erorrrrrrrrrrr");
   //res.json({ status: 0, msg: "Please enter valid natural person MyRefletID!", data: { err_msg: 'Failed'} });
   req.flash("err_msg","Please enter valid natural person MyRefletID!");
   res.redirect('/all-docs-in-folder'+"?folder_id="+folder_id);
@@ -1397,4 +1402,122 @@ console.log("Processinggggggggggggggggg",txCount);
    req.flash("err_msg","Something went wrong,Please try again.");
   res.redirect('/all-docs-in-folder'+"?folder_id="+folder_id);
   }
+}
+
+
+//download documents
+exports.downloadDoc=async function(req,res){
+  let file_id=parseInt(req.body.uploaded_id);
+  let user_id=req.session.user_id;
+  let wallet_type=req.session.wallet_type;
+  var wallet_address=req.session.wallet_address;
+  let folder_id=req.body.folder_id;
+  success_msg = req.flash('success_msg');
+  err_msg = req.flash('err_msg'); 
+  let isDownload=false;
+  try{
+    //find natural reflet id
+   //  let refletInfo=await MyReflectIdModel.findOne({where:{reg_user_id:user_id,reflectid_by:"representative",idCreated:"true"}});
+             if(wallet_type=='BTC'||wallet_type=='ethereum'){
+            
+              let cryptDet =await CryptoWalletModel.findOne({where:{reg_user_id:user_id,public_key:wallet_address}});
+            
+                if(cryptDet.reg_user_id==user_id){
+                  isDownload=true;
+                }else{
+                          //you don't have autherization to download this document
+          req.flash("err_msg","You are not authorized to download this file!");
+           res.redirect('/all-docs-in-folder'+"?folder_id="+folder_id);
+                }
+              
+           
+             }else{
+              let digWallet=await DigitalWalletRelsModel.findOne({where:{reg_user_id:user_id,status:'active',wallet_address:wallet_address}});
+              if(digWallet.reg_user_id==user_id){
+                isDownload=true;
+              }else{
+                //you don't have autherization to delete this document
+                req.flash("err_msg","You are not authorized to download this file!");
+                res.redirect('/all-docs-in-folder'+"?folder_id="+folder_id);
+              }
+            }
+            if(isDownload==true){
+    let file_det=await FilesDocModel.findOne({where:{file_id:file_id}});
+    if(file_det){
+    // var fileContents;
+    let hashCode=decrypt1(decrypt(file_det.file_content));
+   //   let hashcode="QmYmzsfz58t21XeH7cL6kw9S5J7t6wNpBGpBdJ4ZMjs1tF";
+       await ipfs.files.get(hashCode,async (err,files)=>{       
+         files.forEach((file) => {
+         //  console.log("pathhhhhhhhhhhhhhhhhhh:",file); 
+           filename=file.path;
+           let fileContents=file.content.toString();
+           let d1=decrypt1(fileContents);
+          // console.log("First decryptttttttttt",d1);
+        //   res.json({ status: 1, msg: "File sent", data: { file_in_base64:d1} });
+              res.end(d1);
+           })
+       })
+      }
+    }
+  }catch(err){
+    throw err;
+  }
+}
+
+
+//all doc history
+//get shared and recived doc history
+exports.getSharedDocumentsHistory=async function(req,res){
+  let user_id=req.session.user_id;
+       try{
+             let transactionDets=await DocumentTransactionModel.findAll({where:{reg_user_id:user_id},order: sequelize.literal('transaction_id DESC')});
+                      let transArr=[];
+                        if(transactionDets.length>0){
+                        for(let i=0;i<transactionDets.length;i++){
+                          let file_info=await FilesDocModel.findOne({where:{file_id:transactionDets[i].file_id}});
+                          //fetching identity number
+                          let Ddata = await DocumentReflectIdModel.findOne({where:{user_doc_id:file_info.user_doc_id}});
+                          // console.log("Datttttttttttttttttt",Ddata);
+                          if(Ddata.expire_date==null){
+                            var formatted=''
+                          }else{
+                            var dt = dateTime.create(Ddata.expire_date);
+                            formatted = dt.format('m/d/Y');
+                          }
+                       
+                         
+                           let refleInfo=await MyReflectIdModel.findOne({where:{reg_user_id:transactionDets[i].reg_user_id,reflectid_by:'representative',idCreated:'true'}});
+                           let reflet_id=refleInfo.reflect_code;
+                          
+                        
+                     //  let filed_det= await ipfs.files.get(decrypt1(decrypt(file_info.file_content)));
+                   //    console.log(filed_det);
+
+                          let transObj={
+                            uploaded_id:transactionDets[i].file_id,
+                            doc_name:decrypt1(file_info.doc_name),
+                            doc_id_num:decrypt1(Ddata.doc_unique_code),
+                            expiresIn:formatted,
+                            reflet_id:reflet_id,
+                            transaction_hash:decrypt1(transactionDets[i].transaction_hash),
+                            action:transactionDets[i].action
+                          }
+
+                          transArr[i]=transObj;
+                        }
+                     
+                      //  res.json({ status: 1, msg: "documents history", data:transArr });
+                     }
+                     res.render('front/my-document/my-document',{
+                      success_msg,
+                      err_msg,
+                      session:req.session,
+                      transArr
+                     })
+
+            }catch(err){
+              console.log(err);
+              //res.json({ status: 0, msg: "Something went wrong try again.", data: { err_msg: 'Failed', err } });
+       }
 }

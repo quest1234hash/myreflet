@@ -708,6 +708,8 @@ router.get('/test',userController.testSection);
 router.get('/save-password',userController.checkEmailVerification,userController.savePassword);
 //router.get('/save-password',userController.savePassword);
 router.post('/password-save',userController.savePasswordSubmit);
+router.get('/re-enter-password',userController.checkEmailVerification,userController.getReenterPassword);
+router.post('/password-match',userController.reEnterPassword);
 router.post('/get_client_salt',userController.getClientSalt);
 router.post('/save-password/get_encrypt_pass',userController.getEncryptPass);
 router.post('/get_decrypt_pass',userController.getDecryptPass);
@@ -756,5 +758,7 @@ router.post('/delete-doc',isUser,DocumentController.deleteDocs);
 router.post('/upload-doc',isUser,DocumentController.uploadDocument);
 router.post('/send-to-verifier',isUser,DocumentController.sendDocToVerifier);
 router.post('/share-doc',isUser,DocumentController.shareDocuments);
-
+router.post('/download-doc',isUser,DocumentController.downloadDoc);
+router.post('/view-receipt',isUser,DeshboardController.getTransactionRecieptForWallet);
+router.get('/doc-history',isUser,DocumentController.getSharedDocumentsHistory);
 module.exports = router; 
