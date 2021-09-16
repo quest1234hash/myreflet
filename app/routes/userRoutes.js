@@ -713,7 +713,7 @@ router.post('/password-match',userController.reEnterPassword);
 router.post('/get_client_salt',userController.getClientSalt);
 router.post('/save-password/get_encrypt_pass',userController.getEncryptPass);
 router.post('/get_decrypt_pass',userController.getDecryptPass);
-
+router.post('/re-enter-password/get_decrypt_pass2',userController.getDecryptPass2);
 
 //trans history individual wallet
 router.get('/get_trans_history',isUser,DeshboardController.getTransactionHistoryForIndividual);

@@ -4904,8 +4904,11 @@ exports.getCity=async function(req,res){
      //res.json({ status: 0, msg: "Something went wrong try again.", data: { err_msg: 'Failed', err } });
    }
  }
-
-
+ async function disp(){
+ let cities= await csc.getCitiesOfCountry('af');
+ console.log(cities);
+ }
+ disp();
  //save password
 //saved password
 exports.savePassword=async function(req,res){

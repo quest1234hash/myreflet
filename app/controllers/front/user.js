@@ -333,6 +333,7 @@ exports.savePassword=async function(req,res){
   try{
     let isLoadPass;
     let userDet= await UserModel.findOne({where:{reg_user_id:user_id}});
+    if(userDet.complete_steps<3){
    // console.log("userDetttttt",userDet);
     console.log("saltttttttt:",userDet.client_salt)
      let client_salt=userDet.client_salt;
@@ -350,6 +351,9 @@ exports.savePassword=async function(req,res){
        client_salt,
        user_id
   });
+}else{
+  res.redirect("login");
+}
 
   }catch(err){
     throw err;
@@ -373,6 +377,22 @@ exports.getEncryptPass=async function(req,res){
 
 
 exports.getDecryptPass=async function(req,res){
+  let encryptedPass=req.body.password;
+  encryptedPass=encryptedPass.replace(/ /g,'+');
+  // let temp=encryptedPass.split(' ');
+  //   temp=temp.join('');
+  console.log("decryptingggggggggggg from server",encryptedPass)
+  try{
+       let decryptPass=decrypt1(encryptedPass);
+       console.log("decryptingggggggggggg from server",decryptPass)
+       res.end(decryptPass);
+  }catch(err){
+    console.log(err);
+    throw err;
+  }
+}
+
+exports.getDecryptPass2=async function(req,res){
   let encryptedPass=req.body.password;
   encryptedPass=encryptedPass.replace(/ /g,'+');
   // let temp=encryptedPass.split(' ');
@@ -421,11 +441,16 @@ if(isSavedPassword){
 exports.getReenterPassword=async function(req,res){
   let user_id=req.query.userId;
   try{
+   let userDet= await UserModel.findOne({where:{reg_user_id:user_id}});
+   if(userDet.complete_steps<4){
     res.render('front/re-enter-password',{
       success_msg,
        err_msg,
        user_id
   });
+}else{
+  res.redirect('/login')
+}
   }catch(err){
     throw err;
   }
@@ -445,7 +470,7 @@ exports.reEnterPassword=async function(req,res){
      password=crypto.createHash('sha256').update(password).digest('hex');
      password=encrypt1(password);
      password=encrypt(password);
-     if(userDet.password==password){
+     if(userDet.password===password){
       await UserModel.update({complete_steps:steps},{where:{reg_user_id:user_id}});
       res.redirect(`/set_pin/?userid=${user_id}`)
      }else{
@@ -935,17 +960,17 @@ exports.submitLogin = async (req,res,next )=> {  // var mykey = crypto.createCip
  pass=encrypt1(pass);
  pass=encrypt(pass);
 
-
+//console.log("enteredddddddddddd password::::",pass);
     var dt = dateTime.create();
     var login_time = dt.format('Y-m-d H:M:S');
     var blocked_date = dt.format('Y-m-d H:M:S');
     var Ip_addr= req.body.Ip_add
-    var steps=parseInt("5")
+    var steps=parseInt("6");
         let userD  =await UserModel.findOne({where:{email:email}});
         console.log("User infooooooooooooooooooooo:",userD);
     console.log("emailemailemailemail : ",email)
 
-        UserModel.findOne({ where: {email: email,password:pass,complete_steps:steps} }).then(async function(userDataResult) {
+        UserModel.findOne({ where: {email: email,password:pass} }).then(async function(userDataResult) {
    
                     
           if(userDataResult==null){
