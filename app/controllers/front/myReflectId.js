@@ -56,7 +56,7 @@ const web3jsAcc = new Web3(new Web3.providers.HttpProvider("https://ropsten.infu
 
 /** my-reflet-id-code get Method Start  **/
 exports.my_reflect_code_id= async(req,res,next) =>{
-    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ : ")
+    //console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ : ")
     // var  user_type=req.session.user_type
     var user_id=req.session.user_id; 
     var user_type = req.session.user_type;
@@ -65,140 +65,140 @@ exports.my_reflect_code_id= async(req,res,next) =>{
     var all_reflect_id=[]
     let refletArr=[];
     let client_salt;
-    if(user_id)
-    { 
+    if(user_id){ 
         let allData=await MyReflectIdModel.findAll({where:{reg_user_id:user_id,idCreated:'true'}});
         if(allData.length>0){
            
-              let k=0;
-        for(let i=0;i<allData.length;i++){
-           
-            let walletInfo=await WalletModel.findOne({where:{wallet_id:allData[i].wallet_id}});
-              let userDetails=await UserModel.findOne({where:{reg_user_id:user_id}});
-               if(allData[i].reflectid_by=='representative'){
-                let naturalPerson={
-                    myreflectid:'',
-                    walletname:'',
-                    balance:0.0,
-                    type:'representative',
-                    walletAddress:'',
-                    mobile:'',
-                    level_name:""
-                  };
-                //  console.log(walletInfo);
-                 naturalPerson.myreflectid=allData[i].reflect_code;
-                 naturalPerson.walletname=decrypt(allData[i].rep_username);
-                 naturalPerson.walletAddress=walletInfo.wallet_address;
-                 naturalPerson.balance=walletInfo.balance.toString();
-                 naturalPerson.mobile=decrypt(userDetails.mobile_number);
-                 all_reflect_id.unshift(naturalPerson);
-
-               }
-               if(allData[i].reflectid_by=='entity'){
-               //  console.log("Entity:::::::::",allData[i]);
+            let k=0;
+            for(let i=0;i<allData.length;i++){
             
-                 let entityObj={
-                   entity_company_name:'',
-                   entity_name:'',
-                   walletAddress:'',
-                   balance:0,
-                   myreflectid:'',
-                   entity_company_regno:"",
-                   entity_company_address:"",
-                   mobile:'',
-                   type:"entity",
-                   level_name:''
-                 }
-               //  console.log("mobileeeeeeeeeeeeeee",allData[i].entity_company_phoneno);
-                 entityObj.myreflectid=allData[i].reflect_code;
-                 entityObj.entity_name=decrypt(allData[i].entity_name);
-                 entityObj.walletAddress=walletInfo.wallet_address;
-                 entityObj.entity_company_regno=decrypt(allData[i].entity_company_regno);
-                 entityObj.entity_company_address=decrypt(allData[i].entity_company_address);   
-                 entityObj.entity_name=decrypt(allData[i].entity_name);
-                 entityObj.entity_company_name=decrypt(allData[i].entity_company_name);
-                 entityObj.balance=walletInfo.balance.toString();
-                entityObj.mobile=decrypt(allData[i].entity_company_phoneno);
-                 all_reflect_id.push(entityObj);
-                //  entity[k]=entityObj;
-                //  k++;
-               }
-          }
+                let walletInfo=await WalletModel.findOne({where:{wallet_id:allData[i].wallet_id}});
+                let userDetails=await UserModel.findOne({where:{reg_user_id:user_id}});
+                if(allData[i].reflectid_by=='representative'){
+                    let naturalPerson={
+                        myreflectid:'',
+                        walletname:'',
+                        balance:0.0,
+                        type:'representative',
+                        walletAddress:'',
+                        mobile:'',
+                        level_name:""
+                    };
+                    //  console.log(walletInfo);
+                    naturalPerson.myreflectid=allData[i].reflect_code;
+                    naturalPerson.walletname=decrypt(allData[i].rep_username);
+                    naturalPerson.walletAddress=walletInfo.wallet_address;
+                    naturalPerson.balance=walletInfo.balance.toString();
+                    naturalPerson.mobile=decrypt(userDetails.mobile_number);
+                    all_reflect_id.unshift(naturalPerson);
+
+                }
+                if(allData[i].reflectid_by=='entity'){
+                //  console.log("Entity:::::::::",allData[i]);
+                
+                    let entityObj={
+                    entity_company_name:'',
+                    entity_name:'',
+                    walletAddress:'',
+                    balance:0,
+                    myreflectid:'',
+                    entity_company_regno:"",
+                    entity_company_address:"",
+                    mobile:'',
+                    type:"entity",
+                    level_name:''
+                    }
+                //  console.log("mobileeeeeeeeeeeeeee",allData[i].entity_company_phoneno);
+                    entityObj.myreflectid=allData[i].reflect_code;
+                    entityObj.entity_name=decrypt(allData[i].entity_name);
+                    entityObj.walletAddress=walletInfo.wallet_address;
+                    entityObj.entity_company_regno=decrypt(allData[i].entity_company_regno);
+                    entityObj.entity_company_address=decrypt(allData[i].entity_company_address);   
+                    entityObj.entity_name=decrypt(allData[i].entity_name);
+                    entityObj.entity_company_name=decrypt(allData[i].entity_company_name);
+                    entityObj.balance=walletInfo.balance.toString();
+                    entityObj.mobile=decrypt(allData[i].entity_company_phoneno);
+                    all_reflect_id.push(entityObj);
+                    //  entity[k]=entityObj;
+                    //  k++;
+                }
+            }
 
 
-//fetch all shared entity with user
-let userData=await UserModel.findOne({where:{reg_user_id:user_id}});
-client_salt=userData.client_salt;
-let sharedEntity=await ShareEntityModel.findAll({where:{receiver_id:user_id,isBlock:'no'}});
-//console.log("Shared   dddddddddddddddddddddddddd",sharedEntity);
+            //fetch all shared entity with user
+            let userData=await UserModel.findOne({where:{reg_user_id:user_id}});
+            client_salt=userData.client_salt;
+            let sharedEntity=await ShareEntityModel.findAll({where:{receiver_id:user_id,isBlock:'no'}});
+            //console.log("Shared   dddddddddddddddddddddddddd",sharedEntity);
 
-if(sharedEntity.length>0){
+            if(sharedEntity.length>0){
 
- let j=0;
-  for(let i=0;i<sharedEntity.length;i++){
-  
-   try{
-     var refletData =await MyReflectIdModel.findOne({where:{reflect_code:sharedEntity[i].shared_entity}});
-      var naturalIdentity=await MyReflectIdModel.findOne({where:{reg_user_id:refletData.reg_user_id,reflectid_by:'representative'}});
-      var walletInfo=await WalletModel.findOne({where:{wallet_id:refletData.wallet_id}});
-     }catch(err){
-       console.log(err);
-       continue;
-   //   res.json({ status: 0, msg: "Opps! sharing account got deleted ", data: { err_msg: 'Failed'} });
-     }
-       let pass='';
-       if(sharedEntity[i].password==null||sharedEntity[i].password==''){
-          pass='no'
-       }else{
-         pass='yes'
-       }
-       
-       let entityObj={
-       entity_company_name:decrypt(refletData.entity_company_name),
-       entity_name:decrypt(refletData.entity_name),
-       walletAddress:walletInfo.wallet_address,
-       balance:walletInfo.balance.toString(),
-       myrefletid:refletData.reflect_code,
-       entity_company_regno:decrypt(refletData.entity_company_regno),
-       entity_company_address:decrypt(refletData.entity_company_address),
-       shared_by:'',
-       passwordCreated:pass,
-       client_salt:userData.client_salt
-     }
-     if(naturalIdentity==null){
-        entityObj.shared_by='Identity has been deleted'
-    }else{
-        entityObj.shared_by=naturalIdentity.reflect_code
-    }
+            let j=0;
+            for(let i=0;i<sharedEntity.length;i++){
+            
+            try{
+                var refletData =await MyReflectIdModel.findOne({where:{reflect_code:sharedEntity[i].shared_entity}});
+                var naturalIdentity=await MyReflectIdModel.findOne({where:{reg_user_id:refletData.reg_user_id,reflectid_by:'representative'}});
+                var walletInfo=await WalletModel.findOne({where:{wallet_id:refletData.wallet_id}});
+                }catch(err){
+                console.log(err);
+                continue;
+            //   res.json({ status: 0, msg: "Opps! sharing account got deleted ", data: { err_msg: 'Failed'} });
+                }
+                let pass='';
+                if(sharedEntity[i].password==null||sharedEntity[i].password==''){
+                    pass='no'
+                }else{
+                    pass='yes'
+                }
+                
+                let entityObj={
+                entity_company_name:decrypt(refletData.entity_company_name),
+                entity_name:decrypt(refletData.entity_name),
+                walletAddress:walletInfo.wallet_address,
+                balance:walletInfo.balance.toString(),
+                myrefletid:refletData.reflect_code,
+                entity_company_regno:decrypt(refletData.entity_company_regno),
+                entity_company_address:decrypt(refletData.entity_company_address),
+                shared_by:'',
+                passwordCreated:pass,
+                client_salt:userData.client_salt
+                }
+                if(naturalIdentity==null){
+                    entityObj.shared_by='Identity has been deleted'
+                }else{
+                    entityObj.shared_by=naturalIdentity.reflect_code
+                }
 
-     refletArr[j]=entityObj;
-     j++;
-    }
+                refletArr[j]=entityObj;
+                j++;
+                }
 
-    res.render('front/myReflect/my-reflet-id-code',{
-        success_msg,
-        err_msg,
-        session:req.session,
-        all_reflect_id,
-        refletArr,
-        crypto,
-        client_salt,
-        encrypt
-});
-}
-// else{
-//     res.render('front/myReflect/my-reflet-id-code',{
-//         success_msg,
-//         err_msg,
-//         session:req.session,
-//         all_reflect_id,
-//         refletArr,
-//         crypto,
-//         client_salt,
-//         encrypt
-// });
-// }
-        }else{
+                res.render('front/myReflect/my-reflet-id-code',{
+                    success_msg,
+                    err_msg,
+                    session:req.session,
+                    all_reflect_id,
+                    refletArr,
+                    crypto,
+                    client_salt,
+                    encrypt
+            });
+            }
+            else{
+                res.render('front/myReflect/my-reflet-id-code',{
+                    success_msg,
+                    err_msg,
+                    session:req.session,
+                    all_reflect_id,
+                    refletArr,
+                    crypto,
+                    client_salt,
+                    encrypt
+               });
+            }
+        }
+        else{
             res.render('front/myReflect/my-reflet-id-code',{
                 success_msg,
                 err_msg,
@@ -208,14 +208,13 @@ if(sharedEntity.length>0){
                 crypto,
                 client_salt,
                 encrypt
-  });
+            });
         }
    
         
         /**get my all reflect code end**/
     }
-    else
-    {
+    else{
         redirect('/login');
     }
 

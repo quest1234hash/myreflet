@@ -6,56 +6,50 @@ var db = require('../../services/database');
 var sequelize = require('sequelize');
 var dateTime = require('node-datetime');
 const { base64encode, base64decode } = require('nodejs-base64');
-const {encrypt,decrypt, encrypt1,decrypt1}=require('../../helpers/encrypt-decrypt');
+const {encrypt,decrypt, encrypt1,decrypt1} = require('../../helpers/encrypt-decrypt');
 
 /**show all notifications start**/
-
-exports.notification_list= async (req,res,next) =>{
+ 
+exports.notification_list= async (req,res,next) => {
 
 	var user_id=req.session.user_id;
 	var user_type=req.session.user_type;
 
 	console.log("user_type id : "+user_type);
 
-	if(user_id)
-	{
-      
-	 if(user_type==='validatore')
-	     {
-	     	
-       	         		console.log("user_type id else"+user_type);
+	if(user_id){
+		if(user_type==='validatore'){
+				
+			console.log("user_type id else"+user_type);
 
-     	 db.query("select tbl_validator_notifications.*,tbl_user_registrations.profile_pic from tbl_validator_notifications inner join tbl_user_registrations ON  tbl_validator_notifications.sender_id=tbl_user_registrations.reg_user_id WHERE tbl_validator_notifications.deleted='0' and receiver_id="+user_id+" ORDER BY `notification_id` DESC",{ type:db.QueryTypes.SELECT}).then(async function(all_notifications){
+			db.query("select tbl_validator_notifications.*,tbl_user_registrations.profile_pic from tbl_validator_notifications inner join tbl_user_registrations ON  tbl_validator_notifications.sender_id=tbl_user_registrations.reg_user_id WHERE tbl_validator_notifications.deleted='0' and receiver_id="+user_id+" ORDER BY `notification_id` DESC",{ type:db.QueryTypes.SELECT})
+			.then(async function(all_notifications){
 
-          console.log('all_notifications : ',all_notifications)
-       res.render('front/notifications/all-notifications',{
-       	    all_notifications,
-            session:req.session,
-            base64encode,
-			decrypt
-        });
-      });
-         	
-       }
-       else
-       {     // 
-     	console.log("user_type id if"+user_type);
+				console.log('all_notifications : ',all_notifications)
+				res.render('front/notifications/all-notifications',{
+					all_notifications,
+					session:req.session,
+					base64encode,
+					decrypt
+				});
+			});				
+		}
+		else{     // 
+			console.log("user_type id if"+user_type);
 
-		     db.query("select tbl_notifications.*,tbl_user_registrations.profile_img_name from tbl_notifications inner join tbl_user_registrations ON  tbl_notifications.sender_id=tbl_user_registrations.reg_user_id WHERE tbl_notifications.deleted='0' and receiver_id="+user_id+" ORDER BY `notification_id` DESC",{ type:db.QueryTypes.SELECT}).then(async function(all_notifications){
-               console.log("all notificationsssssssssssssssssss",all_notifications);
+			db.query("select tbl_notifications.*,tbl_user_registrations.profile_img_name from tbl_notifications inner join tbl_user_registrations ON  tbl_notifications.sender_id=tbl_user_registrations.reg_user_id WHERE tbl_notifications.deleted='0' and receiver_id="+user_id+" ORDER BY `notification_id` DESC",{ type:db.QueryTypes.SELECT})
+			.then(async function(all_notifications){
+				console.log("all notificationsssssssssssssssssss",all_notifications);
 
-		       res.render('front/notifications/all-notifications',{
-		       	    all_notifications,
-		            session:req.session,
-		            base64encode
-		        });
-      });
-       }
-
-
+				res.render('front/notifications/all-notifications',{
+					all_notifications,
+					session:req.session,
+					base64encode
+				});
+			});
+		}
 	}
-	else
-	{
+	else{
 		redirect('/Login');
 	}
 
@@ -65,50 +59,44 @@ exports.notification_list= async (req,res,next) =>{
 
 /**show all unread notifications start**/
 exports.unreadnotification_list= async (req,res,next) =>{
-
-
 	var user_id=req.session.user_id;
 	var user_type=req.session.user_type;
 	console.log("user_type id"+user_type);
 
-	if(user_id)
-	{
-	 if(user_type==='validatore')
-	     {
-	     	     		console.log("user_type id else"+user_type);
+	if(user_id){
+		if(user_type==='validatore'){
+			console.log("user_type id else"+user_type);
 
-             	db.query("select tbl_validator_notifications.*,tbl_user_registrations.profile_img_name from tbl_validator_notifications inner join tbl_user_registrations ON  tbl_validator_notifications.sender_id=tbl_user_registrations.reg_user_id WHERE tbl_validator_notifications.deleted='0' and tbl_validator_notifications.read_status='no' and tbl_validator_notifications.receiver_id="+user_id+" ORDER BY `notification_id` DESC" ,{ type:db.QueryTypes.SELECT}).then(async function(unread_notifications){
+			db.query("select tbl_validator_notifications.*,tbl_user_registrations.profile_img_name from tbl_validator_notifications inner join tbl_user_registrations ON  tbl_validator_notifications.sender_id=tbl_user_registrations.reg_user_id WHERE tbl_validator_notifications.deleted='0' and tbl_validator_notifications.read_status='no' and tbl_validator_notifications.receiver_id="+user_id+" ORDER BY `notification_id` DESC" ,{ type:db.QueryTypes.SELECT})
+			.then(async function(unread_notifications){
 
-					console.log("unreaddddddddddddddddddddddd",unread_notifications);
-// console.log("-----------------",unread_notifications);
-		         res.render('front/notifications/unread-notifications',{
-		         	unread_notifications,
-		         	session:req.session,
-		         	base64encode,
-					 decrypt
-		          });
+				console.log("unreaddddddddddddddddddddddd",unread_notifications);
+				// console.log("-----------------",unread_notifications);
+				res.render('front/notifications/unread-notifications',{
+					unread_notifications,
+					session:req.session,
+					base64encode,
+					decrypt
+				});
+			});
+							
+		}
+		else{
+			
+			console.log("user_type id if"+user_type);
 
-         });
-	     	         	
-        }
-       else
-       {
-       	    
-         	console.log("user_type id if"+user_type);
-
-		db.query("select tbl_notifications.*,tbl_user_registrations.profile_pic from tbl_notifications inner join tbl_user_registrations ON  tbl_notifications.sender_id=tbl_user_registrations.reg_user_id WHERE tbl_notifications.deleted='0' and tbl_notifications.read_status='no' and tbl_notifications.receiver_id="+user_id+" ORDER BY `notification_id` DESC",{ type:db.QueryTypes.SELECT}).then(async function(unread_notifications){
-// console.log("-----------------",unread_notifications);
-		         res.render('front/notifications/unread-notifications',{
-		         	unread_notifications,
-		         	session:req.session,
-		         	base64encode
-		          });
-
-         });          	 
-       }
+			db.query("select tbl_notifications.*,tbl_user_registrations.profile_pic from tbl_notifications inner join tbl_user_registrations ON  tbl_notifications.sender_id=tbl_user_registrations.reg_user_id WHERE tbl_notifications.deleted='0' and tbl_notifications.read_status='no' and tbl_notifications.receiver_id="+user_id+" ORDER BY `notification_id` DESC",{ type:db.QueryTypes.SELECT})
+			.then(async function(unread_notifications){
+				// console.log("-----------------",unread_notifications);
+				res.render('front/notifications/unread-notifications',{
+					unread_notifications,
+					session:req.session,
+					base64encode
+				});
+			});          	 
+		}
 	}
-	else
-	{
+	else{
 		res.redirect('/Login');
 	}
 	

@@ -67,7 +67,7 @@ async function check_status() {
 
       })
       .catch(function (error) {
-        console.log("Estatus--------cron", error);
+        //console.log("Estatus--------cron", error);
       });
 
   }

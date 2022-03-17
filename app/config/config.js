@@ -10,7 +10,7 @@ const DATABASE                  = config_details.database
 const KEY_FOR_ENCRIPT_DECRIPT   = config_details.KEY_FOR_ENCRIPT_DECRIPT
 const SESSION_SECRET            = config_details.SESSION_SECRET
 
-console.log("mail config chack",config_details)
+//console.log("mail config chack",config_details)
 
 
 module.exports = {

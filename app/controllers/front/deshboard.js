@@ -87,160 +87,162 @@ exports.verifierDeshboard= async(req,res,next )=>{
   //   }
   //   console.log("from ipfs ",file)
   // })
-    var page = req.query.page || 1
-    var perPage = 10
-    var userId =req.session.user_id 
+  var page = req.query.page || 1
+  var perPage = 10
+  var userId =req.session.user_id 
   db.query('SELECT *  ,tbl_wallet_reflectid_rels.reflect_code as v_r_code ,tbl_wallet_reflectid_rels.reflectid_by as v_reflectid_by,tbl_wallet_reflectid_rels.rep_username as v_rep_username,tbl_wallet_reflectid_rels.entity_company_name as v_entity_company_name,tbl_client_verification_requests.createdAt as request_created FROM `tbl_client_verification_requests` INNER JOIN tbl_wallet_reflectid_rels ON tbl_wallet_reflectid_rels.reflect_id=tbl_client_verification_requests.verifer_my_reflect_id INNER JOIN tbl_wallet_reflectid_rels as c ON c.reflect_id=tbl_client_verification_requests.reflect_id INNER JOIN tbl_user_registrations ON tbl_user_registrations.reg_user_id=tbl_client_verification_requests.client_id LEFT JOIN tbl_countries ON c.companyCountry=tbl_countries.country_id WHERE tbl_client_verification_requests.verifier_id="'+userId+'" AND tbl_client_verification_requests.deleted="0"',{type:db.QueryTypes.SELECT}).then(requestToverifier=>{
 
-        db.query('SELECT * FROM tbl_user_registrations WHERE reg_user_id='+userId,{type:db.QueryTypes.SELECT}).then(userData=>{
+    db.query('SELECT * FROM tbl_user_registrations WHERE reg_user_id='+userId,{type:db.QueryTypes.SELECT}).then(userData=>{
           
-                    db.query('SELECT *,tbl_wallet_reflectid_rels.reflect_code as v_r_code ,tbl_wallet_reflectid_rels.reflectid_by as v_reflectid_by,tbl_wallet_reflectid_rels.rep_username as v_rep_username,tbl_wallet_reflectid_rels.entity_company_name as v_entity_company_name FROM `tbl_sub_verifier_clients` INNER JOIN tbl_client_verification_requests ON tbl_client_verification_requests.request_id=tbl_sub_verifier_clients.client_request_id INNER JOIN tbl_wallet_reflectid_rels ON tbl_wallet_reflectid_rels.reflect_id=tbl_client_verification_requests.verifer_my_reflect_id INNER JOIN tbl_wallet_reflectid_rels as c ON c.reflect_id=tbl_client_verification_requests.reflect_id INNER JOIN tbl_user_registrations ON tbl_user_registrations.reg_user_id=tbl_client_verification_requests.client_id WHERE tbl_sub_verifier_clients.sub_verifier_reg_id="'+userId+'" AND tbl_sub_verifier_clients.deleted="0" AND tbl_sub_verifier_clients.sub_client_status="active" AND tbl_client_verification_requests.deleted="0"',{type:db.QueryTypes.SELECT}).then(subverifierAssignClient=>{
+      db.query('SELECT *,tbl_wallet_reflectid_rels.reflect_code as v_r_code ,tbl_wallet_reflectid_rels.reflectid_by as v_reflectid_by,tbl_wallet_reflectid_rels.rep_username as v_rep_username,tbl_wallet_reflectid_rels.entity_company_name as v_entity_company_name FROM `tbl_sub_verifier_clients` INNER JOIN tbl_client_verification_requests ON tbl_client_verification_requests.request_id=tbl_sub_verifier_clients.client_request_id INNER JOIN tbl_wallet_reflectid_rels ON tbl_wallet_reflectid_rels.reflect_id=tbl_client_verification_requests.verifer_my_reflect_id INNER JOIN tbl_wallet_reflectid_rels as c ON c.reflect_id=tbl_client_verification_requests.reflect_id INNER JOIN tbl_user_registrations ON tbl_user_registrations.reg_user_id=tbl_client_verification_requests.client_id WHERE tbl_sub_verifier_clients.sub_verifier_reg_id="'+userId+'" AND tbl_sub_verifier_clients.deleted="0" AND tbl_sub_verifier_clients.sub_client_status="active" AND tbl_client_verification_requests.deleted="0"',{type:db.QueryTypes.SELECT}).then(subverifierAssignClient=>{
 
-                             for (let i = 0; i < subverifierAssignClient.length; i++) {
-                                                      requestToverifier.push(subverifierAssignClient[i])
-                                            
-                              }
-                                const requestarray1 = paginate(requestToverifier, page, perPage); 
-                                res.render('front/dashboard-verifier/v-deshboard',{
-                                                                                   session : req.session,decrypt,
-                                                                                    requestToverifierData :requestarray1,
-                                                                                    verifierMyReflectId:requestToverifier,
-                                                                                     moment,
-                                                                                     userData
-                                 })
-                  })
+        for (let i = 0; i < subverifierAssignClient.length; i++) {
+          requestToverifier.push(subverifierAssignClient[i])             
+        }
+        const requestarray1 = paginate(requestToverifier, page, perPage); 
+        res.render('front/dashboard-verifier/v-deshboard',{
+          session : req.session,decrypt,
+          requestToverifierData :requestarray1,
+          verifierMyReflectId:requestToverifier,
+          moment,
+          userData
+        })
       })
+    })
   })
-//   console.log("......................verifierDeshboard start.................................")
-//   var page = req.query.page || 1
-//   var perPage = 10
-//     var userId =req.session.user_id 
-//     // console.log("user idv ", userId)
-//     var requestarray =[]
+  //   console.log("......................verifierDeshboard start.................................")
+  //   var page = req.query.page || 1
+  //   var perPage = 10
+  //     var userId =req.session.user_id 
+  //     // console.log("user idv ", userId)
+  //     var requestarray =[]
 
-//     await  CountryModel.findAll({where:{status:"active"}}).then(async(countryData)=>{
+  //     await  CountryModel.findAll({where:{status:"active"}}).then(async(countryData)=>{
 
-   
- 
-//     await ClientVerificationModel.findAll({where:{verifier_id: userId,deleted:"0",verifier_deleted :"0" } }).then(async(data)=>{
-//       if(data!="" && data.length>0 && data!=undefined){
-//          var count =1
-//        /*outer loop Start*/
-//          for(var i=0; i<data.length ;i++){
-//             count++
-
-//             UserModel.hasMany(MyReflectIdModel, {foreignKey: 'reg_user_id'})
-//             MyReflectIdModel.belongsTo(UserModel, {foreignKey: 'reg_user_id'})
-//             await MyReflectIdModel.findOne({where:{reflect_id:data[i].reflect_id} ,include: [UserModel]}).then(async(myRefdata)=>
-//             {  
- 
-//                 UserModel.hasMany(MyReflectIdModel, {foreignKey: 'reg_user_id'})
-//                MyReflectIdModel.belongsTo(UserModel, {foreignKey: 'reg_user_id'})
-//                await MyReflectIdModel.findOne({where:{reflect_id:data[i].verifer_my_reflect_id },include: [UserModel]}).then(async(v_myRefdata)=>
-//             {
-//              // console.log(v_myRefdata.tbl_user_registration)
- 
-//              // console.log(".......................................................")
-//              // console.log(v_myRefdata.tbl_user_registration.dataValues)
-//             //  var match_to_client_or_veri ;
-//             //      if(data[i].verifier_id==userId){
-//             //        match_to_client_or_veri=data[i].verifier_id
-//             //      }else{
-//                 //    match_to_client_or_veri=data[i].client_id
-//                 //  }
- 
-//              await UserModel.findOne({where:{reg_user_id:data[i].client_id }}).then(async(userdata)=>{
-
-//                 await UserModel.findOne({where:{reg_user_id:data[i].verifier_id }}).then(async(ver_userdata)=>{
-                
-
-//                 var obj ={
-//                    ClientVerificationData : data[i].dataValues,
-//                    MyReflectIData :myRefdata.dataValues,
-//                    user : userdata.dataValues,
-//                    verifer_my_reflect_id_Data : v_myRefdata,
-//                    ver_userdata :ver_userdata
-//                   }
-
-//                   requestarray.push(obj)
-//                 })
-//              })
- 
- 
-//             })
-           
- 
-//             })
-//          }
-//         /*outer loop End*/
-
-//         //  console.log("requestarray***************** ", requestarray)
-//          const requestarray1 = paginate(requestarray, page, perPage);         
-//          console.log("requestarray***************** ", requestarray1)
-//          res.render('front/dashboard-verifier/v-deshboard',{
-//           session : req.session,
-//           ClientVerificationModelData :requestarray1,
-//           ClientVerificationModelforfilter: requestarray,
-//           countryData,
-//           moment
-//    })
-//     }else{
-//       res.render('front/myReflect/my-reflet-id-code-new',{
-//         success_msg:"",
-//         err_msg:"",
-//         session:req.session,
-//         ejs
-//        }); 
-//     }
-//      }).catch(err=>console.log("errr",err))
     
-//     }).catch(err=>console.log("errr countryData",err))
-// // res.render('front/user-on-boarding-request/boarding-request',{session:req.session})
+  
+  //     await ClientVerificationModel.findAll({where:{verifier_id: userId,deleted:"0",verifier_deleted :"0" } }).then(async(data)=>{
+  //       if(data!="" && data.length>0 && data!=undefined){
+  //          var count =1
+  //        /*outer loop Start*/
+  //          for(var i=0; i<data.length ;i++){
+  //             count++
+
+  //             UserModel.hasMany(MyReflectIdModel, {foreignKey: 'reg_user_id'})
+  //             MyReflectIdModel.belongsTo(UserModel, {foreignKey: 'reg_user_id'})
+  //             await MyReflectIdModel.findOne({where:{reflect_id:data[i].reflect_id} ,include: [UserModel]}).then(async(myRefdata)=>
+  //             {  
+  
+  //                 UserModel.hasMany(MyReflectIdModel, {foreignKey: 'reg_user_id'})
+  //                MyReflectIdModel.belongsTo(UserModel, {foreignKey: 'reg_user_id'})
+  //                await MyReflectIdModel.findOne({where:{reflect_id:data[i].verifer_my_reflect_id },include: [UserModel]}).then(async(v_myRefdata)=>
+  //             {
+  //              // console.log(v_myRefdata.tbl_user_registration)
+  
+  //              // console.log(".......................................................")
+  //              // console.log(v_myRefdata.tbl_user_registration.dataValues)
+  //             //  var match_to_client_or_veri ;
+  //             //      if(data[i].verifier_id==userId){
+  //             //        match_to_client_or_veri=data[i].verifier_id
+  //             //      }else{
+  //                 //    match_to_client_or_veri=data[i].client_id
+  //                 //  }
+  
+  //              await UserModel.findOne({where:{reg_user_id:data[i].client_id }}).then(async(userdata)=>{
+
+  //                 await UserModel.findOne({where:{reg_user_id:data[i].verifier_id }}).then(async(ver_userdata)=>{
+                  
+
+  //                 var obj ={
+  //                    ClientVerificationData : data[i].dataValues,
+  //                    MyReflectIData :myRefdata.dataValues,
+  //                    user : userdata.dataValues,
+  //                    verifer_my_reflect_id_Data : v_myRefdata,
+  //                    ver_userdata :ver_userdata
+  //                   }
+
+  //                   requestarray.push(obj)
+  //                 })
+  //              })
+  
+  
+  //             })
+            
+  
+  //             })
+  //          }
+  //         /*outer loop End*/
+
+  //         //  console.log("requestarray***************** ", requestarray)
+  //          const requestarray1 = paginate(requestarray, page, perPage);         
+  //          console.log("requestarray***************** ", requestarray1)
+  //          res.render('front/dashboard-verifier/v-deshboard',{
+  //           session : req.session,
+  //           ClientVerificationModelData :requestarray1,
+  //           ClientVerificationModelforfilter: requestarray,
+  //           countryData,
+  //           moment
+  //    })
+  //     }else{
+  //       res.render('front/myReflect/my-reflet-id-code-new',{
+  //         success_msg:"",
+  //         err_msg:"",
+  //         session:req.session,
+  //         ejs
+  //        }); 
+  //     }
+  //      }).catch(err=>console.log("errr",err))
+      
+  //     }).catch(err=>console.log("errr countryData",err))
+  // // res.render('front/user-on-boarding-request/boarding-request',{session:req.session})
 
 }
 
   /**request_status_change Get method Start**/
 exports.RequestAcceptReject=async(req,res,next)=>{
-
-   var status = req.query.status
+  var status = req.query.status
   var user_id=  req.session.user_id 
   var request_id = req.query.request_id
   var dt = dateTime.create();
-   var formatted = dt.format('Y-m-d H:M:S');
+  var formatted = dt.format('Y-m-d H:M:S');
   //  var msg= `Your request has been ${status}ed by verifier.`
-   var ntf_type ;
-   if(status=="accept"){
-     ntf_type=2;
-   }else{
-     ntf_type=3
-   }
- //  console.log("123......................<><><><<<>.........................................................")
- //  console.log(status)
- //  console.log(request_id)
+  var ntf_type ;
+  if(status=="accept"){
+    ntf_type=2;
+  }
+  else{
+    ntf_type=3
+  }
+  //  console.log("123......................<><><><<<>.........................................................")
+  //  console.log(status)
+  //  console.log(request_id)
 
- //  console.log(".............................<><><><.............................................")
- var useradata =await UserModel.findOne({where:{reg_user_id:user_id}})
+  //  console.log(".............................<><><><.............................................")
+  var useradata =await UserModel.findOne({where:{reg_user_id:user_id}})
   await ClientVerificationModel.update({request_status:status}, { where: { request_id:request_id }}).then(async(result) =>{
-       // console.log(result)
+    // console.log(result)
        
-       ClientVerificationModel.findOne({where:{request_id:request_id}}).then(async(requestdata)=>{
-        var msg= `Your request has been ${status}ed by verifier ${decrypt(useradata.full_name)}-${requestdata.request_code}.`
+    ClientVerificationModel.findOne({where:{request_id:request_id}}).then(async(requestdata)=>{
+      var msg= `Your request has been ${status}ed by verifier ${decrypt(useradata.full_name)}-${requestdata.request_code}.`
 
-         await NotificationModel.create({
-           notification_msg   :   msg,
-           sender_id          :  user_id,
-           receiver_id        :  requestdata.client_id,
-           request_id         :  request_id,
-           notification_type  :   ntf_type,
-           notification_date  : formatted,
-           read_status        : "no"
-          }).then(data=>{
-            res.redirect("/verifier_deshboard")
-
-          }).catch(err=>console.log("err",err))
-       }).catch(err=>console.log("err",err))
+      await NotificationModel.create({
+        notification_msg   :   msg,
+        sender_id          :  user_id,
+        receiver_id        :  requestdata.client_id,
+        request_id         :  request_id,
+        notification_type  :   ntf_type,
+        notification_date  : formatted,
+        read_status        : "no"
+      })
+      .then(data=>{
+        res.redirect("/verifier_deshboard")
+      })
+      .catch(err=>console.log("err",err))
+    })
+  .catch(err=>console.log("err",err))
  
-   }).catch(err=>console.log("err",err))
+  })
+  .catch(err=>console.log("err",err))
 }
 /**request_status_change Get method End**/
 
@@ -1239,76 +1241,82 @@ exports.getUnlinkedWallets=async function(req,res){
   let reflet_id=req.query.reflet_id;
   console.log("reflet iddddddddddddddd:",reflet_id);
   reflet_id=decrypt(reflet_id);
+  
+  //res.send(reflet_id).end();
+  
   console.log("derccccccccc",reflet_id);
   let user_id=req.session.user_id;
   var success_msg = req.flash('success_msg');
-    var err_msg= req.flash('err_msg');
+  var err_msg= req.flash('err_msg');
   try{
     let allDegitalsUnlink=await DigitalWalletRelsModel.findAll({where:{reg_user_id:user_id,status:'active',parent_reflect_id:null}})
     let allCryptoUnlink=await CryptoWalletModel.findAll({where:{reg_user_id:user_id,status:'active',reflet_code:null}})
-   let wallets=[]; 
+    let wallets=[]; 
     if(allDegitalsUnlink.length>0||allCryptoUnlink.length>0){
       let k=0;
-          if(allDegitalsUnlink.length>0){
-            for(let i=0;i<allDegitalsUnlink.length;i++){
-             if(allDegitalsUnlink[i].balance==null){
-               allDegitalsUnlink[i].balance='0'
-             }
-                let walletObj={
-                  walletAddress:allDegitalsUnlink[i].wallet_address,
-                  balance:allDegitalsUnlink[i].balance.toString(),
-                  refletid:'',
-                  walletid:allDegitalsUnlink[i].dig_wallet_rel.toString(),
-                  wallet_type:'digital',
-                  name:allDegitalsUnlink[i].digital_type
-                }
-                wallets[k]=walletObj;
-                k++;
+      if(allDegitalsUnlink.length>0){
+        for(let i=0;i<allDegitalsUnlink.length;i++){
+          if(allDegitalsUnlink[i].balance==null){
+            allDegitalsUnlink[i].balance='0'
+          }
+          let walletObj = {
+            walletAddress:allDegitalsUnlink[i].wallet_address,
+            balance:allDegitalsUnlink[i].balance.toString(),
+            refletid:'',
+            walletid:allDegitalsUnlink[i].dig_wallet_rel.toString(),
+            wallet_type:'digital',
+            name:allDegitalsUnlink[i].digital_type
+          }
+          wallets[k]=walletObj;
+          k++;
+        }
+      }
+      if(allCryptoUnlink.length>0){
+        for(let i=0;i<allCryptoUnlink.length;i++){
+        
+          let walletObj={
+            walletAddress:decrypt1(allCryptoUnlink[i].public_key),
+            balance:'',
+            refletid:'',
+            walletid:decrypt1(allCryptoUnlink[i].wallet_address),
+            wallet_type:'crypto',
+            name:decrypt1(allCryptoUnlink[i].wallet_type)
+          }
+          if(decrypt1(allCryptoUnlink[i].wallet_type).toLowerCase()=='ethereum'){
+          let balanceObj=await web3jsAcc.eth.getBalance(decrypt1(allCryptoUnlink[i].wallet_address));
+          let balance_eth= web3jsAcc.utils.fromWei(balanceObj, "ether");
+          balance_eth=parseFloat(balance_eth).toFixed(8);
+          walletObj.balance=balance_eth.toString();
+          }
+          else{
+            try{
+              let btcBa= await btcbalance(decrypt1(allCryptoUnlink[i].wallet_address));
+              btcBa=btcBa.toString();
+              walletObj.balance=btcBa;
+            
+            }
+            catch(err){
+              walletObj.balance='0'
+              console.log(err);
+              //throw err;
+              //res.json({ status: 0, msg: "Something went wrong", data: { err_msg: 'Failed'} });
             }
           }
-          if(allCryptoUnlink.length>0){
-           for(let i=0;i<allCryptoUnlink.length;i++){
-            
-               let walletObj={
-                 walletAddress:decrypt1(allCryptoUnlink[i].public_key),
-                 balance:'',
-                 refletid:'',
-                 walletid:decrypt1(allCryptoUnlink[i].wallet_address),
-                 wallet_type:'crypto',
-                 name:decrypt1(allCryptoUnlink[i].wallet_type)
-               }
-               if(decrypt1(allCryptoUnlink[i].wallet_type).toLowerCase()=='ethereum'){
-                let balanceObj=await web3jsAcc.eth.getBalance(decrypt1(allCryptoUnlink[i].wallet_address));
-                let balance_eth= web3jsAcc.utils.fromWei(balanceObj, "ether");
-                balance_eth=parseFloat(balance_eth).toFixed(8);
-                walletObj.balance=balance_eth.toString();
-              }else{
-                try{
-                 let btcBa= await btcbalance(decrypt1(allCryptoUnlink[i].wallet_address));
-                 btcBa=btcBa.toString();
-                 walletObj.balance=btcBa;
-               
-                }catch(err){
-                  walletObj.balance='0'
-                  console.log(err);
-                  //throw err;
-                  //res.json({ status: 0, msg: "Something went wrong", data: { err_msg: 'Failed'} });
-                }
-              }
-              
-               wallets[k]=walletObj;
-               k++;
-           }
-         }
+          
+          wallets[k]=walletObj;
+          k++;
         }
-        res.render('front/dashboard_client/unlinekd-wallet',{
-          success_msg,
-          err_msg,
-          reflet_id,
-          wallets,
-          encrypt
-        })
-  }catch(err){
+      }
+    }
+    res.render('front/dashboard_client/unlinekd-wallet',{
+      success_msg,
+      err_msg,
+      reflet_id,
+      wallets,
+      encrypt
+    })
+  }
+  catch(err){
     console.log(err);
     throw err;
   }
@@ -1720,6 +1728,7 @@ exports.generatePvtKeyForDigitalWallet=async function(req,res){
           //res.json({ status: 0, msg: "It takes few seconds to generate private key,Please try again after 20sec.", data: { err_msg: 'Failed'} });
           req.flash('err_msg', 'It will take few seconds to generate pvt key, Please try again after 45 sec ');
           res.redirect("/get-public-key");
+          return;
          }
      console.log("CSVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV",csv);
      var c = web3.eth.accounts.decrypt(csv,user_pass);

@@ -6,7 +6,7 @@ const dotenv=require('dotenv');
 dotenv.config();
 var app=express();
 var session = require('express-session');
-var sequelize = require('sequelize');
+ var sequelize = require('sequelize');
 var db = require('./app/services/database.js');
 const flash = require('express-flash');
 var https = require('https');

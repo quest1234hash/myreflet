@@ -103,22 +103,22 @@
 
 
 
-	<!-- JQuery -->
-        <script type="text/javascript" src="/assets/js/jquery-3.3.1.min.js"></script>
-        <!-- <script type="text/javascript" src="assets/js/jquery-1.11.3.min.js"></script> -->
-        <!-- Bootstrap Core JavaScript -->
-        <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
-        <!-- dropdownhover effects JavaScript -->
-        <script type="text/javascript" src="/assets/js/bootstrap-dropdownhover.min.js"></script>
-        <!-- wow JavaScript -->
-        <script type="text/javascript" src="/assets/js/wow.min.js"></script>
-        <!-- video player JavaScript -->
+<!-- JQuery -->
+<script type="text/javascript" src="/assets/js/jquery-3.3.1.min.js"></script>
+<!-- <script type="text/javascript" src="assets/js/jquery-1.11.3.min.js"></script> -->
+<!-- Bootstrap Core JavaScript -->
+<script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+<!-- dropdownhover effects JavaScript -->
+<script type="text/javascript" src="/assets/js/bootstrap-dropdownhover.min.js"></script>
+<!-- wow JavaScript -->
+<script type="text/javascript" src="/assets/js/wow.min.js"></script>
+<!-- video player JavaScript -->
 
-        <!-- Custom JavaScript -->
-        <script type="text/javascript" src="/assets/js/custom.js"></script>
+<!-- Custom JavaScript -->
+<script type="text/javascript" src="/assets/js/custom.js"></script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
         
         
@@ -126,98 +126,91 @@
 
 
 
-        <script type="text/javascript">
-         
+<script type="text/javascript">    
 
-          $(document).ready(function(){
-              
-            $('.loader').hide();
+    $(document).ready(function(){
+        
+        $('.loader').hide();
 
-           $('.hide_class').hide();
-            var remember = $.cookie('remember');
-            
-            if (remember == 'true') 
-            {
-                var otp1 = $.cookie('otp1');
-                var otp2 = $.cookie('otp2');
-                var otp3 = $.cookie('otp3');
-                var otp4 = $.cookie('otp4');
-                // var password = $.cookie('password');
-                // autofill the fields
-                $.ajax({
-                                                                        type    : "post",
-                                                                        url     : "/cookies_handler_decript",
-                                                                        data    : {otp1,otp2,otp3,otp4},
-                                                                        success : function(data){
-
-                                                                                        // set cookies to expire in 14 days
-                                                                                        $("#remember").prop("checked", true);
-                                                                                        $('#otp1').val(data.otp1);
-                                                                                        $('#otp2').val(data.otp2);
-                                                                                        $('#otp3').val(data.otp3);
-                                                                                        $('#otp4').val(data.otp4);
-                                                                                        $('#otp6').val(data.otp1);
-                                                                                        $('#otp7').val(data.otp2);
-                                                                                        $('#otp8').val(data.otp3);
-                                                                                        $('#otp9').val(data.otp4);
-                                                                        }
-                                                                    })
-               
+        $('.hide_class').hide();
+        var remember = $.cookie('remember');
     
+        if (remember == 'true') {
+            var otp1 = $.cookie('otp1');
+            var otp2 = $.cookie('otp2');
+            var otp3 = $.cookie('otp3');
+            var otp4 = $.cookie('otp4');
+            // var password = $.cookie('password');
+            // autofill the fields
+            $.ajax({
+                type    : "post",
+                url     : "/cookies_handler_decript",
+                data    : {otp1,otp2,otp3,otp4},
+                success : function(data){
+                    // set cookies to expire in 14 days
+                    $("#remember").prop("checked", true);
+                    $('#otp1').val(data.otp1);
+                    $('#otp2').val(data.otp2);
+                    $('#otp3').val(data.otp3);
+                    $('#otp4').val(data.otp4);
+                    $('#otp6').val(data.otp1);
+                    $('#otp7').val(data.otp2);
+                    $('#otp8').val(data.otp3);
+                    $('#otp9').val(data.otp4);
+                }
+            })
+        }
+
+
+
+        $('#validate').validate({
+        
+            onfocusout: function(element) {
+                this.element(element);
+            },
+            errorClass: 'error_validate',
+            errorElement:'span',
+            highlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+            submitHandler:function(form){
+                $('#submit_signup').attr('disabled',true);
+                var otp1=   $("#otp1").val();
+                var otp2= $("#otp2").val();
+                var otp3=  $("#otp3").val();
+                var otp4= $("#otp4").val();
+
+                var totalOtp1 = otp1+otp2+otp3+otp4
+                if($("#otp1").val()==""||$("#otp2").val()==""||$("#otp3").val()==""||$("#otp4").val()==""){
+                //    alert("dnsfjksd")
+                    $("#otp_err").text("All fields are required.")
+                    }else{
+                    $("#otp_err").text("")
+                    loder_fun()
+                    form.submit();
+                    }
+                    
+                //  alert(totalOtp1)
+                //  alert(totalOtp2)
+
+                // 
             }
+        });
 
-
-
-          $('#validate').validate({
-              
-               onfocusout: function(element) {
-               this.element(element);
-               },
-               errorClass: 'error_validate',
-               errorElement:'span',
-               highlight: function(element, errorClass) {
-               $(element).removeClass(errorClass);
-               },
-               submitHandler:function(form)
-                  {
-                    $('#submit_signup').attr('disabled',true);
-                 var otp1=   $("#otp1").val();
-                 var otp2= $("#otp2").val();
-                 var otp3=  $("#otp3").val();
-                 var otp4= $("#otp4").val();
-
-                 var totalOtp1 = otp1+otp2+otp3+otp4
-                    if($("#otp1").val()==""||$("#otp2").val()==""||$("#otp3").val()==""||$("#otp4").val()==""){
-                    //    alert("dnsfjksd")
-                       $("#otp_err").text("All fields are required.")
-                     }else{
-                        $("#otp_err").text("")
-                        loder_fun()
-                        form.submit();
-                     }
-                     
-                    //  alert(totalOtp1)
-                    //  alert(totalOtp2)
-
-                   // 
-                  }
-               });
-
-          $('.restrict_key').bind('keyup keydown keypress', function (evt) {
+        $('.restrict_key').bind('keyup keydown keypress', function (evt) {
             return false;
-       });
+        });
 
 
-  });
-          </script>
+    });
+</script>
+
 <script>
     $(function(){
-    
-    var url = new URL( window.location.href);
-    var userId = url.searchParams.get("userid");
-    $("#userId").val(userId)
-    // alert( $("#userId").val())
-
+        var url = new URL( window.location.href);
+        var userId = url.searchParams.get("userid");
+        $("#userId").val(userId)
+        // alert( $("#userId").val())
     })
 </script>
 
@@ -225,59 +218,60 @@
 
 
 
-         <script>
+<script>
     $('.digit-group').find('input').each(function() {
-    $(this).attr('maxlength', 1);
-    $(this).on('keyup', function(e) {
-        var parent = $($(this).parent());
-        
-        if(e.keyCode === 8 || e.keyCode === 37) {
-            var prev = parent.find('input#' + $(this).data('previous'));
+        $(this).attr('maxlength', 1);
+        $(this).on('keyup', function(e) {
+            var parent = $($(this).parent());
             
-            if(prev.length) {
-                $(prev).select();
-            }
-        } else if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
-            var next = parent.find('input#' + $(this).data('next'));
-            
-            if(next.length) {
-                $(next).select();
-            } else {
-                if(parent.data('autosubmit')) {
-                    parent.submit();
+            if(e.keyCode === 8 || e.keyCode === 37) {
+                var prev = parent.find('input#' + $(this).data('previous'));
+                
+                if(prev.length) {
+                    $(prev).select();
+                }
+            } else if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
+                var next = parent.find('input#' + $(this).data('next'));
+                
+                if(next.length) {
+                    $(next).select();
+                } else {
+                    if(parent.data('autosubmit')) {
+                        parent.submit();
+                    }
                 }
             }
-        }
+        });
     });
-});
 </script>
-      <script>
-            // WRITE THE VALIDATION SCRIPT.
-            function isNumber(evt) {
-                
-                var iKeyCode = (evt.which) ? evt.which : evt.keyCode
-                if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
-                    return false;
+
+<script>
+    // WRITE THE VALIDATION SCRIPT.
+    function isNumber(evt) {
         
-                return true;
-            }  
-            
-            
-// function isequl1(value){
+        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+            return false;
+
+        return true;
+    }  
+    
+    
+    // function isequl1(value){
 
 //                     $("#otp1").val();
-                   
+            
 
 //                     $("#otp6").val();
-                    
+            
 //                     if($("#otp1").val()!=$("#otp6").val()){
 //                                             $("#con_otp_err1").text("")
 //                                            $("#con_otp_err1").text("set-pin and confirme pin should be equal")
 //                     }else{
 //                         $("#con_otp_err1").text("")
 //                     }
-                   
             
+    
 //             }
 // function isequl2(value){
 
@@ -322,21 +316,21 @@
 
 // }   
 
-        </script>
-  <script>
+</script>
 
-window.onload = () => {
- const otp1 = document.getElementById('otp1');
- const otp2 = document.getElementById('otp2');
- const otp3 = document.getElementById('otp3');
- const otp4 = document.getElementById('otp4');
+<script>
 
- otp1.onpaste = e => e.preventDefault();
- otp2.onpaste = e => e.preventDefault();
- otp3.onpaste = e => e.preventDefault();
- otp4.onpaste = e => e.preventDefault();
+    window.onload = () => {
+        const otp1 = document.getElementById('otp1');
+        const otp2 = document.getElementById('otp2');
+        const otp3 = document.getElementById('otp3');
+        const otp4 = document.getElementById('otp4');
 
-}
+        otp1.onpaste = e => e.preventDefault();
+        otp2.onpaste = e => e.preventDefault();
+        otp3.onpaste = e => e.preventDefault();
+        otp4.onpaste = e => e.preventDefault();
+    }
     function setcook(){
 
         var otp1 = $('#otp1').val()
@@ -355,51 +349,46 @@ window.onload = () => {
         
       
 
-                            if ( $("#remember").prop("checked") ) {
-
+        if ( $("#remember").prop("checked") ) {                                                                    
                                                                     
-                                                                    
-                                                                    $.ajax({
-                                                                        type    : "post",
-                                                                        url     : "/cookies_handler_encript",
-                                                                        data    : {otp1,otp2,otp3,otp4},
-                                                                        success : function(data){
+            $.ajax({
+                type    : "post",
+                url     : "/cookies_handler_encript",
+                data    : {otp1,otp2,otp3,otp4},
+                success : function(data){
 
-                                                                                        // set cookies to expire in 14 days
-                                                                                $.cookie('otp1', data.otp1, { expires: 14 });
-                                                                                $.cookie('otp2', data.otp2, { expires: 14 });
-                                                                                $.cookie('otp3', data.otp3, { expires: 14 });
-                                                                                $.cookie('otp4', data.otp4, { expires: 14 });
-                                                                                // $.cookie('password', password, { expires: 14 });
-                                                                                $.cookie('remember', true, { expires: 14 });
-                                                                        }
-                                                                    })
-                                                            
-                                                                   
-                                } else {
-
-                                                                    // reset cookies
-                                                                    // alert(" else")
-                                                                    $.cookie('otp1', otp1, { expires: 14 });
-                                                                    $.cookie('otp2', otp2, { expires: 14 });
-                                                                    $.cookie('otp3', otp3, { expires: 14 });
-                                                                    $.cookie('otp4', otp4, { expires: 14 });
-                                                                    $.cookie('remember', null);
-
-                                }
+                                // set cookies to expire in 14 days
+                        $.cookie('otp1', data.otp1, { expires: 14 });
+                        $.cookie('otp2', data.otp2, { expires: 14 });
+                        $.cookie('otp3', data.otp3, { expires: 14 });
+                        $.cookie('otp4', data.otp4, { expires: 14 });
+                        // $.cookie('password', password, { expires: 14 });
+                        $.cookie('remember', true, { expires: 14 });
+                }
+            })                                                                                                           
+        } 
+        else {
+            // reset cookies
+            // alert(" else")
+            $.cookie('otp1', otp1, { expires: 14 });
+            $.cookie('otp2', otp2, { expires: 14 });
+            $.cookie('otp3', otp3, { expires: 14 });
+            $.cookie('otp4', otp4, { expires: 14 });
+            $.cookie('remember', null);
+        }
     }
 
     //$('.use-keyboard-input').onkey
 
-$(document).ready(function(){
-//alert("data"); 
+    $(document).ready(function(){
+    //alert("data"); 
 
-    // $(".use-keyboard-input" ).keyup(function() {
-    //      alert( "Handler for .keyup() called." );
-    // });
+        // $(".use-keyboard-input" ).keyup(function() {
+        //      alert( "Handler for .keyup() called." );
+        // });
 
 
-});
+    });
 
     // $(".use-keyboard-input" ).keyup(function() {
     //      alert( "Handler for .keyup() called." );

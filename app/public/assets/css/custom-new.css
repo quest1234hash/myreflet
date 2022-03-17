@@ -286,11 +286,12 @@ overflow: hidden;
 padding: 40px 20px 10px;
 }
 .right-side-login .first-line {
-  max-width: 260px;
+  max-width:85%;
   margin: 0 auto;
   text-align: center;
   color: #274794;
   font-weight: 500;
+  font-size: 30px;
 }
 .social-btns a i{
 font-size: 24px;

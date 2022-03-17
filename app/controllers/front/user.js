@@ -43,172 +43,172 @@ var formatted       = dt.format('Y-m-d H:M:S');
 
 
 /**signup Get Method start**/
-  exports.signup = (req,res,next )=> {
+exports.signup = (req,res,next) => {
 
-    success_msg = req.flash('success_msg');
-    err_msg     = req.flash('err_msg');
-        
-      db.query(' SELECT * FROM `tbl_countries` WHERE status="active" ORDER BY `country_id` ASC',{type:db.  QueryTypes.SELECT})
-      .then(countryData=>{
+  success_msg = req.flash('success_msg');
+  err_msg     = req.flash('err_msg');
+      
+  db.query(' SELECT * FROM `tbl_countries` WHERE status="active" ORDER BY `country_id` ASC',{type:db.  QueryTypes.SELECT})
+  .then(countryData => {
 
-          db.query('SELECT * FROM `tbl_country_codes` ORDER BY `iso` ASC',{type:db.QueryTypes.SELECT})
-          .then(countryCode=>{
-           var isShowCity='false';
-                          res.render('front/register',{
-                                                        success_msg,
-                                                        err_msg,
-                                                        countryData,countryCode,
-                                                        isShowCity
-                                                      });
-          })
-      })
-  }
+    db.query('SELECT * FROM `tbl_country_codes` ORDER BY `iso` ASC',{type:db.QueryTypes.SELECT})
+    .then(countryCode => {
+      var isShowCity='false';
+      res.render('front/register',{
+        success_msg,
+        err_msg,
+        countryData,countryCode,
+        isShowCity
+      });
+    })
+  })
+} 
 /**signup Get Method End**/
 
 /**submit_register Post Method start**/
-exports.submit_register = (req,res,next )=> {
-console.log("Hello");
-    success_msg         = req.flash('success_msg');
-    err_msg             = req.flash('err_msg');
-    var full_name       = encrypt(req.body.full_name);
-    var email           = encrypt(req.body.email);
-    var dob             = encrypt(req.body.dob);
-    var country=req.body.place_of_birth;
-  var city=req.body.city;
-  var place_of_birth=city+","+country;
-  place_of_birth=encrypt(place_of_birth);
+exports.submit_register = (req,res,next) => {
+  console.log("Hello");
+  success_msg         = req.flash('success_msg');
+  err_msg             = req.flash('err_msg');
+  var full_name       = encrypt(req.body.full_name);
+  var email           = encrypt(req.body.email);
+  var dob             = encrypt(req.body.dob);
+  var country = req.body.place_of_birth;
+  var city = req.body.city;
+  var place_of_birth = city + "," + country;
+  place_of_birth = encrypt(place_of_birth);
   //  var place_of_birth  = encrypt(req.body.place_of_birth);
-    var country_code_select = req.body.country_code_select;
-    var mobile          = encrypt(req.body.mobile);
-    var last_name       = encrypt(req.body.last_name);
-    var now             = new Date();
-    now.setMinutes(now.getMinutes() + 05); // timestamp
-    now = new Date(now); // Date object
-     var otp_expire =now
-    var otp = encrypt(generateOTP());
-    function generateOTP() { 
-         
-        // Declare a digits variable  
-        // which stores all digits 
-        var digits = '0123456789'; 
-        let OTP = ''; 
-        for (let i = 0; i < 4; i++ ) { 
-            OTP += digits[Math.floor(Math.random() * 10)]; 
-        } 
-        console.log("OTPPPPPPPPPPPPPP",OTP);
-        return OTP; 
-     } 
-    //  let test_pass = Buffer.from(req.body.password, 'base64').toString('ascii')
-    //  var mystr = crypto.createHash('sha256').update(test_pass).digest('hex');
-//generate randome client salt
+  var country_code_select = req.body.country_code_select;
+  var mobile          = encrypt(req.body.mobile);
+  var last_name       = encrypt(req.body.last_name);
+  var now             = new Date();
+  now.setMinutes(now.getMinutes() + 05); // timestamp
+  now = new Date(now); // Date object
+  var otp_expire = now
+  var otp = encrypt(generateOTP());
+  function generateOTP() {         
+    // Declare a digits variable  
+    // which stores all digits 
+    var digits = '0123456789'; 
+    let OTP = ''; 
+    for (let i = 0; i < 4; i++ ) { 
+        OTP += digits[Math.floor(Math.random() * 10)]; 
+    } 
+    console.log("OTPPPPPPPPPPPPPP",OTP);
+    return OTP; 
+  } 
+  //  let test_pass = Buffer.from(req.body.password, 'base64').toString('ascii')
+  //  var mystr = crypto.createHash('sha256').update(test_pass).digest('hex');
+  //generate randome client salt
 
-            let randomeSalt=crypto.randomBytes(32).toString('base64');
+  let randomeSalt=crypto.randomBytes(32).toString('base64');
 
-    UserModel.findOne({ where: {email: email} }).then(function(userDataResult) {
-        if(userDataResult){
-               req.flash('err_msg', 'User email is already registered.')
-               res.redirect('/signup');
-        }else{
-            UserModel.findOne({ where: {mobile_number:mobile} }).then(function(userResult){
-                  if(userResult){
-                               req.flash('err_msg', 'User mobile number is already registered.')
-                               res.redirect('/signup');
-                }else{
-                    var steps=parseInt("1")
-                        UserModel.create({full_name:full_name,last_name:last_name,email:email,country_code_id:country_code_select,mobile_number:mobile,birthplace:place_of_birth,dob:dob,otp,otp_expire,complete_steps:steps,client_salt:randomeSalt}).then(result=>{
-            
-                              var smtpTransport = nodemailer.createTransport({
-                                service: 'gmail',
-                                auth: {
-                                  user: MAIL_SEND_ID,
-                                  pass: PASS_OF_MAIL 
-                                }
-                              });
-                              const mailOptions = {
-                                to:decrypt(email),
-                                from: 'questtestmail@gmail.com',
-                                subject: "MyReflet OTP for registration.",
-                          
-                                html: `<!DOCTYPE html>
-                                <html>
-                                  <head>
-                                    <title>My Reflet</title>
-                                    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-                                     <style>
-                                    @media only screen and (max-width: 600px) {
-                                    .inner-body {
-                                    width: 100% !important;
-                                    }
-                                    .footer {
-                                    width: 100% !important;
-                                    }
-                                    }
-                                    @media only screen and (max-width: 500px) {
-                                    .button {
-                                    width: 100% !important;
-                                    }
-                                    }
-                                    </style> 
-                                  </head>
-                                  <body>
-                                    <div style="border:1px solid #000; width: 900px; max-width: 100%;margin: 30px auto;font-family: sans-serif;">
-                                      <div style="background-color: #88beda;padding: 10px 30px 5px;">
-                                        <img src="https://${req.headers.host}/assets/images/logo-white.png" style="width: 120px;">
-                                      </div>
-                                      <div style="padding: 30px;line-height: 32px; text-align: justify;">
-                                        <h4 style="font-size: 20px; margin-bottom: 0;">Dear  ${decrypt(full_name)}</h4>
-                                        <p>Your OTP for MyReflet registration is ${decrypt(otp)}</p>
-                                        <h4 style="margin: 0;line-height: 20px; margin-top: 50px;">Thanks & Regards</h4>
-                                        <h4 style="margin: 10px 0 20px;line-height: 20px;">My Reflet</h4>
-                                
-                                       
-                                      </div>
-                                       <div style="background-color:  #88beda; color: #fff; padding: 20px 30px;">
-                                         &copy; Copyright 2020 - My Reflet. All rights reserved.
-                                        </div>
-                                    </div>
-                                  </body>
-                                </html>  
-                                `
-                              };
-                              smtpTransport.sendMail(mailOptions, function (err) {
-                               
-                              });
-                            UserModel.findOne({ where: {email: email,mobile_number:mobile} }).then(userdata=>{
-                               
-                                req.flash('success_msg', 'OTP has been sent to your email please check.')
-                                res.redirect(`/top_verification?userid=${userdata.reg_user_id}`)
-                            }).catch(err=>console.log("errrrr 2nd findOne",err))
-                        }).catch(err=>{
-                            console.log("update faunction err ",err)
-                        })
-                    }
-                  
-            }).catch(err=>{
-                console.log("errrrr 2st findOne",err)
-                
-            });
+  UserModel.findOne({ where: {email: email} })
+  .then(function(userDataResult) {
+    if(userDataResult){
+      req.flash('err_msg', 'User email is already registered.')
+      res.redirect('/signup');
+    }
+    else{
+      UserModel.findOne({ where: {mobile_number:mobile} })
+      .then(function(userResult){
+        if(userResult){
+          req.flash('err_msg', 'User mobile number is already registered.')
+          res.redirect('/signup');
         }
-       
-	}).catch(err=>{
-        console.log("errrrr 1st findOne",err)
-    });
+        else{
+          var steps=parseInt("1")
+          UserModel.create({full_name:full_name,last_name:last_name,email:email,country_code_id:country_code_select,mobile_number:mobile,birthplace:place_of_birth,dob:dob,otp,otp_expire,complete_steps:steps,client_salt:randomeSalt})
+          .then(result=>{
+          
+            var smtpTransport = nodemailer.createTransport({
+              service: 'gmail',
+              auth: {
+                user: MAIL_SEND_ID,
+                pass: PASS_OF_MAIL 
+              }
+            });
+            const mailOptions = {
+              to:decrypt(email),
+              from: 'questtestmail@gmail.com',
+              subject: "MyReflet OTP for registration.",
+        
+              html: `<!DOCTYPE html>
+              <html>
+                <head>
+                  <title>My Reflet</title>
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                    <style>
+                  @media only screen and (max-width: 600px) {
+                  .inner-body {
+                  width: 100% !important;
+                  }
+                  .footer {
+                  width: 100% !important;
+                  }
+                  }
+                  @media only screen and (max-width: 500px) {
+                  .button {
+                  width: 100% !important;
+                  }
+                  }
+                  </style> 
+                </head>
+                <body>
+                  <div style="border:1px solid #000; width: 900px; max-width: 100%;margin: 30px auto;font-family: sans-serif;">
+                    <div style="background-color: #88beda;padding: 10px 30px 5px;">
+                      <img src="https://${req.headers.host}/assets/images/logo-white.png" style="width: 120px;">
+                    </div>
+                    <div style="padding: 30px;line-height: 32px; text-align: justify;">
+                      <h4 style="font-size: 20px; margin-bottom: 0;">Dear  ${decrypt(full_name)}</h4>
+                      <p>Your OTP for MyReflet registration is ${decrypt(otp)}</p>
+                      <h4 style="margin: 0;line-height: 20px; margin-top: 50px;">Thanks & Regards</h4>
+                      <h4 style="margin: 10px 0 20px;line-height: 20px;">My Reflet</h4>
+              
+                      
+                    </div>
+                      <div style="background-color:  #88beda; color: #fff; padding: 20px 30px;">
+                        &copy; Copyright 2020 - My Reflet. All rights reserved.
+                      </div>
+                  </div>
+                </body>
+              </html>  
+              `
+            };
+            smtpTransport.sendMail(mailOptions, function (err) {});
+            UserModel.findOne({ where: {email: email,mobile_number:mobile} })
+            .then(userdata => {                                
+              req.flash('success_msg', 'OTP has been sent to your email please check.')
+              res.redirect(`/top_verification?userid=${userdata.reg_user_id}`)
+            })
+            .catch(err=>console.log("errrrr 2nd findOne",err))
+          })
+          .catch(err=>{
+            console.log("update faunction err ",err)
+          })
+        }      
+      })
+      .catch(err=>{
+        console.log("errrrr 2st findOne",err)     
+      });
+    } 
+  })
+  .catch(err=>{
+      console.log("errrrr 1st findOne",err)
+  });
 }
 /**submit_register Post Method End**/
 
 /**top_verification Get Method start**/
-exports.otpVerification = (req,res,next )=> {
+exports.otpVerification = (req,res,next) => {
+  success_msg  = req.flash('success_msg');
+  err_msg      = req.flash('err_msg');
 
-    success_msg  = req.flash('success_msg');
-    err_msg      = req.flash('err_msg');
-
-           res.render('front/otp-for-verify',{
-                success_msg,
-                err_msg,
-            });
-
-  
+  res.render('front/otp-for-verify',{
+    success_msg,
+    err_msg,
+  });  
 }
 /**top_verification Get Method End**/
 exports.testSection=function(req,res){
@@ -935,216 +935,222 @@ InvalidLoginAttempt = (email,req) => {
  }
 
 /**submit_login Post Method Start**/
-exports.submitLogin = async (req,res,next )=> {  // var mykey = crypto.createCipher('aes-128-cbc', 'mypass');
-// var pass = mykey.update(req.body.password, 'utf8', 'hex')
-// pass += mykey.final('hex');
+exports.submitLogin = async (req,res,next) => {
+  // var mykey = crypto.createCipher('aes-128-cbc', 'mypass');
+  // var pass = mykey.update(req.body.password, 'utf8', 'hex')
+  // pass += mykey.final('hex');
 
-    success_msg = req.flash('success_msg');
-    err_msg = req.flash('err_msg');
+  success_msg = req.flash('success_msg');
+  err_msg = req.flash('err_msg');
 
-  console.log("login password.................befor.....",req.body.password)
-  console.log("login email.................befor.....",req.body.email)
-    var email = encrypt((req.body.email).trim());
-    console.log("entered emaiiiiiiiiiiii",email);
+  // console.log("login password.................befor.....",req.body.password)
+  // console.log("login email.................befor.....",req.body.email)
+  var email = encrypt((req.body.email).trim());
+  // console.log("entered emaiiiiiiiiiiii",email);
 
-    let isPresent=await UserModel.findOne({where:{email:email}});
+  let isPresent = await UserModel.findOne({where:{email:email}});
   let client_salt;
   let server_salt;
   if(isPresent){
-    client_salt=isPresent.client_salt;
-    server_salt=decrypt(isPresent.server_salt);
+    client_salt = isPresent.client_salt;
+    server_salt = decrypt(isPresent.server_salt);
   }
- let pass= crypto.pbkdf2Sync(req.body.password, client_salt,  1000, 128, 'SHA512').toString(`hex`);
- pass=pass+server_salt
- pass=crypto.createHash('sha256').update(pass).digest('hex');
- pass=encrypt1(pass);
- pass=encrypt(pass);
+  let pass = crypto.pbkdf2Sync(req.body.password, client_salt,  1000, 128, 'SHA512').toString(`hex`);
+  pass = pass + server_salt
+  pass = crypto.createHash('sha256').update(pass).digest('hex');
+  pass = encrypt1(pass);
+  pass = encrypt(pass);
 
-//console.log("enteredddddddddddd password::::",pass);
-    var dt = dateTime.create();
-    var login_time = dt.format('Y-m-d H:M:S');
-    var blocked_date = dt.format('Y-m-d H:M:S');
-    var Ip_addr= req.body.Ip_add
-    var steps=parseInt("6");
-        let userD  =await UserModel.findOne({where:{email:email}});
-        console.log("User infooooooooooooooooooooo:",userD);
-    console.log("emailemailemailemail : ",email)
+  //console.log("enteredddddddddddd password::::",pass);
+  var dt = dateTime.create();
+  var login_time = dt.format('Y-m-d H:M:S');
+  var blocked_date = dt.format('Y-m-d H:M:S');
+  var Ip_addr = req.body.Ip_add
+  var steps = parseInt("6");
+  let userD  = await UserModel.findOne({where:{email:email}});
+  // console.log("User infooooooooooooooooooooo:",userD);
+  // console.log("emailemailemailemail : ",email)
 
-        UserModel.findOne({ where: {email: email,password:pass} }).then(async function(userDataResult) {
-   
+  UserModel.findOne({ where: {email: email,password:pass} })
+  .then(async function(userDataResult) {
+    if(userDataResult == null){                     
+
+      await UserModel.findOne({ where: {email: email} })
+      .then(async(tryLogidata)=> {
+
+        if(tryLogidata!=null){
+
+          var creatObj= {
+            reg_user_id:tryLogidata.reg_user_id,
+            login_time,
+            ip_address:Ip_addr,
+            deleted:"1",
+            status :"inactive"
+          }
+
+          await LogDetailsModel.create(creatObj)
+          .then(async(data)=>{
+
+            await LogDetailsModel.findAll({ where: {reg_user_id: tryLogidata.reg_user_id,deleted:"1"} })
+            .then(async(invalidUserLogindata)=>{
+              
+                if(invalidUserLogindata.length>4){
+
+                  console.log("inside the if ,user blocked")
+
+                  await UserModel.update({status:"block",block_date:blocked_date},{ where: {reg_user_id: invalidUserLogindata[0].reg_user_id} })
+                  .then(async(status_update)=>{
+
+                    console.log("status update status_update",status_update,invalidUserLogindata.length)
+                    req.flash('err_msg', 'You are block for 48 hours.')
+                    var full_name,email;
                     
-          if(userDataResult==null){
-                      
+                    await  UserModel.findOne({ where: { reg_user_id:invalidUserLogindata[0].reg_user_id }})
+                    .then(userdata=>{
+                  
+                      full_name=userdata.full_name
+                      email=userdata.email
 
-                  await UserModel.findOne({ where: {email: email} }).then(async(tryLogidata)=> {
+                      // console.log("emailemailemailemailemail : ",email)
 
-                        if(tryLogidata!=null){
-
-                                        var creatObj= {
-                                                        reg_user_id:tryLogidata.reg_user_id,
-                                                        login_time,
-                                                        ip_address:Ip_addr,
-                                                        deleted:"1",
-                                                        status :"inactive"
-                                                      }
-
-                          await  LogDetailsModel.create(creatObj).then(async(data)=>{
-
-                               await LogDetailsModel.findAll({ where: {reg_user_id: tryLogidata.reg_user_id,deleted:"1"} }).then(async(invalidUserLogindata)=>{
-                                  
-                                   if(invalidUserLogindata.length>4){
-
-                                    console.log("inside the if ,user blocked")
-
-                                       await UserModel.update({status:"block",block_date:blocked_date},{ where: {reg_user_id: invalidUserLogindata[0].reg_user_id} }).then(async(status_update)=>{
-
-                                            console.log("status update status_update",status_update,invalidUserLogindata.length)
-                                            req.flash('err_msg', 'You are block for 48 hours.')
-                                            var full_name,email;
-                                          
-                                                await  UserModel.findOne({ where: { reg_user_id:invalidUserLogindata[0].reg_user_id }}).then(userdata=>{
-                                        
-                                                    full_name=userdata.full_name
-                                                    email=userdata.email
-
-                                                    console.log("emailemailemailemailemail : ",email)
-
-                                                    var smtpTransport = nodemailer.createTransport({
-                                                        service: 'gmail',
-                                                        auth: {
-                                                          user: MAIL_SEND_ID,
-                                                          pass: PASS_OF_MAIL 
-                                                        }
-                                                      });
-                                                      const mailOptions = {
-                                                        to: decrypt(email),
-                                                        from: 'questtestmail@gmail.com',
-                                                        subject: "My Reflet Account Blocked !!.",
-                                                  
-                                                        html: `<!DOCTYPE html>
-                                                        <html>
-                                                          <head>
-                                                            <title>My Reflet</title>
-                                                            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                                                            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-                                                             <style>
-                                                            @media only screen and (max-width: 600px) {
-                                                            .inner-body {
-                                                            width: 100% !important;
-                                                            }
-                                                            .footer {
-                                                            width: 100% !important;
-                                                            }
-                                                            }
-                                                            @media only screen and (max-width: 500px) {
-                                                            .button {
-                                                            width: 100% !important;
-                                                            }
-                                                            }
-                                                            </style> 
-                                                          </head>
-                                                          <body>
-                                                            <div style="border:1px solid #000; width: 900px; max-width: 100%;margin: 30px auto;font-family: sans-serif;">
-                                                              <div style="background-color:#88beda;padding: 10px 30px 5px;">
-                                                                <img src="https://${req.headers.host}/admin-assets/images/logo-white.png" style="width: 120px;">
-                                                              </div>
-                                                              <div style="padding: 30px;line-height: 32px; text-align: justify;">
-                                                                <h4 style="font-size: 20px; margin-bottom: 0;">Dear  ${decrypt(full_name)}</h4>
-                                                                <p>Alert!My Reflect Team block your account.</p>
-                                                                <p>Please contact to administrator for more details.</p>
-                                                                <h4 style="margin: 0;line-height: 20px; margin-top: 50px;">Thanks & Regards</h4>
-                                                                <h4 style="margin: 10px 0 20px;line-height: 20px;">My Reflet</h4>
-                                                        
-                                                               
-                                                              </div>
-                                                               <div style="background-color: #88beda; color: #fff; padding: 20px 30px;">
-                                                                 &copy; Copyright 2020 - My Reflet. All rights reserved.
-                                                                </div>
-                                                            </div>
-                                                          </body>
-                                                        </html>  
-                                                        `
-                                                      };
-                                                      smtpTransport.sendMail(mailOptions, function (err) {
-                                                       
-                                                      });
-                                                })
-                                            
-                                            res.redirect("/login")
-                                        }).catch(err=>console.log("status update err",err))
-                                    }else{
-
-                                      InvalidLoginAttempt(email,req)
-                                        req.flash('err_msg', 'You entered wrong credentials.')
-                                        res.redirect("/login")
-                                    }
-                                        //    console.log("invalidUserLogindata",invalidUserLogindata)
-                                }).catch(err=>console.log("errr",err))
-
-        
-                            }).catch(err=>console.log("logomodel err....",err))
-                        }else{
-                            req.flash('err_msg', 'You entered wrong credentials.')
-                                        res.redirect("/login")
+                      var smtpTransport = nodemailer.createTransport({
+                        service: 'gmail',
+                        auth: {
+                          user: MAIL_SEND_ID,
+                          pass: PASS_OF_MAIL 
                         }
-                       
-                    }).catch(err=>console.log("trylogin err..",err))
+                      });
+                      const mailOptions = {
+                        to: decrypt(email),
+                        from: 'questtestmail@gmail.com',
+                        subject: "My Reflet Account Blocked !!.",
+                  
+                        html: `<!DOCTYPE html>
+                        <html>
+                          <head>
+                            <title>My Reflet</title>
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                              <style>
+                            @media only screen and (max-width: 600px) {
+                            .inner-body {
+                            width: 100% !important;
+                            }
+                            .footer {
+                            width: 100% !important;
+                            }
+                            }
+                            @media only screen and (max-width: 500px) {
+                            .button {
+                            width: 100% !important;
+                            }
+                            }
+                            </style> 
+                          </head>
+                          <body>
+                            <div style="border:1px solid #000; width: 900px; max-width: 100%;margin: 30px auto;font-family: sans-serif;">
+                              <div style="background-color:#88beda;padding: 10px 30px 5px;">
+                                <img src="https://${req.headers.host}/admin-assets/images/logo-white.png" style="width: 120px;">
+                              </div>
+                              <div style="padding: 30px;line-height: 32px; text-align: justify;">
+                                <h4 style="font-size: 20px; margin-bottom: 0;">Dear  ${decrypt(full_name)}</h4>
+                                <p>Alert!My Reflect Team block your account.</p>
+                                <p>Please contact to administrator for more details.</p>
+                                <h4 style="margin: 0;line-height: 20px; margin-top: 50px;">Thanks & Regards</h4>
+                                <h4 style="margin: 10px 0 20px;line-height: 20px;">My Reflet</h4>
+                        
+                                
+                              </div>
+                                <div style="background-color: #88beda; color: #fff; padding: 20px 30px;">
+                                  &copy; Copyright 2020 - My Reflet. All rights reserved.
+                                </div>
+                            </div>
+                          </body>
+                        </html>  
+                        `
+                      };
+                      smtpTransport.sendMail(mailOptions, function (err) {
+                          
+                      });
+                    })
+                      
+                    res.redirect("/login")
+                  })
+                  .catch(err=>console.log("status update err",err))
+                }
+                else{
+                  InvalidLoginAttempt(email,req)
+                  req.flash('err_msg', 'You entered wrong credentials.')
+                  res.redirect("/login")
+                }
+                //    console.log("invalidUserLogindata",invalidUserLogindata)
+            })
+            .catch(err=>console.log("errr",err))
+
+
+          })
+          .catch(err=>console.log("logomodel err....",err))
+        }
+        else{
+          req.flash('err_msg', 'You entered wrong credentials.')
+          res.redirect("/login")
+        }
+          
+      })
+      .catch(err=>console.log("trylogin err..",err))
                     
                                
-                    }else{
+    }
+    else{
 
-                      if(userDataResult.status=="inactive"){
-                                req.flash('err_msg', 'Your ID is not active, Please accept invitation or contact to admin.')
-                                res.redirect("/login")
-
-                      }else{
-
-                        if(userDataResult.status=="block"){
-                          req.flash('err_msg', 'You are blocked for 48 hours, After 48 hours you will be able to login.')
-                              res.redirect("/login")
-                      }else{
-                         await   LogDetailsModel.update({status:"active", deleted:"0"},{where:{ reg_user_id: userDataResult.reg_user_id }}).then( async(result) => {
-                             console.log("unlock periveus entry done")
-                         })
-
-
-                        //  console.log("pic",userDataResult.profile_pic);
-                        let text_img;
-                         /**Imgae for ejs start**/
-                         if(userDataResult.profile_img_name!=null||userDataResult.profile_img_name!=''){
-                        //  let buff= new Buffer(userDataResult.profile_pic).toString('utf8');
-                         text_img = userDataResult.profile_img_name;
-                       }else{
-                       text_img=""
-
-                       }
-                          
-                         /**Image for ejs end**/
-console.log("user nameeeeeeeeeeeeeeeeeeee",userDataResult.full_name);
-              req.session.name = userDataResult.full_name;
-              req.session.profile_pic=text_img;
-              req.session.email= email;
-              req.session.user_id   = userDataResult.reg_user_id;
-              if(userDataResult.type=="validatore"){
-                req.session.user_type = "validatore";
-              }else{
-                req.session.user_type = "client";
-              }
+      if(userDataResult.status == "inactive"){
+        req.flash('err_msg', 'Your ID is not active, Please accept invitation or contact to admin.')
+        res.redirect("/login")
+      }
+      else{
+        if(userDataResult.status == "block"){
+          req.flash('err_msg', 'You are blocked for 48 hours, After 48 hours you will be able to login.')
+          res.redirect("/login")
+        }
+        else{
+          await LogDetailsModel.update({status:"active", deleted:"0"},{where:{ reg_user_id: userDataResult.reg_user_id }})
+          .then( async(result) => {
+              // console.log("unlock periveus entry done")
+          })
 
 
-                         // req.app.locals.userDetail=userDataResult.reg_user_id;
-                          //successfully login
-                          res.redirect('/otp_veri_aft_login');
-                      }
+          //  console.log("pic",userDataResult.profile_pic);
+          let text_img;
+          /**Imgae for ejs start**/
+          if(userDataResult.profile_img_name!=null||userDataResult.profile_img_name!=''){
+          //  let buff= new Buffer(userDataResult.profile_pic).toString('utf8');
+            text_img = userDataResult.profile_img_name;
+          }
+          else{
+            text_img = ""
+          }
+          
+          /**Image for ejs end**/
+          // console.log("user nameeeeeeeeeeeeeeeeeeee",userDataResult.full_name);
+          req.session.name = userDataResult.full_name;
+          req.session.profile_pic = text_img;
+          req.session.email = email;
+          req.session.user_id = userDataResult.reg_user_id;
+          if(userDataResult.type == "validatore"){
+            req.session.user_type = "validatore";
+          }
+          else{
+            req.session.user_type = "client";
+          }
 
-                      }
 
-                      
-                    }
-       
-    })
-  
-
+          // req.app.locals.userDetail=userDataResult.reg_user_id;
+          //successfully login
+          res.redirect('/otp_veri_aft_login');
+        }
+      } 
+    }
+  })
 }
 /**submit_login Post Method End**/
 
@@ -1256,7 +1262,7 @@ exports.submitForgetPassword = (req,res,next )=> {
 
             UserModel.update(updateValues,{where:{ reg_user_id: activeUser.reg_user_id } }).then(async (result) => {
             
-              console.log("result : ",result)
+              console.log("result : ",reult)
               var smtpTransport = nodemailer.createTransport({
                   service: 'gmail',
                   auth: {
@@ -2468,8 +2474,8 @@ function generateOTP() {
     return OTP; 
  } 
  var ip;
- if (req.headers['x-forwarded-for']) {
-     ip = req.headers['x-forwarded-for'].split(",")[0];
+ if (req.headers['X-Forwarded-For']) {
+     ip = req.headers['X-Forwarded-For'].split(",")[0];
  } else if (req.connection && req.connection.remoteAddress) {
      ip = req.connection.remoteAddress;
  } else {
@@ -2713,8 +2719,8 @@ exports.submitSetPinAfterLogin = (req,res,next )=> {
   var formatted = dt.format('Y-m-d H:M:S');
   
   var ip;
-  if (req.headers['x-forwarded-for']) {
-      ip = req.headers['x-forwarded-for'].split(",")[0];
+  if (req.headers['X-Forwarded-For']) {
+      ip = req.headers['X-Forwarded-For'].split(",")[0];
   } else if (req.connection && req.connection.remoteAddress) {
       ip = req.connection.remoteAddress;
   } else {
