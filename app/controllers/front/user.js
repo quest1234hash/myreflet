@@ -2756,7 +2756,7 @@ UserModel.findOne({ where: { reg_user_id: userID,deleted:"0",status:"active"}}).
                      
                       console.log(" donedone :  ",wrong_otp_count)
 
-                    req.flash('err_msg', 'You entered wrong OTP.')
+                    req.flash('err_msg', 'You entered wrong PIN.')
                     res.redirect(`/set_pin_aft_lgn/?userid=${userID}`)
                   }).catch(err=>{
                            console.log(err)

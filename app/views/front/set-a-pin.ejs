@@ -47,7 +47,7 @@
                               <div class="form-group">
                                 <label>Confirm PIN<span style="color: red;">*</span></label>
                                 <div class="otp-box digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
-                                    <input type="password" id="otp6" name="otp5" class="form-control text-center use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp7" onkeypress="return isNumber(event)" tabindex="5"autocomplete="off">
+                                    <input type="password" id="otp6" name="otp5" class="form-control text-center use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp7" onkeypress="return isNumber(event)" tabindex="5" autocomplete="off">
                                     <input type="password" id="otp7" name="otp6"  class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp8" data-previous="otp6" onkeypress="return isNumber(event)" tabindex="6"autocomplete="off" >
                                     <input type="password" id="otp8" name="otp7"  class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp9" data-previous="otp7" onkeypress="return isNumber(event)" tabindex="7"autocomplete="off">
                                     <input type="password" id="otp9" name="otp8" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-previous="otp8" onkeypress="return isNumber(event)" tabindex="8"autocomplete="off">
@@ -105,6 +105,30 @@
         <script type="text/javascript" src="/assets/js/custom.js"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+
+
+
+        <script>
+            $(document).ready(function(){
+
+                document.addEventListener('click',function(e){
+                    var cl = e.target.className;
+                    console.log(cl);
+                    console.log("keyboard: " + cl.search('keyboard'));
+                    console.log("keyboard__keys: " + cl.search('keyboard__keys'));
+                    console.log("form-cotnrol: " + cl.search('form-control'));
+
+                    if((cl.search("keyboard")!=-1) || (cl.search("keyboard__keys")!=-1)||(cl.search("form-control")!=-1)||(cl.search("material-icons")!=-1)){
+                        console.log('cannot hide');
+                    }
+                    else{
+                        console.log('can hide');
+                        var keypad = document.getElementsByClassName('keyboard')[0];
+                        keypad.classList.add('keyboard--hidden');
+                    }
+                });
+            });
+        </script>
 
         <script type="text/javascript">
           $(document).ready(function(){

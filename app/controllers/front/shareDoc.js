@@ -51,22 +51,15 @@ var contractABI = [{ "constant": true, "inputs": [{ "name": "", "type": "uint256
         
 const decoder = new InputDataDecoder(contractABI);
 
-exports.all_reflect_list =  (req,res,next)=>{
-
-         var reg_user_id =  req.session.user_id 
-
-    db
-    .query(`SELECT * FROM tbl_wallet_reflectid_rels WHERE tbl_wallet_reflectid_rels.user_as="client" AND tbl_wallet_reflectid_rels.deleted="0" and reg_user_id<>${reg_user_id}`,{type:db.QueryTypes.SELECT})
-
-    .then(async(ver_result)=>{
-
+exports.all_reflect_list = (req,res,next) => {
+    var reg_user_id =  req.session.user_id 
+    db.query(`SELECT * FROM tbl_wallet_reflectid_rels WHERE tbl_wallet_reflectid_rels.user_as="client" AND tbl_wallet_reflectid_rels.deleted="0" and reg_user_id<>${reg_user_id}`,{type:db.QueryTypes.SELECT})
+    .then(async(ver_result) => {
         res.render("front/myReflect/ajax_all_entity_rep_list",{reflect_list:ver_result})
-
     })
 }
 
-exports.share_certify_doc =async (req,res,next)=>{
-
+exports.share_certify_doc = async (req,res,next) => {
     var share_doc_data  = JSON.parse(req.body.share_doc_data)
     var reflect_id      = req.body.reflect_id
     var my_reflect_id   = req.body.my_reflect_id
@@ -78,48 +71,42 @@ exports.share_certify_doc =async (req,res,next)=>{
     console.log(my_reflect_id)
     console.log(reg_user_id)
 
-    for(i=0; i<share_doc_data.length; i++){
-
+    for(i=0; i<share_doc_data.length; i++) {
         console.log("share_doc_data : ",share_doc_data)
 
         tbl_shared_certified_doc.create({
-                                            sender_my_reflect_id     :  my_reflect_id,
-                                            receiver_my_reflect_id   :  reflect_id,
-                                            sender_reg_user_id       :  reg_user_id,
-                                            request_id               :  share_doc_data[i].request_id,
-                                            request_doc_id           :  share_doc_data[i].request_doc_id,
-                                            descriptions             :  descriptions
+            sender_my_reflect_id     :  my_reflect_id,
+            receiver_my_reflect_id   :  reflect_id,
+            sender_reg_user_id       :  reg_user_id,
+            request_id               :  share_doc_data[i].request_id,
+            request_doc_id           :  share_doc_data[i].request_doc_id,
+            descriptions             :  descriptions
         })
-        .then(async data=>{
-           
-          
+        .then(async data => {          
             console.log("share_doc_data : ",share_doc_data.length," i val : ",i)
-
-                if( i==(share_doc_data.length)){
-
-                   
-                }
-    
+            if( i==(share_doc_data.length)){}    
         })
-        .catch(err=>console.log(err))
-
+        .catch(err => console.log(err))
     }
-    await MyReflectIdModel.findOne({where:{reflect_id:reflect_id }}).then(async(myRefdata)=>{
+    await MyReflectIdModel.findOne({where:{reflect_id:reflect_id }})
+    .then(async(myRefdata) => {
 
-        await   UserModel.findOne({where:{reg_user_id:reg_user_id}}).then(async user_data => {
+        await UserModel.findOne({where:{reg_user_id:reg_user_id}})
+        .then(async user_data => {
 
-        var msg = ` ${decrypt(user_data.full_name)} is shared  a document for this reflet code-${myRefdata.reflect_code}.`
+            var msg = ` ${decrypt(user_data.full_name)} is shared  a document for this reflet code-${myRefdata.reflect_code}.`
 
-                    await  NotificationModel.create({
-                                            notification_msg:msg,
-                                            sender_id:reg_user_id,
-                                            receiver_id:myRefdata.reg_user_id,
-                                            notification_type:'11',
-                                            notification_date:new Date()
-                                }).then(async(notification) =>{
-                                        console.log(notification)
-                                        })
-                            })
+            await NotificationModel.create({
+                notification_msg:msg,
+                sender_id:reg_user_id,
+                receiver_id:myRefdata.reg_user_id,
+                notification_type:'11',
+                notification_date:new Date()
+            })
+            .then(async(notification) =>{
+                console.log(notification)
+            })
+        })
     })
     console.log("i ,share_doc_data.length",i,share_doc_data.length)
     res.send("success")

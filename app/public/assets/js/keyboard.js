@@ -51,11 +51,11 @@ const Keyboard = {
 
                           if(currentValue.length==1)
                           {
-                             setTimeout(function(){ $('input[tabindex='+next_index+']').focus() },1000);
+                             setTimeout(function(){ $('input[tabindex='+next_index+']').focus() },250);
                           }
                           else
                           {
-                             setTimeout(function(){ $('input[tabindex='+el_index+']').focus() },1000);
+                             setTimeout(function(){ $('input[tabindex='+el_index+']').focus() },250);
                           }
                       
                     }
@@ -161,7 +161,7 @@ const Keyboard = {
 
 
 
-                        setTimeout(function(){ alert("test data"+nexttab); },1000);
+                        setTimeout(function(){ alert("test data"+nexttab); },250);
 
                         
                     });

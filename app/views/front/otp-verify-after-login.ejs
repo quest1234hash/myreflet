@@ -75,10 +75,10 @@
 							 <div class="form-group">
 							    <label>OTP</label>
                                 <div class="otp-box digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
-                                    <input type="text" id="otp1" name="otp1" class="form-control text-center use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp2" onkeypress="return isNumber(event)" autocomplete="off">
-                                    <input type="text" id="otp2" name="otp2" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp3" data-previous="otp1" onkeypress="return isNumber(event)" autocomplete="off">
-                                    <input type="text" id="otp3" name="otp3" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp4" data-previous="otp2" onkeypress="return isNumber(event)" autocomplete="off">
-                                    <input type="text" id="otp4" name="otp4" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-previous="otp3" onkeypress="return isNumber(event)" autocomplete="off">
+                                    <input type="text" id="otp1" name="otp1" class="form-control text-center use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp2" onkeypress="return isNumber(event)" autocomplete="off" tabindex="1" />
+                                    <input type="text" id="otp2" name="otp2" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp3" data-previous="otp1" onkeypress="return isNumber(event)" autocomplete="off" tabindex="2" />
+                                    <input type="text" id="otp3" name="otp3" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-next="otp4" data-previous="otp2" onkeypress="return isNumber(event)" autocomplete="off" tabindex="3" />
+                                    <input type="text" id="otp4" name="otp4" class="form-control use-keyboard-input restrict_key" placeholder="-" maxlength="1" data-previous="otp3" onkeypress="return isNumber(event)" autocomplete="off" tabindex="4" />
                                 </div>
                                 <span id="otp_err"  style="color: red;"></span>
                        <input type="hidden"  name="user_id" id="userId">
@@ -126,7 +126,30 @@
         <script type="text/javascript" src="assets/js/custom.js"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
->
+
+
+        <script>
+            $(document).ready(function(){
+
+                document.addEventListener('click',function(e){
+                    var cl = e.target.className;
+                    console.log(cl);
+                    console.log("keyboard: " + cl.search('keyboard'));
+                    console.log("keyboard__keys: " + cl.search('keyboard__keys'));
+                    console.log("form-cotnrol: " + cl.search('form-control'));
+
+                    if((cl.search("keyboard")!=-1) || (cl.search("keyboard__keys")!=-1)||(cl.search("form-control")!=-1)||(cl.search("material-icons")!=-1)){
+                        console.log('cannot hide');
+                    }
+                    else{
+                        console.log('can hide');
+                        var keypad = document.getElementsByClassName('keyboard')[0];
+                        keypad.classList.add('keyboard--hidden');
+                    }
+                });
+            });
+        </script>
+
 <script>
    $(function(){
     $('.restrict_key').bind('keyup keydown keypress', function (evt) {

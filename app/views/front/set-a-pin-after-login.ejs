@@ -381,6 +381,23 @@
     //$('.use-keyboard-input').onkey
 
     $(document).ready(function(){
+
+        document.addEventListener('click',function(e){
+            var cl = e.target.className;
+            console.log(cl);
+            console.log("keyboard: " + cl.search('keyboard'));
+            console.log("keyboard__keys: " + cl.search('keyboard__keys'));
+            console.log("form-cotnrol: " + cl.search('form-control'));
+
+            if((cl.search("keyboard")!=-1) || (cl.search("keyboard__keys")!=-1)||(cl.search("form-control")!=-1)||(cl.search("material-icons")!=-1)){
+                console.log('cannot hide');
+            }
+            else{
+                console.log('can hide');
+                var keypad = document.getElementsByClassName('keyboard')[0];
+                keypad.classList.add('keyboard--hidden');
+            }
+        });
     //alert("data"); 
 
         // $(".use-keyboard-input" ).keyup(function() {
