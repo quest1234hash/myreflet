@@ -67,14 +67,17 @@ exports.signup = (req,res,next) => {
 
 /**submit_register Post Method start**/
 exports.submit_register = (req,res,next) => {
-  console.log("Hello");
+  // console.log("Hello");
   success_msg         = req.flash('success_msg');
   err_msg             = req.flash('err_msg');
   var full_name       = encrypt(req.body.full_name);
   var email           = encrypt(req.body.email);
   var dob             = encrypt(req.body.dob);
   var country = req.body.place_of_birth;
-  var city = req.body.city;
+  // var city = req.body.city;
+  
+  var city = req.body.place_of_city;
+  // res.end(country+", "+city);
   var place_of_birth = city + "," + country;
   place_of_birth = encrypt(place_of_birth);
   //  var place_of_birth  = encrypt(req.body.place_of_birth);
@@ -1862,24 +1865,22 @@ exports.get_change_email = (req,res,next)=>{
   // var user_id =20;
 
   
-            SecurityMasterModel.hasMany(UserSecurityModel, {foreignKey: 'question_id'})
-            UserSecurityModel.belongsTo(SecurityMasterModel, {foreignKey: 'question_id'})
-            UserSecurityModel.findAll({where:{reg_user_id:user_id},include: [SecurityMasterModel]}).then(function(users){
-                    // var question = user.tbl_security_question.dataValues.question;
+  SecurityMasterModel.hasMany(UserSecurityModel, {foreignKey: 'question_id'})
+  UserSecurityModel.belongsTo(SecurityMasterModel, {foreignKey: 'question_id'})
+  UserSecurityModel.findAll({where:{reg_user_id:user_id},include: [SecurityMasterModel]})
+  .then(function(users){
+    // var question = user.tbl_security_question.dataValues.question;
 
-                    // for(var i=0;i<users.length;i++){
-                    // console.log(users[i].tbl_security_question.dataValues.question);}
-                                          res.render('front/email_change',{
-                                              success_msg,
-                                              err_msg,
-                                              users,
-                                              session:req.session
-                                          });
-            
-              
-                })
-
-  
+    // for(var i=0;i<users.length;i++){
+    // console.log(users[i].tbl_security_question.dataValues.question);}
+    
+    res.render('front/email_change',{
+      success_msg,
+      err_msg,
+      users,
+      session:req.session
+    });        
+  })
 }
 /**get_change_email Get method End**/
 
@@ -2144,52 +2145,44 @@ exports.showUserProfile = (req,res,next)=>{
 
   var user_id=req.session.user_id;
 
-  if(user_id)
-  {
+  if(user_id) {
 
     db.query(' SELECT * FROM `tbl_countries` WHERE status="active" ORDER BY `country_id` ASC',{type:db.  QueryTypes.SELECT})
     .then(countryData=>{
 
-        db.query('SELECT * FROM `tbl_country_codes` ORDER BY `iso` ASC',{type:db.QueryTypes.SELECT})
-        .then(countryCode1=>{
+      db.query('SELECT * FROM `tbl_country_codes` ORDER BY `iso` ASC',{type:db.QueryTypes.SELECT})
+      .then(countryCode1=>{
+        
+        UserModel.findOne({ where:{reg_user_id:user_id} })
+        .then(function(user){
+          console.log(`user`);
+          console.log(decrypt(user.birthplace));
+          console.log('user.country_code_id : ',user.country_code_id)
+          db.query('SELECT * FROM tbl_country_codes where country_code_id='+user.country_code_id,{type:db.QueryTypes.SELECT})
+          .then(countryCode => {
+            console.log('user.country_code_id : ',countryCode)
 
-                 
-       
-      UserModel.findOne({ where:{reg_user_id:user_id} }).then(function(user){
-        console.log('user.country_code_id : ',user.country_code_id)
-   db.query('SELECT * FROM tbl_country_codes where country_code_id='+user.country_code_id,{type:db.QueryTypes.SELECT}).then(countryCode=>{
-                            console.log('user.country_code_id : ',countryCode)
-
-         res.render('front/myprofile',{
-            success_msg,
-            err_msg,
-            user,
-            text_func,decrypt,
-            session:req.session,countryCode
-            ,countryData,
-            countryCode1:countryCode1
+            res.render('front/myprofile',{
+              success_msg,
+              err_msg,
+              user,
+              text_func,
+              decrypt,
+              session:req.session,
+              countryCode,
+              countryData,
+              countryCode1:countryCode1
+            });
+          });
         });
-
-      });
-   });
-  })
-})
-
-
-
+      })
+    })
   }
-  else
-  {
-
-    
+  else {   
     res.redirect('/login');
-
   }
-
   // console.log("session");
   // console.log(req.session.user_id);
-
-
 }
 /**profile get Method End**/
 
@@ -2980,34 +2973,30 @@ exports.subscribe = (req,res, next) => {
 /** subscribe Post method End**/
 
 /**select-country-code Post method Start**/
-exports.select_country_code_check = (req,res,next )=> {
+exports.select_country_code_check = (req,res,next) => {
   success_msg = req.flash('success_msg');
   err_msg = req.flash('err_msg');
-  var country=req.body.country;
-  var codeC=country.split(' ');
-  let codeC1=codeC[1].split('');
-  let countryCode='';
-  for(let i=1;i<codeC1.length-1;i++){
-  
-    countryCode=countryCode+codeC1[i];
+  var country = req.body.country;
+  var codeC = country.split(' ');
+  let codeC1 = codeC[1].split('');
+  let countryCode = '';
+  for(let i = 1;i < codeC1.length - 1;i++){
+    countryCode = countryCode+codeC1[i];
   }
- console.log("cccccccccccc:",countryCode);
- countryCode=countryCode.trim();
- let cities=csc.getCitiesOfCountry(countryCode);
- //console.log("City::::::::::::::::",cities)
-var iso,country_code_id,phonecode;
-        console.log(" countries : ",country)
+  console.log("cccccccccccc:",countryCode);
+  countryCode=countryCode.trim();
+  let cities=csc.getCitiesOfCountry(countryCode);
+  //console.log("City::::::::::::::::",cities)
+  var iso,country_code_id,phonecode;
+  console.log(" countries : ",country)
  
             
-                            res.render('front/city_filter',{
-                                                          success_msg,
-                                                          err_msg,
-                                                          cities
-                                                        });
-          
-     
-        
-    // })
+  res.render('front/city_filter',{
+    success_msg,
+    err_msg,
+    cities
+  }); 
+  // })
 }
 /**select-country-code Post method Start**/
 

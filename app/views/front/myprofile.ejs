@@ -234,15 +234,15 @@
 										  </select>
 									  </div>
 									  <label for="">Phone Number</label>
-									  <input type="text" name="mobile" id="mobile" class="form-control test2" placeholder="" value="<%= decrypt(user.mobile_number)%>"
-										data-rule-required="true" maxlength="15" minlength="10"
+									  <input type="number" name="mobile" id="mobile" class="form-control test2" placeholder="" value="<%= decrypt(user.mobile_number)%>"
+										data-rule-required="true"
 										data-msg-required="Please enter mobile number."
 										data-rule-digits="true">
 									</div>
 									<span id="errNm1" class="error_validate"></span>
 								</div>
 								<div class="form-group mb-0">
-									<label>PIN</label>
+									<label>Enter OTP</label>
 									<div class="input-group pin-input-box">
 													<div class="otp-box digit-group" data-group-name="digits"
 														data-autosubmit="false" autocomplete="off">
@@ -297,7 +297,27 @@
 				<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" ></script>
 
 					<script>
-					$(".inputs").keyup(function () {
+					$(".inputs").keyup(function (e) {
+						
+						//script for backspace key
+						var key = (e.keyCode);
+						if(key == 8){
+							var curid = e.target.id;
+							var id_to_focus = 1;
+							curid = curid.substring((curid.length-1),curid.length);
+							if(curid == 1){
+								document.getElementById('otp1').focus();
+							}
+							else if((curid > 1) && (curid <= 4)){
+								id_to_focus = parseInt(curid) - 1;
+								var final_id = "otp" + id_to_focus;
+								console.log(final_id);
+								document.getElementById(final_id).focus();
+							}
+						}
+
+
+
 					    if (this.value.length == this.maxLength) {
 					      var $next = $(this).next('.inputs');
 					      if ($next.length)

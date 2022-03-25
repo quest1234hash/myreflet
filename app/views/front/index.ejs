@@ -134,7 +134,7 @@ p{
                    
                     <%if(session.is_user_logged_in!=true){%>
                     <li class="nav-item dropdown">
-                        <a class="btn btn-common login-btn" href="/login">Login <i class="fas fa-caret-right"></i></a>
+                        <a href="/login" class="btn btn-common login-btn">Login <i class="fas fa-caret-right"></i></a>
                     </li>
                     <%}else{%>
                       <%
@@ -505,7 +505,7 @@ p{
       </div>
    </div>
    <!-- Bhavna -->
-   <div class="popup-overlay">
+   <div class="popup-overlay" style="display:none;">
   <div class="popup" style="color:rgba(0, 0, 0, 0.5)">
     <p>This website uses cookies in order to offer you the most relevant information. Please accept cookies for optimal performance.</p>
     <a href="javascript:void(0);" class="submit purple-btn-index">Yes,I accept Cookies</a>&nbsp;
@@ -540,7 +540,8 @@ p{
 
 	  if( getCookie('popupCookie') != 'submited'){ 
     if(getCookie('popupCookie') != 'closed' ){
-      $('.popup-overlay').css("display", "flex").hide().fadeIn();
+      //$('.popup-overlay').css("display", "flex").hide().fadeIn();
+      $('.popup-overlay').css("display", "none")
     }
   }
   
@@ -598,7 +599,7 @@ $(document).ready( function () {
   //   }
   if (document.cookie.indexOf('submited') == -1 ) {
   // alert("cookie");
- $('a').removeAttr('href');
+//  $('a').removeAttr('href');
 }
 else
 {

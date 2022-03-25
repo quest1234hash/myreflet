@@ -171,129 +171,128 @@
 <!-- <div id="fb-root"></div> -->
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v7.0" nonce="GzcEl0DF"></script>
 <!-- <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div> -->
-	<!-- JQuery -->
-        <script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
-        <!-- <script type="text/javascript" src="assets/js/jquery-1.11.3.min.js"></script> -->
-        <!-- Bootstrap Core JavaScript -->
-        <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-        <!-- dropdownhover effects JavaScript -->
-        <script type="text/javascript" src="assets/js/bootstrap-dropdownhover.min.js"></script>
-        <!-- wow JavaScript -->
-        <script type="text/javascript" src="assets/js/wow.min.js"></script>
-        <!-- video player JavaScript -->
+<!-- JQuery -->
+<script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+<!-- <script type="text/javascript" src="assets/js/jquery-1.11.3.min.js"></script> -->
+<!-- Bootstrap Core JavaScript -->
+<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+<!-- dropdownhover effects JavaScript -->
+<script type="text/javascript" src="assets/js/bootstrap-dropdownhover.min.js"></script>
+<!-- wow JavaScript -->
+<script type="text/javascript" src="assets/js/wow.min.js"></script>
+<!-- video player JavaScript -->
 
-        <script type="text/javascript" src="assets/js/jquery-ui.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
-		<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
-		<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+<script type="text/javascript" src="assets/js/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
 
-        <!-- Custom JavaScript -->
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<!-- Custom JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 
-        <script type="text/javascript" src="assets/js/custom.js"></script>
-        <link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+<script type="text/javascript" src="assets/js/custom.js"></script>
+<link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+
+<script src="https://www.google.com/recaptcha/api.js"></script>
+
+<script src="https://www.google.com/recaptcha/api.js?render=6LepBNIZAAAAADbgTqyuLwnYV4V-STSFYH0qhE0S"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=explicit&onload=onRecaptchaLoadCallback"></script>
 		
-		<script src="https://www.google.com/recaptcha/api.js"></script>
-
-		<script src="https://www.google.com/recaptcha/api.js?render=6LepBNIZAAAAADbgTqyuLwnYV4V-STSFYH0qhE0S"></script>
-		<script src="https://www.google.com/recaptcha/api.js?render=explicit&onload=onRecaptchaLoadCallback"></script>
 		
-		
-        <script>
-        	$(document).ready(function() {
-				$('.loader').hide();
+<script>
+	$(document).ready(function() {
+		$('.loader').hide();
 
-    $('.js-example-basic-multiple').select2();
-});
-        </script>
+    	$('.js-example-basic-multiple').select2();
+	});
+</script>
 
-            <script>
-            	$(document).ready(function() {
-                $(".select2-country").select2({width:'100%'});
-         });
-      $('#datepicker2').datepicker({
-        changeMonth: true,
+<script>
+	$(document).ready(function() {
+		$(".select2-country").select2({width:'100%'});
+	});
+	$('#datepicker2').datepicker({
+		changeMonth: true,
 		changeYear: true,
 		maxDate : "-18Y",
-        // yearRange: "1970:2000",
-        showButtonPanel: true,
-        dateFormat: 'dd/mm/yy',
-        onClose: function(dateText, inst) { 
+		// yearRange: "1970:2000",
+		showButtonPanel: true,
+		dateFormat: 'dd/mm/yy',
+		onClose: function(dateText, inst) {
+			var year = $("#ui-datepicker-div .ui-datepicker-year :selected",).val();	
+		}
+	});
+</script>
 
-            var year = $("#ui-datepicker-div .ui-datepicker-year :selected",).val();
-           
-        }});
-  </script>
+<script type="text/javascript">
+	/*$( "#datepicker2" ).datepicker();*/
 
-		<script type="text/javascript">
-				/*$( "#datepicker2" ).datepicker();*/
+	$('#validate').validate({
+		onfocusout: function(element) {
+		this.element(element);
+		},
+		errorClass: 'error_validate',
+		errorElement:'span',
+		errorPlacement: function(error, element) {	
+			if (element["0"].id=="mobile") {						
+				error.insertAfter(element.parent());
+			}
+			else {
+				error.insertAfter(element);
+			}
+		},
 
-			$('#validate').validate({
-				 onfocusout: function(element) {
-				 this.element(element);
-				 },
-				 errorClass: 'error_validate',
-				 errorElement:'span',
-				 errorPlacement: function(error, element) {
-				
-					if (element["0"].id=="mobile") {						
-						error.insertAfter(element.parent());
-					}
-					else {
-						error.insertAfter(element);
-					}
-				},
+		highlight: function(element, errorClass) {
+			$(element).removeClass(errorClass);
+		},
+		submitHandler:function(form){
+			//return check_captch()
+			$('#submit_signup').attr('disabled',true);
+			form.submit();
+		}
+	});
+</script>
 
-				 highlight: function(element, errorClass) {
-				 $(element).removeClass(errorClass);
-				 },
-				 submitHandler:function(form)
-					{
-						//return check_captch()
-					  $('#submit_signup').attr('disabled',true);
-					  form.submit();
-					}
-				 });
-			</script>
-            <script>
-			  $( function() {
-				var url = new URL( window.location.origin);
-				// alert(url)
-				console.log(url)
-				// var date = new Date(); 
-//   var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-//   var end = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+<script>
+	$( function() {
+		var url = new URL( window.location.origin);
+		// alert(url)
+		console.log(url)
+		// var date = new Date(); 
+		//   var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+		//   var end = new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
-//   var year_20_ago = date.setFullYear(date.getFullYear() - 20);
-//   var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-// alert(date.setFullYear(date.getFullYear() - 20))
+		//   var year_20_ago = date.setFullYear(date.getFullYear() - 20);
+		//   var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+		// alert(date.setFullYear(date.getFullYear() - 20))
 
-//   $("#datepicker").datepicker({ 
-//         format: "mm/dd/yyyy",
-//         todayHighlight: true,
-//         startDate: today,
-// 		// minDate:today,
-// 		// yearRange: '1945:' + "2002",
-// 		minYear: 1901,
-//     maxYear:2002,
-//         autoclose: true,
-//   }).datepicker('update',date);
+		//   $("#datepicker").datepicker({ 
+		//         format: "mm/dd/yyyy",
+		//         todayHighlight: true,
+		//         startDate: today,
+		// 		// minDate:today,
+		// 		// yearRange: '1945:' + "2002",
+		// 		minYear: 1901,
+		//     maxYear:2002,
+		//         autoclose: true,
+		//   }).datepicker('update',date);
 
-// $("#datepicker").datepicker({
-//       changeMonth: true,
-//       changeYear: true,
-//       showButtonPanel: true,
-//       dateFormat: 'dd/mm/yy',
-//       yearRange: '1945:' + (new Date).getFullYear(),
-//       onClose: function (dateText, inst) {
-//         $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
-//       }
-//     });
-  });
-			//   } );
+		// $("#datepicker").datepicker({
+		//       changeMonth: true,
+		//       changeYear: true,
+		//       showButtonPanel: true,
+		//       dateFormat: 'dd/mm/yy',
+		//       yearRange: '1945:' + (new Date).getFullYear(),
+		//       onClose: function (dateText, inst) {
+		//         $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+		//       }
+		//     });
+  	});
+	//   } );
 			 
 </script>
+
 <script>
 	function checkUserSteps(value){
 		// alert(value)
@@ -302,109 +301,99 @@
             url: "/check_user_steps",
             data: { email:value },
             success: function(data){
-    if(data=="noAnyStep"){
-                           // alert("noAnyStep")
-					   }
-	else{
-		 // alert("useris their")
-			var txt;
-	var r = confirm("You are already registered. please press 'ok' to go the next step and cancel for new sign up.");
-	if (r == true) {
-	
-		            txt = "You pressed OK!";
-					console.log(data)
-				    var url = new URL( window.location.origin);
-					// alert(url)
-					console.log(url)
-					if(data.steps==1){
-						window.location.href = url+"top_verification?userid="+data.userid
-						
-									}
-					if(data.steps==2){
-						window.location.href = url+"save-password?userId="+data.userid
-						
-									}
-					if(data.steps==3){
-						window.location.href = url+"re-enter-password?userId="+data.userid
-									}
-					if(data.steps==4){
-						window.location.href = url+"set_pin/?userid="+data.userid
-									}
-					if(data.steps==5){
-						window.location.href = url+"terms-and-conditions?userId="+data.userid
-									}
+				if(data=="noAnyStep"){
+					// alert("noAnyStep")
+				}
+				else{
+					// alert("useris their")
+					var txt;
+					var r = confirm("You are already registered. please press 'ok' to go the next step and cancel for new sign up.");
+					if (r == true) {	
+						txt = "You pressed OK!";
+						console.log(data)
+						var url = new URL( window.location.origin);
+						// alert(url)
+						console.log(url)
+						if(data.steps==1){
+							window.location.href = url+"top_verification?userid="+data.userid
+							
+						}
+						if(data.steps==2){
+							window.location.href = url+"save-password?userId="+data.userid
+							
+						}
+						if(data.steps==3){
+							window.location.href = url+"re-enter-password?userId="+data.userid
+						}
+						if(data.steps==4){
+							window.location.href = url+"set_pin/?userid="+data.userid
+						}
+						if(data.steps==5){
+							window.location.href = url+"terms-and-conditions?userId="+data.userid
+						}
 						if(data.steps==6){
-						window.location.href = url+"login"
-									}
-												
-				}  else {
-	                  window.location.reload()
-	              }
-								}
-
+							window.location.href = url+"login"
+						}		
+					}  
+					else {
+						window.location.reload()
+					}
+				}
             }
-    });
+    	});
 	}
-
 </script>
+
 <script>
-$(document).ready(function(){
-	var selectedCountry;
-    $("select.country").change(function(){
-         selectedCountry = $(".country option:selected").val();
-
-        // alert(selectedCountry)
-  $.ajax({
-                      type : 'POST',
-                      url: "/select-country-code",
-					  data: {country : selectedCountry },
-					  
-                        success: function(data) {
-                        	// alert(data)
-						//	$('.country_append').html("");
-			            //	$('.country_append').html(data);
-						$('.city_append').html("");
-			        	$('.city_append').html(data);
-						
-			}                                                    
-           
-})       
-
-       
-        // $.ajax({
-        //     type: "POST",
-        //       url: "/select-country-code",
-        //     data: { country : selectedCountry } 
-        // }).done(function(data){
-        // 	alert(data)
-        //     // $("#response").html(data);
-        // });
-
-
-     
-    });
-});
+	$(document).ready(function(){
+		var selectedCountry;
+    	$("select.country").change(function(){
+			selectedCountry = $(".country option:selected").val();
+        	//console.log(selectedCountry);
+  			$.ajax({
+				type : 'POST',
+				url: "/select-country-code",
+				data: {country : selectedCountry },					  
+				success: function(data) {
+					//console.log(data);
+					//	$('.country_append').html("");
+					//	$('.country_append').html(data);
+					$('.city_append').html("");
+					$('.city_append').html(data);				
+				}
+			})     
+			// $.ajax({
+			//     type: "POST",
+			//       url: "/select-country-code",
+			//     data: { country : selectedCountry } 
+			// }).done(function(data){
+			// 	alert(data)
+			//     // $("#response").html(data);
+			// });     
+    	});
+	});
 </script>
+
 <script type="text/javascript">
 
-// $('.checkbox2').click(function() {
-// 	alert('checkbox2')
-// })
-// $('.checkbox22').click(function() {
-// 		alert('checkbox23')
+	// $('.checkbox2').click(function() {
+	// 	alert('checkbox2')
+	// })
+	// $('.checkbox22').click(function() {
+	// 		alert('checkbox23')
 
-// })
+	// })
 
-	
-//  $('.').on('select2:select', function (e) {
-//    alert();
-// });	
+		
+	//  $('.').on('select2:select', function (e) {
+	//    alert();
+	// });	
 
- // function country_get(selectedCountry)
- //        {
- //          alert('hhhhhh'+selectedCountry)	
-           
- //        }
+	// function country_get(selectedCountry)
+	//        {
+	//          alert('hhhhhh'+selectedCountry)	
+			
+	//        }
 </script>
 
 <script>
@@ -412,34 +401,33 @@ $(document).ready(function(){
 		// alert('load')
 		var captcha = grecaptcha.getResponse();
 		//   alert(captcha)
-		  if(captcha){
-			   $('.hide_btn').hide();
-	
-			   $('.loader').show();
-				setTimeout(function() {
-								$('.captcha_error').fadeOut('fast');
-								}, 100);
-				return true;
-		  }else{
+		if(captcha){
+			$('.hide_btn').hide();
+
+			$('.loader').show();
+			setTimeout(function() {
+				$('.captcha_error').fadeOut('fast');
+			}, 100);
+			return true;
+		}
+		else{
 			$('.captcha_error').html("Please select captcha first.");
-	
+
 			return false;
-		  }
-		   
-	
 		}
-	</script>
+	}
+</script>
 	
 	
-	<script>
-		function cryptPass(value){
-	
-			// alert(value)
-			// console.log(btoa(value));
-			let codedPass = btoa(value)
-			$("#password").val(codedPass)
-		}
-	</script>
+<script>
+	function cryptPass(value){
+
+		// alert(value)
+		// console.log(btoa(value));
+		let codedPass = btoa(value)
+		$("#password").val(codedPass)
+	}
+</script>
 <%- include('partials/footer.ejs') %>    
 
 

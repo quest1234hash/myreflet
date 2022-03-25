@@ -223,6 +223,11 @@
         $(this).attr('maxlength', 1);
         $(this).on('keyup', function(e) {
             var parent = $($(this).parent());
+
+            console.log(e.target.id);
+            if(e.keyCode == 8){
+                e.target.value = "";
+            }
             
             if(e.keyCode === 8 || e.keyCode === 37) {
                 var prev = parent.find('input#' + $(this).data('previous'));

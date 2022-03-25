@@ -22,7 +22,7 @@ var db = require('../services/database');
     // weeklyScheduleReport();
     // monthlyScheduleReport();
 
-    console.log('running a task every minute');
+    //console.log('running a task every minute');
 
    });
 
