@@ -226,6 +226,9 @@
 
             console.log(e.target.id);
             if(e.keyCode == 8){
+                if(e.target.id == "otp1"){
+                    document.getElementById('otp1').focus();
+                }
                 e.target.value = "";
             }
             
