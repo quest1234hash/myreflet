@@ -10,7 +10,7 @@ const { userAuth,
  }                             = require("../auth/user_auth")
 
 
-//router.get('/signup',btcAppController.signup);
+router.get('/signup',btcAppController.signup);
 router.get('/sequrity_question',btcAppController.sequrityQuestion);
 router.get('/terms-and-conditions',btcAppController.termsAndCondition);
 router.post('/terms-and-conditions-submit',btcAppController.termsAndConditionSubmit);

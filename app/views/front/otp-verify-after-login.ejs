@@ -220,6 +220,13 @@
         var parent = $($(this).parent());
         // alert('kkk')
 
+        if(e.keyCode === 8){
+            e.target.value = "";
+            if(e.target.id == "otp1"){
+                document.getElementById('otp1').focus();
+            }
+        }
+
         if(e.keyCode === 8 || e.keyCode === 37) {
             var prev = parent.find('input#' + $(this).data('previous'));
             

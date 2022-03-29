@@ -163,6 +163,22 @@ var formatted = dt.format('Y-m-d H:M:S');
 
 
 
+
+exports.signup = async (req,res,next) => {
+  var country_data = await db.query(' SELECT * FROM `tbl_countries` WHERE status="active" ORDER BY `country_id` ASC',{type:db.  QueryTypes.SELECT});
+  res.json(country_data);
+}
+
+
+
+
+
+
+
+
+
+
+
 /**submit_register Post Method start**/
 exports.submit_register = async (req, res, next) => {
   console.log('*************BTC apies submit signup******************', req.body);
