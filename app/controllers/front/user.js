@@ -2408,29 +2408,21 @@ exports.check_otp_for_phone_number = (req,res,next) =>{
 /**check_otp_for_phone_number end */
 
 /**update mobile number start */
-exports.updateMobileNumber = (req,res,next) =>{
+exports.updateMobileNumber = (req,res,next) => {
  
   let user_id            =   req.session.user_id
   let country_code       =   req.body.country_code_select
   let mobile             =    encrypt(req.body.mobile)
   console.log("country code############### ",country_code)
-  db.query('SELECT * FROM tbl_country_codes where phonecode='+country_code,{type:db.QueryTypes.SELECT}).then(countryData=>{
-
-
-    
+  db.query('SELECT * FROM tbl_country_codes where phonecode='+country_code,{type:db.QueryTypes.SELECT}).
+  then(countryData => {    
         UserModel.update( { country_code_id : countryData.country_code_id , mobile_number : mobile }, { where :{ reg_user_id :user_id } } )
         .then(userdata => {
-
-
             res.redirect("/profile")
-
-
         })
-        .catch(err=> {
-
+        .catch(err => {
           console.log(err)
           res.redirect("/profile")
-
         })
    })
 }
