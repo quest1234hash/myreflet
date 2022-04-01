@@ -2266,28 +2266,32 @@ exports.getImg=async function(req,res){
 
 
 
-
 // send otp for mobile number chnage post method start
 
 exports.sendOtpForMobileNumberChange = (req ,res , next) => {
 
   let user_id   =   req.session.user_id
 
+  var updation_for = req.body.updation_for;
+
+  console.log("updation for : " + updation_for);
+
   var otp = generateOTP()
+  console.log("otp : " + otp);
   var enc_otp = encrypt(otp);
     
 
-    function generateOTP() { 
-         
-        // Declare a digits variable  
-        // which stores all digits 
-        var digits = '0123456789'; 
-        let OTP = ''; 
-        for (let i = 0; i < 4; i++ ) { 
-            OTP += digits[Math.floor(Math.random() * 10)]; 
-        } 
-        return OTP; 
-     } 
+  function generateOTP() { 
+        
+      // Declare a digits variable  
+      // which stores all digits 
+      var digits = '0123456789'; 
+      let OTP = ''; 
+      for (let i = 0; i < 4; i++ ) { 
+          OTP += digits[Math.floor(Math.random() * 10)]; 
+      } 
+      return OTP; 
+  } 
 
   UserModel.findOne( { where :{ reg_user_id :user_id } } )
   .then( data => {
@@ -2302,58 +2306,111 @@ exports.sendOtpForMobileNumberChange = (req ,res , next) => {
                 pass: PASS_OF_MAIL 
               }
             });
-            const mailOptions = {
-              to           :  email,
-              from         : 'questtestmail@gmail.com',
-              subject      : "MyReflet OTP for Mobile Number Update.",
-
-              html: `<!DOCTYPE html>
-              <html>
-                <head>
-                  <title>My Reflet</title>
-                  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-                  <style>
-                  @media only screen and (max-width: 600px) {
-                  .inner-body {
-                  width: 100% !important;
-                  }
-                  .footer {
-                  width: 100% !important;
-                  }
-                  }
-                  @media only screen and (max-width: 500px) {
-                  .button {
-                  width: 100% !important;
-                  }
-                  }
-                  </style> 
-                </head>
-                <body>
-                  <div style="border:1px solid #000; width: 900px; max-width: 100%;margin: 30px auto;font-family: sans-serif;">
-                    <div style="background-color: #88beda;padding: 10px 30px 5px;">
-                      <img src="https://${req.headers.host}/assets/images/logo-white.png" style="width: 120px;">
-                    </div>
-                    <div style="padding: 30px;line-height: 32px; text-align: justify;">
-                      <h4 style="font-size: 20px; margin-bottom: 0;">Dear  ${decrypt(data.full_name)}</h4>
-                      <p>Your OTP for mobile number update is ${otp}</p>
-                      <h4 style="margin: 0;line-height: 20px; margin-top: 50px;">Thanks & Regards</h4>
-                      <h4 style="margin: 10px 0 20px;line-height: 20px;">My Reflet</h4>
-              
-                    
-                    </div>
-                    <div style="background-color:  #88beda; color: #fff; padding: 20px 30px;">
-                      &copy; Copyright 2020 - My Reflet. All rights reserved.
+            if(updation_for == "email"){
+              const mailOptions = {
+                to           :  email,
+                from         : 'questtestmail@gmail.com',
+                subject      : "MyReflet OTP for Email Update.",
+  
+                html: `<!DOCTYPE html>
+                <html>
+                  <head>
+                    <title>My Reflet</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                    <style>
+                    @media only screen and (max-width: 600px) {
+                    .inner-body {
+                    width: 100% !important;
+                    }
+                    .footer {
+                    width: 100% !important;
+                    }
+                    }
+                    @media only screen and (max-width: 500px) {
+                    .button {
+                    width: 100% !important;
+                    }
+                    }
+                    </style> 
+                  </head>
+                  <body>
+                    <div style="border:1px solid #000; width: 900px; max-width: 100%;margin: 30px auto;font-family: sans-serif;">
+                      <div style="background-color: #88beda;padding: 10px 30px 5px;">
+                        <img src="https://${req.headers.host}/assets/images/logo-white.png" style="width: 120px;">
                       </div>
-                  </div>
-                </body>
-              </html>  
-              `
-            };
-            smtpTransport.sendMail(mailOptions, function (err) {
+                      <div style="padding: 30px;line-height: 32px; text-align: justify;">
+                        <h4 style="font-size: 20px; margin-bottom: 0;">Dear  ${decrypt(data.full_name)}</h4>
+                        <p>Your OTP for email update is ${otp}</p>
+                        <h4 style="margin: 0;line-height: 20px; margin-top: 50px;">Thanks & Regards</h4>
+                        <h4 style="margin: 10px 0 20px;line-height: 20px;">My Reflet</h4>
+                
+                      
+                      </div>
+                      <div style="background-color:  #88beda; color: #fff; padding: 20px 30px;">
+                        &copy; Copyright 2020 - My Reflet. All rights reserved.
+                        </div>
+                    </div>
+                  </body>
+                </html>  
+                `
+              };
+              smtpTransport.sendMail(mailOptions, function (err) {});
+              res.send({type:"success"})
+            }
+            else{
+              const mailOptions = {
+                to           :  email,
+                from         : 'questtestmail@gmail.com',
+                subject      : "MyReflet OTP for Mobile Number Update.",
+
+                html: `<!DOCTYPE html>
+                <html>
+                  <head>
+                    <title>My Reflet</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                    <style>
+                    @media only screen and (max-width: 600px) {
+                    .inner-body {
+                    width: 100% !important;
+                    }
+                    .footer {
+                    width: 100% !important;
+                    }
+                    }
+                    @media only screen and (max-width: 500px) {
+                    .button {
+                    width: 100% !important;
+                    }
+                    }
+                    </style> 
+                  </head>
+                  <body>
+                    <div style="border:1px solid #000; width: 900px; max-width: 100%;margin: 30px auto;font-family: sans-serif;">
+                      <div style="background-color: #88beda;padding: 10px 30px 5px;">
+                        <img src="https://${req.headers.host}/assets/images/logo-white.png" style="width: 120px;">
+                      </div>
+                      <div style="padding: 30px;line-height: 32px; text-align: justify;">
+                        <h4 style="font-size: 20px; margin-bottom: 0;">Dear  ${decrypt(data.full_name)}</h4>
+                        <p>Your OTP for mobile number update is ${otp}</p>
+                        <h4 style="margin: 0;line-height: 20px; margin-top: 50px;">Thanks & Regards</h4>
+                        <h4 style="margin: 10px 0 20px;line-height: 20px;">My Reflet</h4>
+                
+                      
+                      </div>
+                      <div style="background-color:  #88beda; color: #fff; padding: 20px 30px;">
+                        &copy; Copyright 2020 - My Reflet. All rights reserved.
+                        </div>
+                    </div>
+                  </body>
+                </html>  
+                `
+              };
+              smtpTransport.sendMail(mailOptions, function (err) {});
+              res.send({type:"success"})
+            }
             
-            });
-            res.send({type:"success"})
       })
       .catch(err=> {
 
@@ -2427,6 +2484,31 @@ exports.updateMobileNumber = (req,res,next) => {
    })
 }
 /**update mobile number end */
+
+
+
+
+/**update email start */
+exports.updateEmail = (req,res,next) => {
+ 
+  let user_id = req.session.user_id
+  let email = encrypt(req.body.new_email)
+     
+  UserModel.update( { email : email }, { where :{ reg_user_id :user_id } } )
+  .then(userdata => {
+      res.redirect("/profile")
+  })
+  .catch(err => {
+    console.log(err)
+    res.redirect("/profile")
+  })
+}
+/**update email end */
+
+
+
+
+
 /**otp_veri_aft_login get Method Start**/
 exports.otpAfterLogin = async(req,res,next)=>{
    

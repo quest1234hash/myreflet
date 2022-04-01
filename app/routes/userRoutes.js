@@ -132,8 +132,10 @@ router.post('/edit-profile',isUser,upload1,userController.updateProfile);
 router.post('/send_otp_for_mobile_number_change',isUser,userController.sendOtpForMobileNumberChange);
 
 router.post('/check_otp_for_phone_number',isUser,userController.check_otp_for_phone_number);
+
 router.post('/update_mobile_number',isUser,userController.updateMobileNumber);
 
+router.post('/update_email',isUser,userController.updateEmail);
 
 
 router.get('/create-wallet',isUser,walletController.create_wallet);

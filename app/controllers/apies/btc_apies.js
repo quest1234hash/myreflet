@@ -166,7 +166,32 @@ var formatted = dt.format('Y-m-d H:M:S');
 
 exports.signup = async (req,res,next) => {
   var country_data = await db.query(' SELECT * FROM `tbl_countries` WHERE status="active" ORDER BY `country_id` ASC',{type:db.  QueryTypes.SELECT});
-  res.json(country_data);
+  var country_codes = await db.query('SELECT * FROM `tbl_country_codes` ORDER BY `iso` ASC',{type:db.QueryTypes.SELECT});
+  
+  var data = [];
+  var inner_data = {};
+  
+  if((country_data.length > 0) && (country_codes.length > 0)){
+    inner_data = {
+      countryData: country_data,
+      countryCode: country_codes
+    };
+
+    var res_obj = {
+      status: true,
+      msg: 'country data',
+      data: inner_data
+    };
+    res.json(res_obj);
+  }
+  else{
+    var res_obj = {
+      status: false,
+      msg: 'no data',
+      data: []
+    };
+    res.json(res_obj);
+  }
 }
 
 
