@@ -32,14 +32,14 @@ var db = require('../services/database');
     weeklyScheduleReport();
         expiryMail();
 
-    console.log('running a task every 24 hours');
+    //console.log('running a task every 24 hours');
   
    });
 
   
 async function unblockUser()
 {
-    console.log("..........................unblockStart.............................................")
+    //console.log("..........................unblockStart.............................................")
 
     function toTimestamp(strDate){
                                  var datum = Date.parse(strDate);
@@ -50,11 +50,11 @@ async function unblockUser()
     // console.log("blockedUserData....",blockedUserData)
 
            if(blockedUserData[0]!=null){
-            console.log("blockedUserData[0]....................")
+            //console.log("blockedUserData[0]....................")
 
 
             for(var i=0; i<blockedUserData.length ; i++){
-                console.log("forloop....................")
+                //console.log("forloop....................")
 
             var now = new Date(blockedUserData[i].block_date);
             now.setMinutes(now.getMinutes() + 2880); // timestamp
@@ -62,8 +62,8 @@ async function unblockUser()
             var user_block_endDate =now
             var timstampFormDb =parseInt(toTimestamp(user_block_endDate))
             var currentTimestamp =parseInt(toTimestamp(new Date()))
-             console.log("timstampFormDb",timstampFormDb)
-            console.log("currentTimestamp",currentTimestamp)
+             //console.log("timstampFormDb",timstampFormDb)
+            //console.log("currentTimestamp",currentTimestamp)
         
             
 if(timstampFormDb<currentTimestamp){
@@ -122,7 +122,7 @@ async function dailyScheduleReport(req,res)
       // var checked_array=[];
       report_data.push(content)
 
-      console.log(report_data)
+      //console.log(report_data)
       db.query("SELECT * FROM tbl_report_filter_columns where deleted='0' and report_filter_id="+content.report_filter_id+" order by report_filter_id desc",{ type:db.QueryTypes.SELECT}).then(async function(view_column_list){
   
           for(var i=0;i<view_column_list.length;i++)
@@ -144,7 +144,7 @@ async function dailyScheduleReport(req,res)
   
           if(content.user_type=='client')
           {
-              console.log("client ");  
+              //console.log("client ");  
   
           await db.query("SELECT complain_id,created_at,rep_firstname,reflect_code,client_reflect_code,client_reflect_name,complaint_status,complain_message,user_as,complain_id from tbl_complaints INNER JOIN  tbl_wallet_reflectid_rels ON tbl_complaints.reflect_id=tbl_wallet_reflectid_rels.reflect_id WHERE client_reflect_code IN(SELECT reflect_code FROM tbl_wallet_reflectid_rels where reg_user_id="+reg_user_id+") order by tbl_complaints.complain_id desc",{ type:db.QueryTypes.SELECT}).then(async function(complaint_data){
   
@@ -158,7 +158,7 @@ async function dailyScheduleReport(req,res)
           })
       }
       else{
-          console.log("verifier ");  
+          //console.log("verifier ");  
   
           await db.query("SELECT complain_id,created_at,rep_firstname,reflect_code,client_reflect_code,client_reflect_name,complaint_status,complain_message,user_as,complain_id from tbl_complaints INNER JOIN  tbl_wallet_reflectid_rels ON tbl_complaints.reflect_id=tbl_wallet_reflectid_rels.reflect_id WHERE tbl_complaints.reflect_id IN(SELECT reflect_id FROM tbl_wallet_reflectid_rels where reg_user_id="+reg_user_id+") order by tbl_complaints.complain_id desc",{ type:db.QueryTypes.SELECT}).then(async function(complaint_data){
   
@@ -206,7 +206,7 @@ async function dailyScheduleReport(req,res)
               }
               }
               }else{
-                  console.log("reflet_id_data ",reflet_id_data);  
+                  //console.log("reflet_id_data ",reflet_id_data);  
                   for(var j=0;j<reflet_id_data.length;j++)
                   {
                       report_data_type.push(reflet_id_data[j]);
@@ -310,7 +310,7 @@ async function dailyScheduleReport(req,res)
           // console.log("don1 "+data)
   
       if (err) {
-          console.log("EEEEEEEEEERRRRRRRRR       1"+err)
+          //console.log("EEEEEEEEEERRRRRRRRR       1"+err)
       } else {
   
           let options = {
@@ -323,16 +323,16 @@ async function dailyScheduleReport(req,res)
                   "height": "20mm",
               },
           };
-          console.log("EEEEEEEEEERRRRRRRRR out      ",content.report_name,'report_filter_id ',content.report_filter_id)
+          //console.log("EEEEEEEEEERRRRRRRRR out      ",content.report_name,'report_filter_id ',content.report_filter_id)
 
           // async function upload_file(){
 
           pdf.create(data, options).toFile("app/uploads/report_files/"+content.report_name+"_"+content.report_filter_id+".pdf",async function (err, data) {
               // console.log("don441 "+data)
-              console.log("EEEEEEEEEERRRRRRRRR    in   ",content.report_name,'report_filter_id ',content.report_filter_id)
+              //console.log("EEEEEEEEEERRRRRRRRR    in   ",content.report_name,'report_filter_id ',content.report_filter_id)
 
               if (err) {
-                console.log("pdf create data       2"+err)
+                //console.log("pdf create data       2"+err)
 
   
               } else {
@@ -358,11 +358,11 @@ async function dailyScheduleReport(req,res)
                        
                         };
                         smtpTransport.sendMail(mailOptions, function (err) {
-                         console.log('done')
+                         //console.log('done')
                         });
                       
                  
-              console.log("File created successfully");
+              //console.log("File created successfully");
                   
               
                       }

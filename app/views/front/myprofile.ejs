@@ -69,13 +69,22 @@
 															data-msg-required="Please select your Id.">
 														<span class="btn common-btn btn-file1">
 															<img src="../assets/images/icons/profile/edit.png">
-															<input type="file" id="imgInp6" value="" name="image"
+															<input required type="file" id="imgInp6" value="" name="image"
 																accept="image/*" onchange="readURL(this);" value="">
 															<input type="hidden" name="old_image">
 														</span>
 													</div>
 												</div>
 											</div>
+										</div>
+
+										<div>
+											<button type="submit" name="submit" class="btn-common-new">Update</button>
+											<%if(session.user_type=="client"){%>
+												<a class="btn-common-new" href="/cilent_deshboard">Cancel</a>
+											<%}else{%>
+												<a class="btn-common-new" href="/verifier_deshboard">Cancel</a>
+											<%}%>										
 										</div>
 										<div class="row profile-form-row">
 
@@ -155,16 +164,7 @@
 											</div>
 
 											<div class="col-md-12">
-												<div>
-													<button type="submit" name="submit"
-														class="btn-common-new">Update</button>
-													<%if(session.user_type=="client"){%>
-													<a class="btn-common-new" href="/cilent_deshboard">Cancel</a>
-													<%}else{%>
-													<a class="btn-common-new" href="/verifier_deshboard">Cancel</a>
-													<%}%>
 												
-											</div>
 											<a href="">
 												<div class="download-contact">
 												<img src="../assets/images/icons/profile/pdf.png">
@@ -228,8 +228,9 @@
 													<%}%>  
 												</select>
 											</div>
-											<label for="">Phone Number</label>
-											<input type="number" name="mobile" id="mobile" class="form-control test2" placeholder="" value="<%= decrypt(user.mobile_number)%>"
+											<!--<label for="">Phone Number</label>-->
+											<%= //decrypt(user.mobile_number)%>
+											<input type="number" name="mobile" id="mobile" class="form-control test2" placeholder="Enter new mobile number" value=""
 												data-rule-required="true"
 												data-msg-required="Please enter mobile number."
 												data-rule-digits="true">
@@ -313,8 +314,10 @@
 									<div class="create-rflet-id-form">
 										<div class="form-group">
 											<label>Enter new email<span style="color: red;">*</span></label>
-											<div class="input-group">										
-												<input type="email" name="new_email" id="new_email" class="form-control test2" placeholder="" value="<%= decrypt(user.email)%>" data-rule-required="true" data-msg-required="Please enter email." />
+											<div class="input-group">								
+													
+												<%= //decrypt(user.email)%>
+												<input type="email" name="new_email" id="new_email" class="form-control test2" placeholder="" value="" data-rule-required="true" data-msg-required="Please enter email." />
 											</div>
 											<span id="errNm1" class="error_validate"></span>
 										</div>
@@ -370,6 +373,8 @@
 <link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" ></script>
 <script type="text/javascript" src="index_assets/js/bootstrap.min.js"></script>
+
+
 
 <script>
 	document.getElementById('mobile').addEventListener('keypress',(evt) => {

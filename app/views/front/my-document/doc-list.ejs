@@ -51,7 +51,7 @@
 				<a href="#" onclick="activeDownloadFunction(`<%=folder_id%>`)"><img src="../assets/images/icons/dashboard-assets/download-purple.png" id="down_id" > Download</a>
 				<a href="#"data-toggle="modal" onclick="activeSendFunction()" data-target="" id="send_id"><img src="../assets/images/icons/dashboard-assets/send-to-verifier.png"> Send </a>
 				<a href="#" data-toggle="modal"  onclick="activeShareFunction()" data-target="" id="share_id"><img src="../assets/images/icons/dashboard-assets/upload-purple.png"> Share</a>
-				<a href="#" onclick="activeDeleteFunction()"><img src="../assets/images/icons/dashboard-assets/trash_per.png"> delete</a>
+				<a href="#" onclick="activeDeleteFunction()"><img src="../assets/images/icons/dashboard-assets/trash.png">Delete</a>
 				<!-- <a href="#" data-toggle="modal" data-target="#SendDocuments" style="display: none;" id="send_id"></a> -->
 			</label>
 				</div>
@@ -96,7 +96,7 @@
 								<!-- <a href="#" class="btn-common-new" data-toggle="modal" data-target="#Share" > -->
 									<!-- <img src="../assets/images/icons/dashboard-assets/icon_eye_pur.png"style="  width: 33px; height: 39px; margin-right: 16px; margin-left: 40px;"> -->
 									<a href="#" data-toggle="modal" data-target="#view-doc<%=i  %>" class="btn-common-new" style=" padding-left: 16px;padding-right: 16px;" onclick="showDoc(`<%=docsArr[i].uploaded_id%>`,`<%=i%>`)">
-										<i class="fas fa-eye"></i>
+										<span title="View dcument">View <i class="fas fa-eye"></i></span>
 								</a>
 								</a>
 								</div>
@@ -164,13 +164,13 @@
 						<div class="create-rflet-id-form">
 						<div class="form-group">
 								<div class="input-group">
-								  <input type="text" class="form-control" placeholder="Document ID" name="id_number">
+								  <input required type="text" class="form-control" placeholder="Document ID" name="id_number">
 								  <input type="hidden" value="<%=folder_id %>" name="folder_id">
 								</div>
 							</div>
 						<div class="form-group">
-                           <select name="document_name" id="coin" class="form-control" name="document_name">
-                                   <option value="document" >Select Document</option>
+                           <select style="width:100%;" required name="document_name" id="coin" class="" name="document_name">
+                                   <option value="">Select Document</option>
 								   <option value="Utility bills">Utility bills</option>
                                          <option value="Driving license">Driving license</option>
                                                  <option value="Aadhar card">Aadhar card</option>
@@ -185,13 +185,13 @@
 						    </div>
 						    <div class="form-group">
 							<div class="input-group">
-                           <input type="text" name="exp_date" class="form-control" placeholder="Expiry Date (MM/DD/YY)">
+                           <input style="margin-top:14px;" required type="date" min="1908-01-01" name="exp_date" class="form-control" placeholder="Expiry Date (MM/DD/YY)">
 						   </div>
 						    </div>
 							<div class="form-group browse-file-section">
 				                <input type="file" name="staff_image" class="file" style="visibility: hidden;position: absolute;" accept="image/x-png,image/jpeg">
 				                <div class="input-group col-xs-12">
-								<input type="file" name="file" class="form-control" placeholder="Upload Document">
+								<input required type="file" name="file" class="form-control" placeholder="Upload Document">
 				                    <!-- <span class="input-group-btn">
 				                      <button class="browse btn btn-primary input-lg" type="button" style="height: 36px;">Upload</button>
 				                    </span> -->
@@ -200,8 +200,8 @@
                             </div>
 						</div>
 						<div >
-							<button type="reset" class="btn-common-new" >Cancel</button>
-							<button type="submit" class="btn-common-new">Sumbit</button>
+							<button data-dismiss="modal" type="reset" class="btn-common-new" >Cancel</button>
+							<button type="submit" class="btn-common-new">Submit/button>
 						</div>
 					</div>
 				</div>

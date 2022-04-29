@@ -2165,6 +2165,7 @@ exports.showUserProfile = (req,res,next)=>{
             res.render('front/myprofile',{
               success_msg,
               err_msg,
+              resp_for_email: false,
               user,
               text_func,
               decrypt,
@@ -2191,12 +2192,14 @@ exports.updateProfile = (req,res,next)=>{
 
   var user_id=req.session.user_id;
   var full_name= encrypt(req.body.full_name);
-    var last_name= encrypt(req.body.last_name);
+  var last_name= encrypt(req.body.last_name);
 
   var birthplace= encrypt(req.body.birthplace);
   var dob= encrypt(req.body.dob);
+  
   var user_pic=req.body.text_img_name;
   //console.log("oldddddddddddddddd file::::::::::",user_pic);
+  
   let fileName= req.file.originalname;
   fileName=user_id+fileName;
   console.log("fileeeeeeeeeeeeeeeee name newwwwwwwwwwwww:",fileName);
@@ -2493,6 +2496,17 @@ exports.updateEmail = (req,res,next) => {
  
   let user_id = req.session.user_id
   let email = encrypt(req.body.new_email)
+
+  UserModel.findOne({where:{reg_user_id:user_id,deleted:"0"}})
+  .then(data => {
+    if(email == data.email){
+      req.flash('error_msg','you entered same email');
+      res.redirect("/profile");
+    }
+  })
+  .catch(err => {
+    console.log(err);
+  });
      
   UserModel.update( { email : email }, { where :{ reg_user_id :user_id } } )
   .then(userdata => {
@@ -2699,8 +2713,8 @@ if(userdata)
 
             console.log("user_put_otp : ",otp)
 
-           //  if(user_otp == otp && timstampFormDb>=currentTimestamp){   //you need to uncomment this
-               if(otp_new=="2456"){         
+             if(user_otp == otp && timstampFormDb>=currentTimestamp){   //you need to uncomment this
+               //if(otp_new=="2456"){         
                           //    var steps=parseInt("2")
                           //  await  UserModel.update({complete_steps:steps,email_verification_status:"yes"}, { where: { reg_user_id:userid }}).then((result) =>{
                             UserModel.update({wrong_otp_count:"0"},{ where: { reg_user_id:userid,deleted:"0",status:"active" }})

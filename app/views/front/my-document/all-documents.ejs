@@ -64,9 +64,12 @@
 									<div class="row align-item-center">
 									   <div class="col-xl-9 col-lg-12 col-md-12" style="margin: auto;">
 									   	  <div class="id-code-represent-heading"> 
-											  <img src="../assets/images/icons/home-assets/folder.png">
-											  <a href="all-docs-in-folder" onclick="location.href=this.href+'?folder_id='+ `<%=folderDocList[i].folder_id %>`;
-												return false"><span><%= folderDocList[i].folder_name   %></span></a>
+											  
+											  	<a href="all-docs-in-folder" onclick="location.href=this.href+'?folder_id='+ `<%=folderDocList[i].folder_id %>`;
+												return false">
+													<img src="../assets/images/icons/home-assets/folder.png">
+													<span><%= folderDocList[i].folder_name   %></span>
+												</a>
 										  </div>
 									   </div>
 
@@ -233,15 +236,15 @@
 						  <div class="create-rflet-id-form">
 							  <div class="form-group">
 								  <div class="input-group">
-									<input type="text" class="form-control" placeholder="Create New Folder" name="folder_name">
+									<input required type="text" class="form-control" placeholder="Create New Folder (*)" name="folder_name">
 									<input type="hidden" value="<%= wallet_address1 %>" name="wallet_address">
 									<input type="hidden" value="<%= wallet_type %>" name="wallet_type">
 								  </div>
 							  </div>
 						  </div>
 						  <div >
-							  <button class="btn-common-new" type="reset">Cancel</button>
-							  <button class="btn-common-new" type="submit">Sumbit</button>
+							  <button data-dismiss="modal" class="btn-common-new" type="reset">Cancel</button>
+							  <button class="btn-common-new" type="submit">Submit</button>
 						  </div>
 					  </div>
 					</form>
