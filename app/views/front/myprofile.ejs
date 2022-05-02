@@ -377,6 +377,32 @@
 
 
 <script>
+	var dropdown_link = document.getElementById('navDropdown');
+	dropdown_link.addEventListener('click',(e)=>{
+		var li_elem = e.target.parentElement.parentElement;
+		var dd_menu = document.getElementById("dropdown_menu");
+
+		var aria_expanded_status = (e.target.parentElement.getAttribute('aria-expanded'));
+		
+		if(aria_expanded_status == 'true'){
+			
+			li_elem.classList.remove("show");
+			e.target.parentElement.setAttribute('aria-expanded',false);
+			dd_menu.classList.remove("show");
+		}
+		else{						
+			
+			li_elem.classList.add("show");
+			e.target.parentElement.setAttribute('aria-expanded',true);
+			dd_menu.classList.add("show");
+		}
+	});
+</script>
+
+
+
+
+<script>
 	document.getElementById('mobile').addEventListener('keypress',(evt) => {
 		var invalidChars = [
 			'+',

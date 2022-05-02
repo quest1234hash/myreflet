@@ -837,7 +837,7 @@
 									  <div class="create-rflet-id-form">
 										  <div class="form-group">
 											  <div class="input-group">
-												<input type="text" class="form-control" placeholder="Enter recipient Wallet ID" id="rec_add" required name="rec_wallet_id">
+												<input required type="text" class="form-control" placeholder="Enter recipient Wallet ID" id="rec_add" required name="rec_wallet_id">
 												<input type="hidden" value="<%=wallet_type  %>" name="wallet_type">
 												<input type="hidden" value="<%= wallet_address %>" name="sender_wallet_id">
 											  </div>
@@ -846,24 +846,24 @@
 											<label id="msg" style="color: red;"></label>
 											  <div class="input-group">
 												
-												<input type="text" name="pvtKey" class="form-control" placeholder="Enter Private Key" id="pvtKey" onchange="checkValidPvtKey(this.value,`<%= wallet_type%>`,`<%= wallet_address %>`)" required>
+												<input required type="text" name="pvtKey" class="form-control" placeholder="Enter Private Key" id="pvtKey" onchange="checkValidPvtKey(this.value,`<%= wallet_type%>`,`<%= wallet_address %>`)" required>
 											  </div>
 										  </div>
 										  <div class="form-group">
 											  <div class="input-group">
-												<input type="text" name="amount" class="form-control" placeholder="Enter Amount"  onchange="getTransactionFee(this.value,`<%= wallet_type%>`,`<%= wallet_address %>`)" required>
+												<input required type="text" name="amount" class="form-control" placeholder="Enter Amount"  onchange="getTransactionFee(this.value,`<%= wallet_type%>`,`<%= wallet_address %>`)" required>
 											  </div>
 										  </div>
 										  <div class="form-group">
 											  <div class="input-group">
-												<input type="text" class="form-control" placeholder=" Recived Amount" readonly id="receive_amount" required>
+												<input required type="text" class="form-control" placeholder=" Received Amount" readonly id="receive_amount" required>
 											  </div>
 											  <label for="name" style="margin-top: -28px;; float: right;" >MX TX FEE: <span id="tr_fee">0.00000000</span></label>
 										  </div>
 									  </div>
 									  <div >
 										  <button class="btn-common-new" type="reset" onclick="removeLabel()">Cancel</button>
-										  <button class="btn-common-new" type="submit">Sumbit</button>
+										  <button class="btn-common-new" type="submit">Submit</button>
 									  </div>
 								  </div>
 								  </form>
