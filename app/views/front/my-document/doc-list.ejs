@@ -16,7 +16,7 @@
 
 <section class="heading-sec mb-0">
 	<div class="container">
-<!-- main head-->
+		<!-- main head-->
 		<div class="row align-item-center">
 			<div class="col-lg-9 col-md-6 col-sm-6">
 				<h2 class="purple-heading">All Documents</h2>
@@ -27,14 +27,14 @@
 <% if(err_msg!=undefined && err_msg !='' ){ %>
 	<div class="alert alert-danger text-center  flash_msg " id="error_msg">
 		<%= err_msg %>
-	   </div>
+	</div>
 	 
-	<% }%>
-	 <% if(success_msg!=undefined && success_msg !='' ){ %>
-	  <div class="alert alert-success text-center  flash_msg "id="success_message">
-	  <%= success_msg %>
-	 </div>
-	<% }%>
+<% }%>
+<% if(success_msg!=undefined && success_msg !='' ){ %>
+	<div class="alert alert-success text-center  flash_msg "id="success_message">
+		<%= success_msg %>
+	</div>
+<% }%>
 <section class="setup-id-sec">
 	<div class="container">
 		<div class="row personal-info-heading">
@@ -45,16 +45,24 @@
 			<div>
 				<div class="checkbox">
 					<label>
-				<!--<input type="checkbox" value="">-->
-				<!-- <span class="cr"><i class="cr-icon fa fa-check"></i></span> -->
+					<!--<input type="checkbox" value="">-->
+					<!-- <span class="cr"><i class="cr-icon fa fa-check"></i></span> -->
 
-				<a href="#" onclick="activeDownloadFunction(`<%=folder_id%>`)"><img src="../assets/images/icons/dashboard-assets/download-purple.png" id="down_id" > Download</a>
-				<a href="#"data-toggle="modal" onclick="activeSendFunction()" data-target="" id="send_id"><img src="../assets/images/icons/dashboard-assets/send-to-verifier.png"> Send </a>
-				<a href="#" data-toggle="modal"  onclick="activeShareFunction()" data-target="" id="share_id"><img src="../assets/images/icons/dashboard-assets/upload-purple.png"> Share</a>
-				<a href="#" onclick="activeDeleteFunction()"><img src="../assets/images/icons/dashboard-assets/trash.png">Delete</a>
-				<!-- <a href="#" data-toggle="modal" data-target="#SendDocuments" style="display: none;" id="send_id"></a> -->
-			</label>
+					<a href="#" onclick="activeDownloadFunction(`<%=folder_id%>`)"><img src="../assets/images/icons/dashboard-assets/download-purple.png" id="down_id" > Download</a>
+					<a href="#"data-toggle="modal" onclick="activeSendFunction()" data-target="" id="send_id"><img src="../assets/images/icons/dashboard-assets/send-to-verifier.png"> Send </a>
+					<a href="#" data-toggle="modal"  onclick="activeShareFunction()" data-target="" id="share_id"><img src="../assets/images/icons/dashboard-assets/upload-purple.png"> Share</a>
+					<a href="#" onclick="activeDeleteFunction()"><img src="../assets/images/icons/dashboard-assets/trash.png">Delete</a>
+					<a href="#" data-toggle="modal" data-target="#AddDocuments"><i class="fa fa-plus" aria-hidden="true"></i>Add</a>
+					<!-- <a href="#" data-toggle="modal" data-target="#SendDocuments" style="display: none;" id="send_id"></a> -->
+					</label>
 				</div>
+			</div>
+		</div>
+
+		<!-- Add more documents button-->
+		<div class="col-lg-12 col-md-8 col-sm-8">
+			<div class="text-right">
+				<!-- <a class="btn-common-new" href="#" style="padding: 9px 16px !important;" data-toggle="modal" data-target="#AddDocuments"><i class="fa fa-plus" aria-hidden="true"></i></a> -->
 			</div>
 		</div>
 
@@ -126,26 +134,20 @@
 			</table>
 		</div>
 	</div>
-	<!-- Add more documents button-->
-	<div class="col-lg-12 col-md-8 col-sm-8">
-				<div class="text-right">
-					<a class="btn-common-new" href="#" style="padding: 9px 16px !important;" data-toggle="modal" data-target="#AddDocuments"><i class="fa fa-plus" aria-hidden="true"></i></a>
-				</div>
-		</div>
+	
 
 </section>
 
 
-            <!--modal1 upload doc-->
-
+<!--modal1 upload doc-->
 <div class="modal fade field-edit-modal" id="AddDocuments" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <div class="create-wallet-box">
+<div class="modal-dialog" role="document">
+	<div class="modal-content">
+	<div class="modal-body">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+		</button>
+		<div class="create-wallet-box">
 			<div class="row align-item-center">
 				<div class="col-xl-2 col-lg-3 col-md-3">
 					<div>
@@ -164,40 +166,40 @@
 						<div class="create-rflet-id-form">
 						<div class="form-group">
 								<div class="input-group">
-								  <input required type="text" class="form-control" placeholder="Document ID" name="id_number">
-								  <input type="hidden" value="<%=folder_id %>" name="folder_id">
+								<input required type="text" class="form-control" placeholder="Document ID" name="id_number">
+								<input type="hidden" value="<%=folder_id %>" name="folder_id">
 								</div>
 							</div>
 						<div class="form-group">
-                           <select style="width:100%;" required name="document_name" id="coin" class="" name="document_name">
-                                   <option value="">Select Document</option>
-								   <option value="Utility bills">Utility bills</option>
-                                         <option value="Driving license">Driving license</option>
-                                                 <option value="Aadhar card">Aadhar card</option>
-                                                       <option value="Pan card">Pan card</option>
-													   <option value="passport">Passport</option>
-													   <option value="Identity Card">Identity Card</option>
-													   <option value="Permanent account number(PAN)">Permanent account number(PAN)</option>
-													   <option value="Proof of Address">Proof of Address</option>
-													   <option value="Rent agreement">Rent agreement</option>
-													   <option value="Others">Others</option>
-                                                </select>
-						    </div>
-						    <div class="form-group">
+						<select style="width:100%;" required name="document_name" id="coin" class="" name="document_name">
+								<option value="">Select Document</option>
+								<option value="Utility bills">Utility bills</option>
+										<option value="Driving license">Driving license</option>
+												<option value="Aadhar card">Aadhar card</option>
+													<option value="Pan card">Pan card</option>
+													<option value="passport">Passport</option>
+													<option value="Identity Card">Identity Card</option>
+													<option value="Permanent account number(PAN)">Permanent account number(PAN)</option>
+													<option value="Proof of Address">Proof of Address</option>
+													<option value="Rent agreement">Rent agreement</option>
+													<option value="Others">Others</option>
+												</select>
+							</div>
+							<div class="form-group">
 							<div class="input-group">
-                           <input style="margin-top:14px;" required type="date" min="1908-01-01" name="exp_date" class="form-control" placeholder="Expiry Date (MM/DD/YY)">
-						   </div>
-						    </div>
+						<input id="cal_date" style="margin-top:14px;" required type="date" name="exp_date" class="form-control" placeholder="Expiry Date (MM/DD/YY)">
+						</div>
+							</div>
 							<div class="form-group browse-file-section">
-				                <input type="file" name="staff_image" class="file" style="visibility: hidden;position: absolute;" accept="image/x-png,image/jpeg">
-				                <div class="input-group col-xs-12">
+								<input type="file" name="staff_image" class="file" style="visibility: hidden;position: absolute;" accept="image/x-png,image/jpeg">
+								<div class="input-group col-xs-12">
 								<input required type="file" name="file" class="form-control" placeholder="Upload Document">
-				                    <!-- <span class="input-group-btn">
-				                      <button class="browse btn btn-primary input-lg" type="button" style="height: 36px;">Upload</button>
-				                    </span> -->
-				                    <!-- <input type="text" class="form-control" readonly="" placeholder=""> -->
-				                </div>
-                            </div>
+									<!-- <span class="input-group-btn">
+									<button class="browse btn btn-primary input-lg" type="button" style="height: 36px;">Upload</button>
+									</span> -->
+									<!-- <input type="text" class="form-control" readonly="" placeholder=""> -->
+								</div>
+							</div>
 						</div>
 						<div >
 							<button data-dismiss="modal" type="reset" class="btn-common-new" >Cancel</button>
@@ -206,25 +208,24 @@
 					</div>
 				</div>
 				
-			 </div>
+			</div>
 			</form>
-	 	  </div>
-       </div>
-    </div>
-  </div>
+		</div>
+	</div>
+	</div>
+</div>
 </div>
 
 
 <!--modal 2 send documents-->
-
 <div class="modal fade field-edit-modal" id="SendDocuments" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <div class="create-wallet-box">
+<div class="modal-dialog" role="document">
+	<div class="modal-content">
+	<div class="modal-body">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+		</button>
+		<div class="create-wallet-box">
 			<div class="row align-item-center">
 				<div class="col-xl-2 col-lg-3 col-md-3">
 					<div>
@@ -247,52 +248,51 @@
 							<input type="hidden" vaule="" name="uploaded_id" id="upl-id">
 							<input type="hidden" value="<%=folder_id %>" name="folder_id">
 							<input type="hidden" value="" name="veri_reflet_id" id="ref-id">
-                           <select name="veri_name" id="coin" class="form-control">
-                                   <option value="document">Select Verifier</option>
-								   <% if(verifierArr.length>0){ %>
+						<select required name="veri_name" id="coin" class="form-control">
+								<option value="">Select Verifier (*)</option>
+								<% if(verifierArr.length>0){ %>
 									<%for(let i=0;i<verifierArr.length;i++){   %>
 									
-                                         <option value="<%= verifierArr[i].verifierName %>" onclick="getVerifierReflet(`<%= verifierArr[i].verifierName %>`,`<%= verifierArr[i].verifierRefletId %>`)"><%= verifierArr[i].verifierName %> &nbsp; &nbsp;<%= verifierArr[i].verifierRefletId %> </option>
-										 <% }} %>
-						   </select>
-						    </div>
+										<option value="<%= verifierArr[i].verifierName %>" onclick="getVerifierReflet(`<%= verifierArr[i].verifierName %>`,`<%= verifierArr[i].verifierRefletId %>`)"><%= verifierArr[i].verifierName %> &nbsp; &nbsp;<%= verifierArr[i].verifierRefletId %> </option>
+										<% }} %>
+						</select>
+							</div>
 						</div>
 							<div class="form-group">
 								<div class="input-group">
-								  <input type="text" class="form-control" value="" placeholder="Document Name" id="doc_name_id" readonly>
+								<input type="text" class="form-control" value="" placeholder="Document Name" id="doc_name_id" readonly>
 								</div>
 							</div>
-						    <div class="form-group">
+							<div class="form-group">
 								<div class="input-group">
-								  <input type="text" class="form-control" name="natural_reflet_privatekey" placeholder="Enter Natural refletID Private Key">
+								<input required type="text" class="form-control" name="natural_reflet_privatekey" placeholder="Enter Natural refletID Private Key (*)">
 								</div>
 							</div>
 						</div>
 						<div >
-							<button type="reset" class="btn-common-new">Cancel</button>
-							<button type="submit" class="btn-common-new">Sumbit</button>
+							<button type="reset" data-dismiss="modal" class="btn-common-new">Cancel</button>
+							<button type="submit" class="btn-common-new">Submit</button>
 						</div>
 					</div>
 				</div>
-			 </div>
+			</div>
 			</form>
-	 	  </div>
-       </div>
-    </div>
-  </div>
+		</div>
+	</div>
+	</div>
+</div>
 </div>
 
 
-           <!--modal3  share documents--> 
-
+<!--modal3  share documents--> 
 <div class="modal fade field-edit-modal" id="Share" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <div class="create-wallet-box">
+<div class="modal-dialog" role="document">
+	<div class="modal-content">
+	<div class="modal-body">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+		</button>
+		<div class="create-wallet-box">
 			<div class="row align-item-center">
 				<div class="col-xl-2 col-lg-3 col-md-3">
 					<div>
@@ -308,16 +308,16 @@
 				<div class="col-xl-12 col-lg-12 col-md-12 m-auto">
 					<div class="setup-inner-box for-protact">
 						<div class="create-rflet-id-form">
-						    <div class="form-group">
-						    	<div class="input-group">
-								  <input required type="text" class="form-control" name="receiver_refletid" placeholder="Enter receiver's MyReflet ID">
-								  <input type="hidden" id="upload-id" value="" name="uploaded_id">
-								  <input type="hidden" value="<%=folder_id %>" name="folder_id">
-								</div>
-						    </div>
-						    <div class="form-group">
+							<div class="form-group">
 								<div class="input-group">
-								  <input required type="text" class="form-control" name="sender_pvt_key" placeholder="Enter Private Key of this digital wallet">
+								<input required type="text" class="form-control" name="receiver_refletid" placeholder="Enter receiver's MyReflet ID">
+								<input type="hidden" id="upload-id" value="" name="uploaded_id">
+								<input type="hidden" value="<%=folder_id %>" name="folder_id">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group">
+								<input required type="text" class="form-control" name="sender_pvt_key" placeholder="Enter Private Key of this digital wallet">
 								</div>
 							</div>
 						</div>
@@ -327,12 +327,12 @@
 						</div>
 					</div>
 				</div>
-			 </div>
+			</div>
 			</form>
-	 	  </div>
-       </div>
-    </div>
-  </div>
+		</div>
+	</div>
+	</div>
+</div>
 </div>
 
 
@@ -341,79 +341,85 @@
 <%- include('../innerFooter')%>
 
 <!-- scripts-->
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
   
-   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 
-  <script>
-  $(document).ready( function () {
-	$('.table').DataTable();
-   } );
-   </script>
+<script>
+	window.addEventListener('DOMContentLoaded',() => {
+		var cur_date = new Date();
+		cur_date = cur_date.toISOString().substring(0,10);
+		document.getElementById('cal_date').setAttribute('min',cur_date);
+	});
+</script>
+
+<script>
+	$(document).ready( function () {
+		$('.table').DataTable();
+	});
+</script>
 <script>
 	function showDoc(uploaded_id,i){
-		          $.ajax({
-                          type: "post",
-                          url: "/show-doc",
-                          data:{uploaded_id:uploaded_id},
-                          success: function (data) {
-                            console.log(data);
-                         let img_id='view-id'+i;
-						 let srcData="data:image/png;base64,"+data;
-						document.getElementById(img_id).src=srcData;                              
-    }
-  })
-}
+		$.ajax({
+			type: "post",
+			url: "/show-doc",
+			data:{uploaded_id:uploaded_id},
+			success: function (data) {
+				console.log(data);
+				let img_id='view-id'+i;
+				let srcData="data:image/png;base64,"+data;
+				document.getElementById(img_id).src=srcData;                              
+    		}
+  		})
+	}
 
 
 function activeDeleteFunction(){
-let elems=document.getElementsByClassName('upd');
-console.log("valllllllll:",elems[0].value);
-let dataArr=[];
-let k=0;
-for(let i=0;i<elems.length;i++){
-	console.log("checking checked:",elems[i].checked);
-	if(elems[i].checked==true){
-
-          dataArr[k]=elems[i].value;
-		  k++;
+	let elems=document.getElementsByClassName('upd');
+	console.log("valllllllll:",elems[0].value);
+	let dataArr=[];
+	let k=0;
+	for(let i=0;i<elems.length;i++){
+		console.log("checking checked:",elems[i].checked);
+		if(elems[i].checked==true){
+			dataArr[k]=elems[i].value;
+			k++;
+		}
 	}
-
-}
-console.log("arrrrrrrrr",dataArr);
-document.getElementById('uplodid').value=dataArr;
- document.getElementById('subt-btn').click();
+	console.log("arrrrrrrrr",dataArr);
+	document.getElementById('uplodid').value=dataArr;
+	document.getElementById('subt-btn').click();
 }
 
 //send function
 function activeSendFunction(){
 	document.getElementById('upl-id').value="";
-let elems=document.getElementsByClassName('upd');
-let dataArr=[];
-let docNameArr=[];
-let k=0;
-let clicked_value='';
-let docname_elms=document.getElementsByClassName('docNameClass');
-console.log("vvvvvvvvvvvvvvvv:",docname_elms[0].value)
-for(let i=0;i<elems.length;i++){
-	console.log("checking checked:",elems[i].checked);
-	if(elems[i].checked==true){
-		docNameArr[k]=docname_elms[i].value;
-		clicked_value=elems[i].value;
-          dataArr[k]=elems[i].value;
-		  k++;
+	let elems=document.getElementsByClassName('upd');
+	let dataArr=[];
+	let docNameArr=[];
+	let k=0;
+	let clicked_value='';
+	let docname_elms=document.getElementsByClassName('docNameClass');
+	console.log("vvvvvvvvvvvvvvvv:",docname_elms[0].value)
+	for(let i=0;i<elems.length;i++){
+		console.log("checking checked:",elems[i].checked);
+		if(elems[i].checked==true){
+			docNameArr[k]=docname_elms[i].value;
+			clicked_value=elems[i].value;
+			dataArr[k]=elems[i].value;
+			k++;
+		}
 	}
-}
-if(dataArr.length<1){
-	alert("Please select one of the listed documents");
-}else if(dataArr.length>1){
-	alert("Please select only one document at a time in order to send to verifier");
-}else{
-	//document.getElementById("doc_name_id").value=docNameArr[0];
-	document.getElementById('upl-id').value=clicked_value;
-    document.getElementById("send_id").dataset.target="#SendDocuments";
-	
-}
+	if(dataArr.length<1){
+		alert("Please select one of the listed documents");
+	}else if(dataArr.length>1){
+		alert("Please select only one document at a time in order to send to verifier");
+	}else{
+		//document.getElementById("doc_name_id").value=docNameArr[0];
+		document.getElementById('upl-id').value=clicked_value;
+		document.getElementById("send_id").dataset.target="#SendDocuments";
+		
+	}
 }
 
 
@@ -421,32 +427,32 @@ if(dataArr.length<1){
 //share function
 function activeShareFunction(){
 	document.getElementById('upload-id').value="";
-let elems=document.getElementsByClassName('upd');
-let dataArr=[];
-let docNameArr=[];
-let k=0;
-let clicked_value='';
-let docname_elms=document.getElementsByClassName('docNameClass');
-console.log("vvvvvvvvvvvvvvvv:",docname_elms[0].value)
-for(let i=0;i<elems.length;i++){
-	console.log("checking checked:",elems[i].checked);
-	if(elems[i].checked==true){
-		docNameArr[k]=docname_elms[i].value;
-		clicked_value=elems[i].value;
-          dataArr[k]=elems[i].value;
-		  k++;
+	let elems=document.getElementsByClassName('upd');
+	let dataArr=[];
+	let docNameArr=[];
+	let k=0;
+	let clicked_value='';
+	let docname_elms=document.getElementsByClassName('docNameClass');
+	console.log("vvvvvvvvvvvvvvvv:",docname_elms[0].value)
+	for(let i=0;i<elems.length;i++){
+		console.log("checking checked:",elems[i].checked);
+		if(elems[i].checked==true){
+			docNameArr[k]=docname_elms[i].value;
+			clicked_value=elems[i].value;
+			dataArr[k]=elems[i].value;
+			k++;
+		}
 	}
-}
-console.log("dataArr",dataArr);
-if(dataArr.length<1){
-	alert("Please select one of the listed documents");
-}else if(dataArr.length>1){
-	alert("Please select only one document at a time in order to send to verifier");
-}else{
-	document.getElementById("doc_name_id").value=docNameArr[0];
-	document.getElementById('upload-id').value=clicked_value;
-    document.getElementById("share_id").dataset.target="#Share";
-}
+	console.log("dataArr",dataArr);
+	if(dataArr.length<1){
+		alert("Please select one of the listed documents");
+	}else if(dataArr.length>1){
+		alert("Please select only one document at a time in order to send to verifier");
+	}else{
+		document.getElementById("doc_name_id").value=docNameArr[0];
+		document.getElementById('upload-id').value=clicked_value;
+		document.getElementById("share_id").dataset.target="#Share";
+	}
 }
 
 
@@ -457,42 +463,44 @@ function getVerifierReflet(ver_name,ref_id){
 
 //download docs
 function activeDownloadFunction(folder_id){
-let elems=document.getElementsByClassName('upd');
-let dataArr=[];
-let docNameArr=[];
-let k=0;
-let clicked_value='';
-let docname_elms=document.getElementsByClassName('docNameClass');
-console.log("vvvvvvvvvvvvvvvv:",docname_elms[0].value)
-for(let i=0;i<elems.length;i++){
-	console.log("checking checked:",elems[i].checked);
-	if(elems[i].checked==true){
-		docNameArr[k]=docname_elms[i].value;
-		clicked_value=elems[i].value;
-          dataArr[k]=elems[i].value;
-		  k++;
+	let elems=document.getElementsByClassName('upd');
+	let dataArr=[];
+	let docNameArr=[];
+	let k=0;
+	let clicked_value='';
+	let docname_elms=document.getElementsByClassName('docNameClass');
+	console.log("vvvvvvvvvvvvvvvv:",docname_elms[0].value)
+	for(let i=0;i<elems.length;i++){
+		console.log("checking checked:",elems[i].checked);
+		if(elems[i].checked==true){
+			docNameArr[k]=docname_elms[i].value;
+			clicked_value=elems[i].value;
+			dataArr[k]=elems[i].value;
+			k++;
+		}
 	}
-}
-console.log("dataArr",dataArr);
-if(dataArr.length<1){
-	alert("Please select one of the listed documents");
-}else if(dataArr.length>1){
-	alert("Please select only one document at a time in order to download document");
-}else{
-	let uploaded_id=dataArr[0];
-	$.ajax({
-           type: "post",
-           url: "/download-doc",
-           data:{uploaded_id:uploaded_id,folder_id:folder_id},
-           success: function (data) {
-        console.log(data);
-		var a = document.createElement("a"); //Create <a>
-    a.href = "data:image/png;base64," + data; //Image Base64 Goes here
-    a.download = docNameArr[0]+".png"; //File name Here
-    a.click(); //Downloaded file                
-    }
-  })
-}
+	console.log("dataArr",dataArr);
+	if(dataArr.length<1){
+		alert("Please select one of the listed documents");
+	}
+	else if(dataArr.length>1){
+		alert("Please select only one document at a time in order to download document");
+	}
+	else{
+		let uploaded_id=dataArr[0];
+		$.ajax({
+			type: "post",
+			url: "/download-doc",
+			data:{uploaded_id:uploaded_id,folder_id:folder_id},
+			success: function (data) {
+				console.log(data);
+				var a = document.createElement("a"); //Create <a>
+				a.href = "data:image/png;base64," + data; //Image Base64 Goes here
+				a.download = docNameArr[0]+".png"; //File name Here
+				a.click(); //Downloaded file                
+			}
+		})
+	}
 }
 
 </script>

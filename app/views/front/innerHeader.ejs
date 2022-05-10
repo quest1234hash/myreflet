@@ -185,7 +185,7 @@
     <%
      if(Userprofile())
      { var userdata = Userprofile()
-       var imageName = userdata.profile_pic;
+       var imageName = userdata.profile_img_name;
       
        var username  = decrypt(userdata.full_name)
        
@@ -308,7 +308,7 @@
                         <%
                         if(Userprofile())
                         { var userdata = Userprofile()
-                          var imageName = userdata.profile_pic;
+                          var imageName = userdata.profile_img_name;// userdata.profile_pic;
                           var username  = decrypt(userdata.full_name)
                         
 

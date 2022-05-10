@@ -189,7 +189,7 @@ exports.my_reflect_code_id= async(req,res,next) =>{
                 res.render('front/myReflect/my-reflet-id-code',{
                     success_msg,
                     err_msg,
-                    session:req.session,
+                    session:req.session, 
                     all_reflect_id,
                     refletArr,
                     crypto,
@@ -783,131 +783,135 @@ exports.checkEntityPassword=async function(req,res){
 
 //get methods page after clicking over entity will get all linked wallets
 
-exports.getClickingOverEntityPage=async function(req,res){
-    let reflet_id=decrypt(req.query.reflet_id);
+exports.getClickingOverEntityPage = async function(req,res){
+    let reflet_id = decrypt(req.query.reflet_id);
     console.log("reflet idddddddd",reflet_id);
     var success_msg = req.flash('success_msg');
-    var err_msg= req.flash('err_msg');
-     let user_id=req.session.user_id;
+    var err_msg = req.flash('err_msg');
+    let user_id = req.session.user_id;
     try{
         //fetch reflet detail
-         let reflet_det=await MyReflectIdModel.findOne({where:{reflect_code:reflet_id}});
-          let wallet_det=await WalletModel.findOne({where:{wallet_id:reflet_det.wallet_id}});
-          let refNaturalDet=await MyReflectIdModel.findOne({where:{reg_user_id:user_id,reflectid_by:'representative',idCreated:'true'}});
-          let sharedDet=await ShareEntityModel.findAll({where:{shared_entity:reflet_id,entity_owner:refNaturalDet.reflect_code}});
-           let sharedArr=[];
-           if(sharedDet.length>0){
-            for(let i=0;i<sharedDet.length;i++){
-                        let empDet = await MyReflectIdModel.findOne({where:{reg_user_id:sharedDet[i].receiver_id,reflectid_by:'representative',idCreated:'true'}})
-                     if(sharedDet[i].isBlock==null||sharedDet[i].isBlock=='no'){
-                       sharedDet[i].isBlock='no'
-                     }else{
-                       sharedDet[i].isBlock='yes'
-                     }
-                     let dt = dateTime.create(sharedDet[i].createdAt);
-                     let formatted = dt.format('m/d/Y');
-                     let tim=dt.format('H:M:S');
-                     let sharedObj={
-                       employee_refletid:empDet.reflect_code,
-                       block_status:sharedDet[i].isBlock,
-                       date:formatted,
-                       time:tim,
-                       entity_refletid:reflet_id
-                   }
-                   sharedArr[i]=sharedObj;
-            }
- 
-          } 
-          let name="";
-          if(reflet_det.reflectid_by=='representative'){
-            reflet_det.reflectid_by='Natural Person'
-            name=decrypt(reflet_det.rep_username);
-          }else{
-            name=decrypt(reflet_det.entity_name);
-          }
+        let reflet_det = await MyReflectIdModel.findOne({where:{reflect_code:reflet_id}});
+        let wallet_det = await WalletModel.findOne({where:{wallet_id:reflet_det.wallet_id}});
+        let refNaturalDet = await MyReflectIdModel.findOne({where:{reg_user_id:user_id,reflectid_by:'representative',idCreated:'true'}});        
+        
+        //snippet added later (may get removed)
+        if((refNaturalDet == null) || (refNaturalDet.length == 0)){
+            refNaturalDet = await MyReflectIdModel.findOne({where:{reg_user_id:user_id,reflectid_by:'entity',idCreated:'true'}});
+        }
+        
+        let sharedDet = await ShareEntityModel.findAll({where:{shared_entity:reflet_id,entity_owner:refNaturalDet.reflect_code}});
+        let sharedArr = [];
+        if(sharedDet.length > 0){
+            for(let i = 0;i < sharedDet.length;i++){
+                let empDet = await MyReflectIdModel.findOne({where:{reg_user_id:sharedDet[i].receiver_id,reflectid_by:'representative',idCreated:'true'}})
+                if(sharedDet[i].isBlock == null || sharedDet[i].isBlock == 'no'){
+                    sharedDet[i].isBlock = 'no'
+                }
+                else{
+                    sharedDet[i].isBlock = 'yes'
+                }
+                let dt = dateTime.create(sharedDet[i].createdAt);
+                let formatted = dt.format('m/d/Y');
+                let tim = dt.format('H:M:S');
+                let sharedObj = {
+                    employee_refletid:empDet.reflect_code,
+                    block_status:sharedDet[i].isBlock,
+                    date:formatted,
+                    time:tim,
+                    entity_refletid:reflet_id
+                }
+                sharedArr[i]=sharedObj;
+            } 
+        } 
+        let name = "";
+        if(reflet_det.reflectid_by == 'representative'){
+            reflet_det.reflectid_by = 'Natural Person'
+            name = decrypt(reflet_det.rep_username);
+        }
+        else{
+            name = decrypt(reflet_det.entity_name);
+        }
 
-          let reflet_obj={
-              name:name,
-              reflet_id:reflet_id,
-              type:reflet_det.reflectid_by,
-              wallet_id:wallet_det.wallet_address,
-              balance:'0'
-          }
-        let digital_wallet=await DigitalWalletRelsModel.findAll({where:{parent_reflect_id:reflet_id}});
-        let crypto_wallets=await CryptoWalletModel.findAll({where:{reflet_code:reflet_id}});
-        let wallets=[]; 
-        if(digital_wallet.length>0||crypto_wallets.length>0){
-          let k=0;
-              if(digital_wallet.length>0){
-                for(let i=0;i<digital_wallet.length;i++){
-                 if(digital_wallet[i].balance==null){
-                   digital_wallet[i].balance='0'
-                 }
-                    let walletObj={
-                      walletAddress:digital_wallet[i].wallet_address,
-                      balance:digital_wallet[i].balance.toString(),
-                      refletid:digital_wallet[i].parent_reflect_id,
-                      walletid:digital_wallet[i].dig_wallet_rel.toString(),
-                      wallet_type:'digital',
-                      name:digital_wallet[i].digital_type
+        let reflet_obj = {
+            name: name,
+            reflet_id: reflet_id,
+            type: reflet_det.reflectid_by,
+            wallet_id: wallet_det.wallet_address,
+            balance: '0'
+        }
+        let digital_wallet = await DigitalWalletRelsModel.findAll({where:{parent_reflect_id:reflet_id}});
+        let crypto_wallets = await CryptoWalletModel.findAll({where:{reflet_code:reflet_id}});
+        let wallets = []; 
+        if(digital_wallet.length > 0 || crypto_wallets.length > 0){
+            let k=0;
+            if(digital_wallet.length > 0){
+                for(let i = 0;i < digital_wallet.length;i++){
+                    if(digital_wallet[i].balance == null){
+                        digital_wallet[i].balance = '0'
                     }
-                    wallets[k]=walletObj;
+                    let walletObj = {
+                        walletAddress:digital_wallet[i].wallet_address,
+                        balance:digital_wallet[i].balance.toString(),
+                        refletid:digital_wallet[i].parent_reflect_id,
+                        walletid:digital_wallet[i].dig_wallet_rel.toString(),
+                        wallet_type:'digital',
+                        name:digital_wallet[i].digital_type
+                    }
+                    wallets[k] = walletObj;
                     k++;
                 }
-              }
-              if(crypto_wallets.length>0){
-               for(let i=0;i<crypto_wallets.length;i++){
-                   
-                   let walletObj={
-                     walletAddress:decrypt1(crypto_wallets[i].public_key),
-                     balance:'',
-                     refletid:crypto_wallets[i].reflet_code.toString(),
-                     walletid:decrypt1(crypto_wallets[i].wallet_address),
-                     wallet_type:'crypto',
-                     name:decrypt1(crypto_wallets[i].wallet_type)
-                   }
-                   if(decrypt1(crypto_wallets[i].wallet_type).toLowerCase()=='ethereum'){
-                    let balanceObj=await web3jsAcc.eth.getBalance(respObj.walletId);
-                    let balance_eth= web3jsAcc.utils.fromWei(balanceObj, "ether");
-                    balance_eth=parseFloat(balance_eth).toFixed(8);
-                    walletObj.balance=balance_eth.toString();
-                  }else{
-                    try{
-                 let btcba =await btcbalance(respObj.walletId);
-                 btcba=parseFloat(btcba).toFixed(8);
-                 walletObj.balance=btcba.toString();
-                    }catch(err){
-                      walletObj.balance='0'
-                      console.log(err);
+            }
+            if(crypto_wallets.length>0){
+                for(let i=0;i<crypto_wallets.length;i++){
+                    let walletObj={
+                        walletAddress:decrypt1(crypto_wallets[i].public_key),
+                        balance:'',
+                        refletid:crypto_wallets[i].reflet_code.toString(),
+                        walletid:decrypt1(crypto_wallets[i].wallet_address),
+                        wallet_type:'crypto',
+                        name:decrypt1(crypto_wallets[i].wallet_type)
                     }
-                    
-                  }
-
-
-                
-                   wallets[k]=walletObj;
-                   k++;
+                    if(decrypt1(crypto_wallets[i].wallet_type).toLowerCase()=='ethereum'){
+                        let balanceObj = await web3jsAcc.eth.getBalance(respObj.walletId);
+                        let balance_eth = web3jsAcc.utils.fromWei(balanceObj, "ether");
+                        balance_eth = parseFloat(balance_eth).toFixed(8);
+                        walletObj.balance = balance_eth.toString();
+                    }
+                    else{
+                        try{
+                            let btcba = await btcbalance(respObj.walletId);
+                            btcba = parseFloat(btcba).toFixed(8);
+                            walletObj.balance = btcba.toString();
+                        }
+                        catch(err){
+                            walletObj.balance='0'
+                            console.log(err);
+                        }                    
+                    }               
+                    wallets[k] = walletObj;
+                    k++;
                }
-             }
-             res.render('front/myReflect/all-linked-wallets',{
+            }
+            res.render('front/myReflect/all-linked-wallets',{
                 wallets:wallets,
                 reflet_obj:reflet_obj,
                 sharedArr:sharedArr
-             })
-           //  res.json({ status: 1, msg: "Linked wallets", data: wallets });
-       }else{
-        res.render('front/myReflect/all-linked-wallets',{
-            wallets:wallets,
-            reflet_obj:reflet_obj,
-            sharedArr:sharedArr,
-            success_msg,
-            err_msg
-         })
-         //res.json({ status: 0, msg: "No linked wallets with this refletID", data: { err_msg: 'Failed'} });
-       }
-
-          
-    }catch(err){
+            })
+            //  res.json({ status: 1, msg: "Linked wallets", data: wallets });
+        }
+        else{
+            res.render('front/myReflect/all-linked-wallets',{
+                wallets:wallets,
+                reflet_obj:reflet_obj,
+                sharedArr:sharedArr,
+                success_msg,
+                err_msg
+            })
+            //res.json({ status: 0, msg: "No linked wallets with this refletID", data: { err_msg: 'Failed'} });
+        }
+    }
+    catch(err){
         throw err;
     }
 }

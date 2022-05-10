@@ -26,6 +26,7 @@
 								<div class="create-rflet-id-form">
 									<form name="edit-profile-form" id="edit-profile-form" method="post"
 										action="/edit-profile" enctype="multipart/form-data">
+										<div style="display: none;" class="alert alert-warning text-center  flash_msg " id="warning_messgae"></div>
 										<% if(err_msg!=undefined && err_msg !='' ){ %>
 										<div class="alert alert-danger text-center  flash_msg " id="error_msg">
 											<%= err_msg %>
@@ -79,11 +80,15 @@
 										</div>
 
 										<div>
-											<button type="submit" name="submit" class="btn-common-new">Update</button>
+											<button type="submit" style="width:150px;" name="submit" class="btn-common-new">Update</button>
 											<%if(session.user_type=="client"){%>
-												<a class="btn-common-new" href="/cilent_deshboard">Cancel</a>
+												<a href="/cilent_deshboard">
+													<button style="width:150px;" class="btn-common-new">Cancel</button>
+												</a>
 											<%}else{%>
-												<a class="btn-common-new" href="/verifier_deshboard">Cancel</a>
+												<a href="/verifier_deshboard">
+													<button class="btn-common-new">Cancel</button>
+												</a>
 											<%}%>										
 										</div>
 										<div class="row profile-form-row">

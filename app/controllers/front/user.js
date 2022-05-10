@@ -29,6 +29,26 @@ const {  MAIL_SEND_ID,
 }							                                                   = require('../../config/config')
 
 const fs=require('fs');
+
+var multer = require('multer');
+const { resolve } = require('path');
+const { reject } = require('bluebird');
+
+//multer file uploading
+var Storage1 = multer.diskStorage({
+  // destination:'../public/profilepic',
+  destination:"./public/profilepic",
+  filename:(req,file,cb)=>{
+    console.log("Sttttttttttttttttttttttttttt");
+    cb(null,req.session.user_id+file.originalname)
+  }
+ });
+ //middleware
+ 
+
+
+
+
 //new apiiiiiiiiiiiiiiiiii
 let csc = require('country-state-city').default;
 
@@ -2190,27 +2210,29 @@ exports.showUserProfile = (req,res,next)=>{
 /**edit-profile Post Method start**/
 exports.updateProfile = (req,res,next)=>{
 
-  var user_id=req.session.user_id;
+
+  
+  var user_id = req.session.user_id;
   var full_name= encrypt(req.body.full_name);
   var last_name= encrypt(req.body.last_name);
 
   var birthplace= encrypt(req.body.birthplace);
   var dob= encrypt(req.body.dob);
   
-  var user_pic=req.body.text_img_name;
+  // var user_pic=req.body.text_img_name;
   //console.log("oldddddddddddddddd file::::::::::",user_pic);
   
-  let fileName= req.file.originalname;
-  fileName=user_id+fileName;
-  console.log("fileeeeeeeeeeeeeeeee name newwwwwwwwwwwww:",fileName);
+  let fileName = req.file.originalname;
+  fileName = user_id + fileName;
+  console.log(`sessionid : ${user_id}, filename ; ${fileName}`);
+  //console.log("fileeeeeeeeeeeeeeeee name newwwwwwwwwwwww:",fileName);
+
+  
 
   //console.log('user_pic'+user_pic);
 
-  if(user_id)
-  {
-
-    if(user_pic)
-    {
+  if(user_id){
+    if(fileName){
        var updateValues={
         full_name:full_name,
         last_name:last_name,
@@ -2218,32 +2240,36 @@ exports.updateProfile = (req,res,next)=>{
         dob:dob,
         profile_img_name:fileName
       }
-
     }
-    else
-    {
+    else{
       var updateValues={
         full_name:full_name,
         birthplace:birthplace,
         dob:dob
-       
       }
-
     }
 
       
 
-      UserModel.update(updateValues, { where: { reg_user_id: user_id } }).then((result) => 
-             {
-                req.flash('success_msg','Profile updated successfully');
-                res.redirect('/profile');
-        
-             }).catch(err=>console.log('err',err))
+    UserModel.update(updateValues, { where: { reg_user_id: user_id } }).then((result) => {
+      //req.flash('success_msg','Profile updated successfully');
+      console.log('updated');
+      
+      //res.json({status:true,msg:'updated'});
+      res.redirect('/profile');
 
+    })
+    .catch(err => {
+      console.log('err',err);
+
+      //res.json({status:false,msg:err});
+    });
   }
   else
   {
     res.redirect('/login');
+
+    //res.json({status:false,msg:'no user'});
   }
 
   //console.log("user_id"+user_id+"full_name"+full_name+"birthplace"+birthplace+"dob"+dob);
@@ -2816,6 +2842,9 @@ UserModel.findOne({ where: { reg_user_id: userID,deleted:"0",status:"active"}}).
            {
 
             console.log("check pin***********",result)
+            console.log('db pin : '+decrypt(result.user_pin));
+            console.log('db otp : '+decrypt(result.otp));
+            
 
               if(result.user_pin != otp ){
 
@@ -2870,6 +2899,7 @@ UserModel.findOne({ where: { reg_user_id: userID,deleted:"0",status:"active"}}).
                       "user" : ip55[3]
                     });
                     req.session.token = accessToken
+                    console.log(`user type : ${req.session.user_type}`);
                     // res.cookie("jwt", accessToken, {secure: true, httpOnly: true})
 
                     if(req.session.user_type=="validatore"){
